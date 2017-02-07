@@ -1,6 +1,12 @@
 package org.usfirst.frc.team3735.robot;
 
+import Subsystems.BallIntake;
+import Subsystems.Drive;
+import Subsystems.GearIntake;
+import Subsystems.Scaler;
+import Subsystems.Shooter;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,6 +22,15 @@ public class Robot extends IterativeRobot {
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
+	
+	
+	public static BallIntake ballIntake;
+	public static Drive drive;
+	public static GearIntake gearIntake;
+	public static Scaler scaler;
+	//public static Shooter shooter;
+	
+	public static OI oi;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -23,6 +38,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		gearIntake = new GearIntake();
+		//shooter = new Shooter();
+		scaler = new Scaler();
+		drive = new Drive();
+		ballIntake = new BallIntake();
+		oi = new OI();
+		
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
@@ -68,6 +90,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+        Scheduler.getInstance().run();
+        log();
 	}
 
 	/**
@@ -75,6 +99,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+	}
+	
+	public void log(){
+		scaler.log();
 	}
 }
 

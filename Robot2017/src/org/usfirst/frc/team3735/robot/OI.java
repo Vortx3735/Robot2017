@@ -6,12 +6,9 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
 	
-	Joystick joy;
-	Joystick coJoy;
-	
-	public OI(Joystick j1, Joystick j2){
-		joy = j1; //sets joystick from Hardware adapter
-		coJoy = j2;
+	Joystick joy = new Joystick(0);
+	Joystick coJoy = new Joystick(1);	
+	public OI(){
 		
 		//Button Mapping for driver joy-stick
 		Button x = new JoystickButton(joy,1);
@@ -42,5 +39,29 @@ public class OI {
 		Button cRS = new JoystickButton(coJoy,12);
 	}
 	
+	public double getMainLeftX(){
+		return joy.getX();
+	}
+	public double getMainLeftY(){
+		return joy.getY();
+	}
+	public double getMainRightX(){
+		return joy.getTwist();
+	}
+	public double getMainRightY(){
+		return joy.getThrottle();
+	}
 	
+	public double getCoLeftX(){
+		return joy.getX();
+	}
+	public double getCoLeftY(){
+		return joy.getY();
+	}
+	public double getCoRightX(){
+		return joy.getTwist();
+	}
+	public double getCoRightY(){
+		return joy.getThrottle();
+	}
 }

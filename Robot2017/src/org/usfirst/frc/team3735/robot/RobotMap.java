@@ -2,7 +2,7 @@ package org.usfirst.frc.team3735.robot;
 
 public class RobotMap {
 	static int s = 1;
-	
+
 	public static class Drive{
 		public static int leftMotor1 =		1;
 		public static int leftMotor2 = 		2;
@@ -10,7 +10,7 @@ public class RobotMap {
 		
 		public static int rightMotor1 = 	4;
 		public static int rightMotor2 = 	5;
-		public static int rightMotor3 = 	6;
+		public static int rightMotor3 = 	11;
 		
 		
 	}
