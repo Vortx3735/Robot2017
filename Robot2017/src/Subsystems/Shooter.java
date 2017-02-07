@@ -11,16 +11,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Shooter extends Subsystem {
 
 	CANTalon drum = new CANTalon(RobotMap.Shooter.drum);
-	Encoder drumEncoder;
-	double targetSpeed;
+	Encoder drumEncoder = new Encoder(RobotMap.Shooter.encoder1, RobotMap.Shooter.encoder2);
+	double targetSpeed = 0;
 	
 	public PIDController controller = new PIDController(1.0, 0.0, 0.0, drumEncoder, drum);
 	
 	public Shooter(){
 		
 	} 
-
-    
+	
 	public void log() {
 		
 	}

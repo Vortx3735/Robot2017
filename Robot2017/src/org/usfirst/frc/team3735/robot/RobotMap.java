@@ -22,6 +22,8 @@ public class RobotMap {
 	
 	public static class Shooter{
 		public static int drum = 			9;
+		public static int encoder1 = 			0;
+		public static int encoder2 = 			1;
 	}
 	
 	public static class BallIntake{

@@ -28,7 +28,7 @@ public class Robot extends IterativeRobot {
 	public static Drive drive;
 	public static GearIntake gearIntake;
 	public static Scaler scaler;
-	//public static Shooter shooter;
+	public static Shooter shooter;
 	
 	public static OI oi;
 
@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		gearIntake = new GearIntake();
-		//shooter = new Shooter();
+		shooter = new Shooter();
 		scaler = new Scaler();
 		drive = new Drive();
 		ballIntake = new BallIntake();
@@ -99,10 +99,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		
 	}
 	
 	public void log(){
 		scaler.log();
+		drive.log();
 	}
 }
 
