@@ -1,17 +1,13 @@
 package Subsystems;
-import com.kauailabs.navx.frc.AHRS;
 
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-
 import Commands.ExpDrive;
 import HelperClasses.MultiSpeedController;
-
 import org.usfirst.frc.team3735.robot.RobotMap;
-
 import com.ctre.CANTalon;
 
 /**
