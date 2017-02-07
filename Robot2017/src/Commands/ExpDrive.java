@@ -1,6 +1,8 @@
 package Commands;
 
-import team3735.Robot;
+
+import org.usfirst.frc.team3735.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -34,7 +36,7 @@ public class ExpDrive extends Command {
 	/************************************/
     public ExpDrive() {
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.drivetrain);
+    	requires(Robot.drive);
     }
 
     // Called just before this Command runs the first time
@@ -53,31 +55,28 @@ public class ExpDrive extends Command {
     	/************************************/
 		/* Lets Get the New Joy Stick Values*/
 		/************************************/
-		YDriveStick = -Robot.oi.driverStick.getY();
-		ZDriveStick = -Robot.oi.driverStick.getZ();
-    	if(Robot.isTrueSpeed()) {
-			/*********************************/
-			/* Lets Filter the Motor Outputs */
-			/*********************************/
-			/* Note We use the Saved Past Motor Drive Values to Make Calculations */
-			YDriveMotor = (YDriveStick  / K_FILTERCOEF_Y ) + (YDriveMotorPrevious*(K_FILTERCOEF_Y - 1 )/ K_FILTERCOEF_Y);
-			ZDriveMotor = (ZDriveStick  / K_FILTERCOEF_Z ) + (ZDriveMotorPrevious*(K_FILTERCOEF_Z - 1 )/ K_FILTERCOEF_Z);
-			
-			/****************************************/
-			/* Let Save the Motor Y and Z so we     */
-			/* Use the Value for future Calculations*/
-			/****************************************/
-			YDriveMotorPrevious = YDriveMotor; 
-			ZDriveMotorPrevious = ZDriveMotor;
-						
-			/**************************************/
-			/* Let Update the Drive Train Y and Z */
-			/**************************************/
-			Robot.drivetrain.move(YDriveMotor * K_MAX_MTR_Y , ZDriveMotor * K_MAX_MTR_Z);	
-    	}
-    	else {
-    		Robot.drivetrain.move(YDriveStick, ZDriveStick);
-    	}
+		YDriveStick = Robot.oi.getMainLeftY();
+		ZDriveStick = Robot.oi.getMainRightX();
+	
+		/*********************************/
+		/* Lets Filter the Motor Outputs */
+		/*********************************/
+		/* Note We use the Saved Past Motor Drive Values to Make Calculations */
+		YDriveMotor = (YDriveStick  / K_FILTERCOEF_Y ) + (YDriveMotorPrevious*(K_FILTERCOEF_Y - 1 )/ K_FILTERCOEF_Y);
+		ZDriveMotor = (ZDriveStick  / K_FILTERCOEF_Z ) + (ZDriveMotorPrevious*(K_FILTERCOEF_Z - 1 )/ K_FILTERCOEF_Z);
+		
+		/****************************************/
+		/* Let Save the Motor Y and Z so we     */
+		/* Use the Value for future Calculations*/
+		/****************************************/
+		YDriveMotorPrevious = YDriveMotor; 
+		ZDriveMotorPrevious = ZDriveMotor;
+					
+		/**************************************/
+		/* Let Update the Drive Train Y and Z */
+		/**************************************/
+		Robot.drive.arcadeDrive(YDriveMotor * K_MAX_MTR_Y , ZDriveMotor * K_MAX_MTR_Z);	
+	
     }
 
     // Make this return true when this Command no longer needs to run execute()
