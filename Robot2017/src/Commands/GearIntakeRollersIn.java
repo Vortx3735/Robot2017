@@ -1,4 +1,6 @@
-package org.usfirst.frc.team3735.robot;
+package Commands;
+
+import org.usfirst.frc.team3735.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 

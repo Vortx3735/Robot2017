@@ -96,6 +96,9 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber(   "Displacement_X",       ahrs.getDisplacementX());
         SmartDashboard.putNumber(   "Displacement_Y",       ahrs.getDisplacementY());
         
+        SmartDashboard.putNumber("Displacement Total", 
+        		Math.sqrt(Math.pow(ahrs.getDisplacementX(),2) + Math.pow(ahrs.getDisplacementY(),2)));
+        
         /* Display Raw Gyro/Accelerometer/Magnetometer Values                       */
         /* NOTE:  These values are not normally necessary, but are made available   */
         /* for advanced users.  Before using this data, please consider whether     */
