@@ -5,9 +5,10 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import Commands.ExpDrive;
+import Commands.*;
 import HelperClasses.MultiSpeedController;
 import org.usfirst.frc.team3735.robot.RobotMap;
+
 import com.ctre.CANTalon;
 
 /**
@@ -30,7 +31,7 @@ public class Drive extends Subsystem {
 			new MultiSpeedController(new CANTalon[] {r1, r2, r3}, "Drive", "left Motors");
 	RobotDrive driveTrain = new RobotDrive(leftMotors, rightMotors);
 	
-	AHRS ahrs = new AHRS(SPI.Port.kMXP);
+	public AHRS ahrs = new AHRS(SPI.Port.kMXP);
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -82,6 +83,7 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber(   "IMU_Accel_Y",          ahrs.getWorldLinearAccelY());
         SmartDashboard.putBoolean(  "IMU_IsMoving",         ahrs.isMoving());
         SmartDashboard.putBoolean(  "IMU_IsRotating",       ahrs.isRotating());
+        
 
         /* Display estimates of velocity/displacement.  Note that these values are  */
         /* not expected to be accurate enough for estimating robot position on a    */
@@ -135,6 +137,8 @@ public class Drive extends Subsystem {
         /* Connectivity Debugging Support                                           */
         SmartDashboard.putNumber(   "IMU_Byte_Count",       ahrs.getByteCount());
         SmartDashboard.putNumber(   "IMU_Update_Count",     ahrs.getUpdateCount());
+        
+        SmartDashboard.putData("Reset", new ResetNavX());
     }
 }
 
