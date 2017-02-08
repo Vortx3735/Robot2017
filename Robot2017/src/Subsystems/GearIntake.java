@@ -21,7 +21,7 @@ public class GearIntake extends Subsystem {
 	public GearIntake(){
 		topRoller = new CANTalon(RobotMap.GearIntake.topRoller);
 		bottomRoller = new CANTalon(RobotMap.GearIntake.bottomRoller);
-		topRoller.setInverted();
+		topRoller.setInverted(true);
 	}
 
     public void initDefaultCommand() {

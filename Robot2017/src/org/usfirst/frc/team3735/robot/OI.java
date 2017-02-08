@@ -1,5 +1,8 @@
 package org.usfirst.frc.team3735.robot;
 
+import Commands.GearIntakeRollersIn;
+import Commands.ScalerDown;
+import Commands.ScalerUp;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
