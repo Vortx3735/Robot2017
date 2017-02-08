@@ -12,11 +12,10 @@ public class ExpDrive extends Command {
 	/************************************/
 	/* Constants						*/
 	/************************************/	
-	private static final double K_FILTERCOEF_Y 		= 8.0;  /* Range is 1 to 50 , 1 is like old code, 3 or 6, 8 is recommended */ 
-	private static final double K_FILTERCOEF_Z 		= 4.0; 
+	//Range is (0,1] , 1 is no filter, .333 or .167, .125 is recommended 
+	private static final double K_FILTERCOEF_Y 		= .125;  //this is for the move variable
+	private static final double K_FILTERCOEF_Z 		= .250;	 //this is for the turning
 	
-	private static final double K_MAX_MTR_Y 		= 1.00;  /* This is Max Motor Speed when Jy Stick Max */
-	private static final double K_MAX_MTR_Z 		= 1.00; 
 	
 	/************************************/
 	/* Variables						*/
@@ -62,9 +61,14 @@ public class ExpDrive extends Command {
 		/* Lets Filter the Motor Outputs */
 		/*********************************/
 		/* Note We use the Saved Past Motor Drive Values to Make Calculations */
-		YDriveMotor = (YDriveStick  / K_FILTERCOEF_Y ) + (YDriveMotorPrevious*(K_FILTERCOEF_Y - 1 )/ K_FILTERCOEF_Y);
-		ZDriveMotor = (ZDriveStick  / K_FILTERCOEF_Z ) + (ZDriveMotorPrevious*(K_FILTERCOEF_Z - 1 )/ K_FILTERCOEF_Z);
+		//this is old formula- literally the worst formula for the computer
+//		YDriveMotor = (YDriveStick  / K_FILTERCOEF_Y ) + (YDriveMotorPrevious*(K_FILTERCOEF_Y - 1 )/ K_FILTERCOEF_Y);
+//		ZDriveMotor = (ZDriveStick  / K_FILTERCOEF_Z ) + (ZDriveMotorPrevious*(K_FILTERCOEF_Z - 1 )/ K_FILTERCOEF_Z);
 		
+		//these are new formulas, much better for CPU. These are the same forumlas, but the filters are inversed, and the range is 0<x<=1
+		YDriveMotor = (YDriveStick-YDriveMotorPrevious)*K_FILTERCOEF_Y + YDriveMotorPrevious;
+		ZDriveMotor = (ZDriveStick-ZDriveMotorPrevious)*K_FILTERCOEF_Z + ZDriveMotorPrevious;
+
 		/****************************************/
 		/* Let Save the Motor Y and Z so we     */
 		/* Use the Value for future Calculations*/
@@ -75,7 +79,7 @@ public class ExpDrive extends Command {
 		/**************************************/
 		/* Let Update the Drive Train Y and Z */
 		/**************************************/
-		Robot.drive.arcadeDrive(YDriveMotor * K_MAX_MTR_Y , ZDriveMotor * K_MAX_MTR_Z);	
+		Robot.drive.arcadeDrive(YDriveMotor, ZDriveMotor);	
 	
     }
 

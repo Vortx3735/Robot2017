@@ -1,6 +1,7 @@
 package Subsystems;
 
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.ScalerJoystickMovement;
 
 import com.ctre.CANTalon;
@@ -15,18 +16,26 @@ public class Scaler extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	CANTalon motor = new CANTalon(6);
+	CANTalon motor;
+	private final double voltageChangeSpeed = 5;
+	private final double upVoltage = 1;
+	private final double downVoltage = -.1;
+	
+	public Scaler(){
+		motor = new CANTalon(RobotMap.Scaler.motor);
+		motor.changeControlMode(CANTalon.TalonControlMode.Voltage);
+		motor.setVoltageCompensationRampRate(voltageChangeSpeed);
+	}
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new ScalerJoystickMovement());
-		motor.changeControlMode(CANTalon.TalonControlMode.Voltage);
-		motor.setVoltageCompensationRampRate(3);
     }
 	
 	public void log(){
-		SmartDashboard.putNumber("motor voltage", getPower());
-		SmartDashboard.putNumber("joystick value", Robot.oi.getMainRightY());
+		SmartDashboard.putNumber("Scaler motor power", getPower());
+		SmartDashboard.putNumber("Scaler motor joystick value", Robot.oi.getMainRightY());
 	}
 	
 	public void setVoltage(double voltage){
@@ -35,6 +44,14 @@ public class Scaler extends Subsystem {
 	
 	public double getPower(){
 		return motor.getOutputCurrent() * motor.getOutputVoltage();
+	}
+	
+	public void scaleUp(){
+		setVoltage(upVoltage);
+	}
+	
+	public void scaleDown(){
+		setVoltage(downVoltage);
 	}
 }
 

@@ -43,6 +43,14 @@ public class Drive extends Subsystem {
     	driveTrain.arcadeDrive(move, rotate);
     }
     
+    public void tankDrive(double left, double right){
+    	driveTrain.tankDrive(left, right);
+    }
+    
+    public void normalDrive(double move, double curve){
+    	driveTrain.drive(move, curve);
+    }
+    
     public void log(){
     	displayGyroData();
     }

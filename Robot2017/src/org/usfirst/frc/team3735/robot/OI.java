@@ -6,9 +6,14 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
 	
-	Joystick joy = new Joystick(0);
-	Joystick coJoy = new Joystick(1);	
+	Joystick joy;
+	Joystick cojoy;
+	
 	public OI(){
+		
+		//joystick port mapping
+		joy = new Joystick(0);
+		cojoy = new Joystick(1);	
 		
 		//Button Mapping for driver joy-stick
 		Button x = new JoystickButton(joy,1);
@@ -25,19 +30,27 @@ public class OI {
 		Button rs = new JoystickButton(joy,12);
 		
 		//Button Mapping for codriver joy-stick
-		Button cX = new JoystickButton(coJoy,1);
-		Button cA = new JoystickButton(coJoy,2);
-		Button cB = new JoystickButton(coJoy,3);
-		Button cY = new JoystickButton(coJoy,4);
-		Button cLB = new JoystickButton(coJoy,5);
-		Button cRB = new JoystickButton(coJoy,6);
-		Button cLT = new JoystickButton(coJoy,7);
-		Button cRT = new JoystickButton(coJoy,8);
-		Button cBack = new JoystickButton(coJoy,9);
-		Button cStart = new JoystickButton(coJoy,10);
-		Button cLS = new JoystickButton(coJoy,11);
-		Button cRS = new JoystickButton(coJoy,12);
+		Button cX = new JoystickButton(cojoy,1);
+		Button cA = new JoystickButton(cojoy,2);
+		Button cB = new JoystickButton(cojoy,3);
+		Button cY = new JoystickButton(cojoy,4);
+		Button cLB = new JoystickButton(cojoy,5);
+		Button cRB = new JoystickButton(cojoy,6);
+		Button cLT = new JoystickButton(cojoy,7);
+		Button cRT = new JoystickButton(cojoy,8);
+		Button cBack = new JoystickButton(cojoy,9);
+		Button cStart = new JoystickButton(cojoy,10);
+		Button cLS = new JoystickButton(cojoy,11);
+		Button cRS = new JoystickButton(cojoy,12);
+		
+		a.toggleWhenPressed(new GearIntakeRollersIn());
+		rb.whileHeld(new ScalerUp());
+		rt.whileHeld(new ScalerDown());
+	
+		
 	}
+	
+	
 	
 	public double getMainLeftX(){
 		return joy.getX();

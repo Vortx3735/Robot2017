@@ -12,8 +12,8 @@ public class GearIntake extends Subsystem {
 	CANTalon topRoller;
 	CANTalon bottomRoller;
 	
-	double intakeSpeed = 1;
-	double outtakeSpeed = -1;
+	private final double intakeSpeed = 1;
+	private final double outtakeSpeed = -1;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -21,7 +21,7 @@ public class GearIntake extends Subsystem {
 	public GearIntake(){
 		topRoller = new CANTalon(RobotMap.GearIntake.topRoller);
 		bottomRoller = new CANTalon(RobotMap.GearIntake.bottomRoller);
-		//topRoller.setInverted();
+		topRoller.setInverted();
 	}
 
     public void initDefaultCommand() {
@@ -29,18 +29,20 @@ public class GearIntake extends Subsystem {
     }
     
     public void turnRollersIn(){
-    	topRoller.set(intakeSpeed);
-    	bottomRoller.set(intakeSpeed);
+    	setRollerSpeed(intakeSpeed);
     }
     
     public void turnRollersOut(){
-    	topRoller.set(outtakeSpeed);
-    	bottomRoller.set(outtakeSpeed);
+    	setRollerSpeed(outtakeSpeed);
     }
     
     public void turnRollersOff(){
-    	topRoller.set(0);
-    	bottomRoller.set(0);
+    	setRollerSpeed(0);
+    }
+    
+    public void setRollerSpeed(double speed){
+    	topRoller.set(speed);
+    	bottomRoller.set(speed);
     }
     
 }
