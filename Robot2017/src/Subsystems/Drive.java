@@ -1,6 +1,8 @@
 package Subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -8,7 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import Commands.*;
 import HelperClasses.MultiSpeedController;
 import org.usfirst.frc.team3735.robot.RobotMap;
-
 import com.ctre.CANTalon;
 
 /**
@@ -33,6 +34,16 @@ public class Drive extends Subsystem {
 	
 	public AHRS ahrs = new AHRS(SPI.Port.kMXP);
 	
+	PIDController turnController;
+	PIDController dispController;
+	
+	private final double p;
+
+	public Drive(){
+		//turnController = new PIDController();
+	}
+
+	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -41,7 +52,7 @@ public class Drive extends Subsystem {
     }
     
     public void arcadeDrive(double move, double rotate){
-    	driveTrain.arcadeDrive(move, rotate);
+    	driveTrain.arcadeDrive(move, rotate);    	
     }
     
     public void tankDrive(double left, double right){
@@ -50,6 +61,10 @@ public class Drive extends Subsystem {
     
     public void normalDrive(double move, double curve){
     	driveTrain.drive(move, curve);
+    }
+    
+    public void turn(double power){
+    	driveTrain.tankDrive(power, -power);
     }
     
     public void log(){
