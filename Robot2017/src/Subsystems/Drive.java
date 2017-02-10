@@ -40,7 +40,7 @@ public class Drive extends Subsystem {
 	private final double p;
 
 	public Drive(){
-		//turnController = new PIDController();
+		
 	}
 
 	
@@ -66,6 +66,21 @@ public class Drive extends Subsystem {
     public void turn(double power){
     	driveTrain.tankDrive(power, -power);
     }
+    
+    public double getYaw(){
+    	return ahrs.getYaw();
+    }
+    
+    public void getLeftDisp(){
+    	
+    }
+    public void getRightDisp(){
+    	
+    }
+    
+    
+    
+    
     
     public void log(){
     	displayGyroData();
