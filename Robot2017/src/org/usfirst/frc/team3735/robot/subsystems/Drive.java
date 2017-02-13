@@ -5,12 +5,15 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import Commands.*;
 
 import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.RobotMap.Drive;
+import org.usfirst.frc.team3735.robot.commands.DriveTurnToAngle;
 import org.usfirst.frc.team3735.robot.commands.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.ResetNavX;
 import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
@@ -21,31 +24,51 @@ import com.ctre.CANTalon;
  *
  */
 
-public class Drive extends Subsystem {
+public class Drive extends PIDSubsystem {
 	
-	CANTalon l1 = new CANTalon(RobotMap.Drive.leftMotor1); 
-	CANTalon l2 = new CANTalon(RobotMap.Drive.leftMotor2); 
-	CANTalon l3 = new CANTalon(RobotMap.Drive.leftMotor3); 
+	private CANTalon l1,l2,l3,r1,r2,r3;
 	
-	CANTalon r1 = new CANTalon(RobotMap.Drive.rightMotor1); 
-	CANTalon r2 = new CANTalon(RobotMap.Drive.rightMotor2); 
-	CANTalon r3 = new CANTalon(RobotMap.Drive.rightMotor3); 
+//	
+//	MultiSpeedController leftMotors = 
+//			new MultiSpeedController(new CANTalon[] {l1, l2, l3}, "Drive", "left Motors");
+//	MultiSpeedController rightMotors = 
+//			new MultiSpeedController(new CANTalon[] {r1, r2, r3}, "Drive", "left Motors");
+//	
+	RobotDrive driveTrain;
 	
-	MultiSpeedController leftMotors = 
-			new MultiSpeedController(new CANTalon[] {l1, l2, l3}, "Drive", "left Motors");
-	MultiSpeedController rightMotors = 
-			new MultiSpeedController(new CANTalon[] {r1, r2, r3}, "Drive", "left Motors");
-	RobotDrive driveTrain = new RobotDrive(leftMotors, rightMotors);
+	private AHRS ahrs;
 	
-	public AHRS ahrs = new AHRS(SPI.Port.kMXP);
+	public PIDController leftController;
+	public PIDController rightController;
 	
-	PIDController turnController;
-	PIDController dispController;
+	private static double P = 1.0;
+	private static double I = 0.0;
+	private static double D = 0.0;
+	private static double F = 0.0;
 	
-	private final double p;
 
 	public Drive(){
+		super("Drive",P,I,D,F);
+		//drivetrain
+			l1 = new CANTalon(RobotMap.Drive.leftMotor1); 
+			l2 = new CANTalon(RobotMap.Drive.leftMotor2); 
+			l3 = new CANTalon(RobotMap.Drive.leftMotor3); 
+			r1 = new CANTalon(RobotMap.Drive.rightMotor1); 
+			r2 = new CANTalon(RobotMap.Drive.rightMotor2); 
+			r3 = new CANTalon(RobotMap.Drive.rightMotor3); 
+			driveTrain = new RobotDrive(l1, r1);
+			setupSlaves();
 		
+		//sensors
+			ahrs = new AHRS(SPI.Port.kMXP);
+		
+		//turn pid
+			getPIDController().setContinuous();
+			getPIDController().setAbsoluteTolerance(5);
+			getPIDController().setInputRange(-180, 180);
+			getPIDController().setOutputRange(-1, 1);
+	        LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
+			
 	}
 
 	
@@ -72,10 +95,11 @@ public class Drive extends Subsystem {
     	driveTrain.tankDrive(power, -power);
     }
     
+    
+    
     public double getYaw(){
     	return ahrs.getYaw();
     }
-    
     public void getLeftDisp(){
     	
     }
@@ -83,13 +107,37 @@ public class Drive extends Subsystem {
     	
     }
     
+    private void setupSlaves(){
+        
+		l2.changeControlMode(CANTalon.TalonControlMode.Follower);
+		l3.changeControlMode(CANTalon.TalonControlMode.Follower);
+		r2.changeControlMode(CANTalon.TalonControlMode.Follower);
+		r3.changeControlMode(CANTalon.TalonControlMode.Follower);
+		
+		l2.set(leftMaster.getDeviceID());
+		l3.set(rightMaster.getDeviceID());
+		r2.set(leftMaster.getDeviceID());
+		r3.set(rightMaster.getDeviceID());
+    }
     
-    
+	@Override
+	protected double returnPIDInput() {
+		// TODO Auto-generated method stub
+		return ahrs.getYaw();
+	}
+
+
+	@Override
+	protected void usePIDOutput(double output) {
+		turn(output);
+	}
     
     
     public void log(){
     	displayGyroData();
     }
+    
+    
     
     public void displayGyroData(){
     	SmartDashboard.putBoolean(  "IMU_Connected",        ahrs.isConnected());
@@ -178,5 +226,8 @@ public class Drive extends Subsystem {
         
         SmartDashboard.putData("Reset", new ResetNavX());
     }
+
+
+
 }
 

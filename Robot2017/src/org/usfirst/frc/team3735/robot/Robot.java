@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3735.robot;
 
+import org.usfirst.frc.team3735.robot.commands.AutonomousTest;
 import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.subsystems.GearIntake;
@@ -7,6 +8,7 @@ import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,11 +22,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
+	final String autonomousTest = "AutonomousTest";
 	String autoSelected;
-	SendableChooser<String> chooser = new SendableChooser<>();
-	
-	
+	SendableChooser chooser;
+	Command autonomousCommand;
 	public static BallIntake ballIntake;
 	public static Drive drive;
 	public static GearIntake gearIntake;
@@ -44,10 +45,13 @@ public class Robot extends IterativeRobot {
 		scaler = new Scaler();
 		drive = new Drive();
 		ballIntake = new BallIntake();
+		
 		oi = new OI();
 		
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
+		chooser = new SendableChooser();
+		chooser.addDefault("Autonomous Test", new AutonomousTest());
+		//chooser.addObject("Autonomous Test", autonomousTest);
+		
 		SmartDashboard.putData("Auto choices", chooser);
 	}
 
@@ -64,10 +68,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autoSelected = chooser.getSelected();
-		// autoSelected = SmartDashboard.getString("Auto Selector",
-		// defaultAuto);
-		System.out.println("Auto selected: " + autoSelected);
+        autonomousCommand = (Command) chooser.getSelected();
+        if (autonomousCommand != null) autonomousCommand.start();
 	}
 
 	/**
@@ -75,17 +77,18 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		switch (autoSelected) {
-		case customAuto:
-			// Put custom auto code here
-			break;
-		case defaultAuto:
-		default:
-			// Put default auto code here
-			break;
-		}
+		Scheduler.getInstance().run();
 	}
 
+	
+    public void teleopInit() {
+		// This makes sure that the autonomous stops running when
+        // teleop starts running. If you want the autonomous to 
+        // continue until interrupted by another command, remove
+        // this line or comment it out.
+        if (autonomousCommand != null) autonomousCommand.cancel();
+    }
+    
 	/**
 	 * This function is called periodically during operator control
 	 */
