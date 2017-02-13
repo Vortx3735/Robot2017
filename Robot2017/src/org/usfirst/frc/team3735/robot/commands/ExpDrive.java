@@ -1,4 +1,4 @@
-package Commands;
+package org.usfirst.frc.team3735.robot.commands;
 
 
 import org.usfirst.frc.team3735.robot.Robot;

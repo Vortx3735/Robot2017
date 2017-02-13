@@ -1,4 +1,4 @@
-package Commands;
+package org.usfirst.frc.team3735.robot.commands;
 
 import org.usfirst.frc.team3735.robot.Robot;
 
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveTurnToAngle extends Command implements PIDOutput, PIDSource {
+public class DriveMoveDistance extends Command implements PIDOutput, PIDSource {
 
 	PIDController controller;
 	PIDSourceType type = PIDSourceType.kDisplacement;
@@ -21,14 +21,13 @@ public class DriveTurnToAngle extends Command implements PIDOutput, PIDSource {
 	private double D = 0;
 	private double F = 0;
 
-    public DriveTurnToAngle(double angle){
+    public DriveMoveDistance(double distance){
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.drive);
     	controller = new PIDController(P, I, D, F, this, this);
-    	controller.setContinuous();
-    	controller.setInputRange(0, 360);
     	controller.setOutputRange(-1, 1);
-    	controller.setSetpoint(angle);
+    	controller.setSetpoint(distance);
     }
 
     // Called just before this Command runs the first time
@@ -53,6 +52,7 @@ public class DriveTurnToAngle extends Command implements PIDOutput, PIDSource {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	
     }
 
 	@Override
@@ -67,11 +67,11 @@ public class DriveTurnToAngle extends Command implements PIDOutput, PIDSource {
 
 	@Override
 	public double pidGet() {
-		return Robot.drive.getYaw();
+		return 0; 				//FIXME
 	}
 
 	@Override
 	public void pidWrite(double output) {
-		Robot.drive.turn(output);
+		Robot.drive.arcadeDrive(output, 0);
 	}
 }

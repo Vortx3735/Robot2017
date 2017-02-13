@@ -1,4 +1,4 @@
-package Subsystems;
+package org.usfirst.frc.team3735.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -8,8 +8,13 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import Commands.*;
-import HelperClasses.MultiSpeedController;
+
 import org.usfirst.frc.team3735.robot.RobotMap;
+import org.usfirst.frc.team3735.robot.RobotMap.Drive;
+import org.usfirst.frc.team3735.robot.commands.ExpDrive;
+import org.usfirst.frc.team3735.robot.commands.ResetNavX;
+import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
+
 import com.ctre.CANTalon;
 
 /**

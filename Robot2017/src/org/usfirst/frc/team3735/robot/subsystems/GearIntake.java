@@ -1,6 +1,8 @@
-package Subsystems;
+package org.usfirst.frc.team3735.robot.subsystems;
 
 import org.usfirst.frc.team3735.robot.RobotMap;
+import org.usfirst.frc.team3735.robot.RobotMap.GearIntake;
+
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 

@@ -1,4 +1,4 @@
-package Commands;
+package org.usfirst.frc.team3735.robot.commands;
 
 import org.usfirst.frc.team3735.robot.Robot;
 
@@ -7,17 +7,17 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  *
  */
-public class ScalerDown extends InstantCommand {
+public class GearIntakeRollersIn extends InstantCommand {
 
-    public ScalerDown() {
+    public GearIntakeRollersIn() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.scaler);
+    	requires(Robot.gearIntake);
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.scaler.scaleDown();
+    	Robot.gearIntake.turnRollersIn();
     }
 
 }

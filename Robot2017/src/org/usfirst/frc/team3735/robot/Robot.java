@@ -1,10 +1,11 @@
 package org.usfirst.frc.team3735.robot;
 
-import Subsystems.BallIntake;
-import Subsystems.Drive;
-import Subsystems.GearIntake;
-import Subsystems.Scaler;
-import Subsystems.Shooter;
+import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
+import org.usfirst.frc.team3735.robot.subsystems.Drive;
+import org.usfirst.frc.team3735.robot.subsystems.GearIntake;
+import org.usfirst.frc.team3735.robot.subsystems.Scaler;
+import org.usfirst.frc.team3735.robot.subsystems.Shooter;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;

@@ -1,8 +1,9 @@
-package Subsystems;
+package org.usfirst.frc.team3735.robot.subsystems;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.ScalerJoystickMovement;
+import org.usfirst.frc.team3735.robot.RobotMap.Scaler;
 
 import com.ctre.CANTalon;
 

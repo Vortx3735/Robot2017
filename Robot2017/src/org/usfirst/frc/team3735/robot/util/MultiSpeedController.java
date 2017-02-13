@@ -1,4 +1,4 @@
-package HelperClasses;
+package org.usfirst.frc.team3735.robot.util;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
