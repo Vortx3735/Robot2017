@@ -1,8 +1,9 @@
 package org.usfirst.frc.team3735.robot;
 
-import org.usfirst.frc.team3735.robot.commands.GearIntakeRollersIn;
 import org.usfirst.frc.team3735.robot.commands.ScalerDown;
 import org.usfirst.frc.team3735.robot.commands.ScalerUp;
+import org.usfirst.frc.team3735.robot.commands.ShooterMotorTest;
+import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersIn;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -50,6 +51,7 @@ public class OI {
 		a.toggleWhenPressed(new GearIntakeRollersIn());
 		rb.whileHeld(new ScalerUp());
 		rt.whileHeld(new ScalerDown());
+		b.whenPressed(new ShooterMotorTest());
 	
 		
 	}

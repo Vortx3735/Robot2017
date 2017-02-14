@@ -1,8 +1,11 @@
 package org.usfirst.frc.team3735.robot.subsystems;
+
 import org.usfirst.frc.team3735.robot.RobotMap;
-import org.usfirst.frc.team3735.robot.RobotMap.Shooter;
+import org.usfirst.frc.team3735.robot.commands.ShooterMotorTest;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
@@ -20,6 +23,8 @@ public class Shooter extends Subsystem {
 	public PIDController controller = new PIDController(1.0, 0.0, 0.0, drumEncoder, drum);
 	
 	public Shooter(){
+		drum.changeControlMode(TalonControlMode.Position);
+		drum.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		
 	} 
 	
@@ -29,7 +34,6 @@ public class Shooter extends Subsystem {
 
 
   	public void initDefaultCommand() {
-  		
   	}
   
     // Put methods for controlling this subsystem
@@ -37,6 +41,11 @@ public class Shooter extends Subsystem {
 
     public void setVoltage(double voltage){
     	drum.set(voltage);
+    }
+    
+    public void set(double d){
+    	drum.set(d);
+    	System.out.println("set: " + d);
     }
 }
 

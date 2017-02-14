@@ -1,7 +1,9 @@
-package org.usfirst.frc.team3735.robot.commands;
+package org.usfirst.frc.team3735.robot.commands.drive;
 
 
 import org.usfirst.frc.team3735.robot.Robot;
+
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -36,6 +38,8 @@ public class ExpDrive extends Command {
     public ExpDrive() {
         // Use requires() here to declare subsystem dependencies
     	requires(Robot.drive);
+    	Robot.drive.setControlMode(TalonControlMode.PercentVbus);
+
     }
 
     // Called just before this Command runs the first time

@@ -1,9 +1,10 @@
 package org.usfirst.frc.team3735.robot.subsystems;
 
 import org.usfirst.frc.team3735.robot.RobotMap;
-import org.usfirst.frc.team3735.robot.RobotMap.GearIntake;
-
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
+
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -13,9 +14,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class GearIntake extends Subsystem {
 	CANTalon topRoller;
 	CANTalon bottomRoller;
-	
-	private final double intakeSpeed = 1;
-	private final double outtakeSpeed = -1;
+	Solenoid liftSolenoid;
+	Solenoid topFeederSolenoid;
+
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -23,29 +24,32 @@ public class GearIntake extends Subsystem {
 	public GearIntake(){
 		topRoller = new CANTalon(RobotMap.GearIntake.topRoller);
 		bottomRoller = new CANTalon(RobotMap.GearIntake.bottomRoller);
-		topRoller.setInverted(true);
+		
+		liftSolenoid = new Solenoid(RobotMap.GearIntake.liftSolenoid);
+		topFeederSolenoid = new Solenoid(RobotMap.GearIntake.topFeedSolenoid);
 	}
 
     public void initDefaultCommand() {
         //setDefaultCommand(new GearIntakeRollersOff());
     }
     
-    public void turnRollersIn(){
-    	setRollerSpeed(intakeSpeed);
-    }
-    
-    public void turnRollersOut(){
-    	setRollerSpeed(outtakeSpeed);
-    }
-    
-    public void turnRollersOff(){
-    	setRollerSpeed(0);
-    }
-    
+    //positive is out, negative is in
     public void setRollerSpeed(double speed){
     	topRoller.set(speed);
     	bottomRoller.set(speed);
     }
     
+    public void feedOpen(){
+    	topFeederSolenoid.set(true);
+    }
+    public void feedClose(){
+    	topFeederSolenoid.set(false);
+    }
+    public void liftDown(){
+    	topFeederSolenoid.set(true);
+    }
+    public void liftUp(){
+    	topFeederSolenoid.set(false);
+    }
 }
 

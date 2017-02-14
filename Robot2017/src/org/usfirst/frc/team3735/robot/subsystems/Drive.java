@@ -1,7 +1,11 @@
 package org.usfirst.frc.team3735.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
@@ -9,16 +13,11 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import Commands.*;
-
 import org.usfirst.frc.team3735.robot.RobotMap;
-import org.usfirst.frc.team3735.robot.RobotMap.Drive;
-import org.usfirst.frc.team3735.robot.commands.DriveTurnToAngle;
-import org.usfirst.frc.team3735.robot.commands.ExpDrive;
-import org.usfirst.frc.team3735.robot.commands.ResetNavX;
+import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveNavxResest;
 import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
 
-import com.ctre.CANTalon;
 
 /**
  *
@@ -38,9 +37,7 @@ public class Drive extends PIDSubsystem {
 	
 	private AHRS ahrs;
 	
-	public PIDController leftController;
-	public PIDController rightController;
-	
+	//values for rotation
 	private static double P = 1.0;
 	private static double I = 0.0;
 	private static double D = 0.0;
@@ -61,6 +58,7 @@ public class Drive extends PIDSubsystem {
 		
 		//sensors
 			ahrs = new AHRS(SPI.Port.kMXP);
+			
 		
 		//turn pid
 			getPIDController().setContinuous();
@@ -95,16 +93,29 @@ public class Drive extends PIDSubsystem {
     	driveTrain.tankDrive(power, -power);
     }
     
+    public void setControlMode(TalonControlMode mode){
+    	l1.changeControlMode(mode);
+    	r1.changeControlMode(mode);
+    }
+    
+    public void setLeftRight(double left, double right){
+    	l1.set(left);
+    	r1.set(right);
+    }
+    public void getAverageDisplacement(){
+    	
+    }
+    
     
     
     public double getYaw(){
     	return ahrs.getYaw();
     }
-    public void getLeftDisp(){
-    	
+    public void zeroYaw(){
+    	ahrs.zeroYaw();
     }
-    public void getRightDisp(){
-    	
+    public void resetAhrs(){
+    	ahrs.reset();
     }
     
     private void setupSlaves(){
@@ -114,10 +125,10 @@ public class Drive extends PIDSubsystem {
 		r2.changeControlMode(CANTalon.TalonControlMode.Follower);
 		r3.changeControlMode(CANTalon.TalonControlMode.Follower);
 		
-		l2.set(leftMaster.getDeviceID());
-		l3.set(rightMaster.getDeviceID());
-		r2.set(leftMaster.getDeviceID());
-		r3.set(rightMaster.getDeviceID());
+		l2.set(l1.getDeviceID());
+		l3.set(l1.getDeviceID());
+		r2.set(r1.getDeviceID());
+		r3.set(r1.getDeviceID());
     }
     
 	@Override
@@ -224,7 +235,7 @@ public class Drive extends PIDSubsystem {
         SmartDashboard.putNumber(   "IMU_Byte_Count",       ahrs.getByteCount());
         SmartDashboard.putNumber(   "IMU_Update_Count",     ahrs.getUpdateCount());
         
-        SmartDashboard.putData("Reset", new ResetNavX());
+        SmartDashboard.putData("Reset", new DriveNavxResest());
     }
 
 
