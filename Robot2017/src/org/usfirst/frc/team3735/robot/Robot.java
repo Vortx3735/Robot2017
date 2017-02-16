@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3735.robot;
 
-import org.usfirst.frc.team3735.robot.commands.AutonomousTest;
+import org.usfirst.frc.team3735.robot.commands.autonomous.AutonomousTest;
 import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.subsystems.GearIntake;
