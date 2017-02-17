@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3735.robot.subsystems;
 
 import org.usfirst.frc.team3735.robot.RobotMap;
-import org.usfirst.frc.team3735.robot.commands.ShooterMotorTest;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterSmartDashboard;
 
 import com.ctre.CANTalon;

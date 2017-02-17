@@ -23,11 +23,11 @@ public class ScalerJoystickMovement extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(Robot.scaler.getPower() < -300 || Robot.scaler.getPower() > 10){
-    		Robot.scaler.setVoltage(0);
+    		Robot.scaler.setCurrent(0);
     		System.out.println("overload");
     		isDone = true;
     	}else if (isDone == false){
-    		Robot.scaler.setVoltage(Robot.oi.getMainRightY());
+    		Robot.scaler.setCurrent(Robot.oi.getMainRightY());
     	}else if(Math.abs(Robot.scaler.getPower()) < .5 && isDone == true && Math.abs(Robot.oi.getMainLeftY()) < .015){
 			isDone = false;
     	}
