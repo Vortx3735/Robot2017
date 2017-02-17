@@ -102,11 +102,47 @@ public class Drive extends PIDSubsystem {
     	l1.set(left);
     	r1.set(right);
     }
+    
+    public void setupDriveForDistance() {
+    	int absolutePosition = l1.getPulseWidthPosition() & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
+        l1.setEncPosition(absolutePosition);
+        l1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+        l1.reverseSensor(false);
+        l1.configNominalOutputVoltage(+0f, -0f);
+        l1.configPeakOutputVoltage(+12f, -12f);
+        l1.setAllowableClosedLoopErr(0); 
+        l1.setProfile(0);
+        l1.setF(F);
+        l1.setP(P);
+        l1.setI(I); 
+        l1.setD(D); 
+        l1.changeControlMode(TalonControlMode.Position);
+        
+        r1.setEncPosition(absolutePosition);
+        r1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+        r1.reverseSensor(false);
+        r1.configNominalOutputVoltage(+0f, -0f);
+        r1.configPeakOutputVoltage(+12f, -12f);
+        r1.setAllowableClosedLoopErr(0); 
+        r1.setProfile(0);
+        r1.setF(F);
+        r1.setP(P);
+        r1.setI(I); 
+        r1.setD(D); 
+        r1.changeControlMode(TalonControlMode.Position);
+    }
+    
     public void getAverageDisplacement(){
     	
     }
     
+    public double getPosistionLeft() {
+    	return l1.getPosition();
+    }
     
+    public double getPosistionRight() {
+    	return r1.getPosition();
+    }
     
     public double getYaw(){
     	return ahrs.getYaw();
