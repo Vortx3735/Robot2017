@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends Subsystem {
 
 	CANTalon drum = new CANTalon(RobotMap.Shooter.drum);
-	//Encoder drumEncoder = new Encoder(RobotMap.Shooter.encoder1, RobotMap.Shooter.encoder2);
+	Encoder drumEncoder = new Encoder(RobotMap.Shooter.encoder1, RobotMap.Shooter.encoder2);
 	double targetSpeed = 0;
 	
 	public PIDController controller = new PIDController(1.0, 0.0, 0.0, drumEncoder, drum);
