@@ -9,12 +9,11 @@ public class Constants {
 	public class GearIntake{
 		public final static double rollerOutSpeed = 1.0;
 		public final static double rollerInSpeed = -1.0;
-		public static final double feedingSpeed = 1;
+		public final static double feedingSpeed = 1;
 	}
 	
 	public class Scaler{
-		public final static double scalingPower = 1.0;
-		public final static double upCurrent = 1;
+		public final static double upCurrent = 1.0;
 		public final static double powerMax = 100;
 	}
 	

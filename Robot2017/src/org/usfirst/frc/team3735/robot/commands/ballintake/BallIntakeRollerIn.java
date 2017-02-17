@@ -19,7 +19,7 @@ public class BallIntakeRollerIn extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.ballIntake.setRollerSpeed(Constants.BallIntake.rollerInSpeed);
+    	Robot.ballIntake.setRollerCurrent(Constants.BallIntake.rollerInSpeed);
     }
 
 }

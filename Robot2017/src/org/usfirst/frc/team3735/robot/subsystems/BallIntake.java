@@ -5,6 +5,7 @@ import org.usfirst.frc.team3735.robot.RobotMap;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -26,8 +27,12 @@ public class BallIntake extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public void setRollerSpeed(double speed){
+    public void setRollerCurrent(double speed){
     	motor.set(speed);
+    }
+    
+    public void log(){
+    	SmartDashboard.putNumber("Ball Intake motor current", motor.get());
     }
 }
 

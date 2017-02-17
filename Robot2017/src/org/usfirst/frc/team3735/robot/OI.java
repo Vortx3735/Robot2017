@@ -50,6 +50,7 @@ public class OI {
 		a.whileHeld(new ScalerUp());
 		b.toggleWhenPressed(new GearIntakeToggleOpenClose());
 		rt.whileHeld(new GearIntakeFeeding());
+		//x.toggleWhenPressed(new GearIntake);
 		
 		
 	}
