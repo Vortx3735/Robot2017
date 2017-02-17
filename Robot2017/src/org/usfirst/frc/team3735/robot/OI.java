@@ -1,8 +1,12 @@
 package org.usfirst.frc.team3735.robot;
 
+import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
+import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeToggleOpenClose;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
+import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOff;
+import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOn;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -47,10 +51,17 @@ public class OI {
 		Button cLS = new JoystickButton(cojoy,11);
 		Button cRS = new JoystickButton(cojoy,12);
 		
-		a.whileHeld(new ScalerUp());
-		b.toggleWhenPressed(new GearIntakeToggleOpenClose());
+		
+		b.whenPressed(new BallIntakeRollerIn());
+		b.whenReleased(new BallIntakeRollerOff());
+		
+		rb.toggleWhenPressed(new GearIntakeToggleOpenClose());
 		rt.whileHeld(new GearIntakeFeeding());
-		//x.toggleWhenPressed(new GearIntake);
+		
+		a.whileHeld(new ScalerUp());
+		
+		y.whenPressed(new ShooterOn());
+		y.whenReleased(new ShooterOff());
 		
 		
 	}

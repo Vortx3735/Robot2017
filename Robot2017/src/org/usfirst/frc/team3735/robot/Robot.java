@@ -109,6 +109,8 @@ public class Robot extends IterativeRobot {
 	public void log(){
 		scaler.log();
 		drive.log();
+		shooter.log();
+		
 	}
 }
 

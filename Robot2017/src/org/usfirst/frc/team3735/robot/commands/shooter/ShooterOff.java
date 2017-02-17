@@ -2,12 +2,13 @@ package org.usfirst.frc.team3735.robot.commands.shooter;
 
 import org.usfirst.frc.team3735.robot.Robot;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /**
  *
  */
-public class ShooterOff extends InstantCommand {
+public class ShooterOff extends Command {
 
     public ShooterOff() {
         super();
@@ -20,5 +21,11 @@ public class ShooterOff extends InstantCommand {
     protected void initialize() {
     	Robot.shooter.setSpeed(0);
     }
+
+	@Override
+	protected boolean isFinished() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

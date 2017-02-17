@@ -36,6 +36,8 @@ public class Shooter extends Subsystem {
         drum.setP(0.22); 
         drum.setI(0);  
         drum.setD(0); 
+        
+    	SmartDashboard.putData(new ShooterSmartDashboard());
 
 	} 
 	
@@ -46,7 +48,7 @@ public class Shooter extends Subsystem {
 
 
   	public void initDefaultCommand() {
-  		setDefaultCommand(new ShooterSmartDashboard());
+  		//setDefaultCommand(new ShooterSmartDashboard());
   	}
   
     // Put methods for controlling this subsystem
