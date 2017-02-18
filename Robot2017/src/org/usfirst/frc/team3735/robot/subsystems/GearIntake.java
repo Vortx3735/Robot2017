@@ -46,10 +46,10 @@ public class GearIntake extends Subsystem {
     	topFeederSolenoid.set(false);
     }
     public void liftDown(){
-    	topFeederSolenoid.set(true);
+    	liftSolenoid.set(true);
     }
     public void liftUp(){
-    	topFeederSolenoid.set(false);
+    	liftSolenoid.set(false);
     }
 }
 

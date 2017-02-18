@@ -5,6 +5,7 @@ import org.usfirst.frc.team3735.robot.Robot;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
@@ -36,14 +37,13 @@ public class DriveMoveDistance extends Command {
     	startPosistion = Robot.drive.getPosistionLeft();
     	endPosistion = startPosistion+targetRotations;
     	Robot.drive.setupDriveForDistance();
+    	Robot.drive.setControlMode(TalonControlMode.MotionMagic);
     	Robot.drive.setLeftRight(endPosistion, endPosistion);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("Left Posistion: " + Robot.drive.getPosistionLeft());
-    	System.out.println("Right Posistion: " + Robot.drive.getPosistionRight());
-    }
+   }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
