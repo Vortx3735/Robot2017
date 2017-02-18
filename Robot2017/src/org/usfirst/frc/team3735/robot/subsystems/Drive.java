@@ -42,7 +42,7 @@ public class Drive extends PIDSubsystem {
 	private static double I = 0.0;
 	private static double D = 0.0;
 	private static double F = 0.0;
-	private static double accel = 0.0;
+	private static double accel = 100;
 	private static double velocity = 0.0;
 	
 
@@ -186,6 +186,9 @@ public class Drive extends PIDSubsystem {
     
     public void log(){
     	displayGyroData();
+    	SmartDashboard.putNumber("left Position", l1.getPosition());
+    	SmartDashboard.putNumber("right Position", r1.getPosition());
+
     }
     
     
