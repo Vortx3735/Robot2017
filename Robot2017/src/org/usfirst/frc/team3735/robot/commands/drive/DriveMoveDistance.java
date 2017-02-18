@@ -36,8 +36,8 @@ public class DriveMoveDistance extends Command {
     	startPosistion = Robot.drive.getPosistionLeft();
     	endPosistion = startPosistion+distance;
     	Robot.drive.setupDriveForDistance();
-    	Robot.drive.setLeftRight(endPosistion, endPosistion);
     	Robot.drive.setControlMode(TalonControlMode.MotionMagic);
+    	Robot.drive.setLeftRight(endPosistion, endPosistion);
     }
 
     // Called repeatedly when this Command is scheduled to run
