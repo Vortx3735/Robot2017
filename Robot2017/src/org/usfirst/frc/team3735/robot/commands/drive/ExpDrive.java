@@ -5,7 +5,9 @@ import org.usfirst.frc.team3735.robot.Robot;
 
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -17,7 +19,6 @@ public class ExpDrive extends Command {
 	//Range is (0,1] , 1 is no filter, .333 or .167, .125 is recommended 
 	private static final double K_FILTERCOEF_Y 		= .125;  //this is for the move variable
 	private static final double K_FILTERCOEF_Z 		= .250;	 //this is for the turning
-	
 	
 	/************************************/
 	/* Variables						*/
@@ -32,24 +33,33 @@ public class ExpDrive extends Command {
 	private double YDriveMotorPrevious;
 	private double ZDriveMotorPrevious;
 	
+	
+	private double time;
+	private double period;
+	private double prevTime;
 	/************************************/
 	/* Code								*/
 	/************************************/
     public ExpDrive() {
         // Use requires() here to declare subsystem dependencies
     	requires(Robot.drive);
-    	Robot.drive.setControlMode(TalonControlMode.PercentVbus);
+		
+		time = 0;
+		period = 0;
+		prevTime = 0;
 
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.drive.setControlMode(TalonControlMode.PercentVbus);
 		YDriveStick			= 0.0;
 		ZDriveStick			= 0.0;
 		YDriveMotor			= 0.0;
 		ZDriveMotor			= 0.0;
 		YDriveMotorPrevious = 0.0;
 		ZDriveMotorPrevious = 0.0;
+
 	
     }
 
@@ -84,7 +94,7 @@ public class ExpDrive extends Command {
 		/* Let Update the Drive Train Y and Z */
 		/**************************************/
 		Robot.drive.arcadeDrive(YDriveMotor, ZDriveMotor);	
-	
+		log();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -99,5 +109,14 @@ public class ExpDrive extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    }
+    
+    private void log(){
+    	time = Timer.getFPGATimestamp();
+    	SmartDashboard.putNumber("Timer Value", time);
+    	period = time - prevTime;
+    	SmartDashboard.putNumber("Timer Period", period);
+    	
+    	prevTime = time;
     }
 }

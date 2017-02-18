@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3735.robot.commands.drive;
 
+import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
 
 import com.ctre.CANTalon;
@@ -15,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveMoveDistance extends Command {
 	
-	private double distance;
+	private double targetRotations;
 	private double startPosistion;
 	private double endPosistion;
 //	private static double P = 1;
@@ -27,14 +28,14 @@ public class DriveMoveDistance extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
-    	this.distance=distance/(4.0*Math.PI); //4 is radius of wheels
+    	this.targetRotations=distance/(Constants.Drive.wheelDiameter*Math.PI); //4 is diameter of wheels
     }
     
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	startPosistion = Robot.drive.getPosistionLeft();
-    	endPosistion = startPosistion+distance;
+    	endPosistion = startPosistion+targetRotations;
     	Robot.drive.setupDriveForDistance();
     	Robot.drive.setControlMode(TalonControlMode.MotionMagic);
     	Robot.drive.setLeftRight(endPosistion, endPosistion);
@@ -57,7 +58,7 @@ public class DriveMoveDistance extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	
+    	Robot.drive.tankDrive(0, 0);
     }
 
     // Called when another command which requires one or more of the same

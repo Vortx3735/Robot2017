@@ -10,6 +10,7 @@ import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -33,6 +34,7 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	
 	public static OI oi;
+	public RobotMap robotmap;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -40,6 +42,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		robotmap = new RobotMap();
 		gearIntake = new GearIntake();
 		shooter = new Shooter();
 		scaler = new Scaler();
@@ -54,7 +57,6 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Auto choices", chooser);
 	}
-
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable
@@ -103,7 +105,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		
+		LiveWindow.run();
 	}
 	
 	public void log(){
