@@ -17,7 +17,7 @@ public class GearIntakeRollersOff extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.gearIntake.setRollerSpeed(0);
+    	Robot.gearIntake.setRollerVoltage(0);
     }
 
 }

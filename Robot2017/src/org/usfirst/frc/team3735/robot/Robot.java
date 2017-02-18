@@ -57,6 +57,10 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Auto choices", chooser);
 	}
+	
+	@Override
+	public void robotPeriodic() {
+	}
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable
@@ -97,7 +101,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        log();
+        //log();
 	}
 
 	/**
@@ -113,6 +117,18 @@ public class Robot extends IterativeRobot {
 		drive.log();
 		shooter.log();
 		
+	}
+	/**
+	 * This function is called when the disabled button is hit. You can use it to reset subsystems before shutting down.
+	 */
+	@Override
+	public void disabledInit() {
+		if (autonomousCommand != null)
+			autonomousCommand.cancel();
+	}
+	@Override
+	public void disabledPeriodic() {
+		Scheduler.getInstance().run();
 	}
 }
 
