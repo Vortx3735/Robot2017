@@ -42,6 +42,8 @@ public class Drive extends PIDSubsystem {
 	private static double I = 0.0;
 	private static double D = 0.0;
 	private static double F = 0.0;
+	private static double accel = 0.0;
+	private static double velocity = 0.0;
 	
 
 	public Drive(){
@@ -116,7 +118,8 @@ public class Drive extends PIDSubsystem {
         l1.setP(P);
         l1.setI(I); 
         l1.setD(D); 
-        l1.changeControlMode(TalonControlMode.Position);
+        l1.setMotionMagicCruiseVelocity(velocity);
+		l1.setMotionMagicAcceleration(accel);
         
         r1.setEncPosition(absolutePosition);
         r1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
@@ -129,7 +132,8 @@ public class Drive extends PIDSubsystem {
         r1.setP(P);
         r1.setI(I); 
         r1.setD(D); 
-        r1.changeControlMode(TalonControlMode.Position);
+        r1.setMotionMagicCruiseVelocity(velocity);
+		r1.setMotionMagicAcceleration(accel);
     }
     
     public void getAverageDisplacement(){
