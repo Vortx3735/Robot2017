@@ -23,7 +23,7 @@ import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
  *
  */
 
-public class Drive extends PIDSubsystem {
+public class Drive extends Subsystem {
 	
 	private CANTalon l1,l2,l3,r1,r2,r3;
 	
@@ -45,7 +45,7 @@ public class Drive extends PIDSubsystem {
 	
 
 	public Drive(){
-		super("Drive",P,I,D,F);
+		//super("Drive",P,I,D,F);
 		//drivetrain
 			l1 = new CANTalon(RobotMap.Drive.leftMotor1); 
 			l2 = new CANTalon(RobotMap.Drive.leftMotor2); 
@@ -54,19 +54,19 @@ public class Drive extends PIDSubsystem {
 			r2 = new CANTalon(RobotMap.Drive.rightMotor2); 
 			r3 = new CANTalon(RobotMap.Drive.rightMotor3); 
 			driveTrain = new RobotDrive(l1, r1);
+			driveTrain.setSafetyEnabled(false);
 			setupSlaves();
 		
 		//sensors
-			ahrs = new AHRS(SPI.Port.kMXP);
+//			ahrs = new AHRS(SPI.Port.kMXP);
 			
-		
-		//turn pid
-			getPIDController().setContinuous();
-			getPIDController().setAbsoluteTolerance(5);
-			getPIDController().setInputRange(-180, 180);
-			getPIDController().setOutputRange(-1, 1);
-	        LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
-			
+//		
+//		//turn pid
+//			getPIDController().setContinuous();
+//			getPIDController().setAbsoluteTolerance(5);
+//			getPIDController().setInputRange(-180, 180);
+//			getPIDController().setOutputRange(-1, 1);
+//	        LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
 	}
 
 	
@@ -116,7 +116,7 @@ public class Drive extends PIDSubsystem {
         l1.setP(P);
         l1.setI(I); 
         l1.setD(D); 
-        l1.changeControlMode(TalonControlMode.Position);
+        l1.changeControlMode(TalonControlMode.MotionMagic);
         
         r1.setEncPosition(absolutePosition);
         r1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
@@ -129,7 +129,7 @@ public class Drive extends PIDSubsystem {
         r1.setP(P);
         r1.setI(I); 
         r1.setD(D); 
-        r1.changeControlMode(TalonControlMode.Position);
+        r1.changeControlMode(TalonControlMode.MotionMagic);
     }
     
     public void getAverageDisplacement(){
@@ -143,16 +143,16 @@ public class Drive extends PIDSubsystem {
     public double getPosistionRight() {
     	return r1.getPosition();
     }
-    
-    public double getYaw(){
-    	return ahrs.getYaw();
-    }
-    public void zeroYaw(){
-    	ahrs.zeroYaw();
-    }
-    public void resetAhrs(){
-    	ahrs.reset();
-    }
+//    
+//    public double getYaw(){
+//    	return ahrs.getYaw();
+//    }
+//    public void zeroYaw(){
+//    	ahrs.zeroYaw();
+//    }
+//    public void resetAhrs(){
+//    	ahrs.reset();
+//    }
     
     private void setupSlaves(){
         
@@ -167,21 +167,22 @@ public class Drive extends PIDSubsystem {
 		r3.set(r1.getDeviceID());
     }
     
-	@Override
-	protected double returnPIDInput() {
-		// TODO Auto-generated method stub
-		return ahrs.getYaw();
-	}
-
-
-	@Override
-	protected void usePIDOutput(double output) {
-		turn(output);
-	}
+//	@Override
+//	protected double returnPIDInput() {
+//		// TODO Auto-generated method stub
+////		return ahrs.getYaw();
+//		return 0;
+//	}
+//
+//
+//	@Override
+//	protected void usePIDOutput(double output) {
+//		turn(output);
+//	}
     
     
     public void log(){
-    	displayGyroData();
+    	//displayGyroData();
     }
     
     
