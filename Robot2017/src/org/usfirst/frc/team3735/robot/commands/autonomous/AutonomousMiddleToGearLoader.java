@@ -1,9 +1,10 @@
 package org.usfirst.frc.team3735.robot.commands.autonomous;
 
 import org.usfirst.frc.team3735.robot.Constants;
+import org.usfirst.frc.team3735.robot.util.Point;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistance;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
-
+import org.usfirst.frc.team3735.robot.Constants.PointsLeft;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -14,37 +15,19 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonomousMiddleToGearLoader extends CommandGroup {
 	
     public AutonomousMiddleToGearLoader() {
-    	//Drive To gear loader
-    	addSequential(new DriveMoveDistance(114.775-Constants.RobotDimensions.length));
+    	Point point0 = PointsLeft.startMiddle;
+    	Point point1 = PointsLeft.middleLift;
+    	Point point2 = PointsLeft.midBackUp;
+    	Point point3 = PointsLeft.retrivalAndBaseLine;
+    	Point point4 = PointsLeft.opSideRetrivalAndBaseLine;
     	
-    	//addSequential(new put get drop off class)
-    	addSequential(new DriveMoveDistance(-65));
-    	addSequential(new DriveTurnToAngle(-60));
-    	addSequential(new DriveMoveDistance(173));
-    	addSequential(new DriveTurnToAngle(60));
-    	addSequential(new DriveMoveDistance(464));
-    	
-    	//finish at 52 in away from other team wall and 12 inches down from top wall
-    	
-    	
-    	
-    	
-    	
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+    	addSequential(new DriveTurnToAngle(Point.findAngle(point0, point1)));
+    	addSequential(new DriveMoveDistance(Point.findDistance(point0, point1)));
+    	addSequential(new DriveTurnToAngle(Point.findAngle(point1, point2)));
+    	addSequential(new DriveMoveDistance(Point.findDistance(point1, point2)));
+    	addSequential(new DriveTurnToAngle(Point.findAngle(point2, point3)));
+    	addSequential(new DriveMoveDistance(Point.findDistance(point2, point3)));
+    	addSequential(new DriveTurnToAngle(Point.findAngle(point3, point4)));
+    	addSequential(new DriveMoveDistance(Point.findDistance(point3, point4)));
     }
 }
