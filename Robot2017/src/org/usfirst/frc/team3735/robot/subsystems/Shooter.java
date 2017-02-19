@@ -25,6 +25,7 @@ public class Shooter extends Subsystem {
 //	public PIDController controller = new PIDController(1.0, 0.0, 0.0, drumEncoder, drum);
 	
 	public Shooter(){
+		drum.changeControlMode(TalonControlMode.Voltage);
 		//drum.changeControlMode(TalonControlMode.Speed);
 		//drum.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		
@@ -47,7 +48,8 @@ public class Shooter extends Subsystem {
 	public void log() {
 //		SmartDashboard.putNumber("Raw Motor Speed (native ticks/100ms)", drum.getSpeed());
 //		SmartDashboard.putNumber("Motor Speed (RPM?)", drum.get());
-		
+		SmartDashboard.putNumber("Shooter motor get", drum.get());
+		SmartDashboard.putBoolean("shooter enabled", isEnabled);
 	}
 
 

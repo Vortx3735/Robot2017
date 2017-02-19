@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveNavxResest;
@@ -56,7 +58,8 @@ public class Drive extends Subsystem {
 			r2 = new CANTalon(RobotMap.Drive.rightMotor2); 
 			r3 = new CANTalon(RobotMap.Drive.rightMotor3); 
 			driveTrain = new RobotDrive(l1, r1);
-			driveTrain.setSafetyEnabled(false);
+			driveTrain.setSensitivity(Constants.Drive.sensitivity);
+			driveTrain.setMaxOutput(Constants.Drive.scaledMaxOutput);
 			setupSlaves();
 		
 		//sensors
@@ -79,9 +82,8 @@ public class Drive extends Subsystem {
         setDefaultCommand(new ExpDrive());
     }
     
-    public void arcadeDrive(double move, double rotate){
-    	driveTrain.arcadeDrive(move, rotate);    	
-    	System.out.println(move);
+    public void arcadeDrive(double move, double rotate, boolean squareValues){
+    	driveTrain.arcadeDrive(move, rotate, squareValues);    	
     }
     
     public void tankDrive(double left, double right){

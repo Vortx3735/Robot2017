@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.drive;
 
 
+import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
 
 import com.ctre.CANTalon.TalonControlMode;
@@ -17,8 +18,8 @@ public class ExpDrive extends Command {
 	/* Constants						*/
 	/************************************/	
 	//Range is (0,1] , 1 is no filter, .333 or .167, .125 is recommended 
-	private static final double K_FILTERCOEF_Y 		= .125;  //this is for the move variable
-	private static final double K_FILTERCOEF_Z 		= .250;	 //this is for the turning
+	private static final double K_FILTERCOEF_Y 		=  Constants.Drive.moveReactivity;  //this is for the move variable
+	private static final double K_FILTERCOEF_Z 		= Constants.Drive.turnReactivity;	 //this is for the turning
 	
 	/************************************/
 	/* Variables						*/
@@ -93,7 +94,10 @@ public class ExpDrive extends Command {
 		/**************************************/
 		/* Let Update the Drive Train Y and Z */
 		/**************************************/
-		Robot.drive.arcadeDrive(YDriveMotor, ZDriveMotor);	
+		YDriveMotor = YDriveMotor * Math.pow(Math.abs(YDriveMotor), Constants.Drive.moveExponent - 1);
+		ZDriveMotor = ZDriveMotor * Math.pow(Math.abs(ZDriveMotor), Constants.Drive.turnExponent - 1);
+		
+		Robot.drive.arcadeDrive(YDriveMotor, ZDriveMotor, false);	
 		log();
     }
 

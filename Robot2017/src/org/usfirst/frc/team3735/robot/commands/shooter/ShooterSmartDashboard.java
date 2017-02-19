@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShooterSmartDashboard extends Command {
 
-	
+	double speed;
     public ShooterSmartDashboard() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -24,7 +24,8 @@ public class ShooterSmartDashboard extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.setSpeed(SmartDashboard.getNumber("Shooter Voltage", 0));
+    	speed = SmartDashboard.getNumber("Shooter Voltage", 0);
+    	Robot.shooter.setSpeed(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
