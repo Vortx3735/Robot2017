@@ -1,6 +1,28 @@
 package org.usfirst.frc.team3735.robot;
 
+import org.usfirst.frc.team3735.robot.util.Point;
+
 public class Constants {
+	
+	public static class PointsLeft {
+		public final static double halfLength = RobotDimensions.length/2;
+		public final static Point startTop = new Point(halfLength, 242.7);
+		public final static Point startMiddle = new Point(halfLength, 162);
+		public final static Point startBottom = new Point(halfLength, 89.1);
+		public final static Point topLift = new Point(0-halfLength, 0); //calculate this
+		public final static Point middleLift = new Point(Field.startToGearLiftMiddle-halfLength, 162);
+		public final static Point bottomLift = new Point(0-halfLength, 0); //calculate this
+		public final static Point retrivalAndBaseLine = new Point(93.25, 288.6);
+		public final static Point opSideRetrivalAndBaseLine = new Point(558.7, 288.6);
+		public final static Point midBackUp = new Point(12+halfLength, 162);
+		public final static Point lineUpWithBoiler = new Point(46.65,44.55);
+		public final static Point boiler = new Point(0,0); //calculate this
+		
+	}
+	
+	public class PointsRight {
+		
+	}
 	
 	public class Field {
 		public final static double toBaseLine = 93.25;
@@ -13,9 +35,9 @@ public class Constants {
 	}
 	
 	public class RobotDimensions {
-		public final static double length = 36;
+		public final static double length = 33.65;
 		public final static double width = 40;
-		public final static double height = 24;
+		public final static double height = 23.5;
 	}
 	
 	public class Drive{
