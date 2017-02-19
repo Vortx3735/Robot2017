@@ -20,6 +20,7 @@ public class Shooter extends Subsystem {
 	CANTalon drum = new CANTalon(RobotMap.Shooter.drum);
 //	Encoder drumEncoder = new Encoder(RobotMap.Shooter.encoder1, RobotMap.Shooter.encoder2);
 	double targetSpeed = 0;
+	private boolean isEnabled = false;
 	
 //	public PIDController controller = new PIDController(1.0, 0.0, 0.0, drumEncoder, drum);
 	
@@ -27,14 +28,14 @@ public class Shooter extends Subsystem {
 		//drum.changeControlMode(TalonControlMode.Speed);
 		//drum.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		
-        drum.configNominalOutputVoltage(+0.0f, -0.0f); 
-        drum.configPeakOutputVoltage(+12.0f, -12.0f); 
-
-        drum.setProfile(0); 
-        drum.setF(0.1097); 
-        drum.setP(0.22); 
-        drum.setI(0);  
-        drum.setD(0); 
+//        drum.configNominalOutputVoltage(+0.0f, -0.0f); 
+//        drum.configPeakOutputVoltage(+12.0f, -12.0f); 
+//
+//        drum.setProfile(0); 
+//        drum.setF(0.1097); 
+//        drum.setP(0.22); 
+//        drum.setI(0);  
+//        drum.setD(0); 
 //        
 //        try{
 //    	SmartDashboard.putData(new ShooterSmartDashboard());
@@ -44,21 +45,29 @@ public class Shooter extends Subsystem {
 	} 
 	
 	public void log() {
-		SmartDashboard.putNumber("Raw Motor Speed (native ticks/100ms)", drum.getSpeed());
-		SmartDashboard.putNumber("Motor Speed (RPM?)", drum.get());
+//		SmartDashboard.putNumber("Raw Motor Speed (native ticks/100ms)", drum.getSpeed());
+//		SmartDashboard.putNumber("Motor Speed (RPM?)", drum.get());
 		
 	}
 
 
   	public void initDefaultCommand() {
-  		//setDefaultCommand(new ShooterSmartDashboard());
+  		setDefaultCommand(new ShooterSmartDashboard());
   	}
   
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void setSpeed(double d){
-    	drum.set(d);
+    	if(isEnabled){
+    		drum.set(d);
+    	}else{
+    		drum.set(0);
+    	}
+    }
+    
+    public void toggleEnabled(){
+    	isEnabled = !isEnabled;
     }
 }
 
