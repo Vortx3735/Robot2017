@@ -26,8 +26,8 @@ public class DriveTurnToAngle extends Command{
 
     // Called just before this Command runs the first time
     protected void initialize() {
-//    	Robot.drive.enable();
-//    	Robot.drive.setSetpoint(setpoint);
+    	Robot.drive.enable();
+    	Robot.drive.setSetpoint(setpoint);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -36,13 +36,12 @@ public class DriveTurnToAngle extends Command{
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-//        return Robot.drive.onTarget();
-    	return true;
+		return Robot.drive.onTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	//Robot.drive.disable();
+    	Robot.drive.disable();
     }
 
     // Called when another command which requires one or more of the same

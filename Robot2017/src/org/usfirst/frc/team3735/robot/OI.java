@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3735.robot;
 
-import org.usfirst.frc.team3735.robot.commands.DriveSwitchDirection;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeToggleOpenClose;
