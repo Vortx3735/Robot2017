@@ -73,5 +73,6 @@ public class DriveMoveDistanceFaulty extends Command implements PIDOutput, PIDSo
 	@Override
 	public void pidWrite(double output) {
 		Robot.drive.arcadeDrive(output, 0, false);
+
 	}
 }

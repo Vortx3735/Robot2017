@@ -6,18 +6,27 @@ public class Constants {
 	
 	public static class PointsLeft {
 		public final static double halfLength = RobotDimensions.length/2;
-		public final static Point startTop = new Point(halfLength, 242.7);
-		public final static Point startMiddle = new Point(halfLength, 162);
-		public final static Point startBottom = new Point(halfLength, 89.1);
-		public final static Point topLift = new Point(0-halfLength, 0); //calculate this
-		public final static Point middleLift = new Point(Field.startToGearLiftMiddle-halfLength, 162);
-		public final static Point bottomLift = new Point(0-halfLength, 0); //calculate this
-		public final static Point retrivalAndBaseLine = new Point(93.25, 288.6);
-		public final static Point opSideRetrivalAndBaseLine = new Point(558.7, 288.6);
-		public final static Point midBackUp = new Point(12+halfLength, 162);
-		public final static Point lineUpWithBoiler = new Point(46.65,44.55);
-		public final static Point boiler = new Point(0,0); //calculate this
 		
+		public final static Point startTop = new Point(halfLength, 80.7);
+		public final static Point startMiddle = new Point(halfLength, 0);
+		public final static Point startBottom = new Point(halfLength, -72.9);
+		
+		public final static Point topLift = new Point(123.9425, 45.059);
+		public final static Point middleLift = new Point(Field.fromStartToGearLiftMiddle-halfLength, 0);
+		public final static Point bottomLift = new Point(123.9425, 45.059);
+		
+		public final static Point retrivalAndBaseLine = new Point(93.25, 126.6);
+		public final static Point opSideRetrivalAndBaseLine = new Point(420, 126.6);
+		
+		public final static Point midBackUp = new Point(12+halfLength, Field.midHeight);
+		public final static Point crossBottomBaseLine = new Point(140, -117.45);
+		
+		public final static Point lineUpWithBoiler = new Point(46.65, -117.45);
+		public final static Point boiler = new Point(40.373, 38.555);
+		public final static Point boilerExact = new Point(0, -162);
+		
+		public final static Point lineUpWithTopLift = new Point(93.25, 98.34);
+		public final static Point lineUpWithBottomLift = new Point(93.25, -98.34);
 	}
 	
 	public class PointsRight {
@@ -28,10 +37,11 @@ public class Constants {
 		public final static double toBaseLine = 93.25;
 		public final static double toLaunchpadLine = 185.25;
 		public final static double baseLineToLaunchpad = 92;
-		public final static double startToGearLiftMiddle = 114.75;
-		public final static double startToGearLiftSide = 132.375;
+		public final static double fromStartToGearLiftMiddle = 114.75;
+		public final static double fromStartToGearLiftSide = 132.375;
 		public final static double height = 324;
 		public final static double length = 652;
+		public final static double midHeight = 162;
 	}
 	
 	public class RobotDimensions {
