@@ -42,14 +42,19 @@ public class Constants {
 	
 	public class Drive{
 		public final static double acceleration = 1;
-		public final static double cruiseVelocity = 1;
+		public final static double cruiseVelocity = 4;
 		public static final double wheelDiameter = 4;
 	}
 	
 	public class GearIntake{
-		public final static double rollerOutSpeed = .1;
-		public final static double rollerInSpeed = -.1;
-		public final static double feedingSpeed = .1;
+		public final static double rollerOutSpeed = .5;
+		public final static double rollerInSpeed = -.5;
+		public final static double feedingSpeed = -.5;
+		
+		public static final double dropOffRollDelay = .5;
+		public static final double dropOffJerkDelay = .3;
+		public static final double dropOffEndDelay = .5;
+
 	}
 	
 	public class Scaler{

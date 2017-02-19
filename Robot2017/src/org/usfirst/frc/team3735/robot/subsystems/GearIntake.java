@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3735.robot.subsystems;
 
 import org.usfirst.frc.team3735.robot.RobotMap;
+import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersOff;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -25,16 +27,19 @@ public class GearIntake extends Subsystem {
 		topRoller = new CANTalon(RobotMap.GearIntake.topRoller);
 		bottomRoller = new CANTalon(RobotMap.GearIntake.bottomRoller);
 		
+		topRoller.changeControlMode(TalonControlMode.Voltage);
+		bottomRoller.changeControlMode(TalonControlMode.Voltage);
+		
 		liftSolenoid = new Solenoid(RobotMap.GearIntake.liftSolenoid);
 		topFeederSolenoid = new Solenoid(RobotMap.GearIntake.topFeedSolenoid);
 	}
 
     public void initDefaultCommand() {
-        //setDefaultCommand(new GearIntakeRollersOff());
+        setDefaultCommand(new GearIntakeRollersOff());
     }
     
     //positive is out, negative is in
-    public void setRollerSpeed(double speed){
+    public void setRollerVoltage(double speed){
     	topRoller.set(speed);
     	bottomRoller.set(speed);
     }

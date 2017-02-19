@@ -43,10 +43,10 @@ public class Scaler extends Subsystem {
 	public void setCurrent(double current){
 		if(getPower() >= Constants.Scaler.powerMax){
 			isOverLoaded = true;
-			setCurrent(0);
+			motor.set(0);
 		}else{
 			isOverLoaded = false;
-			setCurrent(current);
+			motor.set(current);
 		}
 	}
 	

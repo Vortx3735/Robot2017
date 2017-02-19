@@ -81,6 +81,7 @@ public class Drive extends Subsystem {
     
     public void arcadeDrive(double move, double rotate){
     	driveTrain.arcadeDrive(move, rotate);    	
+    	System.out.println(move);
     }
     
     public void tankDrive(double left, double right){

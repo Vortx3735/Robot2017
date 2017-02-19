@@ -17,13 +17,12 @@ public class GearIntakeFeeding extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gearIntake.liftDown();
-    	Robot.gearIntake.setRollerSpeed(Constants.GearIntake.feedingSpeed);
-    	
+    	Robot.gearIntake.liftDown();    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.gearIntake.setRollerVoltage(Constants.GearIntake.feedingSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -39,6 +38,6 @@ public class GearIntakeFeeding extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     	Robot.gearIntake.liftUp();
-    	Robot.gearIntake.setRollerSpeed(0);
+    	Robot.gearIntake.setRollerVoltage(0);
     }
 }
