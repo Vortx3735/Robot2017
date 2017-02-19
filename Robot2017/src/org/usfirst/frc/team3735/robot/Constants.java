@@ -16,7 +16,7 @@ public class Constants {
 		public final static Point bottomLift = new Point(123.9425, 45.059);
 		
 		public final static Point retrivalAndBaseLine = new Point(93.25, 126.6);
-		public final static Point opSideRetrivalAndBaseLine = new Point(558.7, 126.6);
+		public final static Point opSideRetrivalAndBaseLine = new Point(420, 126.6);
 		
 		public final static Point midBackUp = new Point(12+halfLength, Field.midHeight);
 		public final static Point crossBottomBaseLine = new Point(140, -117.45);
