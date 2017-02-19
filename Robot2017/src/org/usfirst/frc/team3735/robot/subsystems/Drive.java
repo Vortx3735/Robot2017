@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
+import org.usfirst.frc.team3735.robot.commands.drive.GTAExpDrive;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveNavxResest;
 import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
 
@@ -79,7 +80,7 @@ public class Drive extends Subsystem {
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-        setDefaultCommand(new ExpDrive());
+        setDefaultCommand(new GTAExpDrive());
     }
     
     public void arcadeDrive(double move, double rotate, boolean squareValues){

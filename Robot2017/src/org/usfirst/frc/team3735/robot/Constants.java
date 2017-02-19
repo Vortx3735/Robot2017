@@ -55,7 +55,7 @@ public class Constants {
 		public final static double cruiseVelocity = 4;
 		public static final double wheelDiameter = 4;
 		
-		public static final double scaledMaxOutput = .33;	//(0,1] this is directly to the motor percentage
+		public static final double scaledMaxOutput = 1;	//(0,1] this is directly to the motor percentage
 
 		//normal drive - but we usually use EXP!!!!
 		public static final double sensitivity = .5;	//raise for sharper turns

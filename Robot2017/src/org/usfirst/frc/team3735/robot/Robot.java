@@ -34,6 +34,7 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	
 	public static OI oi;
+	public static GTAOI gta;
 	public RobotMap robotmap;
 
 	/**
@@ -50,6 +51,7 @@ public class Robot extends IterativeRobot {
 		ballIntake = new BallIntake();
 		
 		oi = new OI();
+		gta = new GTAOI();
 		
 		chooser = new SendableChooser();
 		chooser.addDefault("Autonomous Test", new AutonomousMiddleGearTopLoader());
@@ -101,7 +103,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        //log();
+        log();
 	}
 
 	/**
@@ -113,9 +115,10 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void log(){
-		scaler.log();
-		drive.log();
-		shooter.log();
+//		scaler.log();
+//		drive.log();
+//		shooter.log();
+		gta.log();
 		
 	}
 	/**
