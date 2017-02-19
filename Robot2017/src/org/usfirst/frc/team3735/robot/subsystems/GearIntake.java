@@ -32,6 +32,7 @@ public class GearIntake extends Subsystem {
 		
 		liftSolenoid = new Solenoid(RobotMap.GearIntake.liftSolenoid);
 		topFeederSolenoid = new Solenoid(RobotMap.GearIntake.topFeedSolenoid);
+		liftUp();
 	}
 
     public void initDefaultCommand() {

@@ -1,14 +1,15 @@
 package org.usfirst.frc.team3735.robot;
 
-import org.usfirst.frc.team3735.robot.commands.ShooterSwitchEnabled;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeToggleOpenClose;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOff;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOn;
+import org.usfirst.frc.team3735.robot.commands.shooter.ShooterSwitchEnabled;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -65,6 +66,8 @@ public class OI {
 		
 		y.whenPressed(new ShooterSwitchEnabled());
 		
+		start.whenPressed(new DriveSwitchDirection());
+		
 		
 	}
 	
@@ -74,7 +77,7 @@ public class OI {
 		return joy.getX();
 	}
 	public double getMainLeftY(){
-		return joy.getY();
+		return joy.getY() * -1;
 	}
 	public double getMainRightX(){
 		return joy.getTwist();

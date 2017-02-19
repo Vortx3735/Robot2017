@@ -18,8 +18,8 @@ public class ExpDrive extends Command {
 	/* Constants						*/
 	/************************************/	
 	//Range is (0,1] , 1 is no filter, .333 or .167, .125 is recommended 
-	private static final double K_FILTERCOEF_Y 		=  Constants.Drive.moveReactivity;  //this is for the move variable
-	private static final double K_FILTERCOEF_Z 		= Constants.Drive.turnReactivity;	 //this is for the turning
+	private static double K_FILTERCOEF_Y 		=  Constants.Drive.moveReactivity;  //this is for the move variable
+	private static double K_FILTERCOEF_Z 		= Constants.Drive.turnReactivity;	 //this is for the turning
 	
 	/************************************/
 	/* Variables						*/
@@ -35,9 +35,12 @@ public class ExpDrive extends Command {
 	private double ZDriveMotorPrevious;
 	
 	
+	
 	private double time;
 	private double period;
 	private double prevTime;
+	
+	private boolean hasVariables;
 	/************************************/
 	/* Code								*/
 	/************************************/
@@ -48,14 +51,23 @@ public class ExpDrive extends Command {
 		time = 0;
 		period = 0;
 		prevTime = 0;
-
+		hasVariables = false;
+    }
+    
+    public ExpDrive(double move, double turn){
+    	YDriveStick = move;
+    	ZDriveStick = turn;
+    	hasVariables = true;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drive.setControlMode(TalonControlMode.PercentVbus);
-		YDriveStick			= 0.0;
-		ZDriveStick			= 0.0;
+    	if(!hasVariables){
+    		YDriveStick			= 0.0;
+    		ZDriveStick			= 0.0;
+    	}
+
 		YDriveMotor			= 0.0;
 		ZDriveMotor			= 0.0;
 		YDriveMotorPrevious = 0.0;
@@ -69,8 +81,10 @@ public class ExpDrive extends Command {
     	/************************************/
 		/* Lets Get the New Joy Stick Values*/
 		/************************************/
-		YDriveStick = Robot.oi.getMainLeftY();
-		ZDriveStick = Robot.oi.getMainRightX();
+		if(!hasVariables){
+			YDriveStick = Robot.oi.getMainLeftY();
+			ZDriveStick = Robot.oi.getMainRightX();
+		}
 	
 		/*********************************/
 		/* Lets Filter the Motor Outputs */
@@ -96,7 +110,7 @@ public class ExpDrive extends Command {
 		/**************************************/
 		YDriveMotor = YDriveMotor * Math.pow(Math.abs(YDriveMotor), Constants.Drive.moveExponent - 1);
 		ZDriveMotor = ZDriveMotor * Math.pow(Math.abs(ZDriveMotor), Constants.Drive.turnExponent - 1);
-		
+		System.out.println("Exp Execute:" + YDriveMotor + " " + ZDriveMotor + " " );
 		Robot.drive.arcadeDrive(YDriveMotor, ZDriveMotor, false);	
 		log();
     }

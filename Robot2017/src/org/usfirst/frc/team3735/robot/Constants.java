@@ -61,9 +61,9 @@ public class Constants {
 		public static final double sensitivity = .5;	//raise for sharper turns
 		
 		//exp drive
-		public static final double moveReactivity = .125;	//(0,1] (least reactive, most reactive]
+		public static final double moveReactivity = .200;	//(0,1] (least reactive, most reactive]
 		public static final double turnReactivity = .250;	//(0,1] (least reactive, most reactive]	
-		public static final double scaledMaxTurn = .700;	//(0,1] directly to the arcadedrive turn value
+		public static final double scaledMaxTurn = .500;	//(0,1] directly to the arcadedrive turn value
 		//these retain the range but shift more of the action towards lower values as the exponent is raised higher
 		//graph y = x * x^(p-1) {-1 < x < 1} for visualization
 		public static final int moveExponent = 2;			//[1,inf) 1 is linear, 2 is squared (normal), etc.
@@ -71,13 +71,16 @@ public class Constants {
 	}
 	
 	public class GearIntake{
-		public final static double rollerOutSpeed = .5;
-		public final static double rollerInSpeed = -.5;
-		public final static double feedingSpeed = -.5;
+		public final static double rollerOutVoltage = 6;
+		public final static double rollerInVoltage = -6;
+		public final static double feedingVoltage = -6;
 		
 		public static final double dropOffRollDelay = .5;
 		public static final double dropOffJerkDelay = .3;
 		public static final double dropOffEndDelay = .5;
+		public static final double totalTime = dropOffRollDelay + dropOffJerkDelay + dropOffEndDelay;
+		public static final double dropOffDriveTime = .6;
+		public static final double dropOffDrivePercent = -1;
 
 	}
 	
@@ -91,7 +94,8 @@ public class Constants {
 	}
 	
 	public class Shooter{
-		public final static double shootSpeed = .67;
+		public final static double shootVoltage = 8;
+		public static final double agitatorVoltage = -3;
 	}
 
 }

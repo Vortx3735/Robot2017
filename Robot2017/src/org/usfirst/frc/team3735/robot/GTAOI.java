@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3735.robot;
 
-import org.usfirst.frc.team3735.robot.commands.ShooterSwitchEnabled;
+import org.usfirst.frc.team3735.robot.commands.shooter.ShooterSwitchEnabled;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;

@@ -26,7 +26,7 @@ import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
  *
  */
 
-public class Drive extends Subsystem {
+public class Drive extends PIDSubsystem {
 	
 	private CANTalon l1,l2,l3,r1,r2,r3;
 	
@@ -39,6 +39,7 @@ public class Drive extends Subsystem {
 	RobotDrive driveTrain;
 	
 	private AHRS ahrs;
+	private double direction = 1;
 	
 	//values for rotation
 	private static double P = 1.0;
@@ -50,7 +51,7 @@ public class Drive extends Subsystem {
 	
 
 	public Drive(){
-		//super("Drive",P,I,D,F);
+		super("Drive",P,I,D,F);
 		//drivetrain
 			l1 = new CANTalon(RobotMap.Drive.leftMotor1); 
 			l2 = new CANTalon(RobotMap.Drive.leftMotor2); 
@@ -64,15 +65,15 @@ public class Drive extends Subsystem {
 			setupSlaves();
 		
 		//sensors
-//			ahrs = new AHRS(SPI.Port.kMXP);
+			ahrs = new AHRS(SPI.Port.kMXP);
 			
-//		
-//		//turn pid
-//			getPIDController().setContinuous();
-//			getPIDController().setAbsoluteTolerance(5);
-//			getPIDController().setInputRange(-180, 180);
-//			getPIDController().setOutputRange(-1, 1);
-//	        LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
+		
+		//turn pid
+			getPIDController().setContinuous();
+			getPIDController().setAbsoluteTolerance(5);
+			getPIDController().setInputRange(-180, 180);
+			getPIDController().setOutputRange(-1, 1);
+	        LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
 	}
 
 	
@@ -83,8 +84,12 @@ public class Drive extends Subsystem {
         setDefaultCommand(new GTAExpDrive());
     }
     
+    public void changeDirection(){
+    	direction *= -1;
+    }
+    
     public void arcadeDrive(double move, double rotate, boolean squareValues){
-    	driveTrain.arcadeDrive(move, rotate, squareValues);    	
+    	driveTrain.arcadeDrive(move * direction, rotate * -1, squareValues);    	
     }
     
     public void tankDrive(double left, double right){
@@ -153,16 +158,16 @@ public class Drive extends Subsystem {
     public double getPosistionRight() {
     	return r1.getPosition();
     }
-//    
-//    public double getYaw(){
-//    	return ahrs.getYaw();
-//    }
-//    public void zeroYaw(){
-//    	ahrs.zeroYaw();
-//    }
-//    public void resetAhrs(){
-//    	ahrs.reset();
-//    }
+    
+    public double getYaw(){
+    	return ahrs.getYaw();
+    }
+    public void zeroYaw(){
+    	ahrs.zeroYaw();
+    }
+    public void resetAhrs(){
+    	ahrs.reset();
+    }
     
     private void setupSlaves(){
         
@@ -177,23 +182,23 @@ public class Drive extends Subsystem {
 		r3.set(r1.getDeviceID());
     }
     
-//	@Override
-//	protected double returnPIDInput() {
-////		return ahrs.getYaw();
-//		return 0;
-//	}
-//
-//
-//	@Override
-//	protected void usePIDOutput(double output) {
-//		turn(output);
-//	}
+	@Override
+	protected double returnPIDInput() {
+		return ahrs.getYaw();
+	}
+
+
+	@Override
+	protected void usePIDOutput(double output) {
+		turn(output);
+	}
     
     
     public void log(){
     	//displayGyroData();
 //    	SmartDashboard.putNumber("left Position", l1.getPosition());
 //    	SmartDashboard.putNumber("right Position", r1.getPosition());
+    	SmartDashboard.putNumber("gyro yaw", ahrs.getYaw());
 
     }
     

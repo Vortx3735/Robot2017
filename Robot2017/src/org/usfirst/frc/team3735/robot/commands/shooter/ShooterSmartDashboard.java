@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3735.robot.commands.shooter;
 
+import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,11 +12,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterSmartDashboard extends Command {
 
 	double speed;
+	double voltage;
+	String key = "Shooter Voltage (0-12 volts presumably)";
+	String akey = "agitator voltage";
     public ShooterSmartDashboard() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
-    	SmartDashboard.putNumber("Shooter Voltage (0-12 volts presumably)", 0);
+    	SmartDashboard.putNumber(key, Constants.Shooter.shootVoltage);
+    	SmartDashboard.putNumber(akey, Constants.Shooter.agitatorVoltage);
     }
 
     // Called just before this Command runs the first time
@@ -24,8 +29,10 @@ public class ShooterSmartDashboard extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	speed = SmartDashboard.getNumber("Shooter Voltage", 0);
+    	speed = SmartDashboard.getNumber(key, 0);
     	Robot.shooter.setSpeed(speed);
+    	voltage = SmartDashboard.getNumber(akey, 0);
+    	Robot.shooter.setAgitatorVoltage(voltage);
     }
 
     // Make this return true when this Command no longer needs to run execute()

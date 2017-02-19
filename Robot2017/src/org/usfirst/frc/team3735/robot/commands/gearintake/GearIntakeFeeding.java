@@ -13,16 +13,18 @@ public class GearIntakeFeeding extends Command {
     public GearIntakeFeeding() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.gearIntake);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.gearIntake.liftDown();    	
+    	Robot.gearIntake.setRollerVoltage(Constants.GearIntake.feedingVoltage);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.gearIntake.setRollerVoltage(Constants.GearIntake.feedingSpeed);
+    	Robot.gearIntake.setRollerVoltage(Constants.GearIntake.feedingVoltage);
     }
 
     // Make this return true when this Command no longer needs to run execute()

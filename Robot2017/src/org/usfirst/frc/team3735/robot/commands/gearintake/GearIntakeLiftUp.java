@@ -13,12 +13,13 @@ public class GearIntakeLiftUp extends InstantCommand {
         super();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.gearIntake);
+        //requires(Robot.gearIntake);
     }
 
     // Called once when the command executes
     protected void initialize() {
     	Robot.gearIntake.liftUp();
+    	System.out.println("Life up init");
     }
 
 }

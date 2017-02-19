@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends Subsystem {
 
 	CANTalon drum = new CANTalon(RobotMap.Shooter.drum);
+	CANTalon agitator = new CANTalon(RobotMap.Shooter.agitator);
 //	Encoder drumEncoder = new Encoder(RobotMap.Shooter.encoder1, RobotMap.Shooter.encoder2);
 	double targetSpeed = 0;
 	private boolean isEnabled = false;
@@ -26,6 +27,7 @@ public class Shooter extends Subsystem {
 	
 	public Shooter(){
 		drum.changeControlMode(TalonControlMode.Voltage);
+		agitator.changeControlMode(TalonControlMode.Voltage);
 		//drum.changeControlMode(TalonControlMode.Speed);
 		//drum.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		
@@ -65,6 +67,15 @@ public class Shooter extends Subsystem {
     		drum.set(d);
     	}else{
     		drum.set(0);
+    	}
+    }
+    
+    public void setAgitatorVoltage(double voltage){
+
+    	if(isEnabled){
+    		agitator.set(voltage);
+    	}else{
+    		agitator.set(0);
     	}
     }
     
