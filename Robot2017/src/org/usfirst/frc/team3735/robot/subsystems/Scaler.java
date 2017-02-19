@@ -26,6 +26,9 @@ public class Scaler extends Subsystem {
 		motor = new CANTalon(RobotMap.Scaler.motor);
 		//motor.changeControlMode(CANTalon.TalonControlMode.Voltage);
 		//motor.setVoltageCompensationRampRate(voltageChangeSpeed);
+		SmartDashboard.putNumber("Scaler motor power", getPower());
+		SmartDashboard.putBoolean("Scaler overLoaded", isOverLoaded);
+
 	}
 	
     public void initDefaultCommand() {

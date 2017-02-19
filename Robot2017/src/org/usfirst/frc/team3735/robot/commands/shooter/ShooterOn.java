@@ -19,7 +19,7 @@ public class ShooterOn extends Command {
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.shooter.setSpeed(Constants.Shooter.shootSpeed);
+    	Robot.shooter.setSpeed(Constants.Shooter.shootVoltage);
     }
 
 	@Override

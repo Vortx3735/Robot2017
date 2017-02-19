@@ -1,6 +1,9 @@
 package org.usfirst.frc.team3735.robot.commands.gearintake;
 
 import org.usfirst.frc.team3735.robot.Constants;
+import org.usfirst.frc.team3735.robot.Constants.GearIntake;
+import org.usfirst.frc.team3735.robot.commands.Wait;
+import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -11,13 +14,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class GearIntakeDropOff extends CommandGroup {
 
     public GearIntakeDropOff() {
-    	addParallel(new GearIntakeRollersOut());
-    	Timer.delay(Constants.GearIntake.dropOffRollDelay);
+    	addParallel(new GearIntakeRollersIn(),Constants.GearIntake.totalTime);
+    	addSequential(new Wait(Constants.GearIntake.dropOffRollDelay));
     	addSequential(new GearIntakeLiftDown());
-    	Timer.delay(Constants.GearIntake.dropOffJerkDelay);
+    	addSequential(new ExpDrive(Constants.GearIntake.dropOffDrivePercent,0),Constants.GearIntake.dropOffDriveTime);
+    	addSequential(new Wait(Constants.GearIntake.dropOffJerkDelay));
     	addSequential(new GearIntakeLiftUp());
-    	Timer.delay(Constants.GearIntake.dropOffEndDelay);
-    	addSequential(new GearIntakeRollersOff());
+    	addSequential(new Wait(GearIntake.dropOffEndDelay));
+    	//addSequential(new GearIntakeRollersOff());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

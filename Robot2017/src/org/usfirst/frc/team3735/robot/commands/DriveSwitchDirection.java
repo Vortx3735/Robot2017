@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3735.robot.commands.gearintake;
+package org.usfirst.frc.team3735.robot.commands;
 
 import org.usfirst.frc.team3735.robot.Robot;
 
@@ -7,19 +7,18 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  *
  */
-public class GearIntakeLiftUp extends InstantCommand {
+public class DriveSwitchDirection extends InstantCommand {
 
-    public GearIntakeLiftUp() {
+    public DriveSwitchDirection() {
         super();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        //requires(Robot.gearIntake);
+        
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.gearIntake.liftUp();
-    	System.out.println("Life up init");
+    	Robot.drive.changeDirection();
     }
 
 }
