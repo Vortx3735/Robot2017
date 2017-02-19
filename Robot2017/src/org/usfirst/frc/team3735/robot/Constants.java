@@ -54,6 +54,20 @@ public class Constants {
 		public final static double acceleration = 1;
 		public final static double cruiseVelocity = 4;
 		public static final double wheelDiameter = 4;
+		
+		public static final double scaledMaxOutput = .33;	//(0,1] this is directly to the motor percentage
+
+		//normal drive - but we usually use EXP!!!!
+		public static final double sensitivity = .5;	//raise for sharper turns
+		
+		//exp drive
+		public static final double moveReactivity = .125;	//(0,1] (least reactive, most reactive]
+		public static final double turnReactivity = .250;	//(0,1] (least reactive, most reactive]	
+		public static final double scaledMaxTurn = .700;	//(0,1] directly to the arcadedrive turn value
+		//these retain the range but shift more of the action towards lower values as the exponent is raised higher
+		//graph y = x * x^(p-1) {-1 < x < 1} for visualization
+		public static final int moveExponent = 2;			//[1,inf) 1 is linear, 2 is squared (normal), etc.
+		public static final int turnExponent = 2;			//[1,inf) 
 	}
 	
 	public class GearIntake{
@@ -79,4 +93,5 @@ public class Constants {
 	public class Shooter{
 		public final static double shootSpeed = .67;
 	}
+
 }
