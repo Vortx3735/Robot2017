@@ -68,6 +68,7 @@ public class Constants {
 		//graph y = x * x^(p-1) {-1 < x < 1} for visualization
 		public static final int moveExponent = 2;			//[1,inf) 1 is linear, 2 is squared (normal), etc.
 		public static final int turnExponent = 4;			//[1,inf) 
+		public static final double timedPower = .4;
 	}
 	
 	public class GearIntake{

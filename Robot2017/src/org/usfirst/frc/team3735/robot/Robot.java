@@ -6,6 +6,7 @@ import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
+import org.usfirst.frc.team3735.robot.util.DriveOI;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -33,7 +34,7 @@ public class Robot extends IterativeRobot {
 	public static Scaler scaler;
 	public static Shooter shooter;
 	
-	public static OI oi;
+	public static DriveOI oi;
 	public RobotMap robotmap;
 
 	/**
@@ -43,6 +44,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		robotmap = new RobotMap();
+		
 		gearIntake = new GearIntake();
 		shooter = new Shooter();
 		scaler = new Scaler();
@@ -52,7 +54,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		
 		chooser = new SendableChooser();
-		chooser.addDefault("Autonomous Test", new AutonomousMiddleGearTopLoader());
+		chooser.addDefault("AutonomousMiddleGearTopLoader", new AutonomousMiddleGearTopLoader());
 		//chooser.addObject("Autonomous Test", autonomousTest);
 		
 		SmartDashboard.putData("Auto choices", chooser);
@@ -101,7 +103,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        //log();
+        log();
 	}
 
 	/**
@@ -113,9 +115,9 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void log(){
-		scaler.log();
-		drive.log();
-		shooter.log();
+//		scaler.log();
+//		drive.log();
+//		shooter.log();
 		
 	}
 	/**

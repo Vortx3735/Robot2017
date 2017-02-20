@@ -47,7 +47,6 @@ public class ExpDrive extends Command {
     public ExpDrive() {
         // Use requires() here to declare subsystem dependencies
     	requires(Robot.drive);
-		
 		time = 0;
 		period = 0;
 		prevTime = 0;
@@ -67,7 +66,6 @@ public class ExpDrive extends Command {
     		YDriveStick			= 0.0;
     		ZDriveStick			= 0.0;
     	}
-
 		YDriveMotor			= 0.0;
 		ZDriveMotor			= 0.0;
 		YDriveMotorPrevious = 0.0;
@@ -82,8 +80,8 @@ public class ExpDrive extends Command {
 		/* Lets Get the New Joy Stick Values*/
 		/************************************/
 		if(!hasVariables){
-			YDriveStick = Robot.oi.getMainLeftY();
-			ZDriveStick = Robot.oi.getMainRightX();
+			YDriveStick = Robot.oi.getDriveMove();
+			ZDriveStick = Robot.oi.getDriveTurn();
 		}
 	
 		/*********************************/
@@ -110,7 +108,6 @@ public class ExpDrive extends Command {
 		/**************************************/
 		YDriveMotor = YDriveMotor * Math.pow(Math.abs(YDriveMotor), Constants.Drive.moveExponent - 1);
 		ZDriveMotor = ZDriveMotor * Math.pow(Math.abs(ZDriveMotor), Constants.Drive.turnExponent - 1);
-		System.out.println("Exp Execute:" + YDriveMotor + " " + ZDriveMotor + " " );
 		Robot.drive.arcadeDrive(YDriveMotor, ZDriveMotor, false);	
 		log();
     }
@@ -130,11 +127,6 @@ public class ExpDrive extends Command {
     }
     
     private void log(){
-    	time = Timer.getFPGATimestamp();
-    	SmartDashboard.putNumber("Timer Value", time);
-    	period = time - prevTime;
-    	SmartDashboard.putNumber("Timer Period", period);
     	
-    	prevTime = time;
     }
 }
