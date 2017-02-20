@@ -61,13 +61,13 @@ public class Constants {
 		public static final double sensitivity = .5;	//raise for sharper turns
 		
 		//exp drive
-		public static final double moveReactivity = .200;	//(0,1] (least reactive, most reactive]
-		public static final double turnReactivity = .250;	//(0,1] (least reactive, most reactive]	
-		public static final double scaledMaxTurn = .500;	//(0,1] directly to the arcadedrive turn value
+		public static final double moveReactivity = .150;	//(0,1] (least reactive, most reactive]
+		public static final double turnReactivity = .200;	//(0,1] (least reactive, most reactive]	
+		public static final double scaledMaxTurn = .080;	//(0,1] directly to the arcadedrive turn value
 		//these retain the range but shift more of the action towards lower values as the exponent is raised higher
 		//graph y = x * x^(p-1) {-1 < x < 1} for visualization
 		public static final int moveExponent = 2;			//[1,inf) 1 is linear, 2 is squared (normal), etc.
-		public static final int turnExponent = 2;			//[1,inf) 
+		public static final int turnExponent = 4;			//[1,inf) 
 	}
 	
 	public class GearIntake{
@@ -85,8 +85,8 @@ public class Constants {
 	}
 	
 	public class Scaler{
-		public final static double upCurrent = 1.0;
-		public final static double powerMax = 100;
+		public final static double upCurrent = -1.0;
+		public final static double powerMax = 1000;
 	}
 	
 	public class BallIntake{

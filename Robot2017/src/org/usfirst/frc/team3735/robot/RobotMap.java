@@ -19,7 +19,7 @@ public class RobotMap {
 	}
 	public static class Shooter{
 		public static int drum = 			12;
-		public static int agitator =   		10;
+		public static int agitator =   		11;
 		public static int encoder1 = 			0;
 		public static int encoder2 = 			1;
 	}
@@ -27,7 +27,7 @@ public class RobotMap {
 		public static int roller = 			8;
 	}
 	public static class Scaler{
-		public static int motor = 			11;
+		public static int motor = 			10;
 	}
 		
 }

@@ -3,7 +3,6 @@ package org.usfirst.frc.team3735.robot.subsystems;
 import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.RobotMap;
-import org.usfirst.frc.team3735.robot.commands.scaler.ScalerJoystickMovement;
 
 import com.ctre.CANTalon;
 
@@ -34,7 +33,6 @@ public class Scaler extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new ScalerJoystickMovement());
     }
 	
 	public void log(){
@@ -44,7 +42,7 @@ public class Scaler extends Subsystem {
 	}
 	
 	public void setCurrent(double current){
-		if(getPower() >= Constants.Scaler.powerMax){
+		if(Math.abs(getPower()) > Constants.Scaler.powerMax){
 			isOverLoaded = true;
 			motor.set(0);
 		}else{

@@ -1,42 +1,36 @@
-package org.usfirst.frc.team3735.robot.commands.scaler;
+package org.usfirst.frc.team3735.robot.commands;
 
+import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ScalerJoystickMovement extends Command {
-
-	boolean isDone = false;
-    public ScalerJoystickMovement() {
+public class DriveChangeScaledMaxOutput extends Command {
+	
+	String key = "Drive Scaled Max Output";
+    public DriveChangeScaledMaxOutput() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.scaler);
+    	SmartDashboard.putNumber(key, .5);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.drive.changeScaledMaxOutput(SmartDashboard.getNumber(key, .5));
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.scaler.getPower() < -300 || Robot.scaler.getPower() > 10){
-    		Robot.scaler.setCurrent(0);
-    		System.out.println("overload");
-    		isDone = true;
-    	}else if (isDone == false){
-    		Robot.scaler.setCurrent(Robot.oi.getMainRightY());
-    	}else if(Math.abs(Robot.scaler.getPower()) < .5 && isDone == true && Math.abs(Robot.oi.getMainLeftY()) < .015){
-			isDone = false;
-    	}
+    	Robot.drive.changeScaledMaxOutput(SmartDashboard.getNumber(key, .5));
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return false;
-	
+        return false;
     }
 
     // Called once after isFinished returns true
@@ -46,5 +40,6 @@ public class ScalerJoystickMovement extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.drive.changeScaledMaxOutput(Constants.Drive.scaledMaxOutput);
     }
 }

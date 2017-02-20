@@ -168,6 +168,10 @@ public class Drive extends PIDSubsystem {
     	ahrs.reset();
     }
     
+    public void changeScaledMaxOutput(double output){
+		driveTrain.setMaxOutput(output);
+    }
+    
     private void setupSlaves(){
         
 		l2.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -290,6 +294,7 @@ public class Drive extends PIDSubsystem {
         
         SmartDashboard.putData("Reset", new DriveNavxResest());
     }
+    
 
 
 

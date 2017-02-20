@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3735.robot;
 
+import org.usfirst.frc.team3735.robot.commands.DriveChangeScaledMaxOutput;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
@@ -62,11 +63,13 @@ public class OI {
 		rt.whileHeld(new GearIntakeFeeding());
 		lt.whenPressed(new GearIntakeDropOff());
 		
-		a.whileHeld(new ScalerUp());
+		a.toggleWhenPressed(new ScalerUp());
 		
 		y.whenPressed(new ShooterSwitchEnabled());
 		
 		start.whenPressed(new DriveSwitchDirection());
+		
+		back.toggleWhenPressed(new DriveChangeScaledMaxOutput());
 		
 		
 	}
