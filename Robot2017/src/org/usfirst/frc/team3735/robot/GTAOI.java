@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterSwitchEnabled;
+import org.usfirst.frc.team3735.robot.util.DriveOI;
+import org.usfirst.frc.team3735.robot.util.JoystickPOVButton;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
@@ -16,7 +18,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class GTAOI {
+public class GTAOI implements DriveOI{
 	
 	Joystick joy;
 	Joystick cojoy;
@@ -29,6 +31,7 @@ public class GTAOI {
 		cojoy = new Joystick(1);	
 		
 		//Button Mapping for driver joy-stick
+		//currently mapped for next level shit
 		Button a = new JoystickButton(joy,1);
 		Button b = new JoystickButton(joy,2);
 		Button x = new JoystickButton(joy,3);
@@ -40,7 +43,18 @@ public class GTAOI {
 		Button ls = new JoystickButton(joy,9);
 		Button rs = new JoystickButton(joy,10);
 		
+		Button pov0 = new JoystickPOVButton(joy,0);
+		Button pov45 = new JoystickPOVButton(joy,45);
+		Button pov90 = new JoystickPOVButton(joy,90);
+		Button pov135 = new JoystickPOVButton(joy,135);
+		Button pov180 = new JoystickPOVButton(joy,180);
+		Button pov225 = new JoystickPOVButton(joy,225);
+		Button pov270 = new JoystickPOVButton(joy,270);
+		Button pov315 = new JoystickPOVButton(joy,315);
+
+		
 		//Button Mapping for codriver joy-stick
+		//currently mapped for normal mode
 		Button cX = new JoystickButton(cojoy,1);
 		Button cA = new JoystickButton(cojoy,2);
 		Button cB = new JoystickButton(cojoy,3);
@@ -54,6 +68,14 @@ public class GTAOI {
 		Button cLS = new JoystickButton(cojoy,11);
 		Button cRS = new JoystickButton(cojoy,12);
 		
+		Button cpov0 = new JoystickPOVButton(cojoy,0);
+		Button cpov45 = new JoystickPOVButton(cojoy,45);
+		Button cpov90 = new JoystickPOVButton(cojoy,90);
+		Button cpov135 = new JoystickPOVButton(cojoy,135);
+		Button cpov180 = new JoystickPOVButton(cojoy,180);
+		Button cpov225 = new JoystickPOVButton(cojoy,225);
+		Button cpov270 = new JoystickPOVButton(cojoy,270);
+		Button cpov315 = new JoystickPOVButton(cojoy,315);
 		
 		b.whenPressed(new BallIntakeRollerIn());
 		b.whenReleased(new BallIntakeRollerOff());
@@ -71,27 +93,55 @@ public class GTAOI {
 	
 	
 	
-//	public double getMainLeftX(){
-//		return joy.getX();
-//	}
-//	public double getMainLeftY(){
-//		return joy.getY();
-//	}
+	public double getMainLeftX(){
+		return joy.getX();
+	}
+	public double getMainLeftY(){
+		return joy.getY();
+	}
 //	public double getMainRightX(){
 //		return joy.getTwist();
 //	}
 //	public double getMainRightY(){
 //		return joy.getThrottle();
 //	}
-	
-	public double getY() {
-		return joy.getThrottle()-joy.getZ();
+	public double getMainRightTrigger(){
+		return joy.getThrottle();
+	}
+	public double getMainLeftTrigger(){
+		return joy.getZ();
 	}
 	
-	public double getX() {
-		return joy.getX()*-1.0;
+//	public double getCoLeftX(){
+//		return joy.getX();
+//	}
+//	public double getCoLeftY(){
+//		return joy.getY();
+//	}
+//	public double getCoRightX(){
+//		return joy.getTwist();
+//	}
+//	public double getCoRightY(){
+//		return joy.getThrottle();
+//	}
+	public double getCoLeftTrigger(){
+		return cojoy.getZ();
+	}
+	public double getCoRightTrigger(){
+		return cojoy.getThrottle();
 	}
 	
+
+	@Override
+	public double getDriveMove() {
+		return getMainRightTrigger() - getMainLeftTrigger();
+	}
+	@Override
+	public double getDriveTurn() {
+		return getMainLeftX() * -1;
+	}
+	
+
 	public void log() {
 		SmartDashboard.putNumber("Get X:", joy.getX());
 		SmartDashboard.putNumber("Get Y:", joy.getY());
@@ -107,16 +157,4 @@ public class GTAOI {
 		
 	}
 	
-//	public double getCoLeftX(){
-//		return joy.getX();
-//	}
-//	public double getCoLeftY(){
-//		return joy.getY();
-//	}
-//	public double getCoRightX(){
-//		return joy.getTwist();
-//	}
-//	public double getCoRightY(){
-//		return joy.getThrottle();
-//	}
 }

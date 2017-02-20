@@ -10,12 +10,13 @@ import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOff;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOn;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterSwitchEnabled;
+import org.usfirst.frc.team3735.robot.util.DriveOI;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-public class OI {
+public class OI implements DriveOI{
 	
 	Joystick joy;
 	Joystick cojoy;
@@ -77,7 +78,7 @@ public class OI {
 		return joy.getX();
 	}
 	public double getMainLeftY(){
-		return joy.getY() * -1;
+		return joy.getY();
 	}
 	public double getMainRightX(){
 		return joy.getTwist();
@@ -98,4 +99,16 @@ public class OI {
 	public double getCoRightY(){
 		return joy.getThrottle();
 	}
+
+
+	@Override
+	public double getDriveMove() {
+		return getMainLeftY() * -1;
+	}
+	@Override
+	public double getDriveTurn() {
+		// TODO Auto-generated method stub
+		return getMainRightX() * -1;
+	}
+	
 }
