@@ -19,10 +19,14 @@ public class Scaler extends Subsystem {
 	CANTalon motor;
 	//private final double voltageChangeSpeed = 5;
 
+	
 	private boolean isOverLoaded = false;
+	private double rampRate = .01;
+	private double percent = 0;
 	
 	public Scaler(){
 		motor = new CANTalon(RobotMap.Scaler.motor);
+		motor.setCloseLoopRampRate(.2);
 		//motor.changeControlMode(CANTalon.TalonControlMode.Voltage);
 		//motor.setVoltageCompensationRampRate(voltageChangeSpeed);
 		SmartDashboard.putNumber("Scaler motor power", getPower());
@@ -44,15 +48,29 @@ public class Scaler extends Subsystem {
 	public void setCurrent(double current){
 		if(Math.abs(getPower()) > Constants.Scaler.powerMax){
 			isOverLoaded = true;
-			motor.set(0);
+			percent = 0;
+			motor.set(percent);
 		}else{
 			isOverLoaded = false;
-			motor.set(current);
+			if(current < percent){
+				percent -= rampRate;
+			}else if(current > percent){
+				percent += rampRate;
+			}
+			motor.set(percent);
 		}
+	}
+	
+	public void setPercent(double p){
+		percent = 0;
 	}
 	
 	public double getPower(){
 		return motor.getOutputCurrent() * motor.getOutputVoltage();
+	}
+	
+	public boolean getOverloaded(){
+		return isOverLoaded;
 	}
 }
 

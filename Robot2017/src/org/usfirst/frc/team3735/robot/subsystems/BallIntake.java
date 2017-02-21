@@ -30,9 +30,13 @@ public class BallIntake extends Subsystem {
     public void setRollerCurrent(double speed){
     	motor.set(speed);
     }
+    public double getPower(){
+    	return motor.getOutputVoltage() * motor.getOutputCurrent();
+    }
     
     public void log(){
     	SmartDashboard.putNumber("Ball Intake motor current", motor.get());
+    	SmartDashboard.putNumber("ball intake power", getPower());
     }
 }
 

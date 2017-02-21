@@ -1,6 +1,5 @@
-package org.usfirst.frc.team3735.robot.commands.ballintake;
+package org.usfirst.frc.team3735.robot.commands.drive;
 
-import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,27 +8,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class BallIntakeRollerIn extends Command {
-
-	private double target;
-	private String key = "Ball Intake Speed";
-    public BallIntakeRollerIn() {
+public class DriveTurnToSmartDashboardAngle extends Command {
+	
+	private double setAngle;
+	private String key = "Angle Setpoint (-180, 180)";
+	
+    public DriveTurnToSmartDashboardAngle() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.ballIntake);
-    	target = Constants.BallIntake.rollerInSpeed;
-    	SmartDashboard.putNumber(key, Constants.BallIntake.rollerInSpeed);
+    	requires(Robot.drive);
+    	SmartDashboard.putNumber(key, 0);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.ballIntake.setRollerCurrent(Constants.BallIntake.rollerInSpeed);
+    	setAngle = Robot.drive.getYaw();
+    	Robot.drive.setSetpoint(setAngle);
+    	Robot.drive.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	target = SmartDashboard.getNumber(key, Constants.BallIntake.rollerInSpeed);
-    	Robot.ballIntake.setRollerCurrent(target);
+    	setAngle = SmartDashboard.getNumber(key, 0);
+      	Robot.drive.setSetpoint(setAngle);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -44,6 +45,6 @@ public class BallIntakeRollerIn extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.ballIntake.setRollerCurrent(0);
+    	Robot.drive.disable();
     }
 }

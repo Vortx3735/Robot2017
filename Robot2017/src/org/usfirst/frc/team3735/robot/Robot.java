@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 		drive = new Drive();
 		ballIntake = new BallIntake();
 		
-		oi = new OI();
+		oi = new GTAOI();
 		
 		chooser = new SendableChooser();
 		chooser.addDefault("AutonomousMiddleGearTopLoader", new AutonomousMiddleGearTopLoader());
@@ -115,9 +115,11 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void log(){
-//		scaler.log();
-//		drive.log();
-//		shooter.log();
+		scaler.log();
+		drive.log();
+		shooter.log();
+		oi.log();
+		ballIntake.log();
 		
 	}
 	/**

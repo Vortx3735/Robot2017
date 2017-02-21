@@ -1,9 +1,9 @@
 package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
-import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeScaledMaxOutput;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeToggleOpenClose;
@@ -12,6 +12,7 @@ import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOff;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOn;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterSwitchEnabled;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
+import org.usfirst.frc.team3735.robot.util.JoystickPOVButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -42,6 +43,15 @@ public class OI implements DriveOI{
 		Button ls = new JoystickButton(joy,11);
 		Button rs = new JoystickButton(joy,12);
 		
+		Button pov0 = new JoystickPOVButton(joy,0);
+		Button pov45 = new JoystickPOVButton(joy,45);
+		Button pov90 = new JoystickPOVButton(joy,90);
+		Button pov135 = new JoystickPOVButton(joy,135);
+		Button pov180 = new JoystickPOVButton(joy,180);
+		Button pov225 = new JoystickPOVButton(joy,225);
+		Button pov270 = new JoystickPOVButton(joy,270);
+		Button pov315 = new JoystickPOVButton(joy,315);
+		
 		//Button Mapping for codriver joy-stick
 		Button cX = new JoystickButton(cojoy,1);
 		Button cA = new JoystickButton(cojoy,2);
@@ -57,8 +67,7 @@ public class OI implements DriveOI{
 		Button cRS = new JoystickButton(cojoy,12);
 		
 		
-		b.whenPressed(new BallIntakeRollerIn());
-		b.whenReleased(new BallIntakeRollerOff());
+		b.toggleWhenPressed(new BallIntakeRollerIn());
 		
 		rb.toggleWhenPressed(new GearIntakeToggleOpenClose());
 		rt.whileHeld(new GearIntakeFeeding());
@@ -69,39 +78,48 @@ public class OI implements DriveOI{
 		y.whenPressed(new ShooterSwitchEnabled());
 		
 		start.whenPressed(new DriveSwitchDirection());
-		
 		back.toggleWhenPressed(new DriveChangeScaledMaxOutput());
 		
+		pov0.whenPressed(new DriveTurnToAngle(0));
+		pov45.whenPressed(new DriveTurnToAngle(45));
+		pov90.whenPressed(new DriveTurnToAngle(90));
+		pov135.whenPressed(new DriveTurnToAngle(135));
+		pov180.whenPressed(new DriveTurnToAngle(180));
+		pov225.whenPressed(new DriveTurnToAngle(-135));
+		pov270.whenPressed(new DriveTurnToAngle(-90));
+		pov315.whenPressed(new DriveTurnToAngle(-45));
+
+		
 		
 	}
 	
 	
 	
-	public double getMainLeftX(){
-		return joy.getX();
-	}
-	public double getMainLeftY(){
-		return joy.getY();
-	}
-	public double getMainRightX(){
-		return joy.getTwist();
-	}
-	public double getMainRightY(){
-		return joy.getThrottle();
-	}
-	
-	public double getCoLeftX(){
-		return joy.getX();
-	}
-	public double getCoLeftY(){
-		return joy.getY();
-	}
-	public double getCoRightX(){
-		return joy.getTwist();
-	}
-	public double getCoRightY(){
-		return joy.getThrottle();
-	}
+//	public double getMainLeftX(){
+//		return joy.getX();
+//	}
+//	public double getMainLeftY(){
+//		return joy.getY();
+//	}
+//	public double getMainRightX(){
+//		return joy.getTwist();
+//	}
+//	public double getMainRightY(){
+//		return joy.getThrottle();
+//	}
+//	
+//	public double getCoLeftX(){
+//		return joy.getX();
+//	}
+//	public double getCoLeftY(){
+//		return joy.getY();
+//	}
+//	public double getCoRightX(){
+//		return joy.getTwist();
+//	}
+//	public double getCoRightY(){
+//		return joy.getThrottle();
+//	}
 
 
 	@Override
@@ -110,8 +128,66 @@ public class OI implements DriveOI{
 	}
 	@Override
 	public double getDriveTurn() {
-		// TODO Auto-generated method stub
-		return getMainRightX() * -1;
+		return getMainRightX();
+	}
+
+
+
+	@Override
+	public double getMainLeftX() {
+		return joy.getX();
+	}
+	@Override
+	public double getMainLeftY() {
+		return joy.getY();
+	}
+	@Override
+	public double getMainRightX() {
+		return joy.getTwist();
+	}
+	@Override
+	public double getMainRightY() {
+		return joy.getThrottle();
+	}
+	@Override
+	public double getMainLeftTrigger() {
+		return 0;
+	}
+	@Override
+	public double getMainRightTrigger() {
+		return 0;
+	}
+
+
+
+	@Override
+	public double getCoLeftX() {
+		return cojoy.getX();
+	}
+	@Override
+	public double getCoLeftY() {
+		return cojoy.getY();
+	}
+	@Override
+	public double getCoRightX() {
+		return cojoy.getTwist();
+	}
+	@Override
+	public double getCoRightY() {
+		return cojoy.getThrottle();
+	}
+	@Override
+	public double getCoLeftTrigger() {
+		return 0;
+	}
+	@Override
+	public double getCoRightTrigger() {
+		return 0;
+	}
+
+	@Override
+	public void log() {
+		
 	}
 	
 }

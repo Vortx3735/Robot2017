@@ -27,7 +27,7 @@ public class ScalerUp extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.scaler.getOverloaded();
     }
 
     // Called once after isFinished returns true
@@ -39,7 +39,8 @@ public class ScalerUp extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.scaler.setCurrent(0);
+    	Robot.scaler.setPercent(0);
     	System.out.println("This is the Scaler Interrupted method");
+    	end();
     }
 }

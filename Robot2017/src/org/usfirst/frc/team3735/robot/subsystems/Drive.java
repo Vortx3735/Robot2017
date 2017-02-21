@@ -41,12 +41,15 @@ public class Drive extends PIDSubsystem {
 	private double direction = 1;
 	
 	//values for rotation
-	private static double P = 1.0;
+	private static double P = .04;
 	private static double I = 0.0;
 	private static double D = 0.0;
 	private static double F = 0.0;
 	private static double accel = 100;
 	private static double velocity = 0.0;
+	
+	private String turnCorrectionKey = "Turn Correction";
+	private double turnCorrection;
 	
 
 	public Drive(){
@@ -73,6 +76,7 @@ public class Drive extends PIDSubsystem {
 			getPIDController().setInputRange(-180, 180);
 			getPIDController().setOutputRange(-1, 1);
 	        LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
+	        SmartDashboard.putNumber(turnCorrectionKey, 0);
 	}
 
 	
@@ -88,7 +92,8 @@ public class Drive extends PIDSubsystem {
     }
     
     public void arcadeDrive(double move, double rotate, boolean squareValues){
-    	driveTrain.arcadeDrive(move * direction, rotate * -1, squareValues);    	
+    	turnCorrection = SmartDashboard.getNumber(turnCorrectionKey, 0);
+    	driveTrain.arcadeDrive(move * direction, rotate * -1 + (turnCorrection * direction), squareValues);    	
     }
     
     public void tankDrive(double left, double right){

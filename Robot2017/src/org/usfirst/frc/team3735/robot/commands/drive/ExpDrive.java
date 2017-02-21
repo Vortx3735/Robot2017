@@ -41,6 +41,7 @@ public class ExpDrive extends Command {
 	private double prevTime;
 	
 	private boolean hasVariables;
+	
 	/************************************/
 	/* Code								*/
 	/************************************/
@@ -108,6 +109,8 @@ public class ExpDrive extends Command {
 		/**************************************/
 		YDriveMotor = YDriveMotor * Math.pow(Math.abs(YDriveMotor), Constants.Drive.moveExponent - 1);
 		ZDriveMotor = ZDriveMotor * Math.pow(Math.abs(ZDriveMotor), Constants.Drive.turnExponent - 1);
+		YDriveMotor = YDriveMotor * Constants.Drive.scaledMaxMove;
+		ZDriveMotor = ZDriveMotor * Constants.Drive.scaledMaxTurn;
 		Robot.drive.arcadeDrive(YDriveMotor, ZDriveMotor, false);	
 		log();
     }

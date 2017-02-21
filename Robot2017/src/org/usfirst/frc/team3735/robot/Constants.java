@@ -63,7 +63,8 @@ public class Constants {
 		//exp drive
 		public static final double moveReactivity = .150;	//(0,1] (least reactive, most reactive]
 		public static final double turnReactivity = .200;	//(0,1] (least reactive, most reactive]	
-		public static final double scaledMaxTurn = .080;	//(0,1] directly to the arcadedrive turn value
+		public static final double scaledMaxMove = .5;
+		public static final double scaledMaxTurn = .400;	//(0,1] directly to the arcadedrive turn value
 		//these retain the range but shift more of the action towards lower values as the exponent is raised higher
 		//graph y = x * x^(p-1) {-1 < x < 1} for visualization
 		public static final int moveExponent = 2;			//[1,inf) 1 is linear, 2 is squared (normal), etc.
@@ -87,15 +88,15 @@ public class Constants {
 	
 	public class Scaler{
 		public final static double upCurrent = -1.0;
-		public final static double powerMax = 1000;
+		public final static double powerMax = 350;
 	}
 	
 	public class BallIntake{
-		public final static double rollerInSpeed = .5;
+		public final static double rollerInSpeed = -.7;
 	}
 	
 	public class Shooter{
-		public final static double shootVoltage = 8;
+		public final static double shootVoltage = -8.5;
 		public static final double agitatorVoltage = -3;
 	}
 
