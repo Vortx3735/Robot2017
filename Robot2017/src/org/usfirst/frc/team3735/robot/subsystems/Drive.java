@@ -41,7 +41,7 @@ public class Drive extends PIDSubsystem {
 	private double direction = 1;
 	
 	//values for rotation
-	private static double P = .04;
+	private static double P = .01;
 	private static double I = 0.0;
 	private static double D = 0.0;
 	private static double F = 0.0;
@@ -68,7 +68,6 @@ public class Drive extends PIDSubsystem {
 		
 		//sensors
 			ahrs = new AHRS(SPI.Port.kMXP);
-			
 		
 		//turn pid
 			getPIDController().setContinuous();
