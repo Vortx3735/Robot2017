@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
 	public static GearIntake gearIntake;
 	public static Scaler scaler;
 	public static Shooter shooter;
-	public CameraServer server;
+	CameraServer server;
 	
 	public static DriveOI oi;
 	public RobotMap robotmap;

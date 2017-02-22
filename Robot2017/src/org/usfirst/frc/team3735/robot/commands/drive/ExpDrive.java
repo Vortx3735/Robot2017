@@ -92,7 +92,7 @@ public class ExpDrive extends Command {
     	/************************************/
 		/* Lets Get the New Joy Stick Values*/
 		/************************************/
-		if(!isJoystickInput){
+		if(isJoystickInput){
 			YDriveStick = Robot.oi.getDriveMove();
 			ZDriveStick = Robot.oi.getDriveTurn();
 		}

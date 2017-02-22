@@ -2,6 +2,7 @@ package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 import org.usfirst.frc.team3735.robot.util.JoystickPOVButton;
+import org.usfirst.frc.team3735.robot.commands.DriveBrake;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToCustomDriveSettings;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
@@ -79,9 +80,9 @@ public class GTAOI implements DriveOI{
 		b.whenPressed(new GearIntakeDropOff());
 		
 		rb.toggleWhenPressed(new ScalerUp());
-		
 		x.whenPressed(new ShooterSwitchEnabled());
 		
+		lb.whileHeld(new DriveBrake());
 		start.whenPressed(new DriveSwitchDirection());
 		back.toggleWhenPressed(new DriveChangeToCustomDriveSettings());
 		
