@@ -115,11 +115,13 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void log(){
+		oi.log();
+
 		scaler.log();
 		drive.log();
 		shooter.log();
-		oi.log();
 		ballIntake.log();
+		gearIntake.log();
 		
 	}
 	/**

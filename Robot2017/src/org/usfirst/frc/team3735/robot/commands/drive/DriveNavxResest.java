@@ -17,7 +17,7 @@ public class DriveNavxResest extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	//Robot.drive.resetAhrs();
+    	Robot.drive.resetAhrs();
     }
 
 }

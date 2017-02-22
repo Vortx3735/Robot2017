@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveChangeScaledMaxOutput extends Command {
+public class DriveChangeToCustomDriveSettings extends Command {
 	
 	String key = "Drive Scaled Max Output";
-    public DriveChangeScaledMaxOutput() {
+    public DriveChangeToCustomDriveSettings() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	SmartDashboard.putNumber(key, .5);

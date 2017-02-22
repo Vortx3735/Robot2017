@@ -57,5 +57,9 @@ public class GearIntake extends Subsystem {
     public void liftUp(){
     	liftSolenoid.set(false);
     }
+    
+    public void log(){
+    	
+    }
 }
 
