@@ -56,18 +56,31 @@ public class GTAOI implements DriveOI{
 		
 		//Button Mapping for codriver joy-stick
 		//currently mapped for normal mode
-		Button cX = new JoystickButton(cojoy,1);
-		Button cA = new JoystickButton(cojoy,2);
-		Button cB = new JoystickButton(cojoy,3);
+//		Button cX = new JoystickButton(cojoy,1);
+//		Button cA = new JoystickButton(cojoy,2);
+//		Button cB = new JoystickButton(cojoy,3);
+//		Button cY = new JoystickButton(cojoy,4);
+//		Button cLB = new JoystickButton(cojoy,5);
+//		Button cRB = new JoystickButton(cojoy,6);
+//		Button cLT = new JoystickButton(cojoy,7);
+//		Button cRT = new JoystickButton(cojoy,8);
+//		Button cBack = new JoystickButton(cojoy,9);
+//		Button cStart = new JoystickButton(cojoy,10);
+//		Button cLS = new JoystickButton(cojoy,11);
+//		Button cRS = new JoystickButton(cojoy,12);
+		
+		//Button Mapping for codriver joy-stick
+		//currently mapped for next level shit
+		Button cA = new JoystickButton(cojoy,1);
+		Button cB = new JoystickButton(cojoy,2);
+		Button cX = new JoystickButton(cojoy,3);
 		Button cY = new JoystickButton(cojoy,4);
 		Button cLB = new JoystickButton(cojoy,5);
 		Button cRB = new JoystickButton(cojoy,6);
-		Button cLT = new JoystickButton(cojoy,7);
-		Button cRT = new JoystickButton(cojoy,8);
-		Button cBack = new JoystickButton(cojoy,9);
-		Button cStart = new JoystickButton(cojoy,10);
-		Button cLS = new JoystickButton(cojoy,11);
-		Button cRS = new JoystickButton(cojoy,12);
+		Button cBack = new JoystickButton(cojoy,7);
+		Button cStart = new JoystickButton(cojoy,8);
+		Button cLS = new JoystickButton(cojoy,9);
+		Button cRS = new JoystickButton(cojoy,10);
 		
 		Button cpov0 = new JoystickPOVButton(cojoy,0);
 		Button cpov45 = new JoystickPOVButton(cojoy,45);
@@ -127,8 +140,20 @@ public class GTAOI implements DriveOI{
 	public double getMainRightTrigger() {
 		return joy.getThrottle();
 	}
+	
 
-
+	@Override
+	public double getDriveMove() {
+		return  (getMainRightTrigger() - getMainLeftTrigger());
+	}
+	@Override
+	public double getDriveTurn() {
+		return getMainLeftX();
+	}
+	
+	
+	
+	
 	@Override
 	public double getCoLeftX() {
 		return cojoy.getX();
@@ -139,11 +164,11 @@ public class GTAOI implements DriveOI{
 	}
 	@Override
 	public double getCoRightX() {
-		return 0;
+		return cojoy.getRawAxis(4);
 	}
 	@Override
 	public double getCoRightY() {
-		return 0;
+		return cojoy.getRawAxis(5) * -1;
 	}
 	@Override
 	public double getCoLeftTrigger() {
@@ -154,14 +179,7 @@ public class GTAOI implements DriveOI{
 		return cojoy.getThrottle();
 	}
 
-	@Override
-	public double getDriveMove() {
-		return  (getMainRightTrigger() - getMainLeftTrigger());
-	}
-	@Override
-	public double getDriveTurn() {
-		return getMainLeftX();
-	}
+	
 	
 	@Override
 	public void log() {
