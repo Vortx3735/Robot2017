@@ -35,7 +35,6 @@ public class BallIntake extends Subsystem {
     }
     
     public void log(){
-    	SmartDashboard.putNumber("Ball Intake motor current", motor.get());
     	SmartDashboard.putNumber("ball intake power", getPower());
     }
 }

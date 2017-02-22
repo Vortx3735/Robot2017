@@ -58,7 +58,7 @@ public class DriveMoveDistance extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drive.tankDrive(0, 0);
+    	Robot.drive.tankDrive(0, 0, false);
     }
 
     // Called when another command which requires one or more of the same

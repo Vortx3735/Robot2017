@@ -8,6 +8,7 @@ import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -33,6 +34,7 @@ public class Robot extends IterativeRobot {
 	public static GearIntake gearIntake;
 	public static Scaler scaler;
 	public static Shooter shooter;
+	public CameraServer server;
 	
 	public static DriveOI oi;
 	public RobotMap robotmap;
@@ -58,6 +60,12 @@ public class Robot extends IterativeRobot {
 		//chooser.addObject("Autonomous Test", autonomousTest);
 		
 		SmartDashboard.putData("Auto choices", chooser);
+		
+    	server = CameraServer.getInstance();
+        //server.setQuality(50);
+        //server.setSize(kSize320x240);
+        server.startAutomaticCapture();
+        //server.putVideo("name", 100, 100);
 	}
 	
 	@Override
@@ -115,11 +123,13 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void log(){
+		oi.log();
+
 		scaler.log();
 		drive.log();
 		shooter.log();
-		oi.log();
 		ballIntake.log();
+		gearIntake.log();
 		
 	}
 	/**

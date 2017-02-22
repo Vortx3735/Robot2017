@@ -3,7 +3,7 @@ package org.usfirst.frc.team3735.robot;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 import org.usfirst.frc.team3735.robot.util.JoystickPOVButton;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeScaledMaxOutput;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToCustomDriveSettings;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
@@ -27,13 +27,10 @@ public class GTAOI implements DriveOI{
 	
 	public GTAOI(){
 		
-		
 		//joystick port mapping
 		joy = new Joystick(0);
 		cojoy = new Joystick(1);	
-		
 		//Button Mapping for driver joy-stick
-		//currently mapped for next level shit
 		Button a = new JoystickButton(joy,1);
 		Button b = new JoystickButton(joy,2);
 		Button x = new JoystickButton(joy,3);
@@ -55,22 +52,6 @@ public class GTAOI implements DriveOI{
 		Button pov315 = new JoystickPOVButton(joy,315);
 		
 		//Button Mapping for codriver joy-stick
-		//currently mapped for normal mode
-//		Button cX = new JoystickButton(cojoy,1);
-//		Button cA = new JoystickButton(cojoy,2);
-//		Button cB = new JoystickButton(cojoy,3);
-//		Button cY = new JoystickButton(cojoy,4);
-//		Button cLB = new JoystickButton(cojoy,5);
-//		Button cRB = new JoystickButton(cojoy,6);
-//		Button cLT = new JoystickButton(cojoy,7);
-//		Button cRT = new JoystickButton(cojoy,8);
-//		Button cBack = new JoystickButton(cojoy,9);
-//		Button cStart = new JoystickButton(cojoy,10);
-//		Button cLS = new JoystickButton(cojoy,11);
-//		Button cRS = new JoystickButton(cojoy,12);
-		
-		//Button Mapping for codriver joy-stick
-		//currently mapped for next level shit
 		Button cA = new JoystickButton(cojoy,1);
 		Button cB = new JoystickButton(cojoy,2);
 		Button cX = new JoystickButton(cojoy,3);
@@ -102,7 +83,7 @@ public class GTAOI implements DriveOI{
 		x.whenPressed(new ShooterSwitchEnabled());
 		
 		start.whenPressed(new DriveSwitchDirection());
-		back.toggleWhenPressed(new DriveChangeScaledMaxOutput());
+		back.toggleWhenPressed(new DriveChangeToCustomDriveSettings());
 		
 		pov0.whenPressed(new DriveTurnToAngle(0));
 		pov45.whenPressed(new DriveTurnToAngle(45));
@@ -122,7 +103,7 @@ public class GTAOI implements DriveOI{
 	}
 	@Override
 	public double getMainLeftY() {
-		return joy.getY();
+		return joy.getY() * -1;
 	}
 	@Override
 	public double getMainRightX() {
@@ -141,7 +122,15 @@ public class GTAOI implements DriveOI{
 		return joy.getThrottle();
 	}
 	
-
+	
+	public double getMainRightMagnitude(){
+	    return Math.sqrt(Math.pow(getMainRightX(), 2) + Math.pow(getMainRightY(), 2));
+	}
+	public double getMainRightAngle(){
+		return Math.toDegrees(Math.atan2(getMainRightX(), getMainRightY()));
+	}
+	
+	
 	@Override
 	public double getDriveMove() {
 		return  (getMainRightTrigger() - getMainLeftTrigger());
@@ -160,7 +149,7 @@ public class GTAOI implements DriveOI{
 	}
 	@Override
 	public double getCoLeftY() {
-		return cojoy.getY();
+		return cojoy.getY() * -1;
 	}
 	@Override
 	public double getCoRightX() {
@@ -183,22 +172,9 @@ public class GTAOI implements DriveOI{
 	
 	@Override
 	public void log() {
-//		SmartDashboard.putNumber("Get X:", joy.getX());
-//		SmartDashboard.putNumber("Get Y:", joy.getY());
-//		SmartDashboard.putNumber("Get Twist:", joy.getTwist());
-//		SmartDashboard.putNumber("Get Throttle:", joy.getThrottle());
-//		SmartDashboard.putNumber("Get Dicection Degrees:", joy.getDirectionDegrees());
-//		SmartDashboard.putNumber("Get Magnitutde:", joy.getMagnitude());
-//		SmartDashboard.putNumber("Get Z:", joy.getZ());
-//		SmartDashboard.putBoolean("Get Top:", joy.getTop());
-//		SmartDashboard.putNumber("Get POV:", joy.getPOV());
-//		SmartDashboard.putNumber("Get Count:", joy.getAxisCount());
-//		//SmartDashboard.putData("values ", AxisType.values());
-//		SmartDashboard.putNumber("raw axis 4", joy.getRawAxis(4));
-//		SmartDashboard.putNumber("raw axis 5", joy.getRawAxis(5));
-//		SmartDashboard.putNumber("raw axis 6", joy.getRawAxis(6));
+		SmartDashboard.putNumber("right joystick angle", getMainRightAngle());
+		SmartDashboard.putNumber("right joystick magnitude", getMainRightMagnitude());
 
-		
 	}
 
 

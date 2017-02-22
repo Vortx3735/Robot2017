@@ -34,13 +34,21 @@ public class ExpDrive extends Command {
 	private double YDriveMotorPrevious;
 	private double ZDriveMotorPrevious;
 	
+	private boolean isJoystickInput;
 	
+	private String moveExponentKey = "Move Exponent";
+	private String turnExponentKey = "Turn Exponent";
+	private String scaledMaxMoveKey = "Scaled Max Move";
+	private String scaledMaxTurnKey = "Scaled Max Turn";
+	private String moveReactivityKey = "Move Reactivity";
+	private String turnReactivityKey = "Turn Reactivity";
 	
-	private double time;
-	private double period;
-	private double prevTime;
-	
-	private boolean hasVariables;
+	private double moveExponent = Constants.Drive.moveExponent;
+	private double turnExponent = Constants.Drive.turnExponent;
+	private double scaledMaxMove = Constants.Drive.scaledMaxMove;
+	private double scaledMaxTurn = Constants.Drive.scaledMaxTurn;
+	private double moveReactivity = Constants.Drive.moveReactivity;
+	private double turnReactivity = Constants.Drive.turnReactivity;
 	
 	/************************************/
 	/* Code								*/
@@ -48,22 +56,19 @@ public class ExpDrive extends Command {
     public ExpDrive() {
         // Use requires() here to declare subsystem dependencies
     	requires(Robot.drive);
-		time = 0;
-		period = 0;
-		prevTime = 0;
-		hasVariables = false;
+		isJoystickInput = true;
     }
     
     public ExpDrive(double move, double turn){
     	YDriveStick = move;
     	ZDriveStick = turn;
-    	hasVariables = true;
+    	isJoystickInput = false;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drive.setControlMode(TalonControlMode.PercentVbus);
-    	if(!hasVariables){
+    	if(isJoystickInput){
     		YDriveStick			= 0.0;
     		ZDriveStick			= 0.0;
     	}
@@ -77,10 +82,17 @@ public class ExpDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+		moveExponent = SmartDashboard.getNumber(moveExponentKey, moveExponent);
+	    turnExponent = SmartDashboard.getNumber(turnExponentKey, turnExponent);
+		scaledMaxMove = SmartDashboard.getNumber(scaledMaxMoveKey, scaledMaxMove);
+		scaledMaxTurn = SmartDashboard.getNumber(scaledMaxTurnKey, scaledMaxTurn);
+		moveReactivity = SmartDashboard.getNumber(moveReactivityKey, moveReactivity);
+		turnReactivity = SmartDashboard.getNumber(turnReactivityKey, turnReactivity);
+
     	/************************************/
 		/* Lets Get the New Joy Stick Values*/
 		/************************************/
-		if(!hasVariables){
+		if(!isJoystickInput){
 			YDriveStick = Robot.oi.getDriveMove();
 			ZDriveStick = Robot.oi.getDriveTurn();
 		}
@@ -127,9 +139,17 @@ public class ExpDrive extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	if(!isJoystickInput){
+    		Robot.drive.arcadeDrive(0, 0, false);
+    	}
     }
     
     private void log(){
-    	
+    	SmartDashboard.putNumber(moveExponentKey, moveExponent);
+    	SmartDashboard.putNumber(turnExponentKey, turnExponent);
+    	SmartDashboard.putNumber(scaledMaxMoveKey, scaledMaxMove);
+    	SmartDashboard.putNumber(scaledMaxTurnKey, scaledMaxTurn);
+    	SmartDashboard.putNumber(moveReactivityKey, moveReactivity);
+    	SmartDashboard.putNumber(turnReactivityKey, turnReactivity);
     }
 }
