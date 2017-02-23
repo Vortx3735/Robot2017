@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3735.robot.commands.drive;
 
+import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -16,6 +17,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class DriveTurnToAngle extends Command{
 
 	private double setpoint;
+	private double timeOnTarget = 0;
+	private double finishTime = Constants.Drive.turnFinishTime;
 
     public DriveTurnToAngle(double angle){
         // Use requires() here to declare subsystem dependencies
@@ -32,11 +35,16 @@ public class DriveTurnToAngle extends Command{
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(Robot.drive.onTarget()){
+    		timeOnTarget += .002;
+    	}else{
+    		timeOnTarget = 0;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-		return Robot.drive.onTarget();
+		return timeOnTarget >= finishTime;
     }
 
     // Called once after isFinished returns true

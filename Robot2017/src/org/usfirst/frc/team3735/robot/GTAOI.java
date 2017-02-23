@@ -2,8 +2,8 @@ package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 import org.usfirst.frc.team3735.robot.util.JoystickPOVButton;
-import org.usfirst.frc.team3735.robot.commands.DriveBrake;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveBrake;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToCustomDriveSettings;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
@@ -31,6 +31,7 @@ public class GTAOI implements DriveOI{
 		//joystick port mapping
 		joy = new Joystick(0);
 		cojoy = new Joystick(1);	
+		
 		//Button Mapping for driver joy-stick
 		Button a = new JoystickButton(joy,1);
 		Button b = new JoystickButton(joy,2);
@@ -125,8 +126,9 @@ public class GTAOI implements DriveOI{
 	
 	
 	public double getMainRightMagnitude(){
-	    return Math.sqrt(Math.pow(getMainRightX(), 2) + Math.pow(getMainRightY(), 2));
+	    return Math.hypot(getMainRightX(), getMainRightY());
 	}
+	//returns the angle of the right main joystick in degrees in the range (180, 180]
 	public double getMainRightAngle(){
 		return Math.toDegrees(Math.atan2(getMainRightX(), getMainRightY()));
 	}

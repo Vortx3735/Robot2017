@@ -83,7 +83,6 @@ public class Drive extends PIDSubsystem {
 			getPIDController().setContinuous();
 			getPIDController().setOutputRange(-1, 1);
 	        LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
-	        
 	}
 
 	
