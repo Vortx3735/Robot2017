@@ -27,6 +27,9 @@ public class Constants {
 		
 		//power for using the driveMoveDistanceTimed exeriment
 		public static final double timedPower = .4;
+		
+		//time for the turnToAngle command to finish being on target
+		public static final double turnFinishTime = .5;
 	}
 	
 	public class GearIntake{
