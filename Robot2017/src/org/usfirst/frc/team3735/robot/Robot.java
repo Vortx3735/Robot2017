@@ -66,6 +66,13 @@ public class Robot extends IterativeRobot {
         //server.setSize(kSize320x240);
         server.startAutomaticCapture();
         //server.putVideo("name", 100, 100);
+        
+        //experimental code to test on 2/24
+        SmartDashboard.putData(gearIntake);
+        SmartDashboard.putData(shooter);
+        SmartDashboard.putData(scaler);
+        SmartDashboard.putData(drive);
+        SmartDashboard.putData(ballIntake);
 	}
 	
 	@Override
