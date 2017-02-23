@@ -28,7 +28,6 @@ import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
 public class Drive extends PIDSubsystem {
 	
 	private CANTalon l1,l2,l3,r1,r2,r3;
-	
 //	
 //	MultiSpeedController leftMotors = 
 //			new MultiSpeedController(new CANTalon[] {l1, l2, l3}, "Drive", "left Motors");
@@ -52,7 +51,7 @@ public class Drive extends PIDSubsystem {
 	private static double dF = 0.0;
 
 	private static double accel = 10;
-	private static double CruiseVelocity = 30;
+	private static double cruiseVelocity = 30;
 	
 	
 	private String turnCorrectionKey = "Turn Correction";
@@ -118,8 +117,17 @@ public class Drive extends PIDSubsystem {
     public void tankDrive(double left, double right, boolean squareValues){
     	driveTrain.tankDrive(left, right, squareValues);
     }
-    public void normalDrive(double move, double curve, boolean squareValues){
-    	driveTrain.drive(move, curve, squareValues);
+    public void normalDrive(double move, double curve){
+    	driveTrain.drive(move, curve);
+    }
+    public void setLeftRight(double left, double right){
+    	if(reversed){
+    		r1.set(left);
+    		l1.set(right);
+    	}else{
+    		l1.set(left);
+    		r1.set(right);
+    	}
     }
     public void setLeftRightOutputs(double leftOutput, double rightOutput){
 		driveTrain.setLeftRightMotorOutputs(leftOutput, rightOutput);
@@ -171,7 +179,7 @@ public class Drive extends PIDSubsystem {
 	    l1.setI(dI); 
 	    l1.setD(dD); 
 	    l1.changeControlMode(TalonControlMode.MotionMagic);
-	    l1.setMotionMagicCruiseVelocity(CruiseVelocity);
+	    l1.setMotionMagicCruiseVelocity(cruiseVelocity);
 		l1.setMotionMagicAcceleration(accel);
 	    
 	    r1.setEncPosition(absolutePosition);
@@ -186,7 +194,7 @@ public class Drive extends PIDSubsystem {
 	    r1.setI(dI); 
 	    r1.setD(dD); 
 	    r1.changeControlMode(TalonControlMode.MotionMagic);
-	    r1.setMotionMagicCruiseVelocity(CruiseVelocity);
+	    r1.setMotionMagicCruiseVelocity(cruiseVelocity);
 		r1.setMotionMagicAcceleration(accel);
 	}
 

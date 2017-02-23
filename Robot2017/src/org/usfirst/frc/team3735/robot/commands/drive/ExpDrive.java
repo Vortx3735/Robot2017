@@ -82,26 +82,17 @@ public class ExpDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.drive.isUsingCustomSettings()){
-    		moveExponent = SmartDashboard.getNumber(moveExponentKey, moveExponent);
-    	    turnExponent = SmartDashboard.getNumber(turnExponentKey, turnExponent);
-    		scaledMaxMove = SmartDashboard.getNumber(scaledMaxMoveKey, scaledMaxMove);
-    		scaledMaxTurn = SmartDashboard.getNumber(scaledMaxTurnKey, scaledMaxTurn);
-    		moveReactivity = SmartDashboard.getNumber(moveReactivityKey, moveReactivity);
-    		turnReactivity = SmartDashboard.getNumber(turnReactivityKey, turnReactivity);
-    	}else{
-    		moveExponent = Constants.Drive.moveExponent;
-    		turnExponent = Constants.Drive.turnExponent;
-    		scaledMaxMove = Constants.Drive.scaledMaxMove;
-    		scaledMaxTurn = Constants.Drive.scaledMaxTurn;
-    		moveReactivity = Constants.Drive.moveReactivity;
-    		turnReactivity = Constants.Drive.turnReactivity;
-    		
-    	}
+		moveExponent = SmartDashboard.getNumber(moveExponentKey, moveExponent);
+	    turnExponent = SmartDashboard.getNumber(turnExponentKey, turnExponent);
+		scaledMaxMove = SmartDashboard.getNumber(scaledMaxMoveKey, scaledMaxMove);
+		scaledMaxTurn = SmartDashboard.getNumber(scaledMaxTurnKey, scaledMaxTurn);
+		moveReactivity = SmartDashboard.getNumber(moveReactivityKey, moveReactivity);
+		turnReactivity = SmartDashboard.getNumber(turnReactivityKey, turnReactivity);
+
     	/************************************/
 		/* Lets Get the New Joy Stick Values*/
 		/************************************/
-		if(!isJoystickInput){
+		if(isJoystickInput){
 			YDriveStick = Robot.oi.getDriveMove();
 			ZDriveStick = Robot.oi.getDriveTurn();
 		}

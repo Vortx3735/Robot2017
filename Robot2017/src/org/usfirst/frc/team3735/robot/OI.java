@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeScaledMaxOutput;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToCustomDriveSettings;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
@@ -27,7 +27,7 @@ public class OI implements DriveOI{
 		
 		//joystick port mapping
 		joy = new Joystick(0);
-		cojoy = new Joystick(1);	
+		cojoy = new Joystick(1);
 		
 		//Button Mapping for driver joy-stick
 		Button x = new JoystickButton(joy,1);
@@ -78,7 +78,7 @@ public class OI implements DriveOI{
 		y.whenPressed(new ShooterSwitchEnabled());
 		
 		start.whenPressed(new DriveSwitchDirection());
-		back.toggleWhenPressed(new DriveChangeScaledMaxOutput());
+		back.toggleWhenPressed(new DriveChangeToCustomDriveSettings());
 		
 		pov0.whenPressed(new DriveTurnToAngle(0));
 		pov45.whenPressed(new DriveTurnToAngle(45));

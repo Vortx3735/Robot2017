@@ -2,8 +2,9 @@ package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 import org.usfirst.frc.team3735.robot.util.JoystickPOVButton;
+import org.usfirst.frc.team3735.robot.commands.DriveBrake;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeScaledMaxOutput;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToCustomDriveSettings;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
@@ -79,11 +80,11 @@ public class GTAOI implements DriveOI{
 		b.whenPressed(new GearIntakeDropOff());
 		
 		rb.toggleWhenPressed(new ScalerUp());
-		
 		x.whenPressed(new ShooterSwitchEnabled());
 		
+		lb.whileHeld(new DriveBrake());
 		start.whenPressed(new DriveSwitchDirection());
-		back.toggleWhenPressed(new DriveChangeScaledMaxOutput());
+		back.toggleWhenPressed(new DriveChangeToCustomDriveSettings());
 		
 		pov0.whenPressed(new DriveTurnToAngle(0));
 		pov45.whenPressed(new DriveTurnToAngle(45));
@@ -121,14 +122,28 @@ public class GTAOI implements DriveOI{
 	public double getMainRightTrigger() {
 		return joy.getThrottle();
 	}
+	
+	
 	public double getMainRightMagnitude(){
 	    return Math.sqrt(Math.pow(getMainRightX(), 2) + Math.pow(getMainRightY(), 2));
 	}
 	public double getMainRightAngle(){
 		return Math.toDegrees(Math.atan2(getMainRightX(), getMainRightY()));
 	}
-
-
+	
+	
+	@Override
+	public double getDriveMove() {
+		return  (getMainRightTrigger() - getMainLeftTrigger());
+	}
+	@Override
+	public double getDriveTurn() {
+		return getMainLeftX();
+	}
+	
+	
+	
+	
 	@Override
 	public double getCoLeftX() {
 		return cojoy.getX();
@@ -154,31 +169,10 @@ public class GTAOI implements DriveOI{
 		return cojoy.getThrottle();
 	}
 
-	@Override
-	public double getDriveMove() {
-		return  (getMainRightTrigger() - getMainLeftTrigger());
-	}
-	@Override
-	public double getDriveTurn() {
-		return getMainLeftX();
-	}
+	
 	
 	@Override
 	public void log() {
-//		SmartDashboard.putNumber("Get X:", joy.getX());
-//		SmartDashboard.putNumber("Get Y:", joy.getY());
-//		SmartDashboard.putNumber("Get Twist:", joy.getTwist());
-//		SmartDashboard.putNumber("Get Throttle:", joy.getThrottle());
-//		SmartDashboard.putNumber("Get Dicection Degrees:", joy.getDirectionDegrees());
-//		SmartDashboard.putNumber("Get Magnitutde:", joy.getMagnitude());
-//		SmartDashboard.putNumber("Get Z:", joy.getZ());
-//		SmartDashboard.putBoolean("Get Top:", joy.getTop());
-//		SmartDashboard.putNumber("Get POV:", joy.getPOV());
-//		SmartDashboard.putNumber("Get Count:", joy.getAxisCount());
-//		//SmartDashboard.putData("values ", AxisType.values());
-//		SmartDashboard.putNumber("raw axis 4", joy.getRawAxis(4));
-//		SmartDashboard.putNumber("raw axis 5", joy.getRawAxis(5));
-//		SmartDashboard.putNumber("raw axis 6", joy.getRawAxis(6));
 		SmartDashboard.putNumber("right joystick angle", getMainRightAngle());
 		SmartDashboard.putNumber("right joystick magnitude", getMainRightMagnitude());
 
