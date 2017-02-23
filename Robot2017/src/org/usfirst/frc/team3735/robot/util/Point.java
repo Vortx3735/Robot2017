@@ -26,29 +26,9 @@ public class Point {
 	}
 	
 	public static double findAngle(Point start, Point end) {
-		double startX = start.getX();
-		double startY = start.getY();
-		double endX = end.getX();
-		double endY = end.getY();
-
-		
-		double changeX = endX - startX;
-		double changeY = endY - startY;
-		double angleA = 0;
-
-		angleA = -1*Math.atan((changeY / changeX));
-		angleA = Math.toDegrees(angleA);
-		
-		if(endX < startX){
-			if(startY >= endY){
-				angleA += 180;
-			}else if(startY < endY){
-				angleA -=180;
-			}
-		}
-		
-		System.out.println("angle is " + angleA);
-		return angleA;
+		double angle = -Math.toDegrees(Math.atan2(end.getY()-start.getY(), end.getX()-start.getX()));
+		System.out.println("angle is " + angle);
+		return angle;
 	}
 	public static double findDistance(Point start, Point end){
 		return Math.sqrt(Math.pow(end.getX()-start.getX(), 2) 
