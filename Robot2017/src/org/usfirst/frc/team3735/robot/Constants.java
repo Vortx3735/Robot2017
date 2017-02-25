@@ -7,7 +7,7 @@ public class Constants {
 	public class Drive{
 		public final static double acceleration = 1;	//???
 		public final static double cruiseVelocity = 4;	//???
-		public static final double wheelDiameter = 4;	//in inches
+		public static final double wheelDiameter = 4.5;	//in inches
 		
 		public static final double scaledMaxOutput = 1;	//(0,1] this is directly to the motor percentage
 		public static final double turnCorrection = 0;
@@ -50,7 +50,7 @@ public class Constants {
 	
 	public class Scaler{
 		public final static double upCurrent = -1.0;
-		public final static double powerMax = 350;
+		public final static double powerMax = 1000; //350;
 	}
 	
 	public class BallIntake{

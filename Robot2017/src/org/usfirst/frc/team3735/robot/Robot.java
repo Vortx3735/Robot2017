@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3735.robot;
 
+import org.usfirst.frc.team3735.robot.commands.EncoderTest;
 import org.usfirst.frc.team3735.robot.commands.autonomous.AutonomousMiddleGearTopLoader;
 import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
@@ -57,6 +58,7 @@ public class Robot extends IterativeRobot {
 		
 		chooser = new SendableChooser();
 		chooser.addDefault("AutonomousMiddleGearTopLoader", new AutonomousMiddleGearTopLoader());
+		chooser.addObject("encoder test", new EncoderTest());
 		//chooser.addObject("Autonomous Test", autonomousTest);
 		
 		SmartDashboard.putData("Auto choices", chooser);

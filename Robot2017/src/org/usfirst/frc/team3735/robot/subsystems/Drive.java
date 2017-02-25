@@ -83,6 +83,8 @@ public class Drive extends PIDSubsystem {
 			getPIDController().setContinuous();
 			getPIDController().setOutputRange(-1, 1);
 	        LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
+	        //getTable().putBoolean("Drive test boolean", true);
+	        setupDriveForDistance();
 	}
 
 	
@@ -168,7 +170,7 @@ public class Drive extends PIDSubsystem {
 	    
 		l1.setEncPosition(absolutePosition);
 	    l1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-	    l1.reverseSensor(false);
+	    l1.reverseSensor(true);
 	    l1.configNominalOutputVoltage(+0f, -0f);
 	    l1.configPeakOutputVoltage(+12f, -12f);
 	    l1.setAllowableClosedLoopErr(0); 
@@ -177,10 +179,12 @@ public class Drive extends PIDSubsystem {
 	    l1.setP(dP);
 	    l1.setI(dI); 
 	    l1.setD(dD); 
-	    l1.changeControlMode(TalonControlMode.MotionMagic);
-	    l1.setMotionMagicCruiseVelocity(cruiseVelocity);
-		l1.setMotionMagicAcceleration(accel);
+	    l1.changeControlMode(TalonControlMode.Position);
+	    //l1.setMotionMagicCruiseVelocity(cruiseVelocity);
+		//l1.setMotionMagicAcceleration(accel);
 	    
+		absolutePosition = r1.getPulseWidthPosition() & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
+		r1.reverseOutput(true);
 	    r1.setEncPosition(absolutePosition);
 	    r1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 	    r1.reverseSensor(false);
@@ -192,9 +196,9 @@ public class Drive extends PIDSubsystem {
 	    r1.setP(dP);
 	    r1.setI(dI); 
 	    r1.setD(dD); 
-	    r1.changeControlMode(TalonControlMode.MotionMagic);
-	    r1.setMotionMagicCruiseVelocity(cruiseVelocity);
-		r1.setMotionMagicAcceleration(accel);
+	    r1.changeControlMode(TalonControlMode.Position);
+	    //r1.setMotionMagicCruiseVelocity(cruiseVelocity);
+		//r1.setMotionMagicAcceleration(accel);
 	}
 
 
@@ -228,6 +232,9 @@ public class Drive extends PIDSubsystem {
 //    	SmartDashboard.putNumber("right Position", r1.getPosition());
     	SmartDashboard.putNumber("Gyro Yaw", ahrs.getYaw());
 //      SmartDashboard.putData("Reset", new DriveNavxResest());
+    	SmartDashboard.putNumber("left get", l1.getPosition());
+    	SmartDashboard.putNumber("right get", r1.getPosition());
+
     }
     
     
