@@ -13,8 +13,8 @@ public class ShooterSmartDashboard extends Command {
 
 	double speed;
 	double voltage;
-	String key = "Shooter Voltage (0-12 volts presumably)";
-	String akey = "agitator voltage";
+	String key = "Shooter setVoltage";
+	String akey = "Agitator setVoltage";
     public ShooterSmartDashboard() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

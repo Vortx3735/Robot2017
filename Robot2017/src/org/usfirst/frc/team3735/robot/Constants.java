@@ -33,9 +33,9 @@ public class Constants {
 	}
 	
 	public class GearIntake{
-		public final static double rollerOutVoltage = 6;
-		public final static double rollerInVoltage = -6;
-		public final static double feedingVoltage = -6;
+		public final static double rollerOutVoltage = -6;
+		public final static double rollerInVoltage = 6;
+		public final static double feedingVoltage = 6;
 		
 		//constants for dropping off the gear
 		public static final double dropOffRollDelay = .5;

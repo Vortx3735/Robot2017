@@ -18,6 +18,7 @@ public class BallIntake extends Subsystem {
     // here. Call these from Commands.
 	private CANTalon motor;
 	
+	
 	public BallIntake(){
 		motor = new CANTalon(RobotMap.BallIntake.roller);
 	}
@@ -30,12 +31,13 @@ public class BallIntake extends Subsystem {
     public void setRollerCurrent(double speed){
     	motor.set(speed);
     }
+    
     public double getPower(){
     	return motor.getOutputVoltage() * motor.getOutputCurrent();
     }
     
     public void log(){
-    	SmartDashboard.putNumber("ball intake power", getPower());
+    	SmartDashboard.putNumber("Ball Intake getPower", getPower());
     }
 }
 

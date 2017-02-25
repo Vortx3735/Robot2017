@@ -226,15 +226,14 @@ public class Drive extends PIDSubsystem {
     
     
     public void log(){
-        SmartDashboard.putNumber(turnCorrectionKey, turnCorrection);
+    	SmartDashboard.putNumber(turnCorrectionKey, turnCorrection);
 //    	displayGyroData();
 //    	SmartDashboard.putNumber("left Position", l1.getPosition());
 //    	SmartDashboard.putNumber("right Position", r1.getPosition());
     	SmartDashboard.putNumber("Gyro Yaw", ahrs.getYaw());
 //      SmartDashboard.putData("Reset", new DriveNavxResest());
-    	SmartDashboard.putNumber("left get", l1.getPosition());
-    	SmartDashboard.putNumber("right get", r1.getPosition());
-
+        SmartDashboard.putNumber("Left Drive getPosition", l1.getPosition());
+        SmartDashboard.putNumber("Right Drive getPosition", r1.getPosition());
     }
     
     

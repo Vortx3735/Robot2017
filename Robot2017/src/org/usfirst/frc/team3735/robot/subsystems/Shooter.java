@@ -50,8 +50,9 @@ public class Shooter extends Subsystem {
 	public void log() {
 //		SmartDashboard.putNumber("Raw Motor Speed (native ticks/100ms)", drum.getSpeed());
 //		SmartDashboard.putNumber("Motor Speed (RPM?)", drum.get());
-		SmartDashboard.putNumber("Shooter motor get", drum.get());
-		SmartDashboard.putBoolean("shooter enabled", isEnabled);
+		SmartDashboard.putNumber("Agitator getPower", getAgitatorPower());
+		SmartDashboard.putBoolean("Shooter enabled", isEnabled);
+		SmartDashboard.putNumber("Shooter getPower", getShooterPower());
 	}
 
 
@@ -81,6 +82,14 @@ public class Shooter extends Subsystem {
     
     public void toggleEnabled(){
     	isEnabled = !isEnabled;
+    }
+    
+    public double getAgitatorPower(){
+    	return agitator.getOutputCurrent() * agitator.getOutputVoltage();
+    }
+    
+    public double getShooterPower(){
+    	return drum.getOutputCurrent() * drum.getOutputVoltage();
     }
 }
 

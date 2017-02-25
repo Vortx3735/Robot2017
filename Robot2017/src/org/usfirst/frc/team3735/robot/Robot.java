@@ -70,11 +70,15 @@ public class Robot extends IterativeRobot {
         //server.putVideo("name", 100, 100);
         
         //experimental code to test on 2/24
-        SmartDashboard.putData(gearIntake);
-        SmartDashboard.putData(shooter);
-        SmartDashboard.putData(scaler);
         SmartDashboard.putData(drive);
-        SmartDashboard.putData(ballIntake);
+        
+		oi.log();
+
+		scaler.log();
+		drive.log();
+		shooter.log();
+		ballIntake.log();
+		gearIntake.log();
 	}
 	
 	@Override

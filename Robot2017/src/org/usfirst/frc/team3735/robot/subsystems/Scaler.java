@@ -40,7 +40,7 @@ public class Scaler extends Subsystem {
     }
 	
 	public void log(){
-		SmartDashboard.putNumber("Scaler motor power", getPower());
+		SmartDashboard.putNumber("Scaler motor getPower", getPower());
 		//SmartDashboard.putNumber("Scaler motor joystick value", Robot.oi.getMainRightY());
 		SmartDashboard.putBoolean("Scaler overLoaded", isOverLoaded);
 	}
