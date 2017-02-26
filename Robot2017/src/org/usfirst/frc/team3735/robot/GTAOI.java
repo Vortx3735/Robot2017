@@ -2,17 +2,32 @@ package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 import org.usfirst.frc.team3735.robot.util.JoystickPOVButton;
+import org.usfirst.frc.team3735.robot.util.JoystickTriggerButton;
+import org.usfirst.frc.team3735.robot.commands.BallIntakeRollerOff;
+import org.usfirst.frc.team3735.robot.commands.InterruptOperations;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveAddSensitiveLeft;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveAddSensitiveRight;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveBrake;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToBallDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToCustomDriveSettings;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToGearDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
+import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
+import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeClose;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
+import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeOpen;
+import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersIn;
+import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersOut;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeToggleOpenClose;
+import org.usfirst.frc.team3735.robot.commands.scaler.ScalerOff;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOff;
-import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOn;
+import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOnAgitatorHigh;
+import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOnAgitatorLow;
+import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOnAgitatorSmartDash;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterSwitchEnabled;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -54,16 +69,18 @@ public class GTAOI implements DriveOI{
 		Button pov315 = new JoystickPOVButton(joy,315);
 		
 		//Button Mapping for codriver joy-stick
-		Button cA = new JoystickButton(cojoy,1);
-		Button cB = new JoystickButton(cojoy,2);
-		Button cX = new JoystickButton(cojoy,3);
-		Button cY = new JoystickButton(cojoy,4);
-		Button cLB = new JoystickButton(cojoy,5);
-		Button cRB = new JoystickButton(cojoy,6);
-		Button cBack = new JoystickButton(cojoy,7);
-		Button cStart = new JoystickButton(cojoy,8);
-		Button cLS = new JoystickButton(cojoy,9);
-		Button cRS = new JoystickButton(cojoy,10);
+		Button ca = new JoystickButton(cojoy,1);
+		Button cb = new JoystickButton(cojoy,2);
+		Button cx = new JoystickButton(cojoy,3);
+		Button cy = new JoystickButton(cojoy,4);
+		Button clb = new JoystickButton(cojoy,5);
+		Button crb = new JoystickButton(cojoy,6);
+		Button cback = new JoystickButton(cojoy,7);
+		Button cstart = new JoystickButton(cojoy,8);
+		Button cls = new JoystickButton(cojoy,9);
+		Button crs = new JoystickButton(cojoy,10);
+		Button clt = new JoystickTriggerButton(cojoy, false, .5);
+		Button crt = new JoystickTriggerButton(cojoy, true, .5);
 		
 		Button cpov0 = new JoystickPOVButton(cojoy,0);
 		Button cpov45 = new JoystickPOVButton(cojoy,45);
@@ -74,18 +91,36 @@ public class GTAOI implements DriveOI{
 		Button cpov270 = new JoystickPOVButton(cojoy,270);
 		Button cpov315 = new JoystickPOVButton(cojoy,315);
 		
-		y.toggleWhenPressed(new BallIntakeRollerIn());
-		
+		//layout for single driver
+//		y.toggleWhenPressed(new BallIntakeRollerIn());
 //		rb.toggleWhenPressed(new GearIntakeToggleOpenClose());
-		a.whileHeld(new GearIntakeFeeding());
-		b.whenPressed(new GearIntakeDropOff());
+//		a.whileHeld(new GearIntakeFeeding());
+//		b.whenPressed(new GearIntakeDropOff());
+//		rb.toggleWhenPressed(new ScalerUp());
+//		x.whenPressed(new ShooterSwitchEnabled());
+//		lb.whileHeld(new DriveBrake());
+//		start.whenPressed(new DriveSwitchDirection());
+//		pov0.whenPressed(new DriveTurnToAngle(0));
+//		pov45.whenPressed(new DriveTurnToAngle(45));
+//		pov90.whenPressed(new DriveTurnToAngle(90));
+//		pov135.whenPressed(new DriveTurnToAngle(135));
+//		pov180.whenPressed(new DriveTurnToAngle(180));
+//		pov225.whenPressed(new DriveTurnToAngle(-135));
+//		pov270.whenPressed(new DriveTurnToAngle(-90));
+//		pov315.whenPressed(new DriveTurnToAngle(-45));
 		
-		rb.toggleWhenPressed(new ScalerUp());
-		x.whenPressed(new ShooterSwitchEnabled());
+		//layout for two drivers
 		
-		lb.whileHeld(new DriveBrake());
-		start.whenPressed(new DriveSwitchDirection());
-		back.toggleWhenPressed(new DriveChangeToCustomDriveSettings());
+		
+		
+		a.whileHeld(new DriveBrake());
+		y.whenPressed(new ExpDrive());
+		
+		start.whenPressed(new DriveChangeToGearDirection());
+		back.whenPressed(new DriveChangeToBallDirection());
+		
+		lb.whileHeld(new DriveAddSensitiveLeft());
+		rb.whileHeld(new DriveAddSensitiveRight());
 		
 		pov0.whenPressed(new DriveTurnToAngle(0));
 		pov45.whenPressed(new DriveTurnToAngle(45));
@@ -95,6 +130,30 @@ public class GTAOI implements DriveOI{
 		pov225.whenPressed(new DriveTurnToAngle(-135));
 		pov270.whenPressed(new DriveTurnToAngle(-90));
 		pov315.whenPressed(new DriveTurnToAngle(-45));
+		
+		
+		cstart.whenPressed(new ScalerUp());
+		cback.whenPressed(new ScalerOff());
+		
+		ca.whileHeld(new GearIntakeFeeding());
+		cb.whenPressed(new GearIntakeDropOff());
+		
+		crb.whenPressed(new GearIntakeOpen());
+		crt.whenPressed(new GearIntakeClose());
+		
+		cx.whileHeld(new GearIntakeRollersIn());
+		cy.whileHeld(new GearIntakeRollersOut());
+		
+		cpov0.whenPressed(new ShooterOnAgitatorHigh());
+		cpov90.whenPressed(new ShooterOnAgitatorSmartDash());
+		cpov180.whenPressed(new ShooterOnAgitatorLow());
+		cpov270.whenPressed(new ShooterOff());
+		
+		clt.whenPressed(new BallIntakeRollerOff());
+		clb.whenPressed(new BallIntakeRollerIn());
+		
+		crs.whenPressed(new InterruptOperations());
+		
 		
 		
 	}
@@ -128,7 +187,7 @@ public class GTAOI implements DriveOI{
 	public double getMainRightMagnitude(){
 	    return Math.hypot(getMainRightX(), getMainRightY());
 	}
-	//returns the angle of the right main joystick in degrees in the range (180, 180]
+	//returns the angle of the right main joystick in degrees in the range (-180, 180]
 	public double getMainRightAngle(){
 		return Math.toDegrees(Math.atan2(getMainRightX(), getMainRightY()));
 	}

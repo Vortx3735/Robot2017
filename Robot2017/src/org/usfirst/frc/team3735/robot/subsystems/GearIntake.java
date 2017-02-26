@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3735.robot.subsystems;
 
+import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersOff;
 
@@ -30,6 +31,9 @@ public class GearIntake extends Subsystem {
 		topRoller.changeControlMode(TalonControlMode.Voltage);
 		bottomRoller.changeControlMode(TalonControlMode.Voltage);
 		
+		topRoller.setInverted(Constants.GearIntake.topRollerInverted);
+		bottomRoller.setInverted(Constants.GearIntake.bottomRollerInverted);
+		
 		liftSolenoid = new Solenoid(RobotMap.GearIntake.liftSolenoid);
 		topFeederSolenoid = new Solenoid(RobotMap.GearIntake.topFeedSolenoid);
 		liftUp();
@@ -40,6 +44,7 @@ public class GearIntake extends Subsystem {
     }
     
     //positive is out, negative is in
+    //actually flip that
     public void setRollerVoltage(double speed){
     	topRoller.set(speed);
     	bottomRoller.set(speed);

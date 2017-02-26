@@ -40,7 +40,7 @@ public class Drive extends PIDSubsystem {
 	private boolean reversed = false;
 	
 	//values for rotation
-	private static double P = .0025;//180 * this = max magnitude
+	private static double P = .005;//this = max magnitude/180
 	private static double I = 0.0;
 	private static double D = 0.0;
 	private static double F = 0.0;
@@ -53,11 +53,16 @@ public class Drive extends PIDSubsystem {
 	private static double accel = 10;
 	private static double cruiseVelocity = 30;
 	
+	private double leftAddTurn = 0;
+	private double rightAddTurn = 0;
 	
 	private String turnCorrectionKey = "Turn Correction";
 	private static double defaultTurnCorrection = Constants.Drive.turnCorrection;
 	private double turnCorrection;
 	
+	private String maxOutputKey = "Drive Scaled Max Output";
+	private static double defaultMaxOutput = Constants.Drive.scaledMaxOutput;
+	private double scaledMaxOutput;
 
 	public Drive(){
 		super("Drive",P,I,D,F);
@@ -78,13 +83,12 @@ public class Drive extends PIDSubsystem {
 			ahrs = new AHRS(SPI.Port.kMXP);
 		
 		//turn pid
-			getPIDController().setAbsoluteTolerance(5);
+			getPIDController().setAbsoluteTolerance(Constants.Drive.turnTolerance);
 			getPIDController().setInputRange(-180, 180);
 			getPIDController().setContinuous();
 			getPIDController().setOutputRange(-1, 1);
 	        LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
 	        //getTable().putBoolean("Drive test boolean", true);
-	        setupDriveForDistance();
 	}
 
 	
@@ -102,18 +106,37 @@ public class Drive extends PIDSubsystem {
     
     public void changeDirection(){
     	if(reversed){
-    		driveTrain = new RobotDrive(l1,r1);
-    		reversed = false;
+    		changeToForward();
     	}else{
+    		changeToReverse();
+    	}
+    }
+    
+    public void changeToForward(){
+    	if(reversed){
+    		driveTrain = new RobotDrive(l1, r1);
+    		reversed = false;
+        	setUpDriveTrain();
+    	}
+    }
+    public void changeToReverse(){
+    	if(!reversed){
     		driveTrain = new RobotDrive(r1, l1);
     		reversed = true;
+        	setUpDriveTrain();
     	}
-    	setUpDriveTrain();
+    }
+    
+    public void setLeftTurn(double turn){
+    	leftAddTurn = turn;
+    }
+    public void setRightTurn(double turn){
+    	rightAddTurn = turn;
     }
     
     public void arcadeDrive(double move, double rotate, boolean squareValues){
-    	turnCorrection = SmartDashboard.getNumber(turnCorrectionKey, Constants.Drive.turnCorrection);;
-    	driveTrain.arcadeDrive(move, rotate * -1 + (turnCorrection), squareValues);    	
+    	turnCorrection = SmartDashboard.getNumber(turnCorrectionKey, defaultTurnCorrection);
+    	driveTrain.arcadeDrive(move, rotate * -1 + turnCorrection + rightAddTurn + leftAddTurn, squareValues);    	
     }
     public void tankDrive(double left, double right, boolean squareValues){
     	driveTrain.tankDrive(left, right, squareValues);
@@ -139,8 +162,8 @@ public class Drive extends PIDSubsystem {
     	r1.changeControlMode(mode);
     }
     
-    public void getAverageDisplacement(){
-    	
+    public double getAverageDisplacement(){
+    	return .5 * (getPosistionLeft() + getPosistionRight());
     }
     
     public double getPosistionLeft() {
@@ -200,6 +223,10 @@ public class Drive extends PIDSubsystem {
 	    //r1.setMotionMagicCruiseVelocity(cruiseVelocity);
 		//r1.setMotionMagicAcceleration(accel);
 	}
+    
+    public void setUpDriveForController(){
+    	setControlMode(TalonControlMode.PercentVbus);
+    }
 
 
 	private void setupSlaves(){
@@ -234,6 +261,9 @@ public class Drive extends PIDSubsystem {
 //      SmartDashboard.putData("Reset", new DriveNavxResest());
         SmartDashboard.putNumber("Left Drive getPosition", l1.getPosition());
         SmartDashboard.putNumber("Right Drive getPosition", r1.getPosition());
+                
+        scaledMaxOutput = SmartDashboard.getNumber(maxOutputKey, defaultMaxOutput);
+        changeScaledMaxOutput(scaledMaxOutput);
     }
     
     

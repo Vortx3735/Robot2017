@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot;
 
-import org.usfirst.frc.team3735.robot.commands.EncoderTest;
 import org.usfirst.frc.team3735.robot.commands.autonomous.AutonomousMiddleGearTopLoader;
+import org.usfirst.frc.team3735.robot.commands.autonomous.EncoderTest;
 import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.subsystems.GearIntake;

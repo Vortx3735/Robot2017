@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3735.robot.subsystems;
 
+import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.RobotMap;
+import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOff;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterSmartDashboard;
 
 import com.ctre.CANTalon;
@@ -20,14 +22,28 @@ public class Shooter extends Subsystem {
 	CANTalon drum = new CANTalon(RobotMap.Shooter.drum);
 	CANTalon agitator = new CANTalon(RobotMap.Shooter.agitator);
 //	Encoder drumEncoder = new Encoder(RobotMap.Shooter.encoder1, RobotMap.Shooter.encoder2);
-	double targetSpeed = 0;
-	private boolean isEnabled = false;
+	
+	double drumVoltage;
+	double agitatorVoltage;
+	
+	String drumKey = "Shooter setVoltage";
+	String agitatorKey = "Agitator setVoltage";
 	
 //	public PIDController controller = new PIDController(1.0, 0.0, 0.0, drumEncoder, drum);
 	
 	public Shooter(){
 		drum.changeControlMode(TalonControlMode.Voltage);
 		agitator.changeControlMode(TalonControlMode.Voltage);
+		
+		drum.setInverted(Constants.Shooter.drumInverted);
+		agitator.setInverted(Constants.Shooter.agitatorInverted);
+		
+		drumVoltage = Constants.Shooter.shootVoltage;
+		agitatorVoltage = Constants.Shooter.agitatorVoltage;
+		
+		SmartDashboard.putNumber(drumKey, drumVoltage);
+		SmartDashboard.putNumber(agitatorKey, agitatorVoltage);
+		
 		//drum.changeControlMode(TalonControlMode.Speed);
 		//drum.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		
@@ -51,45 +67,56 @@ public class Shooter extends Subsystem {
 //		SmartDashboard.putNumber("Raw Motor Speed (native ticks/100ms)", drum.getSpeed());
 //		SmartDashboard.putNumber("Motor Speed (RPM?)", drum.get());
 		SmartDashboard.putNumber("Agitator getPower", getAgitatorPower());
-		SmartDashboard.putBoolean("Shooter enabled", isEnabled);
 		SmartDashboard.putNumber("Shooter getPower", getShooterPower());
 	}
 
 
   	public void initDefaultCommand() {
-  		setDefaultCommand(new ShooterSmartDashboard());
+  		setDefaultCommand(new ShooterOff());
   	}
   
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    public void setSpeed(double d){
-    	if(isEnabled){
-    		drum.set(d);
-    	}else{
-    		drum.set(0);
-    	}
-    }
-    
+    public void setDrumVoltage(double d){
+//    	if(isEnabled){
+//    		drum.set(d);
+//    	}else{
+//    		drum.set(0);
+//    	}
+    	drum.set(d);
+    }    
     public void setAgitatorVoltage(double voltage){
-
-    	if(isEnabled){
-    		agitator.set(voltage);
-    	}else{
-    		agitator.set(0);
-    	}
+//    	if(isEnabled){
+//    		agitator.set(voltage);
+//    	}else{
+//    		agitator.set(0);
+//    	}
+    	agitator.set(voltage);
     }
     
-    public void toggleEnabled(){
-    	isEnabled = !isEnabled;
+    public void setDrumSmartDashboard(){
+    	drumVoltage = SmartDashboard.getNumber(drumKey, drumVoltage);
+    	setDrumVoltage(drumVoltage);
     }
+    
+    public void setAgitatorSmartDashboard(){
+    	agitatorVoltage = SmartDashboard.getNumber(agitatorKey, agitatorVoltage);
+    	setAgitatorVoltage(agitatorVoltage);
+    }
+    
+
+    
+//    public void toggleEnabled(){
+//    	isEnabled = !isEnabled;
+//    }
     
     public double getAgitatorPower(){
-    	return agitator.getOutputCurrent() * agitator.getOutputVoltage();
+    	return Math.abs(agitator.getOutputCurrent() * agitator.getOutputVoltage());
     }
     
     public double getShooterPower(){
-    	return drum.getOutputCurrent() * drum.getOutputVoltage();
+    	return Math.abs(drum.getOutputCurrent() * drum.getOutputVoltage());
     }
 }
 

@@ -67,7 +67,7 @@ public class ExpDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drive.setControlMode(TalonControlMode.PercentVbus);
+    	Robot.drive.setUpDriveForController();
     	if(isJoystickInput){
     		YDriveStick			= 0.0;
     		ZDriveStick			= 0.0;
