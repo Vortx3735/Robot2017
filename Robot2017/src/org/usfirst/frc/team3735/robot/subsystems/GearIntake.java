@@ -9,6 +9,7 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -50,6 +51,13 @@ public class GearIntake extends Subsystem {
     	bottomRoller.set(speed);
     }
     
+    public double getTopRollerPower(){
+    	return Math.abs(topRoller.getOutputVoltage() * topRoller.getOutputCurrent());
+    }
+    public double getBottomRollerPower(){
+    	return Math.abs(bottomRoller.getOutputVoltage() * bottomRoller.getOutputCurrent());
+    }
+    
     public void feedOpen(){
     	topFeederSolenoid.set(true);
     }
@@ -64,7 +72,9 @@ public class GearIntake extends Subsystem {
     }
     
     public void log(){
-    	
+    	SmartDashboard.putNumber("Top Roller getPower", getTopRollerPower());
+    	SmartDashboard.putNumber("Bottom Roller getPower", getBottomRollerPower());
+
     }
 }
 

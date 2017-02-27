@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3735.robot;
 
-import org.usfirst.frc.team3735.robot.commands.autonomous.AutonomousMiddleGearTopLoader;
-import org.usfirst.frc.team3735.robot.commands.autonomous.EncoderTest;
+import org.usfirst.frc.team3735.robot.commands.autonomous.*;
 import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.subsystems.GearIntake;
@@ -57,8 +56,14 @@ public class Robot extends IterativeRobot {
 		oi = new GTAOI();
 		
 		chooser = new SendableChooser();
-		chooser.addDefault("AutonomousMiddleGearTopLoader", new AutonomousMiddleGearTopLoader());
-		chooser.addObject("encoder test", new EncoderTest());
+		chooser.addDefault("encoder test", new EncoderTest());
+		chooser.addObject("Top-Cross-Gear-Loader", new AutonomousTopCrossGearLoader());
+		chooser.addObject("Top-Cross-Gear-Shoot", new AutonomousTopCrossGearShoot());
+		chooser.addObject("Middle-Gear-Top-Loader", new AutonomousMiddleGearTopLoader());
+		chooser.addObject("Middle-Gear-Bottom-Shoot", new AutonomousMiddleGearBottomShoot());
+		chooser.addObject("Bottom-Cross-Gear-Loader", new AutonomousBottomCrossGearLoader());
+		chooser.addObject("Bottom-Cross-Gear-Shoot", new AutonomousBottomCrossGearShoot());
+
 		//chooser.addObject("Autonomous Test", autonomousTest);
 		
 		SmartDashboard.putData("Auto choices", chooser);
@@ -97,6 +102,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		Robot.drive.zeroYaw();
         autonomousCommand = (Command) chooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}

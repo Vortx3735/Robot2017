@@ -50,8 +50,8 @@ public class Drive extends PIDSubsystem {
 	private static double dD = 0.0;
 	private static double dF = 0.0;
 
-	private static double accel = 10;
-	private static double cruiseVelocity = 30;
+	private static double accel = 30;			//rpm/s
+	private static double cruiseVelocity = 120;	//rpm
 	
 	private double leftAddTurn = 0;
 	private double rightAddTurn = 0;
@@ -88,7 +88,10 @@ public class Drive extends PIDSubsystem {
 			getPIDController().setContinuous();
 			getPIDController().setOutputRange(-1, 1);
 	        LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
-	        //getTable().putBoolean("Drive test boolean", true);
+	        
+        //smartdashboard puts
+	    	SmartDashboard.putNumber(turnCorrectionKey, turnCorrection);
+
 	}
 
 	
@@ -145,13 +148,12 @@ public class Drive extends PIDSubsystem {
     	driveTrain.drive(move, curve);
     }
     public void setLeftRight(double left, double right){
-    	if(reversed){
-    		r1.set(left);
-    		l1.set(right);
-    	}else{
-    		l1.set(left);
-    		r1.set(right);
-    	}
+		l1.set(left);
+		r1.set(right);
+    }
+    public void setLeftRightDistance(double left, double right){
+    	setLeftRight(left / (Constants.Drive.wheelDiameter * Math.PI),
+    				 right / (Constants.Drive.wheelDiameter * Math.PI));
     }
     public void setLeftRightOutputs(double leftOutput, double rightOutput){
 		driveTrain.setLeftRightMotorOutputs(leftOutput, rightOutput);
@@ -163,15 +165,22 @@ public class Drive extends PIDSubsystem {
     }
     
     public double getAverageDisplacement(){
-    	return .5 * (getPosistionLeft() + getPosistionRight());
+    	return .5 * (getPositionLeft() + getPositionRight());
     }
     
-    public double getPosistionLeft() {
+    public double getPositionLeft() {
     	return l1.getPosition();
     }
     
-    public double getPosistionRight() {
+    public double getPositionRight() {
     	return r1.getPosition();
+    }
+    
+    public double getInchesPositionLeft(){
+    	return getPositionLeft() * (Constants.Drive.wheelDiameter * Math.PI);
+    }
+    public double getInchesPositionRight(){
+    	return getPositionRight() * (Constants.Drive.wheelDiameter * Math.PI);
     }
     
     public double getYaw(){
@@ -190,7 +199,7 @@ public class Drive extends PIDSubsystem {
     
     public void setupDriveForDistance() {
 		int absolutePosition = l1.getPulseWidthPosition() & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
-	    
+		
 		l1.setEncPosition(absolutePosition);
 	    l1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 	    l1.reverseSensor(true);
@@ -202,11 +211,11 @@ public class Drive extends PIDSubsystem {
 	    l1.setP(dP);
 	    l1.setI(dI); 
 	    l1.setD(dD); 
-	    l1.changeControlMode(TalonControlMode.Position);
 	    //l1.setMotionMagicCruiseVelocity(cruiseVelocity);
 		//l1.setMotionMagicAcceleration(accel);
 	    
 		absolutePosition = r1.getPulseWidthPosition() & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
+		
 		r1.reverseOutput(true);
 	    r1.setEncPosition(absolutePosition);
 	    r1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
@@ -219,12 +228,13 @@ public class Drive extends PIDSubsystem {
 	    r1.setP(dP);
 	    r1.setI(dI); 
 	    r1.setD(dD); 
-	    r1.changeControlMode(TalonControlMode.Position);
 	    //r1.setMotionMagicCruiseVelocity(cruiseVelocity);
 		//r1.setMotionMagicAcceleration(accel);
 	}
     
     public void setUpDriveForController(){
+		l1.reverseOutput(false);
+		r1.reverseOuput(false);
     	setControlMode(TalonControlMode.PercentVbus);
     }
 
@@ -253,15 +263,18 @@ public class Drive extends PIDSubsystem {
     
     
     public void log(){
-    	SmartDashboard.putNumber(turnCorrectionKey, turnCorrection);
 //    	displayGyroData();
-//    	SmartDashboard.putNumber("left Position", l1.getPosition());
-//    	SmartDashboard.putNumber("right Position", r1.getPosition());
     	SmartDashboard.putNumber("Gyro Yaw", ahrs.getYaw());
 //      SmartDashboard.putData("Reset", new DriveNavxResest());
         SmartDashboard.putNumber("Left Drive getPosition", l1.getPosition());
         SmartDashboard.putNumber("Right Drive getPosition", r1.getPosition());
-                
+        
+        SmartDashboard.putNumber("Left Drive Get", l1.get());
+        SmartDashboard.putNumber("Right Drive Get", r1.get());
+        
+        SmartDashboard.putNumber("Left Drive getSpeed", l1.getSpeed());
+        SmartDashboard.putNumber("Right Drive getSpeed", r1.getSpeed());
+
         scaledMaxOutput = SmartDashboard.getNumber(maxOutputKey, defaultMaxOutput);
         changeScaledMaxOutput(scaledMaxOutput);
     }
