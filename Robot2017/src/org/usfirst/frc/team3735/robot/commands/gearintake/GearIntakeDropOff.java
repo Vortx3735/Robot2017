@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class GearIntakeDropOff extends CommandGroup {
 
     public GearIntakeDropOff() {
-    	addParallel(new GearIntakeRollersIn(),Constants.GearIntake.dropOffTotalTime);
+    	addParallel(new GearIntakeRollersOut(),Constants.GearIntake.dropOffTotalTime);
     	addSequential(new Wait(Constants.GearIntake.dropOffRollDelay));
     	addSequential(new GearIntakeLiftDown());
     	addSequential(new ExpDrive(Constants.GearIntake.dropOffDrivePercent,0),Constants.GearIntake.dropOffDriveTime);

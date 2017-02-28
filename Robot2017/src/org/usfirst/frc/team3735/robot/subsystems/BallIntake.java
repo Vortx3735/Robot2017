@@ -2,7 +2,7 @@ package org.usfirst.frc.team3735.robot.subsystems;
 
 import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.RobotMap;
-import org.usfirst.frc.team3735.robot.commands.BallIntakeRollerOff;
+import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
 
 import com.ctre.CANTalon;
 
