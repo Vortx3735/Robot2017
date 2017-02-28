@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot {
 	public CoordinateHandler cords;
 	
 	SendableChooser lrChooser;
-
+	boolean rightSide = false;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -68,6 +68,8 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Bottom-Cross-Gear-Loader", new AutonomousBottomCrossGearLoader());
 		autonomousChooser.addObject("Bottom-Cross-Gear-Shoot", new AutonomousBottomCrossGearShoot());
 
+		lrChooser.addDefault("Left Side Coords", false);
+		lrChooser.addObject("Right Side Coords", true);
 		//chooser.addObject("Autonomous Test", autonomousTest);
 		
 		SmartDashboard.putData("Auto choices", autonomousChooser);
@@ -107,6 +109,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		Robot.drive.zeroYaw();
+		rightSide = (boolean) lrChooser.getSelected();
+		if(rightSide){
+			cords.switchToRightSide();
+		}else{
+			cords.switchToLeftSide();
+		}
         autonomousCommand = (Command) autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}

@@ -7,11 +7,8 @@ import org.usfirst.frc.team3735.robot.Constants.RobotDimensions;
 import org.usfirst.frc.team3735.robot.util.Point;
 
 public class CoordinateHandler {
+	public final static double halfLength = RobotDimensions.length/2;
 
-	public double length = 33.65;
-	public double width = 40;
-	public double height = 23.5;
-	public double halfLength = RobotDimensions.length/2;
 	
 	public Point startTop = new Point(halfLength, 80.7);
 	public Point startMiddle = new Point(halfLength, 0);
