@@ -5,6 +5,7 @@ import org.usfirst.frc.team3735.robot.util.Point;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistance;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceTimed;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
+import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.Constants.PointsLeft;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -23,13 +24,13 @@ public class AutonomousMiddleGearTopLoader extends CommandGroup {
     	Point point4 = PointsLeft.opSideRetrivalAndBaseLine;
     	
     	addSequential(new DriveTurnToAngle(Point.findAngle(point0, point1)));
-    	addSequential(new DriveMoveDistanceTimed(Point.findDistance(point0, point1)));
-    	//addSequential(new GearDropOff());
+    	addSequential(new DriveMoveDistance(Point.findDistance(point0, point1)));
+    	addSequential(new GearIntakeDropOff());
     	addSequential(new DriveTurnToAngle(Point.findAngle(point1, point2)));
-    	addSequential(new DriveMoveDistanceTimed(Point.findDistance(point1, point2)));
+    	addSequential(new DriveMoveDistance(Point.findDistance(point1, point2)));
     	addSequential(new DriveTurnToAngle(Point.findAngle(point2, point3)));
-    	addSequential(new DriveMoveDistanceTimed(Point.findDistance(point2, point3)));
+    	addSequential(new DriveMoveDistance(Point.findDistance(point2, point3)));
     	addSequential(new DriveTurnToAngle(Point.findAngle(point3, point4)));
-    	addSequential(new DriveMoveDistanceTimed(Point.findDistance(point3, point4)));
+    	addSequential(new DriveMoveDistance(Point.findDistance(point3, point4)));
     }
 }

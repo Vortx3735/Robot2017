@@ -1,13 +1,14 @@
 package org.usfirst.frc.team3735.robot.subsystems;
 
+import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.RobotMap;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersOff;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -30,19 +31,29 @@ public class GearIntake extends Subsystem {
 		topRoller.changeControlMode(TalonControlMode.Voltage);
 		bottomRoller.changeControlMode(TalonControlMode.Voltage);
 		
+		topRoller.setInverted(Constants.GearIntake.topRollerInverted);
+		bottomRoller.setInverted(Constants.GearIntake.bottomRollerInverted);
+		
 		liftSolenoid = new Solenoid(RobotMap.GearIntake.liftSolenoid);
 		topFeederSolenoid = new Solenoid(RobotMap.GearIntake.topFeedSolenoid);
 		liftUp();
 	}
 
     public void initDefaultCommand() {
-        setDefaultCommand(new GearIntakeRollersOff());
     }
     
     //positive is out, negative is in
+    //actually flip that
     public void setRollerVoltage(double speed){
     	topRoller.set(speed);
     	bottomRoller.set(speed);
+    }
+    
+    public double getTopRollerPower(){
+    	return Math.abs(topRoller.getOutputVoltage() * topRoller.getOutputCurrent());
+    }
+    public double getBottomRollerPower(){
+    	return Math.abs(bottomRoller.getOutputVoltage() * bottomRoller.getOutputCurrent());
     }
     
     public void feedOpen(){
@@ -59,7 +70,9 @@ public class GearIntake extends Subsystem {
     }
     
     public void log(){
-    	
+    	SmartDashboard.putNumber("Top Roller getPower", getTopRollerPower());
+    	SmartDashboard.putNumber("Bottom Roller getPower", getBottomRollerPower());
+
     }
 }
 

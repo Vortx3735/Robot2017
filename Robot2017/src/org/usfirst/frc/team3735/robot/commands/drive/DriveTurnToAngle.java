@@ -36,7 +36,7 @@ public class DriveTurnToAngle extends Command{
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(Robot.drive.onTarget()){
-    		timeOnTarget += .002;
+    		timeOnTarget += .02;
     	}else{
     		timeOnTarget = 0;
     	}

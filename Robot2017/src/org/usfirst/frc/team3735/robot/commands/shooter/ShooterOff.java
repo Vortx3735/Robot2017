@@ -3,7 +3,6 @@ package org.usfirst.frc.team3735.robot.commands.shooter;
 import org.usfirst.frc.team3735.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /**
  *
@@ -11,21 +10,32 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 public class ShooterOff extends Command {
 
     public ShooterOff() {
-        super();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.shooter);
+    	requires(Robot.shooter);
     }
 
-    // Called once when the command executes
+    // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.setSpeed(0);
     }
 
-	@Override
-	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
+    	Robot.shooter.setDrumVoltage(0);
+    	Robot.shooter.setAgitatorVoltage(0);
+    }
 
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+        return false;
+    }
+
+    // Called once after isFinished returns true
+    protected void end() {
+    }
+
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+    }
 }

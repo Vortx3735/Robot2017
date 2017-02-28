@@ -3,6 +3,7 @@ package org.usfirst.frc.team3735.robot.subsystems;
 import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.RobotMap;
+import org.usfirst.frc.team3735.robot.commands.scaler.ScalerOff;
 
 import com.ctre.CANTalon;
 
@@ -21,12 +22,14 @@ public class Scaler extends Subsystem {
 
 	
 	private boolean isOverLoaded = false;
-	private double rampRate = .01;
+	private double rampRate = Constants.Scaler.rampRate;
 	private double percent = 0;
 	
 	public Scaler(){
 		motor = new CANTalon(RobotMap.Scaler.motor);
 		motor.setCloseLoopRampRate(.2);
+		
+		motor.setInverted(Constants.Scaler.scalerInverted);
 		//motor.changeControlMode(CANTalon.TalonControlMode.Voltage);
 		//motor.setVoltageCompensationRampRate(voltageChangeSpeed);
 		SmartDashboard.putNumber("Scaler motor power", getPower());
@@ -37,6 +40,7 @@ public class Scaler extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new ScalerOff());
     }
 	
 	public void log(){
@@ -46,7 +50,7 @@ public class Scaler extends Subsystem {
 	}
 	
 	public void setCurrent(double current){
-		if(Math.abs(getPower()) > Constants.Scaler.powerMax){
+		if(getPower() > Constants.Scaler.powerMax){
 			isOverLoaded = true;
 			percent = 0;
 			motor.set(percent);
@@ -66,7 +70,7 @@ public class Scaler extends Subsystem {
 	}
 	
 	public double getPower(){
-		return motor.getOutputCurrent() * motor.getOutputVoltage();
+		return Math.abs(motor.getOutputCurrent() * motor.getOutputVoltage());
 	}
 	
 	public boolean getOverloaded(){
