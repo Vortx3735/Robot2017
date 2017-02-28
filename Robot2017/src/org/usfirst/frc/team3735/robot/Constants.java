@@ -50,7 +50,7 @@ public class Constants {
 	
 	public class Scaler{
 		public final static double upCurrent = -1.0;
-		public final static double powerMax = 1000; //350;
+		public final static double powerMax = 350; //350;
 	}
 	
 	public class BallIntake{

@@ -28,7 +28,7 @@ public class Robot extends IterativeRobot {
 	final String defaultAuto = "Default";
 	final String autonomousTest = "AutonomousTest";
 	String autoSelected;
-	SendableChooser chooser;
+	SendableChooser autonomousChooser;
 	Command autonomousCommand;
 	public static BallIntake ballIntake;
 	public static Drive drive;
@@ -39,6 +39,9 @@ public class Robot extends IterativeRobot {
 	
 	public static DriveOI oi;
 	public RobotMap robotmap;
+	public CoordinateHandler cords;
+	
+	SendableChooser lrChooser;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -47,6 +50,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		robotmap = new RobotMap();
+		cords = new CoordinateHandler();
 		
 		gearIntake = new GearIntake();
 		shooter = new Shooter();
@@ -56,12 +60,12 @@ public class Robot extends IterativeRobot {
 		
 		oi = new GTAOI();
 		
-		chooser = new SendableChooser();
-		chooser.addDefault("AutonomousMiddleGearTopLoader", new AutonomousMiddleGearTopLoader());
-		chooser.addObject("encoder test", new EncoderTest());
+		autonomousChooser = new SendableChooser();
+		autonomousChooser.addDefault("AutonomousMiddleGearTopLoader", new AutonomousMiddleGearTopLoader());
+		autonomousChooser.addObject("encoder test", new EncoderTest());
 		//chooser.addObject("Autonomous Test", autonomousTest);
 		
-		SmartDashboard.putData("Auto choices", chooser);
+		SmartDashboard.putData("Auto choices", autonomousChooser);
 		
     	server = CameraServer.getInstance();
         //server.setQuality(50);
@@ -97,7 +101,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
+        autonomousCommand = (Command) autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}
 
