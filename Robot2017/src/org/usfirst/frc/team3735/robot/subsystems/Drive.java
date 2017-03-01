@@ -139,7 +139,7 @@ public class Drive extends PIDSubsystem {
     
     public void arcadeDrive(double move, double rotate, boolean squareValues){
     	turnCorrection = SmartDashboard.getNumber(turnCorrectionKey, defaultTurnCorrection);
-    	driveTrain.arcadeDrive(move, rotate * -1 + turnCorrection + rightAddTurn + leftAddTurn, squareValues);    	
+    	driveTrain.arcadeDrive(move, -1 * (rotate + turnCorrection + rightAddTurn + leftAddTurn), squareValues);    	
     }
     public void tankDrive(double left, double right, boolean squareValues){
     	driveTrain.tankDrive(left, right, squareValues);

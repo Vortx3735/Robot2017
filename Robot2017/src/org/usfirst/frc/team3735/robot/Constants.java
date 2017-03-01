@@ -35,7 +35,8 @@ public class Constants {
 		public static final double driveTolerance = 2;		//inches
 
 		//for turning slowly with lb and rb
-		public static final double lowSensitivityTurn = .2;
+		public static final double lowSensitivityLeftTurn = -.2;
+		public static final double lowSensitivityRightTurn = .2;
 
 	}
 	

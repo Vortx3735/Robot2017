@@ -110,11 +110,8 @@ public class GTAOI implements DriveOI{
 //		pov315.whenPressed(new DriveTurnToAngle(-45));
 		
 		//layout for two drivers
-		
-		
-		
 		a.whileHeld(new DriveBrake());
-		y.whenPressed(new ExpDrive());
+		//y.whenPressed(new ExpDrive());
 		
 		start.whenPressed(new DriveChangeToGearDirection());
 		back.whenPressed(new DriveChangeToBallDirection());
@@ -130,6 +127,7 @@ public class GTAOI implements DriveOI{
 		pov225.whenPressed(new DriveTurnToAngle(-135));
 		pov270.whenPressed(new DriveTurnToAngle(-90));
 		pov315.whenPressed(new DriveTurnToAngle(-45));
+		
 		
 		
 		cstart.whenPressed(new ScalerUp());
