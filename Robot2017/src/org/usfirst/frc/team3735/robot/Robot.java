@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		robotmap = new RobotMap();
-		cords = new CoordinateHandler();
+		//cords = new CoordinateHandler();
 		
 		gearIntake = new GearIntake();
 		shooter = new Shooter();
@@ -60,31 +60,33 @@ public class Robot extends IterativeRobot {
 		oi = new GTAOI();
 		
 		autonomousChooser = new SendableChooser();
-		autonomousChooser.addDefault("encoder test", new EncoderTest());
-		autonomousChooser.addObject("Top-Cross-Gear-Loader", new AutonomousTopCrossGearLoader());
-		autonomousChooser.addObject("Top-Cross-Gear-Shoot", new AutonomousTopCrossGearShoot());
-		autonomousChooser.addObject("Middle-Gear-Top-Loader", new AutonomousMiddleGearTopLoader());
-		autonomousChooser.addObject("Middle-Gear-Bottom-Shoot", new AutonomousMiddleGearBottomShoot());
-		autonomousChooser.addObject("Bottom-Cross-Gear-Loader", new AutonomousBottomCrossGearLoader());
-		autonomousChooser.addObject("Bottom-Cross-Gear-Shoot", new AutonomousBottomCrossGearShoot());
-
-		lrChooser.addDefault("Left Side Coords", false);
-		lrChooser.addObject("Right Side Coords", true);
+		autonomousChooser.addDefault("DriveBaseStraightOnlyToBase", new AutonTimedDriveTimedDriveStraightToBase());
+		autonomousChooser.addObject ("DriveBaseLeftOfAirShip", new AutonTimedDriveTimedStepsToLeft());
+		autonomousChooser.addObject ("DriveBaseRightOfAirShip", new AutonTimedDriveTimedStepsToRight());
+		autonomousChooser.addObject ("DriveStrightDropGear", new AutonTimedDriveTimedDropGear());
+		
+//	THIS IS COMMENTED BY MR NAIK OUT SINCE NOT TESTED 	
+//		autonomousChooser.addObject("Top-Cross-Gear-Loader", new AutonomousTopCrossGearLoader());
+//		autonomousChooser.addObject("Top-Cross-Gear-Shoot", new AutonomousTopCrossGearShoot());
+//		autonomousChooser.addObject("Middle-Gear-Top-Loader", new AutonomousMiddleGearTopLoader());
+//		autonomousChooser.addObject("Middle-Gear-Bottom-Shoot", new AutonomousMiddleGearBottomShoot());
+//		autonomousChooser.addObject("Bottom-Cross-Gear-Loader", new AutonomousBottomCrossGearLoader());
+//		autonomousChooser.addObject("Bottom-Cross-Gear-Shoot", new AutonomousBottomCrossGearShoot());
+		//lrChooser.addDefault("Left Side Coords", false);
+		//lrChooser.addObject("Right Side Coords", true);
 		//chooser.addObject("Autonomous Test", autonomousTest);
+		//************************************************************************
 		
-		SmartDashboard.putData("Auto choices", autonomousChooser);
-		
+		SmartDashboard.putData("AUTONOMOUS Mode", autonomousChooser);
+		/* Lets Start the WEB CAMERA */
     	server = CameraServer.getInstance();
-        //server.setQuality(50);
-        //server.setSize(kSize320x240);
-        server.startAutomaticCapture();
-        //server.putVideo("name", 100, 100);
+		server.startAutomaticCapture();
+		/*****************************/
         
         //experimental code to test on 2/24
-        SmartDashboard.putData(drive);
+        //SmartDashboard.putData(drive);
         
 		oi.log();
-
 		scaler.log();
 		drive.log();
 		shooter.log();
@@ -108,13 +110,14 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		Robot.drive.zeroYaw();
-		rightSide = (boolean) lrChooser.getSelected();
-		if(rightSide){
-			cords.switchToRightSide();
-		}else{
-			cords.switchToLeftSide();
-		}
+//		THIS IS COMMENTED BY MR NAIK OUT SINCE NOT TESTED 	
+//		Robot.drive.zeroYaw();
+//		rightSide = (boolean) lrChooser.getSelected();
+//		if(rightSide){
+//			cords.switchToRightSide();
+//		}else{
+//			cords.switchToLeftSide();
+//		}
         autonomousCommand = (Command) autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}

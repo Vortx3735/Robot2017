@@ -35,26 +35,26 @@ public class CoordinateHandler {
 	private boolean isRightSide = false;
 	
 	public CoordinateHandler(){
-		points.add(startTop);
-		points.add(startMiddle);
-		points.add(startBottom);
-		
-		points.add(topLift);
-		points.add(middleLift);
-		points.add(bottomLift);
-		
-		points.add(retrivalAndBaseLine);
-		points.add(opSideRetrivalAndBaseLine);
-		
-		points.add(midBackUp);
-		points.add(crossBottomBaseLine);
-		
-		points.add(lineUpWithBoiler);
-		points.add(boiler);
-		points.add(boilerExact);
-		
-		points.add(lineUpWithTopLift);
-		points.add(lineUpWithBottomLift);
+//		points.add(startTop);
+//		points.add(startMiddle);
+//		points.add(startBottom);
+//		
+//		points.add(topLift);
+//		points.add(middleLift);
+//		points.add(bottomLift);
+//		
+//		points.add(retrivalAndBaseLine);
+//		points.add(opSideRetrivalAndBaseLine);
+//		
+//		points.add(midBackUp);
+//		points.add(crossBottomBaseLine);
+//		
+//		points.add(lineUpWithBoiler);
+//		points.add(boiler);
+//		points.add(boilerExact);
+//		
+//		points.add(lineUpWithTopLift);
+//		points.add(lineUpWithBottomLift);
 	}
 	
 	public void switchToRightSide(){
