@@ -1,3 +1,5 @@
+//values for the practice robot
+
 package org.usfirst.frc.team3735.robot;
 
 public class RobotMap {
@@ -31,6 +33,8 @@ public class RobotMap {
 	}
 		
 }
+
+//values for the final robot
 
 //package org.usfirst.frc.team3735.robot;
 //
