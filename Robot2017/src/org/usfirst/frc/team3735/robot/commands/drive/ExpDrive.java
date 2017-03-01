@@ -62,6 +62,7 @@ public class ExpDrive extends Command {
     public ExpDrive(double move, double turn){
     	YDriveStick = move;
     	ZDriveStick = turn;
+    	System.out.println("Exp Move no Joystick");
     	isJoystickInput = false;
     }
 
