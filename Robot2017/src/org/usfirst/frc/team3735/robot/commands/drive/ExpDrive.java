@@ -62,6 +62,7 @@ public class ExpDrive extends Command {
     public ExpDrive(double move, double turn){
     	YDriveStick = move;
     	ZDriveStick = turn;
+    	System.out.println("Exp Move no Joystick");
     	isJoystickInput = false;
     }
 
@@ -82,17 +83,19 @@ public class ExpDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		moveExponent = SmartDashboard.getNumber(moveExponentKey, moveExponent);
-	    turnExponent = SmartDashboard.getNumber(turnExponentKey, turnExponent);
-		scaledMaxMove = SmartDashboard.getNumber(scaledMaxMoveKey, scaledMaxMove);
-		scaledMaxTurn = SmartDashboard.getNumber(scaledMaxTurnKey, scaledMaxTurn);
-		moveReactivity = SmartDashboard.getNumber(moveReactivityKey, moveReactivity);
-		turnReactivity = SmartDashboard.getNumber(turnReactivityKey, turnReactivity);
+
 
     	/************************************/
 		/* Lets Get the New Joy Stick Values*/
 		/************************************/
 		if(isJoystickInput){
+			moveExponent = SmartDashboard.getNumber(moveExponentKey, moveExponent);
+		    turnExponent = SmartDashboard.getNumber(turnExponentKey, turnExponent);
+			scaledMaxMove = SmartDashboard.getNumber(scaledMaxMoveKey, scaledMaxMove);
+			scaledMaxTurn = SmartDashboard.getNumber(scaledMaxTurnKey, scaledMaxTurn);
+			moveReactivity = SmartDashboard.getNumber(moveReactivityKey, moveReactivity);
+			turnReactivity = SmartDashboard.getNumber(turnReactivityKey, turnReactivity);
+			
 			YDriveStick = Robot.oi.getDriveMove();
 			ZDriveStick = Robot.oi.getDriveTurn();
 		}

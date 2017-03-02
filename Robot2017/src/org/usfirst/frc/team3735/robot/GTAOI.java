@@ -110,11 +110,12 @@ public class GTAOI implements DriveOI{
 //		pov315.whenPressed(new DriveTurnToAngle(-45));
 		
 		//layout for two drivers
+		x.whileHeld(new DriveBrake());
 		
+		a.whileHeld(new GearIntakeFeeding());
+		b.whenPressed(new GearIntakeDropOff());
 		
-		
-		a.whileHeld(new DriveBrake());
-		y.whenPressed(new ExpDrive());
+		//y.whenPressed(new ExpDrive());
 		
 		start.whenPressed(new DriveChangeToGearDirection());
 		back.whenPressed(new DriveChangeToBallDirection());
@@ -123,26 +124,24 @@ public class GTAOI implements DriveOI{
 		rb.whileHeld(new DriveAddSensitiveRight());
 		
 		pov0.whenPressed(new DriveTurnToAngle(0));
-		pov45.whenPressed(new DriveTurnToAngle(45));
+		pov45.whenPressed(new DriveTurnToAngle(30));
 		pov90.whenPressed(new DriveTurnToAngle(90));
-		pov135.whenPressed(new DriveTurnToAngle(135));
+		pov135.whenPressed(new DriveTurnToAngle(120));
 		pov180.whenPressed(new DriveTurnToAngle(180));
-		pov225.whenPressed(new DriveTurnToAngle(-135));
+		pov225.whenPressed(new DriveTurnToAngle(-120));
 		pov270.whenPressed(new DriveTurnToAngle(-90));
-		pov315.whenPressed(new DriveTurnToAngle(-45));
+		pov315.whenPressed(new DriveTurnToAngle(-30));
 		
 		
-		cstart.whenPressed(new ScalerUp());
-		cback.whenPressed(new ScalerOff());
 		
-		ca.whileHeld(new GearIntakeFeeding());
-		cb.whenPressed(new GearIntakeDropOff());
+		cy.whenPressed(new ScalerUp());
+		cx.whenPressed(new ScalerOff());
 		
 		crb.whenPressed(new GearIntakeOpen());
 		crt.whenPressed(new GearIntakeClose());
 		
-		cx.whileHeld(new GearIntakeRollersIn());
-		cy.whileHeld(new GearIntakeRollersOut());
+		ca.whileHeld(new GearIntakeRollersIn());
+		cb.whileHeld(new GearIntakeRollersOut());
 		
 		cpov0.whenPressed(new ShooterOnAgitatorHigh());
 		cpov90.whenPressed(new ShooterOnAgitatorSmartDash());
@@ -152,7 +151,7 @@ public class GTAOI implements DriveOI{
 		clt.whenPressed(new BallIntakeRollerOff());
 		clb.whenPressed(new BallIntakeRollerIn());
 		
-		crs.whenPressed(new InterruptOperations());
+		cstart.whenPressed(new InterruptOperations());
 		
 		
 		

@@ -13,7 +13,7 @@ public class GearIntakeRollersIn extends Command {
     public GearIntakeRollersIn() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.gearIntake);
+    	//requires(Robot.gearIntake);
     }
 
     // Called just before this Command runs the first time
