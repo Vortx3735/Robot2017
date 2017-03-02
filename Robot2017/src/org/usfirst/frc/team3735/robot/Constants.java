@@ -23,7 +23,7 @@ public class Constants {
 		//these retain the range but shift more of the action towards lower values as the exponent is raised higher
 		//graph y = x * x^(p-1) {-1 < x < 1} for visualization
 		public static final double moveExponent = 2;		//[1,inf) 1 is linear, 2 is squared (normal), etc.
-		public static final double turnExponent = 4;		//[1,inf) 
+		public static final double turnExponent = 3;		//[1,inf) 
 		
 		//power for using the driveMoveDistanceTimed exeriment
 		public static final double timedPower = .4;			//seconds
