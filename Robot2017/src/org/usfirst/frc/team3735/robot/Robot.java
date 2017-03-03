@@ -60,11 +60,12 @@ public class Robot extends IterativeRobot {
 		oi = new GTAOI();
 		
 		autonomousChooser = new SendableChooser();
-		autonomousChooser.addDefault("DriveBaseStraightOnlyToBase", new AutonTimedDriveTimedDriveStraightToBase());
-		autonomousChooser.addObject ("DriveBaseLeftOfAirShip", new AutonTimedDriveTimedStepsToLeft());
-		autonomousChooser.addObject ("DriveBaseRightOfAirShip", new AutonTimedDriveTimedStepsToRight());
-		autonomousChooser.addObject ("DriveStrightDropGear", new AutonTimedDriveTimedDropGear());
-		
+		autonomousChooser.addDefault ("Do Nothing", new AutonomousDoNothing());
+		autonomousChooser.addObject("DriveBaseStraightOnlyToBase", new AutonTimedDriveTimedDriveStraightToBase());
+		autonomousChooser.addObject("DriveBaseLeftOfAirShip", new AutonTimedDriveTimedStepsToLeft());
+		autonomousChooser.addObject("DriveBaseRightOfAirShip", new AutonTimedDriveTimedStepsToRight());
+		autonomousChooser.addObject("DriveStrightDropGear", new AutonTimedDriveTimedDropGear());
+
 //	THIS IS COMMENTED BY MR NAIK OUT SINCE NOT TESTED 	
 //		autonomousChooser.addObject("Top-Cross-Gear-Loader", new AutonomousTopCrossGearLoader());
 //		autonomousChooser.addObject("Top-Cross-Gear-Shoot", new AutonomousTopCrossGearShoot());
