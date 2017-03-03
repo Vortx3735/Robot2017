@@ -21,6 +21,7 @@ import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeOpen;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersIn;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersOut;
+import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeSwitchUpDown;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeToggleOpenClose;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerOff;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
@@ -111,7 +112,7 @@ public class GTAOI implements DriveOI{
 		
 		//layout for two drivers
 		x.whileHeld(new DriveBrake());
-		
+		y.whenPressed(new GearIntakeSwitchUpDown());
 		a.whileHeld(new GearIntakeFeeding());
 		b.whenPressed(new GearIntakeDropOff());
 		

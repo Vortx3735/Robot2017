@@ -25,7 +25,7 @@ public class Constants {
 		public static final double moveExponent = 2;		//[1,inf) 1 is linear, 2 is squared (normal), etc.
 		public static final double turnExponent = 3;		//[1,inf) 
 		
-		//power for using the driveMoveDistanceTimed exeriment
+		//power for using the driveMoveDistanceTimed experiment
 		public static final double timedPower = .4;			//seconds
 		
 		//values for turning to angles and driving distance
@@ -45,7 +45,7 @@ public class Constants {
 		public final static double rollerInVoltage = -6;
 		public final static double feedingVoltage = -6;
 		
-		public final static boolean topRollerInverted = true;
+		public final static boolean topRollerInverted = false;
 		public final static boolean bottomRollerInverted = true;
 
 		//constants for dropping off the gear
@@ -55,7 +55,7 @@ public class Constants {
 		public static final double dropOffDriveTime = .6;
 		public static final double dropOffTotalTime = 
 			dropOffRollDelay + dropOffJerkDelay + dropOffEndDelay + dropOffDriveTime;
-		public static final double dropOffDrivePercent = -1;
+		public static final double dropOffDrivePercent = -.4;
 
 	}
 	
@@ -63,7 +63,7 @@ public class Constants {
 
 		public final static double upCurrent = 1.0;
 		public final static double powerMax = 1200; //350;
-		public final static boolean scalerInverted = true;
+		public final static boolean scalerInverted = false;
 		public static final double rampRate = .02;
 	}
 	
@@ -79,8 +79,8 @@ public class Constants {
 		public static final double agitatorVoltage = 7;
 		public static final double highAgitatorVoltage = 12;
 		
-		public final static boolean drumInverted = true;
-		public final static boolean agitatorInverted = true;
+		public final static boolean drumInverted = false;
+		public final static boolean agitatorInverted = false;
 
 		
 	}

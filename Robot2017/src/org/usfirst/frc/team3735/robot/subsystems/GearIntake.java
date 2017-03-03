@@ -20,7 +20,7 @@ public class GearIntake extends Subsystem {
 	Solenoid liftSolenoid;
 	Solenoid topFeederSolenoid;
 
-
+	private boolean isDown = false;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
@@ -64,9 +64,19 @@ public class GearIntake extends Subsystem {
     }
     public void liftDown(){
     	liftSolenoid.set(true);
+    	isDown = true;
     }
     public void liftUp(){
     	liftSolenoid.set(false);
+    	isDown = false;
+    }
+    
+    public void switchLift(){
+    	if(isDown){
+    		liftUp();
+    	}else{
+    		liftDown();
+    	}
     }
     
     public void log(){

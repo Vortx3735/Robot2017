@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends Subsystem {
 
 	CANTalon drum = new CANTalon(RobotMap.Shooter.drum);
+	CANTalon drum2 = new CANTalon(RobotMap.Shooter.drum2);
+
 	CANTalon agitator = new CANTalon(RobotMap.Shooter.agitator);
 //	Encoder drumEncoder = new Encoder(RobotMap.Shooter.encoder1, RobotMap.Shooter.encoder2);
 	
@@ -32,6 +34,10 @@ public class Shooter extends Subsystem {
 	
 	public Shooter(){
 		drum.changeControlMode(TalonControlMode.Voltage);
+		
+		drum2.changeControlMode(TalonControlMode.Follower);
+		drum2.set(drum.getDeviceID());
+		
 		agitator.changeControlMode(TalonControlMode.Voltage);
 		
 		drum.setInverted(Constants.Shooter.drumInverted);
