@@ -34,21 +34,22 @@ public class DriveMoveDistance extends Command {
     public DriveMoveDistance(double distance){
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.drive);
+    	//requires(Robot.drive);
     	this.deltaDistance = distance;
     }
     
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	startDistanceLeft = Robot.drive.getPositionLeft();
+    	startDistanceLeft = Robot.drive.getInchesPositionLeftInches();
     	endPositionLeft = startDistanceLeft + deltaDistance;
-    	startDistanceRight = Robot.drive.getPositionRight();
+    	
+    	startDistanceRight = Robot.drive.getInchesPositionRightInches();
     	endPositionRight = startDistanceRight + deltaDistance;
     	
-    	Robot.drive.setupDriveForDistance();
-    	Robot.drive.setControlMode(TalonControlMode.Position);
-    	Robot.drive.setLeftRight(endPositionLeft, endPositionRight);
+    	Robot.drive.setupDriveForPositionControl();
+    	Robot.drive.setLeftRightRotations(endPositionLeft, endPositionRight);
+    	timeOnTarget = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -61,10 +62,10 @@ public class DriveMoveDistance extends Command {
     }
     
     private boolean isOnTarget(){
-    	return 	VortxMath.isWithinThreshold(Robot.drive.getInchesPositionLeft(),
+    	return 	VortxMath.isWithinThreshold(Robot.drive.getInchesPositionLeftInches(),
 										   	endPositionLeft,
 										   	Constants.Drive.driveTolerance) &&
-    			VortxMath.isWithinThreshold(Robot.drive.getInchesPositionRight(),
+    			VortxMath.isWithinThreshold(Robot.drive.getInchesPositionLeftInches(),
 						   				   	endPositionRight,
 						   				   	Constants.Drive.driveTolerance);
     }
@@ -77,7 +78,7 @@ public class DriveMoveDistance extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drive.tankDrive(0, 0, false);
+    	Robot.drive.arcadeDrive(0, 0, false);
     }
 
     // Called when another command which requires one or more of the same

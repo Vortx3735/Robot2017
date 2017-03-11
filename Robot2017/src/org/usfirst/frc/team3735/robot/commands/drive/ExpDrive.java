@@ -20,7 +20,10 @@ public class ExpDrive extends Command {
 	//Range is (0,1] , 1 is no filter, .333 or .167, .125 is recommended 
 	private static double K_FILTERCOEF_Y 		=  Constants.Drive.moveReactivity;  //this is for the move variable
 	private static double K_FILTERCOEF_Z 		= Constants.Drive.turnReactivity;	 //this is for the turning
-	
+
+	private static double K_FILTERCOEF_Y_ORG 		=  3;  //this is for the move variable
+	private static double K_FILTERCOEF_Z_ORG 		= 3;	 //this is for the turning
+
 	/************************************/
 	/* Variables						*/
 	/************************************/	
@@ -68,7 +71,7 @@ public class ExpDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drive.setUpDriveForController();
+    	Robot.drive.setUpDriveForSpeedControl();
     	if(isJoystickInput){
     		YDriveStick			= 0.0;
     		ZDriveStick			= 0.0;
@@ -82,8 +85,11 @@ public class ExpDrive extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-
+    public void execute() {
+		/***************************************/
+		/* First Refresh the Dash BoardSettings*/
+		/***************************************/
+		//GetDashBoardSettings();
 
     	/************************************/
 		/* Lets Get the New Joy Stick Values*/
@@ -108,7 +114,7 @@ public class ExpDrive extends Command {
 //		YDriveMotor = (YDriveStick  / K_FILTERCOEF_Y ) + (YDriveMotorPrevious*(K_FILTERCOEF_Y - 1 )/ K_FILTERCOEF_Y);
 //		ZDriveMotor = (ZDriveStick  / K_FILTERCOEF_Z ) + (ZDriveMotorPrevious*(K_FILTERCOEF_Z - 1 )/ K_FILTERCOEF_Z);
 		
-		//these are new formulas, much better for CPU. These are the same forumlas, but the filters are inversed, and the range is 0<x<=1
+//these are new formulas, much better for CPU. These are the same forumlas, but the filters are inversed, and the range is 0<x<=1
 		YDriveMotor = (YDriveStick-YDriveMotorPrevious)*K_FILTERCOEF_Y + YDriveMotorPrevious;
 		ZDriveMotor = (ZDriveStick-ZDriveMotorPrevious)*K_FILTERCOEF_Z + ZDriveMotorPrevious;
 
@@ -131,20 +137,20 @@ public class ExpDrive extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     // Called once after isFinished returns true
-    protected void end() {
+    public void end() {
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
-    protected void interrupted() {
-    	if(!isJoystickInput){
-    		Robot.drive.arcadeDrive(0, 0, false);
-    	}
+    public void interrupted() {
+//    	if(!isJoystickInput){
+//    		Robot.drive.arcadeDrive(0, 0, false);
+//    	}
     }
     
     private void log(){

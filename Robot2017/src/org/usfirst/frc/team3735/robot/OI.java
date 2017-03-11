@@ -2,6 +2,9 @@ package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToCustomDriveSettings;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveTwistAngle;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveResetPosition;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
@@ -16,6 +19,7 @@ import org.usfirst.frc.team3735.robot.util.JoystickPOVButton;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class OI implements DriveOI{
 	
@@ -72,8 +76,8 @@ public class OI implements DriveOI{
 		rt.whileHeld(new GearIntakeFeeding());
 		lt.whenPressed(new GearIntakeDropOff());
 		
-		a.toggleWhenPressed(new ScalerUp());
-		
+		//a.toggleWhenPressed(new ScalerUp());
+		//// FIXME
 		y.whenPressed(new ShooterSwitchEnabled());
 		
 		start.whenPressed(new DriveSwitchDirection());
@@ -88,7 +92,13 @@ public class OI implements DriveOI{
 		pov270.whenPressed(new DriveTurnToAngle(-90));
 		pov315.whenPressed(new DriveTurnToAngle(-45));
 
+		//x.
+		//SmartDashboard.putData("DriveDistance 10", new DriveMoveDistance(12.5) );
+		x.whenPressed(new DriveMoveDistanceInches(25));
+		a.whenPressed(new DriveMoveTwistAngle(90));
+		SmartDashboard.putData("DriveResetPosition", new DriveResetPosition() );
 		
+		   
 		
 	}
 	

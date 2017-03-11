@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  *
  */
-public class DriveNavxResest extends InstantCommand {
+public class DriveStopRobot extends InstantCommand {
 
-    public DriveNavxResest() {
+    public DriveStopRobot() {
         super();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -17,7 +17,7 @@ public class DriveNavxResest extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.drive.resetAhrs();
+    	Robot.drive.setLeftRightOutputs(0, 0);
     }
 
 }

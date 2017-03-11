@@ -4,6 +4,7 @@ import org.usfirst.frc.team3735.robot.commands.autonomous.*;
 import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.subsystems.GearIntake;
+import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
@@ -34,6 +35,7 @@ public class Robot extends IterativeRobot {
 	public static GearIntake gearIntake;
 	public static Scaler scaler;
 	public static Shooter shooter;
+	public static Navigation navigation;
 	CameraServer server;
 	
 	public static DriveOI oi;
@@ -56,8 +58,9 @@ public class Robot extends IterativeRobot {
 		scaler = new Scaler();
 		drive = new Drive();
 		ballIntake = new BallIntake();
-		
+		//navigation = new Navigation();
 		oi = new GTAOI();
+		
 		
 		autonomousChooser = new SendableChooser();
 		autonomousChooser.addDefault ("Do Nothing", new AutonomousDoNothing());
@@ -65,6 +68,8 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("DriveBaseLeftOfAirShip", new AutonTimedDriveTimedStepsToLeft());
 		autonomousChooser.addObject("DriveBaseRightOfAirShip", new AutonTimedDriveTimedStepsToRight());
 		autonomousChooser.addObject("DriveStrightDropGear", new AutonTimedDriveTimedDropGear());
+		autonomousChooser.addObject("DriveEncoderFwd", new AutonForwardDrivePosition());
+		autonomousChooser.addObject("DriveEncoderSquare", new AutonForwardDriveSquare());
 
 //	THIS IS COMMENTED BY MR NAIK OUT SINCE NOT TESTED 	
 //		autonomousChooser.addObject("Top-Cross-Gear-Loader", new AutonomousTopCrossGearLoader());
@@ -80,8 +85,14 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("AUTONOMOUS Mode", autonomousChooser);
 		/* Lets Start the WEB CAMERA */
-    	server = CameraServer.getInstance();
-		server.startAutomaticCapture();
+
+    	try {
+			server = CameraServer.getInstance();
+			server.startAutomaticCapture();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		/*****************************/
         
         //experimental code to test on 2/24

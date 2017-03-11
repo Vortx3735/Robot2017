@@ -22,15 +22,15 @@ public class DriveTurnToSmartDashboardAngle extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setAngle = Robot.drive.getYaw();
-    	Robot.drive.setSetpoint(setAngle);
-    	Robot.drive.enable();
+//  FIXME  	setAngle = Robot.drive.getYaw();
+//    	Robot.drive.setSetpoint(setAngle);
+//    	Robot.drive.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	setAngle = SmartDashboard.getNumber(key, 0);
-      	Robot.drive.setSetpoint(setAngle);
+// FIXME     	Robot.drive.setSetpoint(setAngle);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -45,6 +45,6 @@ public class DriveTurnToSmartDashboardAngle extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.drive.disable();
+ //FIXME   	Robot.drive.disable();
     }
 }

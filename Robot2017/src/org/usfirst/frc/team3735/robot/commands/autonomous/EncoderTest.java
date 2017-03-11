@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3735.robot.commands.autonomous;
 
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistance;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class EncoderTest extends CommandGroup {
 
     public EncoderTest(){
-    	addSequential(new DriveMoveDistance(20));
+    	addSequential(new DriveMoveDistanceInches(20));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
