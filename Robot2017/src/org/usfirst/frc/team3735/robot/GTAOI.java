@@ -113,10 +113,11 @@ public class GTAOI implements DriveOI {
 
 		// layout for two drivers
 
-		a.whileHeld(new GearIntakeFeeding());
+		x.whileHeld(new DriveStopRobot());
 		b.whenPressed(new GearIntakeDropOff());
 		
-		y.whenPressed(new ExpDrive());
+		
+		a.whileHeld(new GearIntakeFeeding());
 
 		start.whenPressed(new DriveChangeToGearDirection());
 		back.whenPressed(new DriveChangeToBallDirection());

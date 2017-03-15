@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GearIntake extends Subsystem {
 	CANTalon topRoller;
-	CANTalon bottomRoller;
+	//CANTalon bottomRoller;
 	Solenoid liftSolenoid;
 	Solenoid topFeederSolenoid;
 
@@ -26,13 +26,13 @@ public class GearIntake extends Subsystem {
 	
 	public GearIntake(){
 		topRoller = new CANTalon(RobotMap.GearIntake.topRoller);
-		bottomRoller = new CANTalon(RobotMap.GearIntake.bottomRoller);
+		//bottomRoller = new CANTalon(RobotMap.GearIntake.bottomRoller);
 		
 		topRoller.changeControlMode(TalonControlMode.Voltage);
-		bottomRoller.changeControlMode(TalonControlMode.Voltage);
+		//bottomRoller.changeControlMode(TalonControlMode.Voltage);
 		
 		topRoller.setInverted(Constants.GearIntake.topRollerInverted);
-		bottomRoller.setInverted(Constants.GearIntake.bottomRollerInverted);
+		//bottomRoller.setInverted(Constants.GearIntake.bottomRollerInverted);
 		
 		liftSolenoid = new Solenoid(RobotMap.GearIntake.liftSolenoid);
 		topFeederSolenoid = new Solenoid(RobotMap.GearIntake.topFeedSolenoid);
@@ -46,15 +46,15 @@ public class GearIntake extends Subsystem {
     //actually flip that
     public void setRollerVoltage(double speed){
     	topRoller.set(speed);
-    	bottomRoller.set(speed);
+    	//bottomRoller.set(speed);
     }
     
     public double getTopRollerPower(){
     	return Math.abs(topRoller.getOutputVoltage() * topRoller.getOutputCurrent());
     }
-    public double getBottomRollerPower(){
-    	return Math.abs(bottomRoller.getOutputVoltage() * bottomRoller.getOutputCurrent());
-    }
+//    public double getBottomRollerPower(){
+//    	return Math.abs(bottomRoller.getOutputVoltage() * bottomRoller.getOutputCurrent());
+//    }
     
     public void feedOpen(){
     	topFeederSolenoid.set(true);
@@ -81,7 +81,7 @@ public class GearIntake extends Subsystem {
     
     public void log(){
     	SmartDashboard.putNumber("Top Roller getPower", getTopRollerPower());
-    	SmartDashboard.putNumber("Bottom Roller getPower", getBottomRollerPower());
+    	//SmartDashboard.putNumber("Bottom Roller getPower", getBottomRollerPower());
 
     }
 }

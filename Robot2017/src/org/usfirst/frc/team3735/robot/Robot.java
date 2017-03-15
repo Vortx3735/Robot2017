@@ -7,6 +7,7 @@ import org.usfirst.frc.team3735.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
+import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -37,6 +38,7 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Navigation navigation;
 	CameraServer server;
+	public static Ultrasonic ultra;
 	
 	public static DriveOI oi;
 	public RobotMap robotmap;
@@ -60,6 +62,7 @@ public class Robot extends IterativeRobot {
 		ballIntake = new BallIntake();
 		//navigation = new Navigation();
 		oi = new GTAOI();
+		ultra = new Ultrasonic();
 		
 		
 		autonomousChooser = new SendableChooser();
@@ -181,8 +184,10 @@ public class Robot extends IterativeRobot {
 		shooter.log();
 		ballIntake.log();
 		gearIntake.log();
-		
+		ultra.log();
 	}
+	
+	
 	/**
 	 * This function is called when the disabled button is hit. You can use it to reset subsystems before shutting down.
 	 */
