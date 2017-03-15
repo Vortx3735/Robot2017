@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot {
 	public RobotMap robotmap;
 	public CoordinateHandler cords;
 	
-	SendableChooser lrChooser;
+	//SendableChooser lrChooser;
 	boolean rightSide = false;
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -65,11 +65,16 @@ public class Robot extends IterativeRobot {
 		autonomousChooser = new SendableChooser();
 		autonomousChooser.addDefault ("Do Nothing", new AutonomousDoNothing());
 		autonomousChooser.addObject("DriveBaseStraightOnlyToBase", new AutonTimedDriveTimedDriveStraightToBase());
-		autonomousChooser.addObject("DriveBaseLeftOfAirShip", new AutonTimedDriveTimedStepsToLeft());
-		autonomousChooser.addObject("DriveBaseRightOfAirShip", new AutonTimedDriveTimedStepsToRight());
-		autonomousChooser.addObject("DriveStrightDropGear", new AutonTimedDriveTimedDropGear());
+		//autonomousChooser.addObject("DriveBaseLeftOfAirShip", new AutonTimedDriveTimedStepsToLeft());
+		//autonomousChooser.addObject("DriveBaseRightOfAirShip", new AutonTimedDriveTimedStepsToRight());
+		//autonomousChooser.addObject("DriveStrightDropGear", new AutonTimedDriveTimedDropGear());
 		autonomousChooser.addObject("DriveEncoderFwd", new AutonForwardDrivePosition());
-		autonomousChooser.addObject("DriveEncoderSquare", new AutonForwardDriveSquare());
+		autonomousChooser.addObject("DriveEncoderFwdWithDropGear", new  AutonForwardDrivePositionWithGearDrop());
+		
+		
+		//autonomousChooser.addObject("DriveEncoderSquare", new AutonForwardDriveSquare());
+		//autonomousChooser.addObject("Drive Encoder Position Andrew", new AutonForwardDrivePositionAndrew());
+		
 
 //	THIS IS COMMENTED BY MR NAIK OUT SINCE NOT TESTED 	
 //		autonomousChooser.addObject("Top-Cross-Gear-Loader", new AutonomousTopCrossGearLoader());
@@ -83,16 +88,16 @@ public class Robot extends IterativeRobot {
 		//chooser.addObject("Autonomous Test", autonomousTest);
 		//************************************************************************
 		
-		SmartDashboard.putData("AUTONOMOUS Mode", autonomousChooser);
+		SmartDashboard.putData("AUTONOMOUS SELECTION", autonomousChooser);
 		/* Lets Start the WEB CAMERA */
 
-    	try {
-			server = CameraServer.getInstance();
-			server.startAutomaticCapture();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//    	try {
+//			server = CameraServer.getInstance();
+//			server.startAutomaticCapture();
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		/*****************************/
         
         //experimental code to test on 2/24

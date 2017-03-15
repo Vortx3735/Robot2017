@@ -53,9 +53,9 @@ public class Constants {
 
 		//constants for dropping off the gear
 		public static final double dropOffRollDelay = .5;
-		public static final double dropOffJerkDelay = .1;
+		public static final double dropOffJerkDelay = .3;
 		public static final double dropOffEndDelay = .5;
-		public static final double dropOffDriveTime = .3;
+		public static final double dropOffDriveTime = .6;
 		public static final double dropOffTotalTime = 
 			dropOffRollDelay + dropOffJerkDelay + dropOffEndDelay + dropOffDriveTime;
 		public static final double dropOffDrivePercent = -.8;
@@ -82,8 +82,8 @@ public class Constants {
 		public static final double agitatorVoltage = 7;
 		public static final double highAgitatorVoltage = 12;
 		
-		public final static boolean drumInverted = true;
-		public final static boolean agitatorInverted = true;
+		public final static boolean drumInverted = false;
+		public final static boolean agitatorInverted = false;
 
 		
 	}

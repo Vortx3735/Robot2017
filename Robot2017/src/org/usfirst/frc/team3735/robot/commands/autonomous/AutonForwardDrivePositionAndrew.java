@@ -10,15 +10,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonForwardDrivePosition extends CommandGroup {
+public class AutonForwardDrivePositionAndrew extends CommandGroup {
 
-    public AutonForwardDrivePosition(){
+    public AutonForwardDrivePositionAndrew(){
     	/* Let Move FWD Only */
     	/* All the Timing Needs Adjustment     |    */ 
     	/*                                    This */
     	/*                                     |   */
     	
-    	addSequential(new DriveMoveDistanceInches(80)); /* Straight To Pin*/
-    	//addSequential(new DriveMoveDistance(10));
+    	//addSequential(new DriveMoveDistanceInches(100)); /* Straight To Pin*/
+    	addSequential(new DriveMoveDistance(100));
      }
 }

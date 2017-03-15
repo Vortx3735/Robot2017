@@ -18,17 +18,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveMoveDistanceInches extends Command {
 
-	static double displacementInches;
-	static double startPositionLeftInches;
-	static double startPositionRightInches;
-	static double endPositionLeftInches;
-	static double endPositionRightInches;
-	static double spleft;
-	static double spright;
+	private double displacementInches;
+	private double startPositionLeftInches;
+	private double startPositionRightInches;
+	private double endPositionLeftInches;
+	private double endPositionRightInches;
+	private double spleft;
+	private double spright;
 
-	static double adjustment;
+	private double adjustment;
 
-	static boolean done = false;
+	private boolean done = false;
+	
+	private short donectr =0;
 
 	// private static double P = 1;
 	// private static double I = 0;
@@ -55,23 +57,24 @@ public class DriveMoveDistanceInches extends Command {
     	spright = startPositionRightInches;
     	//this.setTimeout(Math.abs(displacementInches/10));
     	//Robot.drive.setPIDSettings(0.1,0.00025,0);
-    	Robot.drive.setPIDSettings(0.1,0.00015,0);
+    	Robot.drive.setPIDSettings(0.02,0.0000,0);
     	
         Timer.delay(0.02);
     	
     	Robot.drive.setupDriveForPositionControl();
     	done = false;
+    	donectr = 0;
 
 		if (displacementInches>0)
-        	adjustment=0.33;
+        	adjustment=0.125;
         else 
-        	adjustment=-0.33;
+        	adjustment=-0.125;
     }
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (Math.abs(Robot.drive.getInchesPositionLeftInches()-startPositionLeftInches) < 4.0f 
-			&&  Math.abs(Robot.drive.getInchesPositionRightInches()-startPositionRightInches) < 4.0f){
+		if (Math.abs(Robot.drive.getInchesPositionLeftInches()-startPositionLeftInches) < 1.0f 
+			&&  Math.abs(Robot.drive.getInchesPositionRightInches()-startPositionRightInches) < 1.0f){
 			spleft += adjustment;
 			spright += adjustment;
 			Robot.drive.setLeftRightDistance(spleft, spright);
@@ -79,13 +82,28 @@ public class DriveMoveDistanceInches extends Command {
 			System.out.println("Stepping");
 
 		} else {
-			if(Math.abs(Robot.drive.getInchesPositionLeftInches()-endPositionLeftInches) < 2.0
-			&& 	Math.abs(Robot.drive.getInchesPositionRightInches()-endPositionRightInches) < 2.0){
-				done = true;
+			if(Math.abs(Robot.drive.getInchesPositionLeftInches()-endPositionLeftInches) < 10.0
+			&& 	Math.abs(Robot.drive.getInchesPositionRightInches()-endPositionRightInches) < 10.0){
+				donectr++;
+			
 			}
 			System.out.println("Waiting to Reach");
-			Robot.drive.setLeftRightDistance(endPositionLeftInches,endPositionRightInches);
-
+			
+			if (donectr<7)
+			{
+		    	Robot.drive.setPIDSettings(0.05,0.00000,0);
+				Robot.drive.setLeftRightDistance(endPositionLeftInches,endPositionRightInches);
+			}
+			
+			if (donectr>8)
+			{
+				Robot.drive.arcadeDrive(-0.2*adjustment, 0, false);
+			}
+			if (donectr>10)
+			{
+				Robot.drive.arcadeDrive(0, 0, false);
+				done = true;
+			}
 		}
 		
 //		if (this.isTimedOut()){
@@ -93,8 +111,8 @@ public class DriveMoveDistanceInches extends Command {
 //
 //		}
 	
-		SmartDashboard.putNumber("CmdActLPos", Robot.drive.getRotationsLeft());
-		SmartDashboard.putNumber("CmdActRPos", Robot.drive.getRotationsRight());
+		SmartDashboard.putNumber("Cmd get rotations left", Robot.drive.getRotationsLeft());
+		SmartDashboard.putNumber("Cmd get rotations right", Robot.drive.getRotationsRight());
 
 		SmartDashboard.putNumber("CmdSPLeft", spleft);
 		SmartDashboard.putNumber("CmdSPRight", spright);
@@ -112,17 +130,11 @@ public class DriveMoveDistanceInches extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		return done ;
-
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
 		/* This is to E Brake we add little power to stop motor coasting*/
-		Robot.drive.setUpDriveForSpeedControl();
-		Robot.drive.arcadeDrive(-0.5*adjustment, 0, false);
-		Timer.delay(0.04);
-//		Robot.drive.arcadeDrive(-0.5*adjustment, 0, false);
-//     	Timer.delay(0.02);
 		Robot.drive.arcadeDrive(0, 0, false);
 
 		// Robot.drive.arcadeDrive(0, 0, false);

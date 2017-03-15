@@ -105,7 +105,7 @@ public class Drive extends Subsystem {
 		l1.setEncPosition(absolutePosition);
 		l1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		l1.reverseSensor(true);
-		l1.configNominalOutputVoltage(+0.5f, -0.5f);
+		l1.configNominalOutputVoltage(+0.0f, -0.0f);
 		l1.configPeakOutputVoltage(+6f, -6f);
 		l1.setPosition(0);
 
@@ -119,8 +119,8 @@ public class Drive extends Subsystem {
 		r1.reverseOutput(true);
 		r1.setEncPosition(absolutePosition);
 		r1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		r1.reverseSensor(true);
-		r1.configNominalOutputVoltage(+0.5f, -0.5f);
+		r1.reverseSensor(false);
+		r1.configNominalOutputVoltage(+0.0f, -0.0f);
 		r1.configPeakOutputVoltage(+6f, -6f);
 		r1.setPosition(0);
 

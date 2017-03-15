@@ -34,7 +34,7 @@ public class DriveMoveDistance extends Command {
     public DriveMoveDistance(double distance){
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	//requires(Robot.drive);
+    	requires(Robot.drive);
     	this.deltaDistance = distance;
     }
     
@@ -48,7 +48,9 @@ public class DriveMoveDistance extends Command {
     	endPositionRight = startDistanceRight + deltaDistance;
     	
     	Robot.drive.setupDriveForPositionControl();
-    	Robot.drive.setLeftRightRotations(endPositionLeft, endPositionRight);
+    	Robot.drive.setPIDSettings(0.1,0.00015,0);
+    	Robot.drive.setLeftRightDistance(endPositionLeft, endPositionRight);
+    	
     	timeOnTarget = 0;
     }
 
@@ -73,12 +75,12 @@ public class DriveMoveDistance extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 		return timeOnTarget >= finishTime;
-
+		
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drive.arcadeDrive(0, 0, false);
+    	Robot.drive.setUpDriveForSpeedControl();
     }
 
     // Called when another command which requires one or more of the same
