@@ -18,10 +18,8 @@ public class GearIntakeDropOff extends CommandGroup {
     	addParallel(new GearIntakeRollersOut(),Constants.GearIntake.dropOffTotalTime);
     	addSequential(new Wait(Constants.GearIntake.dropOffRollDelay));
     	addSequential(new GearIntakeLiftDown());
-    	
-    	addSequential(new DriveMoveDistanceInches(-30), 2);
+    	addParallel(new DriveMoveDistanceInches(-30), 2);
     	//addSequential(new ExpDrive(Constants.GearIntake.dropOffDrivePercent,0),Constants.GearIntake.dropOffDriveTime);
-    	
     	addSequential(new Wait(Constants.GearIntake.dropOffJerkDelay));
     	addSequential(new GearIntakeLiftUp());
     	addSequential(new Wait(GearIntake.dropOffEndDelay));

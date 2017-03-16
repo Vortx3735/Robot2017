@@ -31,7 +31,7 @@ public class GearIntake extends Subsystem {
 		topRoller.changeControlMode(TalonControlMode.Voltage);
 		//bottomRoller.changeControlMode(TalonControlMode.Voltage);
 		
-		topRoller.setInverted(Constants.GearIntake.topRollerInverted);
+		topRoller.setInverted(RobotMap.GearIntake.topRollerInverted);
 		//bottomRoller.setInverted(Constants.GearIntake.bottomRollerInverted);
 		
 		liftSolenoid = new Solenoid(RobotMap.GearIntake.liftSolenoid);

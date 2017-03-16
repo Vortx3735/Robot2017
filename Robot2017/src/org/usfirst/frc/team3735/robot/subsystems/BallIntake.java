@@ -25,7 +25,7 @@ public class BallIntake extends Subsystem {
 	
 	public BallIntake(){
 		motor = new CANTalon(RobotMap.BallIntake.roller);
-		motor.setInverted(Constants.BallIntake.rollerInverted);
+		motor.setInverted(RobotMap.BallIntake.rollerInverted);
 		
     	rollerSpeed = Constants.BallIntake.rollerInSpeed;
     	SmartDashboard.putNumber(key, rollerSpeed);

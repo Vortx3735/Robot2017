@@ -29,7 +29,7 @@ public class Scaler extends Subsystem {
 		motor = new CANTalon(RobotMap.Scaler.motor);
 		motor.setCloseLoopRampRate(.2);
 		
-		motor.setInverted(Constants.Scaler.scalerInverted);
+		motor.setInverted(RobotMap.Scaler.scalerInverted);
 		//motor.changeControlMode(CANTalon.TalonControlMode.Voltage);
 		//motor.setVoltageCompensationRampRate(voltageChangeSpeed);
 		SmartDashboard.putNumber("Scaler motor power", getPower());

@@ -40,8 +40,8 @@ public class Shooter extends Subsystem {
 		
 		agitator.changeControlMode(TalonControlMode.Voltage);
 		
-		drum.setInverted(Constants.Shooter.drumInverted);
-		agitator.setInverted(Constants.Shooter.agitatorInverted);
+		drum.setInverted(RobotMap.Shooter.drumInverted);
+		agitator.setInverted(RobotMap.Shooter.agitatorInverted);
 		
 		drumVoltage = Constants.Shooter.shootVoltage;
 		agitatorVoltage = Constants.Shooter.agitatorVoltage;

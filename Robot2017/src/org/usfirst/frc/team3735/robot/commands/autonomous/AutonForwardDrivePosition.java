@@ -18,8 +18,8 @@ public class AutonForwardDrivePosition extends CommandGroup {
     	/* All the Timing Needs Adjustment     |    */ 
     	/*                                    This */
     	/*                                     |   */
-    	
-    	addSequential(new DriveMoveDistanceInches(100)); /* Straight To Pin*/
+    	//112 + 20
+    	addSequential(new DriveMoveDistanceInches(132)); /* Straight To Pin*/
     	//addSequential(new DriveMoveDistance(10));
      }
 }

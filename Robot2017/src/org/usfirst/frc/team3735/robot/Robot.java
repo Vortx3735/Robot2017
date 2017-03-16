@@ -68,12 +68,13 @@ public class Robot extends IterativeRobot {
 		autonomousChooser = new SendableChooser();
 		autonomousChooser.addDefault ("Do Nothing", new AutonomousDoNothing());
 		autonomousChooser.addObject("TimedDriveBaseStraightOnlyToBase", new AutonTimedDriveTimedDriveStraightToBase());
+		autonomousChooser.addObject("Drive to Base Line", new AutonForwardDrivePosition());
+		autonomousChooser.addObject("Drive to middle and drop gear", new  AutonForwardDrivePositionWithGearDrop());
+		autonomousChooser.addObject("Drive to side and drop gear", new  AutonForwardDrivePositionSideWithGearDrop());
 		//autonomousChooser.addObject("DriveBaseLeftOfAirShip", new AutonTimedDriveTimedStepsToLeft());
 		//autonomousChooser.addObject("DriveBaseRightOfAirShip", new AutonTimedDriveTimedStepsToRight());
 		//autonomousChooser.addObject("DriveStrightDropGear", new AutonTimedDriveTimedDropGear());
-		autonomousChooser.addObject("Drive to Base Line", new AutonForwardDrivePosition());
-		autonomousChooser.addObject("Drive to middle and drop gear", new  AutonForwardDrivePositionWithGearDrop());
-		//autonomousChooser.addObject("Drive to side and drop gear", new  AutonForwardDriveSideWithGearDrop());
+		
 
 		
 		//autonomousChooser.addObject("DriveEncoderSquare", new AutonForwardDriveSquare());

@@ -24,10 +24,10 @@ public class Constants {
 		public static final double moveReactivity = .150;	//(0,1] (least reactive, most reactive]
 		public static final double turnReactivity = .200;	//(0,1] (least reactive, most reactive]	
 		public static final double scaledMaxMove = 1;
-		public static final double scaledMaxTurn = .800;	//(0,1] directly to the arcadedrive turn value
+		public static final double scaledMaxTurn = .600;	//(0,1] directly to the arcadedrive turn value
 		//these retain the range but shift more of the action towards lower values as the exponent is raised higher
 		//graph y = x * x^(p-1) {-1 < x < 1} for visualization
-		public static final double moveExponent = 1;		//[1,inf) 1 is linear, 2 is squared (normal), etc.
+		public static final double moveExponent = 3;		//[1,inf) 1 is linear, 2 is squared (normal), etc.
 		public static final double turnExponent = 5;		//[1,inf) 
 		
 		//power for using the driveMoveDistanceTimed experiment
@@ -50,12 +50,12 @@ public class Constants {
 		public final static double rollerInVoltage = -6;
 		public final static double feedingVoltage = -6;
 		
-		public final static boolean topRollerInverted = true;
-		public final static boolean bottomRollerInverted = true;
+		//public final static boolean topRollerInverted = true;
+		//public final static boolean bottomRollerInverted = true;
 
 		//constants for dropping off the gear
 		public static final double dropOffRollDelay = .5;
-		public static final double dropOffJerkDelay = .3;
+		public static final double dropOffJerkDelay = .7;
 		public static final double dropOffEndDelay = .5;
 		public static final double dropOffDriveTime = .6;
 		public static final double dropOffTotalTime = 
@@ -68,13 +68,13 @@ public class Constants {
 
 		public final static double upCurrent = 1.0;
 		public final static double powerMax = 1200; //350;
-		public final static boolean scalerInverted = true;
+		//public final static boolean scalerInverted = true;
 		public static final double rampRate = .02;
 	}
 	
 	public class BallIntake{
 		public final static double rollerInSpeed = .7;
-		public final static boolean rollerInverted = true;
+		//public final static boolean rollerInverted = true;
 	}
 	
 	public class Shooter{
@@ -84,8 +84,8 @@ public class Constants {
 		public static final double agitatorVoltage = 7;
 		public static final double highAgitatorVoltage = 12;
 		
-		public final static boolean drumInverted = false;
-		public final static boolean agitatorInverted = false;
+		//public final static boolean drumInverted = false;
+		//public final static boolean agitatorInverted = false;
 
 		
 	}

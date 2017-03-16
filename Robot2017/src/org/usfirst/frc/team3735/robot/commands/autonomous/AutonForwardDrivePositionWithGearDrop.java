@@ -18,7 +18,8 @@ public class AutonForwardDrivePositionWithGearDrop extends CommandGroup {
     	/* All the Timing Needs Adjustment     |    */ 
     	/*                                    This */
     	/*                                     |   */
-    	addSequential(new DriveMoveDistanceInches(81)); /* Straight To Pin*/
+    	//112-26-10.5 = 75.5
+    	addSequential(new DriveMoveDistanceInches(75.5)); /* Straight To Pin*/
     	addSequential(new GearIntakeDropOff());
      }
 }
