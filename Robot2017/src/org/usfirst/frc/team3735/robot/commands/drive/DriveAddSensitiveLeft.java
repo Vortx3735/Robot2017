@@ -17,7 +17,7 @@ public class DriveAddSensitiveLeft extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-// FIXME   	Robot.drive.setLeftTurn(Constants.Drive.lowSensitivityLeftTurn);
+		Robot.drive.setLeftTurn(Constants.Drive.lowSensitivityLeftTurn);
     }
 
     // Called repeatedly when this Command is scheduled to run

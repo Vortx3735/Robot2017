@@ -154,12 +154,19 @@ public class Drive extends Subsystem {
 	 * The Main Robot Arcade Drive
 	 *******************************/
 	public void arcadeDrive(double move, double rotate, boolean squareValues) {
-		driveTrain.arcadeDrive(move, rotate * -1, squareValues);
+		driveTrain.arcadeDrive(move, (rotate + leftAddTurn + rightAddTurn + turnCorrection) * -1, squareValues);
 	}
 
 	public void normalDrive(double move, double curve) {
 		driveTrain.drive(move, curve);
 	}
+	
+	public void setLeftTurn(double turn){
+    	leftAddTurn = turn;
+    }
+    public void setRightTurn(double turn){
+    	rightAddTurn = turn;
+    }
 
 	/*******************************
 	 * Setup Config Items for Drive

@@ -115,8 +115,7 @@ public class GTAOI implements DriveOI {
 
 		x.whileHeld(new DriveStopRobot());
 		b.whenPressed(new GearIntakeDropOff());
-		
-		
+
 		a.whileHeld(new GearIntakeFeeding());
 
 		start.whenPressed(new DriveChangeToGearDirection());
@@ -124,26 +123,24 @@ public class GTAOI implements DriveOI {
 
 		lb.whileHeld(new DriveAddSensitiveLeft());
 		rb.whileHeld(new DriveAddSensitiveRight());
-
-		pov0.whenPressed(new DriveTurnToAngle(0));
-		pov45.whenPressed(new DriveTurnToAngle(30));
-		pov90.whenPressed(new DriveTurnToAngle(90));
-		pov135.whenPressed(new DriveTurnToAngle(120));
-		pov180.whenPressed(new DriveTurnToAngle(180));
-		pov225.whenPressed(new DriveTurnToAngle(-120));
-		pov270.whenPressed(new DriveTurnToAngle(-90));
-		pov315.whenPressed(new DriveTurnToAngle(-30));
 		
-		
+//
+//		pov0.whenPressed(new DriveTurnToAngle(0));
+//		pov45.whenPressed(new DriveTurnToAngle(30));
+//		pov90.whenPressed(new DriveTurnToAngle(90));
+//		pov135.whenPressed(new DriveTurnToAngle(120));
+//		pov180.whenPressed(new DriveTurnToAngle(180));
+//		pov225.whenPressed(new DriveTurnToAngle(-120));
+//		pov270.whenPressed(new DriveTurnToAngle(-90));
+//		pov315.whenPressed(new DriveTurnToAngle(-30));
 		
 		cy.whenPressed(new ScalerUp());
 		cx.whenPressed(new ScalerOff());
+		ca.whileHeld(new GearIntakeRollersIn());
+		cb.whileHeld(new GearIntakeRollersOut());
 		
 		crb.whenPressed(new GearIntakeOpen());
 		crt.whenPressed(new GearIntakeClose());
-		
-		ca.whileHeld(new GearIntakeRollersIn());
-		cb.whileHeld(new GearIntakeRollersOut());
 		
 		cpov0.whenPressed(new ShooterOnAgitatorHigh());
 		cpov90.whenPressed(new ShooterOnAgitatorSmartDash());
