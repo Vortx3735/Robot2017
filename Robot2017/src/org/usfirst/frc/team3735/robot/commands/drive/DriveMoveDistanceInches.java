@@ -29,8 +29,8 @@ public class DriveMoveDistanceInches extends Command {
 	private double adjustment;
 
 	private boolean done = false;
-	
-	private short donectr =0;
+
+	private short donectr = 0;
 
 	// private static double P = 1;
 	// private static double I = 0;
@@ -47,97 +47,71 @@ public class DriveMoveDistanceInches extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-    	startPositionLeftInches = Robot.drive.getInchesPositionLeftInches();
-    	startPositionRightInches = Robot.drive.getInchesPositionRightInches();
+		startPositionLeftInches = Robot.drive.getInchesPositionLeftInches();
+		startPositionRightInches = Robot.drive.getInchesPositionRightInches();
 
-    	endPositionLeftInches = startPositionLeftInches + displacementInches;
-    	endPositionRightInches = startPositionRightInches + displacementInches;
-    	
-    	spleft = startPositionLeftInches;
-    	spright = startPositionRightInches;
-    	//this.setTimeout(Math.abs(displacementInches/10));
-    	//Robot.drive.setPIDSettings(0.1,0.00025,0);
-    	Robot.drive.setPIDSettings(0.02,0.0000,0);
-    	
-        Timer.delay(0.02);
-    	
-    	Robot.drive.setupDriveForPositionControl();
-    	done = false;
-    	donectr = 0;
+		endPositionLeftInches = startPositionLeftInches + displacementInches;
+		endPositionRightInches = startPositionRightInches + displacementInches;
 
-		if (displacementInches>0)
-        	adjustment=0.125;
-        else 
-        	adjustment=-0.125;
-    }
+		spleft = startPositionLeftInches;
+		spright = startPositionRightInches;
+		// this.setTimeout(Math.abs(displacementInches/10));
+		// Robot.drive.setPIDSettings(0.1,0.00025,0);
+		Robot.drive.setPIDSettings(0.02, 0.0000, 0.4);
+
+		Timer.delay(0.02);
+
+		Robot.drive.setupDriveForPositionControl();
+		done = false;
+		donectr = 0;
+
+
+	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (Math.abs(Robot.drive.getInchesPositionLeftInches()-startPositionLeftInches) < 1.0f 
-			&&  Math.abs(Robot.drive.getInchesPositionRightInches()-startPositionRightInches) < 1.0f){
-			spleft += adjustment;
-			spright += adjustment;
-			Robot.drive.setLeftRightDistance(spleft, spright);
-			//Robot.drive.setLeftRightDistance(endPositionLeftInches,endPositionRightInches);
-			System.out.println("Stepping");
+		if (Math.abs(Robot.drive.getInchesPositionLeftInches() - endPositionLeftInches) < 5
+				&& Math.abs(Robot.drive.getInchesPositionRightInches() - endPositionRightInches) < 5) {
+			//Robot.drive.setLeftRightDistance(endPositionLeftInches, endPositionRightInches);
+		//	Robot.drive.setPIDSettings(0.015, 0.0000, 0);
 
-		} else {
-			if(Math.abs(Robot.drive.getInchesPositionLeftInches()-endPositionLeftInches) < 10.0
-			&& 	Math.abs(Robot.drive.getInchesPositionRightInches()-endPositionRightInches) < 10.0){
-				donectr++;
-			
-			}
-			System.out.println("Waiting to Reach");
-			
-			if (donectr<7)
-			{
-		    	Robot.drive.setPIDSettings(0.05,0.00000,0);
-				Robot.drive.setLeftRightDistance(endPositionLeftInches,endPositionRightInches);
-			}
-			
-			if (donectr>8)
-			{
-				Robot.drive.arcadeDrive(-0.2*adjustment, 0, false);
-			}
-			if (donectr>10)
-			{
-				Robot.drive.arcadeDrive(0, 0, false);
+			if (Math.abs(Robot.drive.getInchesPositionLeftInches() - endPositionLeftInches) < 1
+					&& Math.abs(Robot.drive.getInchesPositionRightInches() - endPositionRightInches) < 1) {
+				//Robot.drive.setUpDriveForSpeedControl();
+				//Robot.drive.arcadeDrive(0, 0, false);
 				done = true;
 			}
+		} else {
+			Robot.drive.setPIDSettings(0.025, 0.00000, 0);
+			Robot.drive.setLeftRightDistance(endPositionLeftInches, endPositionRightInches);
 		}
-		
-//		if (this.isTimedOut()){
-//			done = true;
-//
-//		}
-	
-		SmartDashboard.putNumber("Cmd get rotations left", Robot.drive.getRotationsLeft());
-		SmartDashboard.putNumber("Cmd get rotations right", Robot.drive.getRotationsRight());
 
-		SmartDashboard.putNumber("CmdSPLeft", spleft);
-		SmartDashboard.putNumber("CmdSPRight", spright);
-
-		SmartDashboard.putNumber("CmdGetRInches",
-				Robot.drive.getInchesPositionRightInches());
-		SmartDashboard.putNumber("CmdGetLInches",
-				Robot.drive.getInchesPositionLeftInches());
-
-		SmartDashboard.putNumber("CmdSPLEnd", endPositionLeftInches);
-		SmartDashboard.putNumber("CmdSPREnd", endPositionRightInches);
-		System.out.println("Working");
+		// SmartDashboard.putNumber("Cmd get rotations left",
+		// Robot.drive.getRotationsLeft());
+		// SmartDashboard.putNumber("Cmd get rotations right",
+		// Robot.drive.getRotationsRight());
+		//
+		// SmartDashboard.putNumber("CmdSPLeft", spleft);
+		// SmartDashboard.putNumber("CmdSPRight", spright);
+		//
+		// SmartDashboard.putNumber("CmdGetRInches",
+		// Robot.drive.getInchesPositionRightInches());
+		// SmartDashboard.putNumber("CmdGetLInches",
+		// Robot.drive.getInchesPositionLeftInches());
+		//
+		// SmartDashboard.putNumber("CmdSPLEnd", endPositionLeftInches);
+		// SmartDashboard.putNumber("CmdSPREnd", endPositionRightInches);
+		// System.out.println("Working");
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return done ;
+		return done;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		/* This is to E Brake we add little power to stop motor coasting*/
-		Robot.drive.arcadeDrive(0, 0, false);
 
-		// Robot.drive.arcadeDrive(0, 0, false);
 	}
 
 	// Called when another command which requires one or more of the same

@@ -67,13 +67,14 @@ public class Robot extends IterativeRobot {
 		
 		autonomousChooser = new SendableChooser();
 		autonomousChooser.addDefault ("Do Nothing", new AutonomousDoNothing());
-		autonomousChooser.addObject("DriveBaseStraightOnlyToBase", new AutonTimedDriveTimedDriveStraightToBase());
+		autonomousChooser.addObject("TimedDriveBaseStraightOnlyToBase", new AutonTimedDriveTimedDriveStraightToBase());
 		//autonomousChooser.addObject("DriveBaseLeftOfAirShip", new AutonTimedDriveTimedStepsToLeft());
 		//autonomousChooser.addObject("DriveBaseRightOfAirShip", new AutonTimedDriveTimedStepsToRight());
 		//autonomousChooser.addObject("DriveStrightDropGear", new AutonTimedDriveTimedDropGear());
-		autonomousChooser.addObject("DriveEncoderFwd", new AutonForwardDrivePosition());
-		autonomousChooser.addObject("DriveEncoderFwdWithDropGear", new  AutonForwardDrivePositionWithGearDrop());
-		
+		autonomousChooser.addObject("Drive to Base Line", new AutonForwardDrivePosition());
+		autonomousChooser.addObject("Drive to middle and drop gear", new  AutonForwardDrivePositionWithGearDrop());
+		//autonomousChooser.addObject("Drive to side and drop gear", new  AutonForwardDriveSideWithGearDrop());
+
 		
 		//autonomousChooser.addObject("DriveEncoderSquare", new AutonForwardDriveSquare());
 		//autonomousChooser.addObject("Drive Encoder Position Andrew", new AutonForwardDrivePositionAndrew());
@@ -106,12 +107,7 @@ public class Robot extends IterativeRobot {
         //experimental code to test on 2/24
         //SmartDashboard.putData(drive);
         
-		oi.log();
-		scaler.log();
-		drive.log();
-		shooter.log();
-		ballIntake.log();
-		gearIntake.log();
+		log();
 	}
 	
 	@Override
@@ -178,7 +174,6 @@ public class Robot extends IterativeRobot {
 	
 	public void log(){
 		oi.log();
-
 		scaler.log();
 		drive.log();
 		shooter.log();

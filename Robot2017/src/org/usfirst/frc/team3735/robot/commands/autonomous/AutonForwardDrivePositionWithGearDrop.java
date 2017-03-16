@@ -2,6 +2,7 @@ package org.usfirst.frc.team3735.robot.commands.autonomous;
 
 import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistance;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 
@@ -17,8 +18,7 @@ public class AutonForwardDrivePositionWithGearDrop extends CommandGroup {
     	/* All the Timing Needs Adjustment     |    */ 
     	/*                                    This */
     	/*                                     |   */
-    	
-    	addSequential(new DriveMoveDistanceInches(61)); /* Straight To Pin*/
+    	addSequential(new DriveMoveDistanceInches(81)); /* Straight To Pin*/
     	addSequential(new GearIntakeDropOff());
      }
 }

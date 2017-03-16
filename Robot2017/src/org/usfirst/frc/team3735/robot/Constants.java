@@ -22,11 +22,11 @@ public class Constants {
 		public static final double moveReactivity = .150;	//(0,1] (least reactive, most reactive]
 		public static final double turnReactivity = .200;	//(0,1] (least reactive, most reactive]	
 		public static final double scaledMaxMove = 1;
-		public static final double scaledMaxTurn = .400;	//(0,1] directly to the arcadedrive turn value
+		public static final double scaledMaxTurn = .800;	//(0,1] directly to the arcadedrive turn value
 		//these retain the range but shift more of the action towards lower values as the exponent is raised higher
 		//graph y = x * x^(p-1) {-1 < x < 1} for visualization
-		public static final double moveExponent = 3;		//[1,inf) 1 is linear, 2 is squared (normal), etc.
-		public static final double turnExponent = 3;		//[1,inf) 
+		public static final double moveExponent = 1;		//[1,inf) 1 is linear, 2 is squared (normal), etc.
+		public static final double turnExponent = 5;		//[1,inf) 
 		
 		//power for using the driveMoveDistanceTimed experiment
 		public static final double timedPower = .4;			//seconds
