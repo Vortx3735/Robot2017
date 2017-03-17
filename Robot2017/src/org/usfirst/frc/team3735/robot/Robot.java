@@ -71,6 +71,10 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Drive to Base Line", new AutonForwardDrivePosition());
 		autonomousChooser.addObject("Drive to middle and drop gear", new  AutonForwardDrivePositionWithGearDrop());
 		autonomousChooser.addObject("Drive to side and drop gear", new  AutonForwardDrivePositionSideWithGearDrop());
+		autonomousChooser.addObject("Drive to left side and drop gear", new  AutonForwardDrivePositionLeftWithGearDrop());
+		autonomousChooser.addObject("Drive to right side and drop gear", new  AutonForwardDrivePositionRightWithGearDrop());
+
+		
 		//autonomousChooser.addObject("DriveBaseLeftOfAirShip", new AutonTimedDriveTimedStepsToLeft());
 		//autonomousChooser.addObject("DriveBaseRightOfAirShip", new AutonTimedDriveTimedStepsToRight());
 		//autonomousChooser.addObject("DriveStrightDropGear", new AutonTimedDriveTimedDropGear());
@@ -135,6 +139,7 @@ public class Robot extends IterativeRobot {
 //		}else{
 //			cords.switchToLeftSide();
 //		}
+		drive.setupDriveForPositionControl();
         autonomousCommand = (Command) autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}
