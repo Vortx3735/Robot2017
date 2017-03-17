@@ -36,6 +36,6 @@ public class DriveAddSensitiveLeft extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-// FIXME   	Robot.drive.setLeftTurn(0);
+		Robot.drive.setLeftTurn(0);
     }
 }

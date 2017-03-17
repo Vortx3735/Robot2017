@@ -47,7 +47,8 @@ public class DriveMoveTwistAngle extends Command {
     	adjustment = 0;
     	endadjustment = Math.abs(55.0f * twistamount/180) ; // FIXME MOVE CONST TO BETTER PLACE
     	this.setTimeout(5.0);
-    	Robot.drive.setPIDSettings(0.07,0.003,0);
+    	//Robot.drive.setPIDSettings(0.07,0.000,0);
+    	Robot.drive.setPIDSettings(0.02, 0.0000, 0.0);
         Timer.delay(0.02);
     	Robot.drive.setupDriveForPositionControl();
     	done = false;
@@ -80,19 +81,19 @@ public class DriveMoveTwistAngle extends Command {
     	
     	    		
     	
-   	  		 
-		SmartDashboard.putNumber("CmdActLPos",Robot.drive.getRotationsLeft());
-		SmartDashboard.putNumber("CmdActRPos",Robot.drive.getRotationsRight());
-		
-		SmartDashboard.putNumber("CmdGetRInches",Robot.drive.getInchesPositionRightInches());
-		SmartDashboard.putNumber("CmdGetLInches",Robot.drive.getInchesPositionLeftInches());
-		
-		SmartDashboard.putNumber("CmdSPLEnd",endPositionLeftInches);
-		SmartDashboard.putNumber("CmdSPREnd",endPositionRightInches);
-
-		
-		SmartDashboard.putNumber("CmdSPLStart",startPositionLeftInches);
-		SmartDashboard.putNumber("CmdSPRStart",startPositionRightInches);    	
+//   	  		 
+//		SmartDashboard.putNumber("CmdActLPos",Robot.drive.getRotationsLeft());
+//		SmartDashboard.putNumber("CmdActRPos",Robot.drive.getRotationsRight());
+//		
+//		SmartDashboard.putNumber("CmdGetRInches",Robot.drive.getInchesPositionRightInches());
+//		SmartDashboard.putNumber("CmdGetLInches",Robot.drive.getInchesPositionLeftInches());
+//		
+//		SmartDashboard.putNumber("CmdSPLEnd",endPositionLeftInches);
+//		SmartDashboard.putNumber("CmdSPREnd",endPositionRightInches);
+//
+//		
+//		SmartDashboard.putNumber("CmdSPLStart",startPositionLeftInches);
+//		SmartDashboard.putNumber("CmdSPRStart",startPositionRightInches);    	
     	
     }
 

@@ -25,7 +25,7 @@ import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
  *
  */
 
-public class Drive extends Subsystem {
+public class Drive extends PIDSubsystem {
 	
 	private CANTalon l1,l2,l3,r1,r2,r3;
 //	
@@ -65,6 +65,7 @@ public class Drive extends Subsystem {
 	private double scaledMaxOutput;
 
 	public Drive() {
+		super("Drive",P,I,D,F);
 		/******************
 		 * Drivetrain Left
 		 ******************/
@@ -82,11 +83,18 @@ public class Drive extends Subsystem {
 		initLeftRightSensorsAndControls();
 		setupSlaves();
 		setEnableBrake(false);
-
+		
 		driveTrain = new RobotDrive(l1, r1);
 		reversed = false;
 		setUpDriveTrain();
-
+		
+		ahrs = new AHRS(SPI.Port.kMXP);
+		getPIDController().setAbsoluteTolerance(Constants.Drive.turnTolerance);
+		getPIDController().setInputRange(-180, 180);
+		getPIDController().setContinuous();
+		getPIDController().setOutputRange(-1, 1);
+        //LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
+		SmartDashboard.putData("Drive PID Controller",getPIDController());
 	}
 
 	/*******************************
@@ -296,6 +304,15 @@ public class Drive extends Subsystem {
 		
 
 	}
+	
+	@Override
+	protected double returnPIDInput() {
+		return ahrs.getYaw();
+	}
+	@Override
+	protected void usePIDOutput(double output) {
+		driveTrain.setLeftRightMotorOutputs(output, -output);
+	}
 
 
 	/*******************************
@@ -342,6 +359,7 @@ public class Drive extends Subsystem {
 	public void log() {
 		dashBoardUpdateDisplays();
 		dashBoardUpdateControls();
+    	SmartDashboard.putNumber("Gyro Yaw", ahrs.getYaw());
 
 		changeScaledMaxOutput(scaledMaxOutput);
 	}

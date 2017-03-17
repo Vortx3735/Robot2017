@@ -12,6 +12,8 @@ import org.usfirst.frc.team3735.robot.commands.drive.DriveBrake;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToBallDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToCustomDriveSettings;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToGearDirection;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceTwist;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveTwistAngle;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveStopRobot;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
@@ -125,14 +127,22 @@ public class GTAOI implements DriveOI {
 		rb.whileHeld(new DriveAddSensitiveRight());
 		
 //
-//		pov0.whenPressed(new DriveTurnToAngle(0));
-//		pov45.whenPressed(new DriveTurnToAngle(30));
-//		pov90.whenPressed(new DriveTurnToAngle(90));
-//		pov135.whenPressed(new DriveTurnToAngle(120));
-//		pov180.whenPressed(new DriveTurnToAngle(180));
-//		pov225.whenPressed(new DriveTurnToAngle(-120));
-//		pov270.whenPressed(new DriveTurnToAngle(-90));
-//		pov315.whenPressed(new DriveTurnToAngle(-30));
+//		pov0.whenPressed(new DriveMoveDistanceTwist(0));
+//		pov45.whenPressed(new DriveMoveDistanceTwist(60));
+//		pov90.whenPressed(new DriveMoveDistanceTwist(90));
+//		pov135.whenPressed(new DriveMoveDistanceTwist(120));
+//		pov180.whenPressed(new DriveMoveDistanceTwist(180));
+//		pov225.whenPressed(new DriveMoveDistanceTwist(-120));
+//		pov270.whenPressed(new DriveMoveDistanceTwist(-90));
+//		pov315.whenPressed(new DriveMoveDistanceTwist(-60));
+		pov0.whenPressed(new DriveTurnToAngle(0));
+		pov45.whenPressed(new DriveTurnToAngle(60));
+		pov90.whenPressed(new DriveTurnToAngle(90));
+		pov135.whenPressed(new DriveTurnToAngle(150));
+		pov180.whenPressed(new DriveTurnToAngle(180));
+		pov225.whenPressed(new DriveTurnToAngle(-150));
+		pov270.whenPressed(new DriveTurnToAngle(-90));
+		pov315.whenPressed(new DriveTurnToAngle(-60));
 		
 		cy.whenPressed(new ScalerUp());
 		cx.whenPressed(new ScalerOff());
