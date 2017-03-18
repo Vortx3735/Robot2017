@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveMoveDistance extends Command {
+public class DriveMoveDistanceNavx extends Command {
 	
 	private double deltaDistance;
 	private double startDistanceLeft;
@@ -30,8 +30,12 @@ public class DriveMoveDistance extends Command {
 	private double i = 0;
 	private double d = 0;
 	private double f = 0;
+	
+	private double strongMultiplier = .95;	
+	private double yawThreshold = 1;	//degrees
+	private double targetYaw;
 
-    public DriveMoveDistance(double distance){
+    public DriveMoveDistanceNavx(double distance){
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
@@ -50,12 +54,23 @@ public class DriveMoveDistance extends Command {
     	//Robot.drive.setPIDSettings(0.1,0.00015,0);
     	Robot.drive.setPIDSettings(p,i,d);
     	//Robot.drive.setLeftRightDistance(endPositionLeft, endPositionRight);
-    	
+    	targetYaw = Robot.drive.getYaw();
     	timeOnTarget = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(VortxMath.isWithinThreshold(Robot.drive.getYaw(), targetYaw, yawThreshold)){
+    		if(Robot.drive.getYaw() > targetYaw){
+    			Robot.drive.setLeftPID(p*strongMultiplier, i, d);
+    			Robot.drive.setRightPID(p, i, d);
+    		}else{
+    			Robot.drive.setLeftPID(p, i, d);
+    			Robot.drive.setRightPID(p*strongMultiplier, i, d);
+    		}
+    	}else{
+        	Robot.drive.setPIDSettings(p,i,d);
+    	}
 		Robot.drive.setLeftRightDistance(endPositionLeft, endPositionRight);
     	if(isOnTarget()){
     		timeOnTarget += .02;

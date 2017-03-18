@@ -143,9 +143,18 @@ public class Drive extends PIDSubsystem {
 		r1.setP(kp);
 		r1.setI(ki);
 		r1.setD(kd);
-		
 	}
 	
+	public void setLeftPID(double kp, double ki, double kd){
+		l1.setP(kp);
+		l1.setI(ki);
+		l1.setD(kd);
+	}
+	public void setRightPID(double kp, double ki, double kd){
+		r1.setP(kp);
+		r1.setI(ki);
+		r1.setD(kd);
+	}
 	public void resetEncodersPositions(){
 		l1.setPosition(0);
 		r1.setPosition(0);
@@ -303,6 +312,10 @@ public class Drive extends PIDSubsystem {
 		r2.enableBrakeMode(b);
 		
 
+	}
+	
+	public double getYaw(){
+		return ahrs.getYaw();
 	}
 	
 	@Override
