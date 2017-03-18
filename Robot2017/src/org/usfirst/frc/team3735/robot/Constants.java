@@ -24,7 +24,7 @@ public class Constants {
 		public static final double moveReactivity = .150;	//(0,1] (least reactive, most reactive]
 		public static final double turnReactivity = .200;	//(0,1] (least reactive, most reactive]	
 		public static final double scaledMaxMove = 1;
-		public static final double scaledMaxTurn = .600;	//(0,1] directly to the arcadedrive turn value
+		public static final double scaledMaxTurn = .500;	//(0,1] directly to the arcadedrive turn value
 		//these retain the range but shift more of the action towards lower values as the exponent is raised higher
 		//graph y = x * x^(p-1) {-1 < x < 1} for visualization
 		public static final double moveExponent = 3;		//[1,inf) 1 is linear, 2 is squared (normal), etc.
@@ -36,7 +36,7 @@ public class Constants {
 		//values for turning to angles and driving distance
 		public static final double turnFinishTime = .2;		//seconds
 		public static final double turnTolerance = 5;		//degrees
-		public static final double driveFinishTime = .2;	//seconds
+		public static final double driveFinishTime = .5;	//seconds
 		public static final double driveTolerance = 2;		//inches
 
 		//for turning slowly with lb and rb
@@ -46,7 +46,7 @@ public class Constants {
 	}
 	
 	public class GearIntake{
-		public final static double rollerOutVoltage = 6;
+		public final static double rollerOutVoltage = 3;
 		public final static double rollerInVoltage = -6;
 		public final static double feedingVoltage = -6;
 		
@@ -55,7 +55,7 @@ public class Constants {
 
 		//constants for dropping off the gear
 		public static final double dropOffRollDelay = .5;
-		public static final double dropOffJerkDelay = .7;
+		public static final double dropOffJerkDelay = 1;
 		public static final double dropOffEndDelay = .5;
 		public static final double dropOffDriveTime = .6;
 		public static final double dropOffTotalTime = 

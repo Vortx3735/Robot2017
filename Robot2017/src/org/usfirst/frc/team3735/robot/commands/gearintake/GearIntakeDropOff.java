@@ -15,10 +15,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class GearIntakeDropOff extends CommandGroup {
 
     public GearIntakeDropOff() {
+    	addSequential(new ExpDrive(.5,0),.1);
     	addParallel(new GearIntakeRollersOut(),Constants.GearIntake.dropOffTotalTime);
     	addSequential(new Wait(Constants.GearIntake.dropOffRollDelay));
     	addSequential(new GearIntakeLiftDown());
-    	addParallel(new DriveMoveDistanceInches(-30), 2);
+    	addParallel(new DriveMoveDistanceInches(-37), 1);
     	//addSequential(new ExpDrive(Constants.GearIntake.dropOffDrivePercent,0),Constants.GearIntake.dropOffDriveTime);
     	addSequential(new Wait(Constants.GearIntake.dropOffJerkDelay));
     	addSequential(new GearIntakeLiftUp());

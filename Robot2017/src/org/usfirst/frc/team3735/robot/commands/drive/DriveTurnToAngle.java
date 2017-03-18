@@ -24,6 +24,7 @@ public class DriveTurnToAngle extends Command{
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
+    	Robot.drive.setUpDriveForSpeedControl();
     	setpoint = angle;
     }
 

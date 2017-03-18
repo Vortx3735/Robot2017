@@ -20,7 +20,8 @@ public class AutonForwardDrivePositionLeftWithGearDrop extends CommandGroup {
     	/*                                    This */
     	/*                                     |   */
     	addSequential(new DriveMoveDistanceInches(72.8),3);
-    	addSequential(new DriveTurnToAngle(60),4);
+    	addSequential(new DriveTurnToAngle(60));
+    	//addSequential(new ExpDrive(.6,4),1);
     	addSequential(new DriveMoveDistanceInches(60.7),3);
     	addSequential(new GearIntakeDropOff(),3);
      }

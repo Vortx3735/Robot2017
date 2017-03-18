@@ -30,7 +30,6 @@ public class DriveMoveDistanceInches extends Command {
 
 	private boolean done = false;
 
-	private short donectr = 0;
 
 	// private static double P = 1;
 	// private static double I = 0;
@@ -57,13 +56,13 @@ public class DriveMoveDistanceInches extends Command {
 		spright = startPositionRightInches;
 		// this.setTimeout(Math.abs(displacementInches/10));
 		// Robot.drive.setPIDSettings(0.1,0.00025,0);
-		Robot.drive.setPIDSettings(0.02, 0.0000, 0.4);
+		//Robot.drive.setPIDSettings(0.02, 0.0000, 0.4);
+		Robot.drive.setPIDSettings(0.025, 0.00000, 0);
 
 		Timer.delay(0.02);
 
 		Robot.drive.setupDriveForPositionControl();
 		done = false;
-		donectr = 0;
 
 
 	}
@@ -82,7 +81,7 @@ public class DriveMoveDistanceInches extends Command {
 				done = true;
 			}
 		} else {
-			Robot.drive.setPIDSettings(0.025, 0.00000, 0);
+			Robot.drive.setPIDSettings(0.025, 0.00000, .00);
 			Robot.drive.setLeftRightDistance(endPositionLeftInches, endPositionRightInches);
 		}
 

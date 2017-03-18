@@ -135,14 +135,15 @@ public class GTAOI implements DriveOI {
 //		pov225.whenPressed(new DriveMoveDistanceTwist(-120));
 //		pov270.whenPressed(new DriveMoveDistanceTwist(-90));
 //		pov315.whenPressed(new DriveMoveDistanceTwist(-60));
-		pov0.whenPressed(new DriveTurnToAngle(0));
-		pov45.whenPressed(new DriveTurnToAngle(60));
-		pov90.whenPressed(new DriveTurnToAngle(90));
-		pov135.whenPressed(new DriveTurnToAngle(150));
-		pov180.whenPressed(new DriveTurnToAngle(180));
-		pov225.whenPressed(new DriveTurnToAngle(-150));
-		pov270.whenPressed(new DriveTurnToAngle(-90));
-		pov315.whenPressed(new DriveTurnToAngle(-60));
+		
+//		pov0.whenPressed(new DriveTurnToAngle(0));
+//		pov45.whenPressed(new DriveTurnToAngle(60));
+//		pov90.whenPressed(new DriveTurnToAngle(90));
+//		pov135.whenPressed(new DriveTurnToAngle(150));
+//		pov180.whenPressed(new DriveTurnToAngle(180));
+//		pov225.whenPressed(new DriveTurnToAngle(-150));
+//		pov270.whenPressed(new DriveTurnToAngle(-90));
+//		pov315.whenPressed(new DriveTurnToAngle(-60));
 		
 		cy.whenPressed(new ScalerUp());
 		cx.whenPressed(new ScalerOff());

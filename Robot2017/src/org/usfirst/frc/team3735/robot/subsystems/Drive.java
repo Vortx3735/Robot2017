@@ -40,9 +40,9 @@ public class Drive extends PIDSubsystem {
 	private boolean reversed = false;
 	
 	//values for rotation
-	private static double P = .0025;//this = max magnitude/180
-	private static double I = 0.00005;
-	private static double D = 0.0;
+	private static double P = .0045;//this = max magnitude/180
+	private static double I = 0.00019;
+	private static double D = 0.009;
 	private static double F = 0.0;
 	
 	private static double dP = 1.0;
@@ -286,7 +286,7 @@ public class Drive extends PIDSubsystem {
 	 * Speed Control Setup
 	 *******************************/
 	public void setUpDriveForSpeedControl() {
-		setEnableBrake(true);
+		setEnableBrake(false);
 		l1.changeControlMode(TalonControlMode.PercentVbus);
 		r1.changeControlMode(TalonControlMode.PercentVbus);
 
