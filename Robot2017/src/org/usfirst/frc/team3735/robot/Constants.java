@@ -34,7 +34,7 @@ public class Constants {
 		public static final double timedPower = .4;			//seconds
 		
 		//values for turning to angles and driving distance
-		public static final double turnFinishTime = .2;		//seconds
+		public static final double turnFinishTime = .5;		//seconds
 		public static final double turnTolerance = 5;		//degrees
 		public static final double driveFinishTime = .5;	//seconds
 		public static final double driveTolerance = 2;		//inches
@@ -47,7 +47,7 @@ public class Constants {
 	
 	public class GearIntake{
 		public final static double rollerOutVoltage = 3;
-		public final static double rollerInVoltage = -6;
+		public final static double rollerInVoltage = -10;
 		public final static double feedingVoltage = -6;
 		
 		//public final static boolean topRollerInverted = true;

@@ -27,7 +27,7 @@ public class DriveMoveDistanceNavx extends Command {
 	private double finishTime = Constants.Drive.driveFinishTime;
 	
 	private double p = .025;
-	private double i = 0;
+	private double i = 0.00003;
 	private double d = 0;
 	private double f = 0;
 	
@@ -60,6 +60,7 @@ public class DriveMoveDistanceNavx extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//strongMultiplier = SmartDashboard.get
     	if(VortxMath.isWithinThreshold(Robot.drive.getYaw(), targetYaw, yawThreshold)){
     		if(Robot.drive.getYaw() > targetYaw){
     			Robot.drive.setLeftPID(p*strongMultiplier, i, d);

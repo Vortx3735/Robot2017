@@ -46,7 +46,7 @@ public class Ultrasonic extends Subsystem {
 	        	//System.out.println("Sensor string length is 0");
 	        }
         } else {
-        	System.out.println("Ultra is null");
+        	//System.out.println("Ultra is null");
         	
         }
     	return ret;	

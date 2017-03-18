@@ -114,7 +114,7 @@ public class Drive extends PIDSubsystem {
 		l1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		l1.reverseSensor(true);
 		l1.configNominalOutputVoltage(+0.0f, -0.0f);
-		l1.configPeakOutputVoltage(+6f, -6f);
+		l1.configPeakOutputVoltage(+6.7f, -6.7f);
 		l1.setPosition(0);
 
 
@@ -275,6 +275,8 @@ public class Drive extends PIDSubsystem {
 		l1.setI(dI);
 		l1.setD(dD);
 		l1.changeControlMode(TalonControlMode.Position);
+		l1.setIZone(2);
+		
 		// l1.setMotionMagicCruiseVelocity(cruiseVelocity);
 		// l1.setMotionMagicAcceleration(accel);
 
@@ -285,7 +287,7 @@ public class Drive extends PIDSubsystem {
 		r1.setI(dI);
 		r1.setD(dD);
 		r1.changeControlMode(TalonControlMode.Position);
-		
+		r1.setIZone(2);
 		setEnableBrake(true);
 		// r1.setMotionMagicCruiseVelocity(cruiseVelocity);
 		// r1.setMotionMagicAcceleration(accel);
@@ -307,10 +309,11 @@ public class Drive extends PIDSubsystem {
 	public void setEnableBrake(boolean b) {
 		l1.enableBrakeMode(b);
 		l2.enableBrakeMode(b);
+		l3.enableBrakeMode(b);
 		
 		r1.enableBrakeMode(b);
 		r2.enableBrakeMode(b);
-		
+		r3.enableBrakeMode(b);
 
 	}
 	
@@ -326,6 +329,14 @@ public class Drive extends PIDSubsystem {
 	protected void usePIDOutput(double output) {
 		driveTrain.setLeftRightMotorOutputs(output, -output);
 	}
+	
+	public double errorRightPositionInches(){
+		return r1.getClosedLoopError() * Constants.Drive.OneRotationInches ;
+	}
+	public double errorLeftPositionInches(){
+		return l1.getClosedLoopError() * Constants.Drive.OneRotationInches ;
+	}
+
 
 
 	/*******************************
