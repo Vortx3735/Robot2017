@@ -107,18 +107,23 @@ public class Robot extends IterativeRobot {
 //			server.startAutomaticCapture();
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//			e.printStackTrace();.
 //		}
 		/*****************************/
         
         //experimental code to test on 2/24
         //SmartDashboard.putData(drive);
-        
+		SmartDashboard.putNumber("left Voltage", 5.4);
+		SmartDashboard.putNumber("right Voltage", 5);
+
 		log();
 	}
 	
 	@Override
 	public void robotPeriodic() {
+		Robot.drive.sendLeftVoltage((SmartDashboard.getNumber("left Voltage", 5.4)));
+		Robot.drive.sendRightVoltage((SmartDashboard.getNumber("right Voltage", 5)));
+
 	}
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -181,6 +186,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void log(){
+		
 		oi.log();
 		scaler.log();
 		drive.log();

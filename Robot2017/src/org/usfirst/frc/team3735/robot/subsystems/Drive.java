@@ -114,7 +114,7 @@ public class Drive extends PIDSubsystem {
 		l1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		l1.reverseSensor(true);
 		l1.configNominalOutputVoltage(+0.0f, -0.0f);
-		l1.configPeakOutputVoltage(+6.7f, -6.7f);
+		l1.configPeakOutputVoltage(+5.4f, -5.4f);
 		l1.setPosition(0);
 
 
@@ -262,6 +262,13 @@ public class Drive extends PIDSubsystem {
 
 	public void changeScaledMaxOutput(double output) {
 		driveTrain.setMaxOutput(output);
+	}
+	
+	public void sendLeftVoltage(double vol){
+		l1.configPeakOutputVoltage(vol, -vol);
+	}
+	public void sendRightVoltage(double vol){
+		r1.configPeakOutputVoltage(vol, -vol);
 	}
 
 	/*******************************

@@ -65,12 +65,16 @@ public class DriveMoveDistanceNavx extends Command {
     		if(Robot.drive.getYaw() > targetYaw){
     			Robot.drive.setLeftPID(p*strongMultiplier, i, d);
     			Robot.drive.setRightPID(p, i, d);
+    			SmartDashboard.putBoolean("Navx On", true);
     		}else{
     			Robot.drive.setLeftPID(p, i, d);
     			Robot.drive.setRightPID(p*strongMultiplier, i, d);
+    			SmartDashboard.putBoolean("Navx On", true);
     		}
     	}else{
         	Robot.drive.setPIDSettings(p,i,d);
+			SmartDashboard.putBoolean("Navx On", false);
+
     	}
 		Robot.drive.setLeftRightDistance(endPositionLeft, endPositionRight);
     	if(isOnTarget()){
