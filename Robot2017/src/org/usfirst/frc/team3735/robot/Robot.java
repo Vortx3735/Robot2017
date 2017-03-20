@@ -1,6 +1,10 @@
 package org.usfirst.frc.team3735.robot;
 
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
+import org.usfirst.frc.team3735.robot.pipelines.GearPipeline;
+import org.usfirst.frc.team3735.robot.pipelines.StickyNotePipeline;
 import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.subsystems.GearIntake;
@@ -10,6 +14,7 @@ import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,6 +22,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,7 +43,6 @@ public class Robot extends IterativeRobot {
 	public static Scaler scaler;
 	public static Shooter shooter;
 	public static Navigation navigation;
-	CameraServer server;
 	public static Ultrasonic ultra;
 	
 	public static DriveOI oi;
@@ -46,6 +51,14 @@ public class Robot extends IterativeRobot {
 	
 	//SendableChooser lrChooser;
 	boolean rightSide = false;
+	
+	//camera stuff
+	CameraServer server;
+	private static final int IMG_WIDTH = 320;
+	private static final int IMG_HEIGHT = 240;
+	private VisionThread visionThread;
+	private double centerX = 0.0;	
+	private final Object imgLock = new Object();
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -63,7 +76,7 @@ public class Robot extends IterativeRobot {
 		//navigation = new Navigation();
 		oi = new GTAOI();
 		ultra = new Ultrasonic();
-		
+		//server.startAutomaticCapture().
 		
 		autonomousChooser = new SendableChooser();
 		autonomousChooser.addDefault ("Do Nothing", new AutonomousDoNothing());
@@ -77,27 +90,20 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Drive to middle drop gear and drive to baseline", new  AutonMiddleGearThenBaseline());
 
 		
-		//autonomousChooser.addObject("DriveBaseLeftOfAirShip", new AutonTimedDriveTimedStepsToLeft());
-		//autonomousChooser.addObject("DriveBaseRightOfAirShip", new AutonTimedDriveTimedStepsToRight());
-		//autonomousChooser.addObject("DriveStrightDropGear", new AutonTimedDriveTimedDropGear());
-		
-
-		
-		//autonomousChooser.addObject("DriveEncoderSquare", new AutonForwardDriveSquare());
-		//autonomousChooser.addObject("Drive Encoder Position Andrew", new AutonForwardDrivePositionAndrew());
-		
-
-//	THIS IS COMMENTED BY MR NAIK OUT SINCE NOT TESTED 	
+//		autonomousChooser.addObject("DriveBaseLeftOfAirShip", new AutonTimedDriveTimedStepsToLeft());
+//		autonomousChooser.addObject("DriveBaseRightOfAirShip", new AutonTimedDriveTimedStepsToRight());
+//		autonomousChooser.addObject("DriveStrightDropGear", new AutonTimedDriveTimedDropGear());
+//		autonomousChooser.addObject("DriveEncoderSquare", new AutonForwardDriveSquare());
+//		autonomousChooser.addObject("Drive Encoder Position Andrew", new AutonForwardDrivePositionAndrew());
 //		autonomousChooser.addObject("Top-Cross-Gear-Loader", new AutonomousTopCrossGearLoader());
 //		autonomousChooser.addObject("Top-Cross-Gear-Shoot", new AutonomousTopCrossGearShoot());
 //		autonomousChooser.addObject("Middle-Gear-Top-Loader", new AutonomousMiddleGearTopLoader());
 //		autonomousChooser.addObject("Middle-Gear-Bottom-Shoot", new AutonomousMiddleGearBottomShoot());
 //		autonomousChooser.addObject("Bottom-Cross-Gear-Loader", new AutonomousBottomCrossGearLoader());
 //		autonomousChooser.addObject("Bottom-Cross-Gear-Shoot", new AutonomousBottomCrossGearShoot());
-		//lrChooser.addDefault("Left Side Coords", false);
-		//lrChooser.addObject("Right Side Coords", true);
-		//chooser.addObject("Autonomous Test", autonomousTest);
-		//************************************************************************
+//		lrChooser.addDefault("Left Side Coords", false);
+//		lrChooser.addObject("Right Side Coords", true);
+//		chooser.addObject("Autonomous Test", autonomousTest);
 		
 		SmartDashboard.putData("AUTONOMOUS SELECTION", autonomousChooser);
 		/* Lets Start the WEB CAMERA */
@@ -106,16 +112,24 @@ public class Robot extends IterativeRobot {
 //			server = CameraServer.getInstance();
 //			server.startAutomaticCapture();
 //		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();.
+//			e.printStackTrace();
 //		}
-		/*****************************/
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+	    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+	    visionThread = new VisionThread(camera, new GearPipeline(), pipeline -> {
+	        if (!pipeline.filterContoursOutput().isEmpty()) {
+	            Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+	            synchronized (imgLock) {
+	                centerX = r.x + (r.width / 2);
+	            }
+	        }
+	    });
+	    visionThread.start();
         
         //experimental code to test on 2/24
         //SmartDashboard.putData(drive);
 		SmartDashboard.putNumber("left Voltage", 5.4);
 		SmartDashboard.putNumber("right Voltage", 5);
-
 		log();
 	}
 	
@@ -186,7 +200,15 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void log(){
+		double centerX;
+		synchronized (imgLock) {
+			centerX = this.centerX;
+		}
+		double turn = centerX - (IMG_WIDTH / 2);
 		
+		SmartDashboard.putNumber("CenterX", centerX);
+		SmartDashboard.putNumber("turn", turn);
+
 		oi.log();
 		scaler.log();
 		drive.log();

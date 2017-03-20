@@ -2,6 +2,7 @@ package org.usfirst.frc.team3735.robot.commands.gearintake;
 
 import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Constants.GearIntake;
+import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.commands.Wait;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
@@ -41,5 +42,11 @@ public class GearIntakeDropOff extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    }
+    @Override
+    public void execute(){
+    	if(Robot.oi.getMainLeftTrigger() > .05){
+    		cancel();
+    	}
     }
 }
