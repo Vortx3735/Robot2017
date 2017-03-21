@@ -69,6 +69,7 @@ public class ExpDrive extends Command {
     	ZDriveStick = turn;
     	System.out.println("Exp Move no Joystick");
     	isJoystickInput = false;
+    	requires(Robot.drive);
     }
 
     // Called just before this Command runs the first time

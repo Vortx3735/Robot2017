@@ -13,6 +13,7 @@ public class DriveStopRobot extends InstantCommand {
         super();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+        requires(Robot.drive);
     }
 
     // Called once when the command executes
