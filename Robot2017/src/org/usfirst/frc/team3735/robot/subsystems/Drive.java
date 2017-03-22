@@ -55,6 +55,8 @@ public class Drive extends PIDSubsystem {
 	
 	private double leftAddTurn = 0;
 	private double rightAddTurn = 0;
+	private double visionAssist = 0;
+
 	
 	private String turnCorrectionKey = "Turn Correction";
 	private static double defaultTurnCorrection = Constants.Drive.turnCorrection;
@@ -171,7 +173,7 @@ public class Drive extends PIDSubsystem {
 	 * The Main Robot Arcade Drive
 	 *******************************/
 	public void arcadeDrive(double move, double rotate, boolean squareValues) {
-		driveTrain.arcadeDrive(move, (rotate + leftAddTurn + rightAddTurn + turnCorrection) * -1, squareValues);
+		driveTrain.arcadeDrive(move, (rotate + leftAddTurn + rightAddTurn + turnCorrection + visionAssist) * -1, squareValues);
 	}
 
 	public void normalDrive(double move, double curve) {
@@ -184,6 +186,9 @@ public class Drive extends PIDSubsystem {
     public void setRightTurn(double turn){
     	rightAddTurn = turn;
     }
+	public void setVisionAssist(double j) {
+		visionAssist = j;
+	}
 
 	/*******************************
 	 * Setup Config Items for Drive

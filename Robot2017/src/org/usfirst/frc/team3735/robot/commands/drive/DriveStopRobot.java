@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 public class DriveStopRobot extends InstantCommand {
 
     public DriveStopRobot() {
-        super();
-        // Use requires() here to declare subsystem dependencies
+    	// Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(Robot.drive);
     }

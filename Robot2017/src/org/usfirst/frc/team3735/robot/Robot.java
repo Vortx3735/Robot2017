@@ -12,6 +12,7 @@ import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
+import org.usfirst.frc.team3735.robot.subsystems.Vision;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 
 import edu.wpi.cscore.UsbCamera;
@@ -44,6 +45,7 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Navigation navigation;
 	public static Ultrasonic ultra;
+	public static Vision vision;
 	
 	public static DriveOI oi;
 	public RobotMap robotmap;
@@ -53,12 +55,8 @@ public class Robot extends IterativeRobot {
 	boolean rightSide = false;
 	
 	//camera stuff
-	CameraServer server;
-	private static final int IMG_WIDTH = 320;
-	private static final int IMG_HEIGHT = 240;
-	private VisionThread visionThread;
-	private double centerX = 0.0;	
-	private final Object imgLock = new Object();
+				//CameraServer server;
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -76,6 +74,7 @@ public class Robot extends IterativeRobot {
 		//navigation = new Navigation();
 		oi = new GTAOI();
 		ultra = new Ultrasonic();
+		vision = new Vision();
 		//server.startAutomaticCapture().
 		
 		autonomousChooser = new SendableChooser();
@@ -86,7 +85,6 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Drive to side and drop gear", new  AutonForwardDrivePositionSideWithGearDrop());
 		autonomousChooser.addObject("Drive to left side and drop gear", new  AutonForwardDrivePositionLeftWithGearDrop());
 		autonomousChooser.addObject("Drive to right side and drop gear", new  AutonForwardDrivePositionRightWithGearDrop());
-
 		autonomousChooser.addObject("Drive to middle drop gear and drive to baseline", new  AutonMiddleGearThenBaseline());
 
 		
@@ -114,20 +112,9 @@ public class Robot extends IterativeRobot {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-	    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-	    visionThread = new VisionThread(camera, new GearPipeline(), pipeline -> {
-	        if (!pipeline.filterContoursOutput().isEmpty()) {
-	            Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-	            synchronized (imgLock) {
-	                centerX = r.x + (r.width / 2);
-	            }
-	        }
-	    });
-	    visionThread.start();
+		
+		
         
-        //experimental code to test on 2/24
-        //SmartDashboard.putData(drive);
 		SmartDashboard.putNumber("left Voltage", 5.4);
 		SmartDashboard.putNumber("right Voltage", 5);
 		log();
@@ -200,15 +187,6 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void log(){
-		double centerX;
-		synchronized (imgLock) {
-			centerX = this.centerX;
-		}
-		double turn = centerX - (IMG_WIDTH / 2);
-		
-		SmartDashboard.putNumber("CenterX", centerX);
-		SmartDashboard.putNumber("turn", turn);
-
 		oi.log();
 		scaler.log();
 		drive.log();
@@ -216,6 +194,7 @@ public class Robot extends IterativeRobot {
 		ballIntake.log();
 		gearIntake.log();
 		ultra.log();
+		vision.log();
 	}
 	
 	

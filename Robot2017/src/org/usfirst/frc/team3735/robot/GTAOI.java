@@ -33,6 +33,8 @@ import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOnAgitatorHigh;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOnAgitatorLow;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOnAgitatorSmartDash;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterSwitchEnabled;
+import org.usfirst.frc.team3735.robot.commands.vision.DriveAddVisionAssist;
+import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
@@ -114,10 +116,11 @@ public class GTAOI implements DriveOI {
 		// pov315.whenPressed(new DriveTurnToAngle(-45));
 
 		// layout for two drivers
-
+		pov0.whileHeld(new DriveAddVisionAssist(Pipes.Peg));
+		pov180.whileHeld(new DriveAddVisionAssist(Pipes.Gear));
+		
 		x.whileHeld(new DriveStopRobot());
 		b.whenPressed(new GearIntakeDropOff());
-
 		a.whileHeld(new GearIntakeFeeding());
 
 		start.whenPressed(new DriveChangeToGearDirection());

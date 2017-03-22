@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -153,7 +154,66 @@ public class GearPipeline implements VisionPipeline {
 	public ArrayList<MatOfPoint> filterContoursOutput() {
 		return filterContoursOutput;
 	}
-
+	
+	public double getCenterX(){
+		if(filterContoursOutput().isEmpty()){
+			return -1;
+		}else if(filterContoursOutput().size() == 1){
+			Rect r= Imgproc.boundingRect(filterContoursOutput().get(0));
+			return r.x + (r.width / 2);
+		}else{
+			Rect r= Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput()));
+			return r.x + (r.width / 2);
+		}
+	}
+	public double getCenterY(){
+		if(filterContoursOutput().isEmpty()){
+			return -1;
+		}else if(filterContoursOutput().size() == 1){
+			Rect r= Imgproc.boundingRect(filterContoursOutput().get(0));
+			return r.y + (r.height / 2);
+		}else{
+			Rect r= Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput()));
+			return r.y + (r.height / 2);
+		}
+	}
+	public double getHeight(){
+		if(filterContoursOutput().isEmpty()){
+			return -1;			
+		}else if(filterContoursOutput().size() == 1){
+			return Imgproc.boundingRect(filterContoursOutput().get(0)).height;
+		}else{
+			return Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput())).height;
+		}
+	}
+	public double getWidth(){
+		if(filterContoursOutput().isEmpty()){
+			return -1;			
+		}else if(filterContoursOutput().size() == 1){
+				return Imgproc.boundingRect(filterContoursOutput().get(0)).width;
+		}else{
+				return Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput())).width;
+		}
+	}
+	
+	public double getArea(){
+		if(filterContoursOutput().isEmpty()){
+			return -1;			
+		}else if(filterContoursOutput().size() == 1){
+				return Imgproc.boundingRect(filterContoursOutput().get(0)).area();
+		}else{
+				return Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput())).area();
+		}
+	}
+	public MatOfPoint getLargestAreaMat(ArrayList<MatOfPoint> arr) {
+		MatOfPoint ret = arr.get(0);
+		for(MatOfPoint m : arr){
+			if(Imgproc.boundingRect(m).area() > Imgproc.boundingRect(ret).area()){
+				ret = m;
+			}
+		}
+		return ret;
+	}
 
 	/**
 	 * Scales and image to an exact size.
