@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3735.robot.Constants;
+import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveNavxReset;
@@ -275,6 +276,19 @@ public class Drive extends PIDSubsystem {
 	public void sendRightVoltage(double vol){
 		r1.configPeakOutputVoltage(vol, -vol);
 	}
+	
+	public void setLeft(double output) {
+		l1.set(output);
+	}
+
+	public void setRight(double output) {
+		r1.set(output);
+	}
+	
+	public void changeControlMode(TalonControlMode t){
+		l1.changeControlMode(t);
+		r1.changeControlMode(t);
+	}
 
 	/*******************************
 	 * Position Control Setup
@@ -399,6 +413,8 @@ public class Drive extends PIDSubsystem {
 
 		changeScaledMaxOutput(scaledMaxOutput);
 	}
+
+
 
 }
 
