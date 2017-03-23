@@ -17,7 +17,7 @@ public class DriveAddVisionAssist extends Command {
         // eg. requires(chassis);
     	this.pipeline = p;
     	requires(Robot.vision);
-    }
+	}
 
     // Called just before this Command runs the first time
     protected void initialize() {

@@ -75,7 +75,7 @@ public class Robot extends IterativeRobot {
 		ultra = new Ultrasonic();
 		vision = new Vision();
 		
-		oi = new GTAOI();
+		oi = new GTAOI(); //must be instantiated after the subsystems
 	
 		//server.startAutomaticCapture().
 		

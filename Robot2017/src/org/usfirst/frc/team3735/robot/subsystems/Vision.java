@@ -115,7 +115,8 @@ public class Vision extends Subsystem {
     
     public void log(){
 		SmartDashboard.putNumber("CenterX", getCenterX());
-		SmartDashboard.putNumber("CenterY", getCenterX());
+		SmartDashboard.putNumber("CenterY", getCenterY());
+		SmartDashboard.putNumber("Relative CX", getRelativeCX());
 		SmartDashboard.putNumber("height", getHeight());
 		SmartDashboard.putNumber("width", getWidth());
 		SmartDashboard.putNumber("area", getArea());
@@ -132,6 +133,13 @@ public class Vision extends Subsystem {
     }
     public double getRelativeCX(){
 		return getCenterX() - (IMG_WIDTH / 2);
+    }
+    public double getCenterY(){
+    	double centerY;
+		synchronized (imgLock) {
+			centerY = this.centerY;
+		}
+		return centerY;
     }
     public double getArea(){
     	double area;
