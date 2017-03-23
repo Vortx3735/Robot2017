@@ -72,9 +72,11 @@ public class Robot extends IterativeRobot {
 		drive = new Drive();
 		ballIntake = new BallIntake();
 		//navigation = new Navigation();
-		oi = new GTAOI();
 		ultra = new Ultrasonic();
 		vision = new Vision();
+		
+		oi = new GTAOI();
+	
 		//server.startAutomaticCapture().
 		
 		autonomousChooser = new SendableChooser();

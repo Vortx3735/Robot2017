@@ -32,7 +32,6 @@ public class Vision extends Subsystem {
 	private VisionPipeline gearPipe;
 	private VisionPipeline pegPipe;
 	
-	
 	private VisionThread gearThread;
 	private VisionThread pegThread;
 	
@@ -115,11 +114,11 @@ public class Vision extends Subsystem {
     }
     
     public void log(){
-		SmartDashboard.putNumber("CenterX", centerX);
-		SmartDashboard.putNumber("CenterY", centerY);
-		SmartDashboard.putNumber("height", height);
-		SmartDashboard.putNumber("width", width);
-		SmartDashboard.putNumber("area", area);
+		SmartDashboard.putNumber("CenterX", getCenterX());
+		SmartDashboard.putNumber("CenterY", getCenterX());
+		SmartDashboard.putNumber("height", getHeight());
+		SmartDashboard.putNumber("width", getWidth());
+		SmartDashboard.putNumber("area", getArea());
     }
 
     
