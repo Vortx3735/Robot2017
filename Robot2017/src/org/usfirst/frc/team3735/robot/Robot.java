@@ -19,6 +19,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -36,7 +37,7 @@ public class Robot extends IterativeRobot {
 	final String defaultAuto = "Default";
 	final String autonomousTest = "AutonomousTest";
 	String autoSelected;
-	SendableChooser autonomousChooser;
+	SendableChooser<Command> autonomousChooser;
 	Command autonomousCommand;
 	public static BallIntake ballIntake;
 	public static Drive drive;
@@ -79,7 +80,7 @@ public class Robot extends IterativeRobot {
 	
 		//server.startAutomaticCapture().
 		
-		autonomousChooser = new SendableChooser();
+		autonomousChooser = new SendableChooser<Command>();
 		autonomousChooser.addDefault ("Do Nothing", new AutonomousDoNothing());
 		autonomousChooser.addObject("TimedDriveBaseStraightOnlyToBase", new AutonTimedDriveTimedDriveStraightToBase());
 		autonomousChooser.addObject("Drive to Base Line", new AutonForwardDrivePosition());
@@ -149,8 +150,9 @@ public class Robot extends IterativeRobot {
 //		}else{
 //			cords.switchToLeftSide();
 //		}
-		drive.setupDriveForPositionControl();
-        autonomousCommand = (Command) autonomousChooser.getSelected();
+		//drive.setupDriveForPositionControl();
+		
+        autonomousCommand = autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}
 
