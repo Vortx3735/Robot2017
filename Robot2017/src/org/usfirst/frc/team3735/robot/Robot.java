@@ -13,6 +13,7 @@ import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team3735.robot.subsystems.Vision;
+import org.usfirst.frc.team3735.robot.util.CoordinateHandler;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 
 import edu.wpi.cscore.UsbCamera;
@@ -66,7 +67,6 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		robotmap = new RobotMap();
 		//cords = new CoordinateHandler();
-		
 		gearIntake = new GearIntake();
 		shooter = new Shooter();
 		scaler = new Scaler();
@@ -107,27 +107,19 @@ public class Robot extends IterativeRobot {
 //		chooser.addObject("Autonomous Test", autonomousTest);
 		
 		SmartDashboard.putData("AUTONOMOUS SELECTION", autonomousChooser);
-		/* Lets Start the WEB CAMERA */
-
+		
+		//old camera code
 //    	try {
 //			server = CameraServer.getInstance();
 //			server.startAutomaticCapture();
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-		
-		
-        
-		SmartDashboard.putNumber("left Voltage", 5.4);
-		SmartDashboard.putNumber("right Voltage", 5);
 		log();
 	}
 	
 	@Override
 	public void robotPeriodic() {
-		Robot.drive.sendLeftVoltage((SmartDashboard.getNumber("left Voltage", 5.4)));
-		Robot.drive.sendRightVoltage((SmartDashboard.getNumber("right Voltage", 5)));
-
 	}
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -143,7 +135,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 //		THIS IS COMMENTED BY MR NAIK OUT SINCE NOT TESTED 	
-//		Robot.drive.zeroYaw();
 //		rightSide = (boolean) lrChooser.getSelected();
 //		if(rightSide){
 //			cords.switchToRightSide();
@@ -151,7 +142,7 @@ public class Robot extends IterativeRobot {
 //			cords.switchToLeftSide();
 //		}
 		//drive.setupDriveForPositionControl();
-		
+		Robot.drive.zeroYaw();
         autonomousCommand = autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}
@@ -162,6 +153,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		log();
 	}
 
 	

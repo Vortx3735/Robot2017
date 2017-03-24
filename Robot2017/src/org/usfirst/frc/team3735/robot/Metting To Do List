@@ -1,0 +1,16 @@
+
+To Test:
+	
+	Controls:
+		test if left trigger will override dropoff sequence
+		test if south pov will align robot with gear
+		
+	Auto:
+		add recordable cantalons, and try to get them working
+
+To Make:
+
+	make a function for dps / volt for the turnng trap profile
+	make a function for inches per second per volt for moving trap profile
+	
+	

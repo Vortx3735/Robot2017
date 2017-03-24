@@ -98,6 +98,8 @@ public class Drive extends PIDSubsystem {
 		getPIDController().setOutputRange(-1, 1);
         //LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
 		SmartDashboard.putData("Drive PID Controller",getPIDController());
+		SmartDashboard.putNumber("left Voltage", 5.4);
+		SmartDashboard.putNumber("right Voltage", 5);
 	}
 
 	/*******************************
@@ -401,6 +403,10 @@ public class Drive extends PIDSubsystem {
 	 ******************************************/
 	public void dashBoardUpdateControls() {
 		scaledMaxOutput = SmartDashboard.getNumber("DriveParamMaxOut", defaultMaxOutput);
+		
+		sendLeftVoltage((SmartDashboard.getNumber("left Voltage", 5.4)));
+		sendRightVoltage((SmartDashboard.getNumber("right Voltage", 5)));
+
 	}
 
 	/******************************************
@@ -412,6 +418,10 @@ public class Drive extends PIDSubsystem {
     	SmartDashboard.putNumber("Gyro Yaw", ahrs.getYaw());
 
 		changeScaledMaxOutput(scaledMaxOutput);
+	}
+
+	public void zeroYaw() {
+		//TODO call ahrs zeroing method
 	}
 
 

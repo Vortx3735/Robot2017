@@ -1,10 +1,9 @@
-package org.usfirst.frc.team3735.robot;
+package org.usfirst.frc.team3735.robot.util;
 
 import java.util.ArrayList;
 
 import org.usfirst.frc.team3735.robot.Constants.Field;
 import org.usfirst.frc.team3735.robot.Constants.RobotDimensions;
-import org.usfirst.frc.team3735.robot.util.Point;
 
 public class CoordinateHandler {
 	public final static double halfLength = RobotDimensions.length/2;
