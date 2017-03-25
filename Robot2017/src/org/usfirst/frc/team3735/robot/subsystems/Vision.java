@@ -53,11 +53,11 @@ public class Vision extends Subsystem {
             }
 	    });
 	    gearThread.start();
-	    try {
-			gearThread.wait();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//	    try {
+//			gearThread.wait();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	    
 	    pegThread = new VisionThread(camera, new PegPipeline(), pipeline -> {
             synchronized (imgLock) {
@@ -69,11 +69,11 @@ public class Vision extends Subsystem {
             }
 	    });
 	    pegThread.start();
-	    try {
-			pegThread.wait();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}	    
+//	    try {
+//			pegThread.wait();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}	    
 	}
 	
 	public enum Pipes{
@@ -99,7 +99,7 @@ public class Vision extends Subsystem {
 	public void pause(){
 		try {
 			visionThread.wait();
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -132,7 +132,11 @@ public class Vision extends Subsystem {
 		return centerX;
     }
     public double getRelativeCX(){
-		return getCenterX() - (IMG_WIDTH / 2);
+    	double centerX;
+		synchronized (imgLock) {
+			centerX = this.centerX;
+		}
+		return centerX - (IMG_WIDTH / 2);
     }
     public double getCenterY(){
     	double centerY;

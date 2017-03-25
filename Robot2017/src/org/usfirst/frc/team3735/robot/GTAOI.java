@@ -246,9 +246,9 @@ public class GTAOI implements DriveOI {
 
 	@Override
 	public void log() {
-		SmartDashboard.putNumber("right joystick angle", getMainRightAngle());
-		SmartDashboard.putNumber("right joystick magnitude",
-				getMainRightMagnitude());
+//		SmartDashboard.putNumber("right joystick angle", getMainRightAngle());
+//		SmartDashboard.putNumber("right joystick magnitude",
+//				getMainRightMagnitude());
 
 	}
 

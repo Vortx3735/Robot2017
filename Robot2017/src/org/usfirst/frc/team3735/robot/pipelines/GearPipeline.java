@@ -156,9 +156,10 @@ public class GearPipeline implements VisionPipeline {
 	}
 	
 	public double getCenterX(){
-		if(filterContoursOutput().isEmpty()){
-			return -1;
-		}else if(filterContoursOutput().size() == 1){
+//		if(filterContoursOutput().isEmpty()){
+//			return -1;
+//		}else 
+		if(filterContoursOutput().size() == 1){
 			Rect r= Imgproc.boundingRect(filterContoursOutput().get(0));
 			return r.x + (r.width / 2);
 		}else{

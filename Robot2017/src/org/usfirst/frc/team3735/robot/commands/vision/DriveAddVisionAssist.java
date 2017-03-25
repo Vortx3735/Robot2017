@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveAddVisionAssist extends Command {
 
     private Pipes pipeline;
+	private double prevWorking;
 
 	public DriveAddVisionAssist(Pipes p) {
         // Use requires() here to declare subsystem dependencies
@@ -21,18 +22,20 @@ public class DriveAddVisionAssist extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.vision.pause();
+    	//Robot.vision.pause();
     	Robot.vision.setPipeline(pipeline);
-    	Robot.vision.resume();
+    	//Robot.vision.resume();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double in = Robot.vision.getRelativeCX();
     	if(in == -1){
+    		//Robot.drive.setVisionAssist(prevWorking * -1 * .005);
     		Robot.drive.setVisionAssist(0);
     	}else{
-        	Robot.drive.setVisionAssist(in * -1 * .005);
+    		prevWorking = in;
+        	Robot.drive.setVisionAssist(in * -1 * .0015);
     	}
     }
 
@@ -43,7 +46,7 @@ public class DriveAddVisionAssist extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.vision.pause();
+    	//Robot.vision.pause();
 		Robot.drive.setVisionAssist(0);
     }
 
