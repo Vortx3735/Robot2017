@@ -18,6 +18,8 @@ public class Scaler extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	CANTalon motor;
+	CANTalon motor2;
+
 	//private final double voltageChangeSpeed = 5;
 
 	
@@ -28,8 +30,10 @@ public class Scaler extends Subsystem {
 	public Scaler(){
 		motor = new CANTalon(RobotMap.Scaler.motor);
 		motor.setCloseLoopRampRate(.2);
-		
 		motor.setInverted(RobotMap.Scaler.scalerInverted);
+		motor2 = new CANTalon(RobotMap.Scaler.motor2);
+		motor2.setCloseLoopRampRate(.2);
+		motor2.setInverted(RobotMap.Scaler.scalerInverted);
 		//motor.changeControlMode(CANTalon.TalonControlMode.Voltage);
 		//motor.setVoltageCompensationRampRate(voltageChangeSpeed);
 		SmartDashboard.putNumber("Scaler motor power", getPower());
@@ -54,6 +58,7 @@ public class Scaler extends Subsystem {
 			isOverLoaded = true;
 			percent = 0;
 			motor.set(percent);
+			motor2.set(-percent);
 		}else{
 			isOverLoaded = false;
 			if(current < percent){
@@ -62,6 +67,8 @@ public class Scaler extends Subsystem {
 				percent += rampRate;
 			}
 			motor.set(percent);
+			motor2.set(-percent);
+
 		}
 	}
 	

@@ -24,7 +24,7 @@ public class AutonForwardDrivePositionWithGearDrop extends CommandGroup {
     	//112-26-10.5 = 75.5
     	//75.5 + 3 inches = 79
     	//addSequential(new DriveMoveDistanceInches(86),2.6); /* Straight To Pin*/
-    	addSequential(new DriveMoveDistanceNavx(86),2.6); /* Straight To Pin*/
+    	addSequential(new DriveMoveDistanceNavx(89),2.6); /* Straight To Pin*/
     	//addSequential(new DriveMoveDistance(86),2.6); /* Straight To Pin*/
     	addSequential(new DriveBrake(),.4);
     	//addSequential(new Wait(.4));

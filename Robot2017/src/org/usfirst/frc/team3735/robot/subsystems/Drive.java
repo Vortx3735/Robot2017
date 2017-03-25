@@ -41,7 +41,7 @@ public class Drive extends PIDSubsystem {
 	
 	//values for rotation
 	private static double P = .0045;//this = max magnitude/180
-	private static double I = 0.00019;
+	private static double I = 0.00029;
 	private static double D = 0.009;
 	private static double F = 0.0;
 	
@@ -420,7 +420,7 @@ public class Drive extends PIDSubsystem {
 	}
 
 	public void zeroYaw() {
-		//TODO call ahrs zeroing method
+		ahrs.zeroYaw();
 	}
 
 

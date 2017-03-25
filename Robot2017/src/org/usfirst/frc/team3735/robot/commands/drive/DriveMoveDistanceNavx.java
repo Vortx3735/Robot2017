@@ -27,13 +27,14 @@ public class DriveMoveDistanceNavx extends Command {
 	private double finishTime = Constants.Drive.driveFinishTime;
 	
 	private double p = .025;
-	private double i = 0.00003;
+	private double i = 0.00000;
 	private double d = 0;
 	private double f = 0;
 	
-	private double strongMultiplier = .95;	
-	private double yawThreshold = 1;	//degrees
+	private double strongMultiplier = .8;	
+	private double yawThreshold = 2;	//degrees
 	private double targetYaw;
+	private double weakMultiplier = 1.2;
 
     public DriveMoveDistanceNavx(double distance){
         // Use requires() here to declare subsystem dependencies
@@ -61,20 +62,20 @@ public class DriveMoveDistanceNavx extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//strongMultiplier = SmartDashboard.get
-    	if(VortxMath.isWithinThreshold(Robot.drive.getYaw(), targetYaw, yawThreshold)){
+    	if(!VortxMath.isWithinThreshold(Robot.drive.getYaw(), targetYaw, yawThreshold)){
     		if(Robot.drive.getYaw() > targetYaw){
     			Robot.drive.setLeftPID(p*strongMultiplier, i, d);
-    			Robot.drive.setRightPID(p, i, d);
-    			SmartDashboard.putBoolean("Navx On", true);
+    			Robot.drive.setRightPID(p*weakMultiplier, i, d);
+    			SmartDashboard.putBoolean("Navx Right", true);
     		}else{
-    			Robot.drive.setLeftPID(p, i, d);
+    			Robot.drive.setLeftPID(p*weakMultiplier, i, d);
     			Robot.drive.setRightPID(p*strongMultiplier, i, d);
-    			SmartDashboard.putBoolean("Navx On", true);
+    			SmartDashboard.putBoolean("Navx Left", true);
     		}
     	}else{
         	Robot.drive.setPIDSettings(p,i,d);
-			SmartDashboard.putBoolean("Navx On", false);
-
+			SmartDashboard.putBoolean("Navx Left", false);
+			SmartDashboard.putBoolean("Navx Right", false);
     	}
 		Robot.drive.setLeftRightDistance(endPositionLeft, endPositionRight);
     	if(isOnTarget()){
