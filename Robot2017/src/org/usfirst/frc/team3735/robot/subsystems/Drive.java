@@ -18,7 +18,6 @@ import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveNavxReset;
 import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
 
 

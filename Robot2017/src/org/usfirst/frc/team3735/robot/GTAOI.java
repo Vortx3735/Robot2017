@@ -12,7 +12,6 @@ import org.usfirst.frc.team3735.robot.commands.drive.DriveBrake;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToBallDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToCustomDriveSettings;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToGearDirection;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceTwist;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveTwistAngle;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveStopRobot;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
