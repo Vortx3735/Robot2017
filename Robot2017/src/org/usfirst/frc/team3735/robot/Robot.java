@@ -13,7 +13,6 @@ import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team3735.robot.subsystems.Vision;
-import org.usfirst.frc.team3735.robot.util.CoordinateHandler;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 
 import edu.wpi.cscore.UsbCamera;
@@ -51,7 +50,6 @@ public class Robot extends IterativeRobot {
 	
 	public static DriveOI oi;
 	public RobotMap robotmap;
-	public CoordinateHandler cords;
 	
 	//SendableChooser lrChooser;
 	boolean rightSide = false;
