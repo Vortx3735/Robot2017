@@ -3,6 +3,7 @@ package org.usfirst.frc.team3735.robot;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 import org.usfirst.frc.team3735.robot.util.JoystickPOVButton;
 import org.usfirst.frc.team3735.robot.util.JoystickTriggerButton;
+import org.usfirst.frc.team3735.robot.commands.DriveTurnToAngleHyperbola;
 import org.usfirst.frc.team3735.robot.commands.InterruptOperations;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
@@ -146,6 +147,15 @@ public class GTAOI implements DriveOI {
 //		pov225.whenPressed(new DriveTurnToAngle(-150));
 //		pov270.whenPressed(new DriveTurnToAngle(-90));
 //		pov315.whenPressed(new DriveTurnToAngle(-60));
+		
+		pov0.whenPressed(new DriveTurnToAngleHyperbola(0));
+		pov45.whenPressed(new DriveTurnToAngleHyperbola(60));
+		pov90.whenPressed(new DriveTurnToAngleHyperbola(90));
+		pov135.whenPressed(new DriveTurnToAngleHyperbola(150));
+		pov180.whenPressed(new DriveTurnToAngleHyperbola(180));
+		pov225.whenPressed(new DriveTurnToAngleHyperbola(-150));
+		pov270.whenPressed(new DriveTurnToAngleHyperbola(-90));
+		pov315.whenPressed(new DriveTurnToAngleHyperbola(-60));
 		
 		cy.whenPressed(new ScalerUp());
 		cx.whenPressed(new ScalerOff());

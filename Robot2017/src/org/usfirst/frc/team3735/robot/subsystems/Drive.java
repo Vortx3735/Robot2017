@@ -40,10 +40,16 @@ public class Drive extends PIDSubsystem {
 	private boolean reversed = false;
 	
 	//values for rotation
-	private static double P = .0045;//this = max magnitude/180
-	private static double I = 0.00029;
-	private static double D = 0.009;
-	private static double F = 0.0;
+	
+	private static double P = 0.015;//this = max magnitude/180
+	private static double I = 0.000;
+	private static double D = 0.005;
+	private static double F = 0.005;
+	
+//	private static double P = .0045;//this = max magnitude/180
+//	private static double I = 0.00029;
+//	private static double D = 0.009;
+//	private static double F = 0.0;
 	
 	private static double dP = 1.0;
 	private static double dI = 0.0;
@@ -94,7 +100,7 @@ public class Drive extends PIDSubsystem {
 		getPIDController().setAbsoluteTolerance(Constants.Drive.turnTolerance);
 		getPIDController().setInputRange(-180, 180);
 		getPIDController().setContinuous();
-		getPIDController().setOutputRange(-1, 1);
+		getPIDController().setOutputRange(-.25, .25);
         //LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
 		SmartDashboard.putData("Drive PID Controller",getPIDController());
 		SmartDashboard.putNumber("left Voltage", 5.4);

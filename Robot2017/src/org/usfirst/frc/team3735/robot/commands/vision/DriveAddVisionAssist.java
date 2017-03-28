@@ -32,10 +32,10 @@ public class DriveAddVisionAssist extends Command {
     	double in = Robot.vision.getRelativeCX();
     	if(in == -1){
     		//Robot.drive.setVisionAssist(prevWorking * -1 * .005);
-    		Robot.drive.setVisionAssist(0);
+    		Robot.drive.setVisionAssist(prevWorking);
     	}else{
     		prevWorking = in;
-        	Robot.drive.setVisionAssist(in * -1 * .0015);
+        	Robot.drive.setVisionAssist(in * -1 * .0025);
     	}
     }
 
