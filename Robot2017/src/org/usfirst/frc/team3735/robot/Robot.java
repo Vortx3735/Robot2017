@@ -72,7 +72,7 @@ public class Robot extends IterativeRobot {
 		scaler = new Scaler();
 		drive = new Drive();
 		ballIntake = new BallIntake();
-		//navigation = new Navigation();
+		navigation = new Navigation();
 		ultra = new Ultrasonic();
 		vision = new Vision();
 		

@@ -7,6 +7,8 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -24,7 +26,7 @@ import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
  *
  ***********************************************/
 
-public class Navigation extends Subsystem {
+public class Navigation extends Subsystem implements PIDSource {
 	private AHRS ahrs;
 	
 	public Navigation(){
@@ -47,7 +49,9 @@ public class Navigation extends Subsystem {
     public void resetAhrs(){
     	ahrs.reset();
     }
-    
+    public double getRate(){
+    	return ahrs.getRate();
+    }
 	protected double returnPIDInput() {
 		return ahrs.getYaw();
 	}
@@ -139,6 +143,27 @@ public class Navigation extends Subsystem {
         SmartDashboard.putNumber(   "IMU_Update_Count",     ahrs.getUpdateCount());
         
     }
+
+
+	@Override
+	public void setPIDSourceType(PIDSourceType pidSource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public PIDSourceType getPIDSourceType() {
+		// TODO Auto-generated method stub
+		return PIDSourceType.kDisplacement;
+	}
+
+
+	@Override
+	public double pidGet() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
     
 }
 
