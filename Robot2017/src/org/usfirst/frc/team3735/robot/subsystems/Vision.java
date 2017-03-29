@@ -39,17 +39,17 @@ public class Vision extends Subsystem {
 		camera = CameraServer.getInstance().startAutomaticCapture();
 	    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    initThreads();
-	    visionThread = gearThread;
+	    visionThread = pegThread;
 	}
 	
 	private void initThreads(){
 		gearThread = new VisionThread(camera, new GearPipeline(), pipeline -> {
             synchronized (imgLock) {
                 centerX = pipeline.getCenterX();
-                centerY = pipeline.getCenterY();
+                //centerY = pipeline.getCenterY();
                 area = pipeline.getArea();
-                height = pipeline.getHeight();
-                width = pipeline.getWidth();
+                ///height = pipeline.getHeight();
+                //width = pipeline.getWidth();
             }
 	    });
 	    gearThread.start();
