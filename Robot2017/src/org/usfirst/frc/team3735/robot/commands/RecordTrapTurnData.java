@@ -1,42 +1,32 @@
-package org.usfirst.frc.team3735.robot.commands.vision;
+package org.usfirst.frc.team3735.robot.commands;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
+import org.usfirst.frc.team3735.robot.util.Setting;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class DriveAddVisionAssist extends Command {
+public class RecordTrapTurnData extends Command {
 
-    private Pipes pipeline;
-	private double prevWorking;
-
-	public DriveAddVisionAssist(Pipes p) {
+	Setting turnVoltage;
+    public RecordTrapTurnData() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	this.pipeline = p;
-    	requires(Robot.vision);
-	}
+    	requires(Robot.drive);
+    	turnVoltage = new Setting("turning voltage", 0);
+    	
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Robot.vision.pause();
-    	Robot.vision.setPipeline(pipeline);
-    	//Robot.vision.resume();
+    	Robot.drive.changeControlMode(TalonControlMode.Voltage);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double in = Robot.vision.getRelativeCX();
-    	if(in == -161){
-    		Robot.drive.setVisionAssist(prevWorking * -1 * .005);
-    		//Robot.drive.setVisionAssist(0);
-    	}else{
-    		prevWorking = in;
-        	Robot.drive.setVisionAssist(in * -1 * .0025);
-    	}
+    	Robot.drive.setLeftRightOutputs(turnVoltage.getValue(), -turnVoltage.getValue());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -46,13 +36,10 @@ public class DriveAddVisionAssist extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	//Robot.vision.pause();
-		Robot.drive.setVisionAssist(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

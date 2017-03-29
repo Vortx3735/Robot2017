@@ -1,53 +1,51 @@
-package org.usfirst.frc.team3735.robot.commands.vision;
+package org.usfirst.frc.team3735.robot.commands;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class DriveAddVisionAssist extends Command {
+public class RecordAverageRate extends Command {
 
-    private Pipes pipeline;
-	private double prevWorking;
-
-	public DriveAddVisionAssist(Pipes p) {
+	private static final double endTime = 1;
+	private double sum;
+	private double numValues;
+	private double timer;
+	private boolean done;
+    public RecordAverageRate() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	this.pipeline = p;
-    	requires(Robot.vision);
-	}
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Robot.vision.pause();
-    	Robot.vision.setPipeline(pipeline);
-    	//Robot.vision.resume();
+    	sum = 0;
+    	numValues = 0;
+    	timer = 0;
+    	done = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double in = Robot.vision.getRelativeCX();
-    	if(in == -161){
-    		Robot.drive.setVisionAssist(prevWorking * -1 * .005);
-    		//Robot.drive.setVisionAssist(0);
-    	}else{
-    		prevWorking = in;
-        	Robot.drive.setVisionAssist(in * -1 * .0025);
+    	timer+=.02;
+    	if((timer) > endTime){
+    		done = true;
     	}
+    	sum += Robot.drive.getRate();
+    	numValues++;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return done;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	//Robot.vision.pause();
-		Robot.drive.setVisionAssist(0);
+    	System.out.print("Average Rate: " + sum/numValues);
     }
 
     // Called when another command which requires one or more of the same
