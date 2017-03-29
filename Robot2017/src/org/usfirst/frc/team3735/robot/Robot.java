@@ -2,6 +2,8 @@ package org.usfirst.frc.team3735.robot;
 
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team3735.robot.commands.RecordAverageRate;
+import org.usfirst.frc.team3735.robot.commands.RecordTrapTurnData;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
 import org.usfirst.frc.team3735.robot.pipelines.GearPipeline;
 import org.usfirst.frc.team3735.robot.pipelines.StickyNotePipeline;
@@ -82,8 +84,8 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addDefault ("Do Nothing", new AutonomousDoNothing());
 		autonomousChooser.addObject("TimedDriveBaseStraightOnlyToBase", new AutonTimedDriveTimedDriveStraightToBase());
 		autonomousChooser.addObject("Drive to Base Line", new AutonForwardDrivePosition());
-		autonomousChooser.addObject("Drive to middle and drop gear", new  AutonForwardDrivePositionWithGearDrop());
-		autonomousChooser.addObject("Drive to side and drop gear", new  AutonForwardDrivePositionSideWithGearDrop());
+		autonomousChooser.addObject("Drive to middle and drop gear", new  AutonMiddleGearDrop());
+		autonomousChooser.addObject("Drive to side and drop gear", new  AutonSideWithGearDrop());
 		autonomousChooser.addObject("Drive to left side and drop gear", new  AutonForwardDrivePositionLeftWithGearDrop());
 		autonomousChooser.addObject("Drive to right side and drop gear", new  AutonForwardDrivePositionRightWithGearDrop());
 		autonomousChooser.addObject("Drive to middle drop gear and drive to baseline", new  AutonMiddleGearThenBaseline());
@@ -105,7 +107,9 @@ public class Robot extends IterativeRobot {
 //		chooser.addObject("Autonomous Test", autonomousTest);
 		
 		SmartDashboard.putData("AUTONOMOUS SELECTION", autonomousChooser);
-		
+		SmartDashboard.putData("Start Sending Turn Voltages", new RecordTrapTurnData());
+		SmartDashboard.putData("Start Sending Turn Voltages", new RecordAverageRate());
+
 		//old camera code
 //    	try {
 //			server = CameraServer.getInstance();

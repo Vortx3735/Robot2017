@@ -1,42 +1,26 @@
-package org.usfirst.frc.team3735.robot.commands.vision;
+package org.usfirst.frc.team3735.robot.commands.drive;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class DriveAddVisionAssist extends Command {
+public class DriveChangeBrakeMode extends Command {
 
-    private Pipes pipeline;
-	private double prevWorking;
-
-	public DriveAddVisionAssist(Pipes p) {
+    public DriveChangeBrakeMode() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	this.pipeline = p;
-    	requires(Robot.vision);
-	}
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Robot.vision.pause();
-    	Robot.vision.setPipeline(pipeline);
-    	//Robot.vision.resume();
+    	Robot.drive.setEnableBrake(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double in = Robot.vision.getRelativeCX();
-    	if(in == -161){
-    		Robot.drive.setVisionAssist(prevWorking * -1 * .005);
-    		//Robot.drive.setVisionAssist(0);
-    	}else{
-    		prevWorking = in;
-        	Robot.drive.setVisionAssist(in * -1 * .0025);
-    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -46,8 +30,7 @@ public class DriveAddVisionAssist extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	//Robot.vision.pause();
-		Robot.drive.setVisionAssist(0);
+    	Robot.drive.setEnableBrake(false);
     }
 
     // Called when another command which requires one or more of the same

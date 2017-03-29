@@ -429,6 +429,15 @@ public class Drive extends PIDSubsystem {
 		ahrs.zeroYaw();
 	}
 
+	public double getRate() {
+		return ahrs.getRate();
+	}
+
+	public void setPIDSettings(double kp, double ki, double kd, double kf, int kz, double kramp) {
+		l1.setPID(kp, ki, kd, kf, kz, kramp, 0);
+		r1.setPID(kp, ki, kd, kf, kz, kramp, 0);		
+	}
+
 
 
 }

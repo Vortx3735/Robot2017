@@ -3,41 +3,19 @@ package org.usfirst.frc.team3735.robot;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 import org.usfirst.frc.team3735.robot.util.JoystickPOVButton;
 import org.usfirst.frc.team3735.robot.util.JoystickTriggerButton;
-import org.usfirst.frc.team3735.robot.commands.DriveTurnToAngleHyperbola;
-import org.usfirst.frc.team3735.robot.commands.InterruptOperations;
-import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
-import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveAddSensitiveLeft;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveAddSensitiveRight;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveBrake;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToBallDirection;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToCustomDriveSettings;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToGearDirection;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveTwistAngle;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveStopRobot;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
-import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeClose;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeOpen;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersIn;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersOut;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeSwitchUpDown;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeToggleOpenClose;
-import org.usfirst.frc.team3735.robot.commands.scaler.ScalerOff;
-import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
-import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOff;
-import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOnAgitatorHigh;
-import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOnAgitatorLow;
-import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOnAgitatorSmartDash;
-import org.usfirst.frc.team3735.robot.commands.shooter.ShooterSwitchEnabled;
-import org.usfirst.frc.team3735.robot.commands.vision.DriveAddVisionAssist;
+//import org.usfirst.frc.team3735.robot.commands.DriveTurnToAngleHyperbola;
+import org.usfirst.frc.team3735.robot.commands.*;
+import org.usfirst.frc.team3735.robot.commands.ballintake.*;
+import org.usfirst.frc.team3735.robot.commands.drive.*;
+import org.usfirst.frc.team3735.robot.commands.gearintake.*;
+import org.usfirst.frc.team3735.robot.commands.scaler.*;
+import org.usfirst.frc.team3735.robot.commands.shooter.*;
+import org.usfirst.frc.team3735.robot.commands.vision.*;
+
+
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -119,7 +97,7 @@ public class GTAOI implements DriveOI {
 		pov0.whileHeld(new DriveAddVisionAssist(Pipes.Peg));
 		pov180.whileHeld(new DriveAddVisionAssist(Pipes.Gear));
 		
-		x.whileHeld(new DriveStopRobot());
+		x.whileHeld(new DriveChangeBrakeMode());
 		b.whenPressed(new GearIntakeDropOff());
 		a.whileHeld(new GearIntakeFeeding());
 
@@ -148,14 +126,14 @@ public class GTAOI implements DriveOI {
 //		pov270.whenPressed(new DriveTurnToAngle(-90));
 //		pov315.whenPressed(new DriveTurnToAngle(-60));
 		
-		pov0.whenPressed(new DriveTurnToAngleHyperbola(0));
-		pov45.whenPressed(new DriveTurnToAngleHyperbola(60));
-		pov90.whenPressed(new DriveTurnToAngleHyperbola(90));
-		pov135.whenPressed(new DriveTurnToAngleHyperbola(150));
-		pov180.whenPressed(new DriveTurnToAngleHyperbola(180));
-		pov225.whenPressed(new DriveTurnToAngleHyperbola(-150));
-		pov270.whenPressed(new DriveTurnToAngleHyperbola(-90));
-		pov315.whenPressed(new DriveTurnToAngleHyperbola(-60));
+//		pov0.whenPressed(new DriveTurnToAngleHyperbola(0));
+//		pov45.whenPressed(new DriveTurnToAngleHyperbola(60));
+//		pov90.whenPressed(new DriveTurnToAngleHyperbola(90));
+//		pov135.whenPressed(new DriveTurnToAngleHyperbola(150));
+//		pov180.whenPressed(new DriveTurnToAngleHyperbola(180));
+//		pov225.whenPressed(new DriveTurnToAngleHyperbola(-150));
+//		pov270.whenPressed(new DriveTurnToAngleHyperbola(-90));
+//		pov315.whenPressed(new DriveTurnToAngleHyperbola(-60));
 		
 		cy.whenPressed(new ScalerUp());
 		cx.whenPressed(new ScalerOff());
