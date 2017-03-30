@@ -89,6 +89,8 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Drive to left side and drop gear", new  AutonForwardDrivePositionLeftWithGearDrop());
 		autonomousChooser.addObject("Drive to right side and drop gear", new  AutonForwardDrivePositionRightWithGearDrop());
 		autonomousChooser.addObject("Drive to middle drop gear and drive to baseline", new  AutonMiddleGearThenBaseline());
+		autonomousChooser.addObject("naiks middle", new  AutonForwardDrivePositionWithGearDropPinLeft());
+		autonomousChooser.addObject("naiks side gear", new  AutonForwardDrivePositionWithGearDropPinLeft());
 
 		
 //		autonomousChooser.addObject("DriveBaseLeftOfAirShip", new AutonTimedDriveTimedStepsToLeft());

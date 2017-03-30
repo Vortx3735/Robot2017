@@ -19,7 +19,7 @@ public class AutonForwardDrivePositionWithGearDropPinLeft extends CommandGroup {
 
     public AutonForwardDrivePositionWithGearDropPinLeft(){
     	addSequential(new DriveForwardToCurrentGyroHeading(20)); /* Straight To Pin*/
-    	addSequential(new DriveTurnToOffsetGyroHeading(30)); /* Turn 30*/
+    	addSequential(new DriveTurnToOffsetGyroHeading(60)); /* Turn 30*/
     	addSequential(new DriveForwardToCurrentGyroHeading(20)); /* Straight To Pin*/
     	addSequential(new GearIntakeDropOff());
      }
