@@ -23,7 +23,7 @@ public class Vision extends Subsystem {
 	private UsbCamera camera;
 	private final Object imgLock = new Object();
 	
-	private double centerX = 0.0;	
+	private double centerX = 0.0;
 	private double centerY = 0.0;	
 	private double area = 0.0;
 	private double height = 0.0;
@@ -45,9 +45,13 @@ public class Vision extends Subsystem {
 	private void initThreads(){
 		gearThread = new VisionThread(camera, new GearPipeline(), pipeline -> {
             synchronized (imgLock) {
-                centerX = pipeline.getCenterX();
+                if(pipeline.getCenterX() != -1){
+                    centerX = pipeline.getCenterX();
+                }
                 //centerY = pipeline.getCenterY();
-                area = pipeline.getArea();
+                if(pipeline.getArea() != -1){
+                    area = pipeline.getArea();
+                }
                 ///height = pipeline.getHeight();
                 //width = pipeline.getWidth();
             }
@@ -61,11 +65,13 @@ public class Vision extends Subsystem {
 	    
 	    pegThread = new VisionThread(camera, new PegPipeline(), pipeline -> {
             synchronized (imgLock) {
-            	 centerX = pipeline.getCenterX();
-                 centerY = pipeline.getCenterY();
-                 area = pipeline.getArea();
-                 height = pipeline.getHeight();
-                 width = pipeline.getWidth();
+            	if(pipeline.getCenterX() != -1){
+                    centerX = pipeline.getCenterX();
+                }
+                //centerY = pipeline.getCenterY();
+                if(pipeline.getArea() != -1){
+                    area = pipeline.getArea();
+                }
             }
 	    });
 	    pegThread.start();
@@ -115,7 +121,7 @@ public class Vision extends Subsystem {
     
     public void log(){
 		//SmartDashboard.putNumber("CenterX", getCenterX());
-		SmartDashboard.putNumber("CenterY", getCenterY());
+		//SmartDashboard.putNumber("CenterY", getCenterY());
 		SmartDashboard.putNumber("Relative CX", getRelativeCX());
 		SmartDashboard.putNumber("height", getHeight());
 		SmartDashboard.putNumber("width", getWidth());

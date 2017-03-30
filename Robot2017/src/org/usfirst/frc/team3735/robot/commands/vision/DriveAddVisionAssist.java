@@ -35,7 +35,7 @@ public class DriveAddVisionAssist extends Command {
     		//Robot.drive.setVisionAssist(0);
     	}else{
     		prevWorking = in;
-        	Robot.drive.setVisionAssist(in * -1 * .0025);
+        	Robot.drive.setVisionAssist(in * 1 * .0025);
     	}
     }
 
