@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveMoveDistanceInches extends Command {
+public class DriveMoveDistancePIDBroken extends Command {
 
 	private double displacementInches;
 	private double startPositionLeftInches;
@@ -36,7 +36,7 @@ public class DriveMoveDistanceInches extends Command {
 	// private static double D = 0;
 	// private static double F = 0;
 
-	public DriveMoveDistanceInches(double distance) {
+	public DriveMoveDistancePIDBroken(double distance) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.drive);

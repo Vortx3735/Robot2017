@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveMoveTwistAngle extends Command {
+public class DriveMoveTwistAngleNaik extends Command {
 	
 	static double twistamount;
 	static double startPositionLeftInches;
@@ -27,7 +27,7 @@ public class DriveMoveTwistAngle extends Command {
 //	private static double D = 0;
 //	private static double F = 0;
 
-    public DriveMoveTwistAngle(double angle){
+    public DriveMoveTwistAngleNaik(double angle){
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
@@ -46,11 +46,12 @@ public class DriveMoveTwistAngle extends Command {
     	
     	adjustment = 0;
     	endadjustment = Math.abs(55.0f * twistamount/180) ; // FIXME MOVE CONST TO BETTER PLACE
-    	this.setTimeout(5.0);
     	//Robot.drive.setPIDSettings(0.07,0.000,0);
+    	
     	Robot.drive.setPIDSettings(0.02, 0.0000, 0.0);
         Timer.delay(0.02);
     	Robot.drive.setupDriveForPositionControl();
+    	
     	done = false;
     
         
@@ -59,19 +60,17 @@ public class DriveMoveTwistAngle extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if  ( 		adjustment	<	endadjustment )
-    	{
+    	if(adjustment < endadjustment){
     		adjustment+=0.25;
-    		if (twistamount>0.0f)
+    		if (twistamount>0.0f){
         		Robot.drive.setLeftRightDistance(startPositionLeftInches + adjustment, startPositionRightInches-adjustment);
-        	else
+    		}else{
         		Robot.drive.setLeftRightDistance(startPositionLeftInches - adjustment, startPositionRightInches+adjustment);
-        
+    		}
     		
     	}
-    	else
-    	{
-    		if (       Math.abs(Robot.drive.getInchesPositionLeftInches() - endPositionLeftInches )<0.5
+    	else{
+    		if (Math.abs(Robot.drive.getInchesPositionLeftInches() - endPositionLeftInches )<0.5
     				&& Math.abs(Robot.drive.getInchesPositionRightInches() - endPositionRightInches )<0.5    )
         		done = true;
     		Robot.drive.setLeftRightDistance(endPositionLeftInches,endPositionRightInches);
@@ -100,7 +99,7 @@ public class DriveMoveTwistAngle extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    		return done || this.isTimedOut();
+    		return done;
 
     }
 

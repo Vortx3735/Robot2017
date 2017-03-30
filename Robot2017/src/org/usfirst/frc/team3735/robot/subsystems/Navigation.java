@@ -52,12 +52,9 @@ public class Navigation extends Subsystem implements PIDSource {
     public double getRate(){
     	return ahrs.getRate();
     }
-	protected double returnPIDInput() {
-		return ahrs.getYaw();
-	}
     public void log(){
     	SmartDashboard.putNumber("Gyro Yaw", ahrs.getYaw());
- //       displayDebugGyroData();
+ //     displayDebugGyroData();
     }
     
     
@@ -147,22 +144,19 @@ public class Navigation extends Subsystem implements PIDSource {
 
 	@Override
 	public void setPIDSourceType(PIDSourceType pidSource) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public PIDSourceType getPIDSourceType() {
-		// TODO Auto-generated method stub
 		return PIDSourceType.kDisplacement;
 	}
 
 
 	@Override
 	public double pidGet() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ahrs.getYaw();
 	}
     
 }

@@ -4,7 +4,7 @@ import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Constants.GearIntake;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.commands.Wait;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePIDBroken;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -20,7 +20,7 @@ public class GearIntakeDropOff extends CommandGroup {
     	addParallel(new GearIntakeRollersOut(),Constants.GearIntake.dropOffTotalTime);
     	addSequential(new Wait(Constants.GearIntake.dropOffRollDelay));
     	addSequential(new GearIntakeLiftDown());
-    	addParallel(new DriveMoveDistanceInches(-37), 1);
+    	addParallel(new DriveMoveDistancePIDBroken(-37), 1);
     	//addSequential(new ExpDrive(Constants.GearIntake.dropOffDrivePercent,0),Constants.GearIntake.dropOffDriveTime);
     	addSequential(new Wait(Constants.GearIntake.dropOffJerkDelay));
     	addSequential(new GearIntakeLiftUp());

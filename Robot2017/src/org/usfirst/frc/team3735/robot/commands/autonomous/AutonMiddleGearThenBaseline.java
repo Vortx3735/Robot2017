@@ -2,10 +2,10 @@ package org.usfirst.frc.team3735.robot.commands.autonomous;
 
 import org.usfirst.frc.team3735.robot.commands.TurnWithTime;
 import org.usfirst.frc.team3735.robot.commands.Wait;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistance;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePID;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePIDBroken;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceNavx;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePIDBroken;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 
@@ -27,10 +27,10 @@ public class AutonMiddleGearThenBaseline extends CommandGroup {
     	addSequential(new DriveMoveDistanceNavx(86),2.5); /* Straight To Pin*/
     	addSequential(new Wait(.4));
     	addSequential(new GearIntakeDropOff());
-    	addSequential(new DriveMoveDistance(-30));
+    	addSequential(new DriveMoveDistancePID(-30));
     	addSequential(new TurnWithTime(-1),2);
-    	addSequential(new DriveMoveDistance(70));
+    	addSequential(new DriveMoveDistancePID(70));
     	addSequential(new TurnWithTime(1),2);
-    	addSequential(new DriveMoveDistance(100));
+    	addSequential(new DriveMoveDistancePID(100));
      }
 }

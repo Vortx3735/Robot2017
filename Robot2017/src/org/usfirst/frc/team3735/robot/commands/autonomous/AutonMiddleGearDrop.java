@@ -2,10 +2,10 @@ package org.usfirst.frc.team3735.robot.commands.autonomous;
 
 import org.usfirst.frc.team3735.robot.commands.Wait;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveBrake;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistance;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePID;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePIDBroken;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceNavx;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePIDBroken;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 

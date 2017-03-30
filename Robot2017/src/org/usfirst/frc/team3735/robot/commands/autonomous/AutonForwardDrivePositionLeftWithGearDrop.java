@@ -1,10 +1,10 @@
 package org.usfirst.frc.team3735.robot.commands.autonomous;
 
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistance;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePID;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePIDBroken;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceNavx;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAnglePID;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePIDBroken;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 
@@ -21,7 +21,7 @@ public class AutonForwardDrivePositionLeftWithGearDrop extends CommandGroup {
     	/*                                    This */
     	/*                                     |   */
     	addSequential(new DriveMoveDistanceNavx(74.8),3);
-    	addSequential(new DriveTurnToAngle(60));
+    	addSequential(new DriveTurnToAnglePID(60));
     	//addSequential(new ExpDrive(.6,4),1);
     	addSequential(new DriveMoveDistanceNavx(88.7),3);
     	addSequential(new GearIntakeDropOff(),3);

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.drive;
 
 import org.usfirst.frc.team3735.robot.Robot;
-
+import org.usfirst.frc.team3735.robot.util.VortxMath;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 
-public class DriveForwardToCurrentGyroHeading extends Command {
+public class DriveMoveDistanceNavxExpNaik extends Command {
 
 	/**************** MAKE ADJUSTMENTS TO THESE CONSTANTS AND ENABLE DISABLES */
 	public static final boolean ISCONSOLEDEBUG_ENABLED = false;
@@ -77,10 +77,12 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 	private boolean typeistwist = false;
 	private boolean done = false;
 	private short postreachcntr = 0;
+	private double targetYaw;
 
-	public DriveForwardToCurrentGyroHeading(double distance) {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
+	/*
+	 * @param distance	the distance to move in inches
+	 */
+	public DriveMoveDistanceNavxExpNaik(double distance) {
 		requires(Robot.drive);
 		this.currentstate = STATE.IDLE;
 		this.nextstate = STATE.IDLE;
@@ -93,9 +95,12 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 
 	}
 
-	public DriveForwardToCurrentGyroHeading(double distance, boolean typeistwist) {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
+	/*
+	 * @param distance	the distance to move in inches
+	 * @param typeistwist	if true, it will move the left forward 
+	 * 						and the right back, turning the robot
+	 */
+	public DriveMoveDistanceNavxExpNaik(double distance, boolean typeistwist) {
 		requires(Robot.drive);
 		this.currentstate = STATE.IDLE;
 		this.nextstate = STATE.IDLE;
@@ -107,12 +112,12 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 
 	}
 
-	// Called just before this Command runs the first time
 	protected void initialize() {
 		done = false;
 		currentstate = STATE.INITTRAVEL;
 		//Robot.navigation.resetHeading();
-		Robot.drive.zeroYaw();
+		targetYaw = Robot.drive.getYaw();
+		Robot.drive.setSetpoint(targetYaw);
 		yawtwistcorrection = 0.0;
 		stateDoWorkTime = Timer.getFPGATimestamp() + STATEPERIODINTERVAL;
 	}
@@ -181,7 +186,7 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 			 * Position
 			 *******************************/
 
-			if (DriveForwardToCurrentGyroHeading.ENABLE_EXPRAMP) {
+			if (DriveMoveDistanceNavxExpNaik.ENABLE_EXPRAMP) {
 
 				if (isPositionEndZone() == true)
 					filtspeed = NORMALMOVESPEED/-8;
@@ -236,7 +241,7 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 		double ErrLeft = endPositionLeftInches-Robot.drive.getInchesPositionLeftInches();
 		double ErrRight = endPositionRightInches-  Robot.drive.getInchesPositionRightInches();
 
-		if (DriveForwardToCurrentGyroHeading.ISCONSOLEDEBUG_ENABLED) {
+		if (DriveMoveDistanceNavxExpNaik.ISCONSOLEDEBUG_ENABLED) {
 			System.out.format("[%08.3f]: <Lerr=%08.3f Rerr=%08.3f", stateDoWorkTime, ErrLeft, ErrRight);
 			System.out.println("<");
 		}
@@ -263,7 +268,7 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 		boolean rval = false;
 		double ErrLeft = endPositionLeftInches - Robot.drive.getInchesPositionLeftInches()- startPositionLeftInches;
 		double ErrRight = endPositionRightInches - Robot.drive.getInchesPositionRightInches()-startPositionRightInches;
-
+		
 		if (ErrLeft < ENDZONEINCHES
 				&& ErrRight< ENDZONEINCHES) {
 			rval = true;
@@ -278,12 +283,10 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 		 * Call the State Machine at a Periodic Rate
 		 *****************************************/
 		if (Timer.getFPGATimestamp() > stateDoWorkTime) {
-
-			if (DriveForwardToCurrentGyroHeading.ISCONSOLEDEBUG_ENABLED) {
+			if (DriveMoveDistanceNavxExpNaik.ISCONSOLEDEBUG_ENABLED) {
 				System.out.format("[%08.3f]:", stateDoWorkTime);
 				System.out.println(currentstate);
 			}
-
 			stateDoWorkTime = Timer.getFPGATimestamp() + STATEPERIODINTERVAL;
 			stateMachine();
 		}
@@ -291,34 +294,35 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 		/*****************************************
 		 * Calculate Yaw Correction States
 		 *****************************************/
-		if (ENABLE_YAWMODE && !typeistwist)
+		if (ENABLE_YAWMODE && !typeistwist){
 			yawtwistcorrection = calculateYawCorrection();
-		else
+		}else{
 			yawtwistcorrection = 0;
+		}
 		
 		/*****************************************
 		 * Drive Only During Travel States
 		 *****************************************/
-		if (this.currentstate == STATE.TRAVELUNTILREACHED || this.currentstate == STATE.REACHED) {
-			if (this.currentstate == STATE.REACHED)
-				Robot.drive.arcadeDrive((endPositionLeftInches- Robot.drive.getInchesPositionLeftInches())/100, yawtwistcorrection, false);
-			else
+		if (this.currentstate == STATE.REACHED) {
+			Robot.drive.arcadeDrive((endPositionLeftInches- Robot.drive.getInchesPositionLeftInches())/100, yawtwistcorrection, false);
+		}else if(this.currentstate == STATE.TRAVELUNTILREACHED){
 				Robot.drive.arcadeDrive(movespeed, yawtwistcorrection, false);
-			
-				
-		} else {
+		}else{
 			Robot.drive.arcadeDrive(0, 0, false);
-			
 			Robot.drive.setEnableBrake(true);
-
 		}
+		
+		
+		
 
-		System.out.println(endPositionLeftInches- Robot.drive.getInchesPositionLeftInches());
+		//System.out.println(endPositionLeftInches- Robot.drive.getInchesPositionLeftInches());
+		
 		/*****************************************
 		 * Time Out Abort
 		 *****************************************/
-		if (this.isTimedOut())
+		if (this.isTimedOut()){
 			done = true;
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -328,7 +332,6 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-
 	}
 
 	// Called when another command which requires one or more of the same
@@ -344,22 +347,13 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 		/*****************************************
 		 * Calculate Yaw Correction States
 		 *****************************************/
-		double reval = 0;
-		double currentYawReading=0;
 		/*
 		 * If Angle Error is Positive 0 to 180 we need to Turn Opposite
 		 * 
 		 */
-		currentYawReading = Robot.navigation.getYaw() ;
-		reval = 	currentYawReading	 / -180.0;
-
-		if (reval > 0.5)
-			reval = 0.5;
-
-		if (reval < -0.5)
-			reval = -0.5;
-
-		return reval*4.0;
+		double reval = Robot.drive.getPIDController().getError()/ -180.0;
+		reval = VortxMath.limit(reval, -.5, .5);
+		return reval * 4.0;
 
 	}
 	protected void showDashTestInfo() {

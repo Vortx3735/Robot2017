@@ -2,11 +2,11 @@ package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToCustomDriveSettings;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveTwistAngle;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePIDBroken;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveTwistAngleNaik;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveResetPosition;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAnglePID;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeToggleOpenClose;
@@ -83,19 +83,19 @@ public class OI implements DriveOI{
 		start.whenPressed(new DriveSwitchDirection());
 		back.toggleWhenPressed(new DriveChangeToCustomDriveSettings());
 		
-		pov0.whenPressed(new DriveTurnToAngle(0));
-		pov45.whenPressed(new DriveTurnToAngle(45));
-		pov90.whenPressed(new DriveTurnToAngle(90));
-		pov135.whenPressed(new DriveTurnToAngle(135));
-		pov180.whenPressed(new DriveTurnToAngle(180));
-		pov225.whenPressed(new DriveTurnToAngle(-135));
-		pov270.whenPressed(new DriveTurnToAngle(-90));
-		pov315.whenPressed(new DriveTurnToAngle(-45));
+		pov0.whenPressed(new DriveTurnToAnglePID(0));
+		pov45.whenPressed(new DriveTurnToAnglePID(45));
+		pov90.whenPressed(new DriveTurnToAnglePID(90));
+		pov135.whenPressed(new DriveTurnToAnglePID(135));
+		pov180.whenPressed(new DriveTurnToAnglePID(180));
+		pov225.whenPressed(new DriveTurnToAnglePID(-135));
+		pov270.whenPressed(new DriveTurnToAnglePID(-90));
+		pov315.whenPressed(new DriveTurnToAnglePID(-45));
 
 		//x.
 		//SmartDashboard.putData("DriveDistance 10", new DriveMoveDistance(12.5) );
-		x.whenPressed(new DriveMoveDistanceInches(25));
-		a.whenPressed(new DriveMoveTwistAngle(90));
+		x.whenPressed(new DriveMoveDistancePIDBroken(25));
+		a.whenPressed(new DriveMoveTwistAngleNaik(90));
 		SmartDashboard.putData("DriveResetPosition", new DriveResetPosition() );
 		
 		   

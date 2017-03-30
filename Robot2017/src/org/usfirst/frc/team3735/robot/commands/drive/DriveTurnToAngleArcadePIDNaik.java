@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 
-public class DriveTurnToOffsetGyroHeading extends Command  implements PIDOutput{
+public class DriveTurnToAngleArcadePIDNaik extends Command  implements PIDOutput{
 
 	/**************** MAKE ADJUSTMENTS TO THESE CONSTANTS AND ENABLE DISABLES */
 	public static final boolean ISCONSOLEDEBUG_ENABLED = true;
@@ -28,17 +28,14 @@ public class DriveTurnToOffsetGyroHeading extends Command  implements PIDOutput{
 	final static double kD = 0.005;
 	final static double kF  = 0.005;
 	static final double kToleranceDegrees = 1.0;
-	
-	
 
-	
 	PIDController turnController;
 	private double setpointangle;
     double rotateToAngleRate;           // Current rotation rate
-    short inzonecounter=0;
+    short timeOnTarget=0;
 
 	
-	public DriveTurnToOffsetGyroHeading(double angle) {
+	public DriveTurnToAngleArcadePIDNaik(double angle) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.drive);
@@ -46,59 +43,55 @@ public class DriveTurnToOffsetGyroHeading extends Command  implements PIDOutput{
 		turnController.setInputRange(-180.0f,  180.0f);
 	    turnController.setOutputRange(-0.25, 0.25);
 	    turnController.setAbsoluteTolerance(kToleranceDegrees);
-	    turnController.setContinuous(true); 
-	    setpointangle  = angle;
-		this.setTimeout(15.0);
-
+	    turnController.setContinuous(true);
+	    setpointangle = angle;
 	}
 
 	
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.navigation.zeroYaw();
+		//Robot.navigation.zeroYaw();
 		turnController.reset();
 		turnController.setSetpoint(setpointangle);
 		turnController.enable();
-		inzonecounter=0;
+		timeOnTarget=0;
 		 
 	}
 
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.drive.arcadeDrive(0, rotateToAngleRate, false);	
+		Robot.drive.arcadeDrive(0, rotateToAngleRate, false);
 		showDashTestInfo();
-		}
+	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		boolean done=false;
-		
+		boolean done = false;
 		if (Math.abs(Robot.navigation.getRate())< 5 && Math.abs(rotateToAngleRate)<0.2 ){
-			inzonecounter++;
-			if (inzonecounter>50)done = true;
+			timeOnTarget+= .02;
+			if (timeOnTarget > 50){
+				done = true;
+			}
 		}
-		else 
-		{
-			inzonecounter=0;
+		else{
+			timeOnTarget=0;
 		}
-		return done || this.isTimedOut();
+		return done;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
 		turnController.disable();
-		
 		Robot.drive.arcadeDrive(0, 0, false);	
 		Robot.drive.setEnableBrake(true);
-		
-		
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		end();
 	}
 
 	protected void showDashTestInfo() {
@@ -106,7 +99,6 @@ public class DriveTurnToOffsetGyroHeading extends Command  implements PIDOutput{
 			SmartDashboard.putNumber("PID SP", turnController.getSetpoint());
 		    SmartDashboard.putNumber("PID RotataToAngle", rotateToAngleRate);
      		SmartDashboard.putData("PID Turn Ctn", turnController);
-			
 		}
 			
 		// SmartDashboard.putNumber("Cmd get rotations left",

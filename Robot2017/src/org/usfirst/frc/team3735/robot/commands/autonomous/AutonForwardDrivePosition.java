@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3735.robot.commands.autonomous;
 
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistance;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInches;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePID;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePIDBroken;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePIDBroken;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 
@@ -19,7 +19,7 @@ public class AutonForwardDrivePosition extends CommandGroup {
     	/*                                    This */
     	/*                                     |   */
     	//112 + 20
-    	addSequential(new DriveMoveDistanceInches(132)); /* Straight To Pin*/
+    	addSequential(new DriveMoveDistancePIDBroken(132)); /* Straight To Pin*/
     	//addSequential(new DriveMoveDistance(10));
      }
 }
