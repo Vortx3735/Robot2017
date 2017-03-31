@@ -93,21 +93,23 @@ public class GTAOI implements DriveOI {
 		// pov270.whenPressed(new DriveTurnToAngle(-90));
 		// pov315.whenPressed(new DriveTurnToAngle(-45));
 
+		
+		
 		// layout for two drivers
+		
 		pov0.whileHeld(new DriveAddVisionAssist(Pipes.Peg));
 		//pov180.whileHeld(new DriveAddVisionAssist(Pipes.Gear));
 		
-		x.whileHeld(new DriveChangeBrakeMode());
+		lb.whileHeld(new DriveChangeBrakeMode());
+		
 		b.whenPressed(new GearIntakeDropOff());
 		a.whileHeld(new GearIntakeFeeding());
+		x.whileHeld(new DriveAddSensitiveLeft());
+		y.whileHeld(new DriveAddSensitiveRight());
 
 		start.whenPressed(new DriveChangeToGearDirection());
 		back.whenPressed(new DriveChangeToBallDirection());
 
-		lb.whileHeld(new DriveAddSensitiveLeft());
-		rb.whileHeld(new DriveAddSensitiveRight());
-		
-//
 //		pov0.whenPressed(new DriveMoveDistanceTwist(0));
 //		pov45.whenPressed(new DriveMoveDistanceTwist(60));
 //		pov90.whenPressed(new DriveMoveDistanceTwist(90));
@@ -139,10 +141,7 @@ public class GTAOI implements DriveOI {
 		cx.whenPressed(new ScalerOff());
 		ca.whileHeld(new GearIntakeRollersIn());
 		cb.whileHeld(new GearIntakeRollersOut());
-		
-		crb.whenPressed(new GearIntakeOpen());
-		crt.whenPressed(new GearIntakeClose());
-		
+
 		cpov0.whenPressed(new ShooterOnAgitatorHigh());
 		cpov90.whenPressed(new ShooterOnAgitatorSmartDash());
 		cpov180.whenPressed(new ShooterOnAgitatorLow());
@@ -155,6 +154,10 @@ public class GTAOI implements DriveOI {
 		
 		
 		
+	}
+	
+	public boolean isOverriddenByDrive(){
+		return Math.abs(getMainLeftX()) > .1 || getMainLeftTrigger() > .1 || getMainRightTrigger() > .1;
 	}
 
 	@Override

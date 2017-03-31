@@ -9,7 +9,6 @@ import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAnglePID;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeToggleOpenClose;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOff;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterSwitchEnabled;
@@ -72,7 +71,6 @@ public class OI implements DriveOI{
 		
 		b.toggleWhenPressed(new BallIntakeRollerIn());
 		
-		rb.toggleWhenPressed(new GearIntakeToggleOpenClose());
 		rt.whileHeld(new GearIntakeFeeding());
 		lt.whenPressed(new GearIntakeDropOff());
 		

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 public class GearIntake extends Subsystem {
-	CANTalon topRoller;
+	CANTalon roller;
 	//CANTalon bottomRoller;
 	Solenoid liftSolenoid;
 	Solenoid topFeederSolenoid;
@@ -25,17 +25,16 @@ public class GearIntake extends Subsystem {
     // here. Call these from Commands.
 	
 	public GearIntake(){
-		topRoller = new CANTalon(RobotMap.GearIntake.topRoller);
+		roller = new CANTalon(RobotMap.GearIntake.topRoller);
 		//bottomRoller = new CANTalon(RobotMap.GearIntake.bottomRoller);
 		
-		topRoller.changeControlMode(TalonControlMode.Voltage);
+		roller.changeControlMode(TalonControlMode.Voltage);
 		//bottomRoller.changeControlMode(TalonControlMode.Voltage);
 		
-		topRoller.setInverted(RobotMap.GearIntake.topRollerInverted);
+		roller.setInverted(RobotMap.GearIntake.topRollerInverted);
 		//bottomRoller.setInverted(Constants.GearIntake.bottomRollerInverted);
 		
 		liftSolenoid = new Solenoid(RobotMap.GearIntake.liftSolenoid);
-		topFeederSolenoid = new Solenoid(RobotMap.GearIntake.topFeedSolenoid);
 		liftUp();
 	}
 
@@ -45,23 +44,13 @@ public class GearIntake extends Subsystem {
     //positive is out, negative is in
     //actually flip that
     public void setRollerVoltage(double speed){
-    	topRoller.set(speed);
-    	//bottomRoller.set(speed);
+    	roller.set(speed);
     }
     
-    public double getTopRollerPower(){
-    	return Math.abs(topRoller.getOutputVoltage() * topRoller.getOutputCurrent());
+    public double getRollerPower(){
+    	return Math.abs(roller.getOutputVoltage() * roller.getOutputCurrent());
     }
-//    public double getBottomRollerPower(){
-//    	return Math.abs(bottomRoller.getOutputVoltage() * bottomRoller.getOutputCurrent());
-//    }
-    
-    public void feedOpen(){
-    	topFeederSolenoid.set(true);
-    }
-    public void feedClose(){
-    	topFeederSolenoid.set(false);
-    }
+
     public void liftDown(){
     	liftSolenoid.set(true);
     	isDown = true;
@@ -80,9 +69,7 @@ public class GearIntake extends Subsystem {
     }
     
     public void log(){
-    	SmartDashboard.putNumber("Roller getPower", getTopRollerPower());
-    	//SmartDashboard.putNumber("Bottom Roller getPower", getBottomRollerPower());
-
+    	SmartDashboard.putNumber("Gear Roller getPower", getRollerPower());
     }
 }
 
