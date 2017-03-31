@@ -88,7 +88,7 @@ public class Drive extends PIDSubsystem {
 		r2 = new CANTalon(RobotMap.Drive.rightMotor2);
 		r3 = new CANTalon(RobotMap.Drive.rightMotor3);
 		/* Setup Encoders and Controls Scaling */
-		initLeftRightSensorsAndControls();
+		initSensors();
 		setupSlaves();
 		setEnableBrake(false);
 		
@@ -102,24 +102,20 @@ public class Drive extends PIDSubsystem {
 		getPIDController().setContinuous();
 		getPIDController().setOutputRange(-.25, .25);
         //LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
-		SmartDashboard.putData("Drive PID Controller",getPIDController());
-		SmartDashboard.putNumber("left Voltage", 5.4);
-		SmartDashboard.putNumber("right Voltage", 5);
+		SmartDashboard.putData("Turning PID Controller",getPIDController());
+		
+//		SmartDashboard.putNumber("left Voltage", 5.4);
+//		SmartDashboard.putNumber("right Voltage", 5);
 	}
 
 	/*******************************
 	 * Default Commend For Drive
 	 *******************************/
-	public void initLeftRightSensorsAndControls() {
+	public void initSensors() {
 		
-		int absolutePosition = l1.getPulseWidthPosition()
-				& 0xFFF; /*
-							 * mask out the bottom12 bits, we don't care about
-							 * the wrap around
-							 */
+		int absolutePosition = l1.getPulseWidthPosition() & 0xFFF;
 
 		l1.reverseOutput(false);
-
 		l1.setEncPosition(absolutePosition);
 		l1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		l1.reverseSensor(true);
@@ -127,19 +123,14 @@ public class Drive extends PIDSubsystem {
 		l1.configPeakOutputVoltage(+5.4f, -5.4f);
 		l1.setPosition(0);
 
-
-		absolutePosition = r1.getPulseWidthPosition()
-				& 0xFFF; /*
-							 * mask out the bottom12 bits, we don't care about
-							 * the wrap arounds
-							 */
+		absolutePosition = r1.getPulseWidthPosition() & 0xFFF;
 
 		r1.reverseOutput(true);
 		r1.setEncPosition(absolutePosition);
 		r1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		r1.reverseSensor(false);
 		r1.configNominalOutputVoltage(+0.0f, -0.0f);
-		r1.configPeakOutputVoltage(+6f, -6f);
+		r1.configPeakOutputVoltage(+5f, -5f);
 		r1.setPosition(0);
 
 
@@ -253,8 +244,8 @@ public class Drive extends PIDSubsystem {
 		driveTrain.setLeftRightMotorOutputs(leftOutput, rightOutput);
 	}
 
-	public double getAverageDisplacementInches() {
-		return .5 * (getInchesPositionLeftInches() + getInchesPositionRightInches());
+	public double getAveragePositionInches() {
+		return .5 * (getLeftPositionInches() + getRightPositionInches());
 	}
 
 	public double getRotationsLeft() {
@@ -265,11 +256,11 @@ public class Drive extends PIDSubsystem {
 		return r1.getPosition();
 	}
 
-	public double getInchesPositionLeftInches() {
+	public double getLeftPositionInches() {
 		return getRotationsLeft() * (Constants.Drive.OneRotationInches);
 	}
 
-	public double getInchesPositionRightInches() {
+	public double getRightPositionInches() {
 		return getRotationsRight() * (Constants.Drive.OneRotationInches);
 	}
 
@@ -277,10 +268,10 @@ public class Drive extends PIDSubsystem {
 		driveTrain.setMaxOutput(output);
 	}
 	
-	public void sendLeftVoltage(double vol){
+	public void setLeftPeakVoltage(double vol){
 		l1.configPeakOutputVoltage(vol, -vol);
 	}
-	public void sendRightVoltage(double vol){
+	public void setRightPeakVoltage(double vol){
 		r1.configPeakOutputVoltage(vol, -vol);
 	}
 	
@@ -321,6 +312,7 @@ public class Drive extends PIDSubsystem {
 		r1.setD(dD);
 		r1.changeControlMode(TalonControlMode.Position);
 		r1.setIZone(2);
+		
 		setEnableBrake(true);
 		// r1.setMotionMagicCruiseVelocity(cruiseVelocity);
 		// r1.setMotionMagicAcceleration(accel);
@@ -363,10 +355,10 @@ public class Drive extends PIDSubsystem {
 		driveTrain.setLeftRightMotorOutputs(output, -output);
 	}
 	
-	public double errorRightPositionInches(){
+	public double getRightError(){
 		return r1.getClosedLoopError() * Constants.Drive.OneRotationInches ;
 	}
-	public double errorLeftPositionInches(){
+	public double getLeftError(){
 		return l1.getClosedLoopError() * Constants.Drive.OneRotationInches ;
 	}
 
@@ -392,14 +384,14 @@ public class Drive extends PIDSubsystem {
 	 * Dashboard Update Display Variables
 	 ******************************************/
 	public void dashBoardUpdateDisplays() {
-		SmartDashboard.putNumber("DriveLPosition", l1.getPosition());
-		SmartDashboard.putNumber("DriveRPosition", r1.getPosition());
+		SmartDashboard.putNumber("Drive Left Position", l1.getPosition());
+		SmartDashboard.putNumber("Drive Right Position", r1.getPosition());
 
-		SmartDashboard.putNumber("DriveLSpeed", l1.getSpeed());
-		SmartDashboard.putNumber("DriveRSpeed", r1.getSpeed());
+		SmartDashboard.putNumber("Drive Left Speed", l1.getSpeed());
+		SmartDashboard.putNumber("Drive Right Speed", r1.getSpeed());
 
-		SmartDashboard.putNumber("DriveLActual", l1.get());
-		SmartDashboard.putNumber("DriveRActual", r1.get());
+		SmartDashboard.putNumber("Drive Left Get", l1.get());
+		SmartDashboard.putNumber("Drive Right Get", r1.get());
 
 	}
 
@@ -407,10 +399,10 @@ public class Drive extends PIDSubsystem {
 	 * Dashboard Update Setting Variables
 	 ******************************************/
 	public void dashBoardUpdateControls() {
-		scaledMaxOutput = SmartDashboard.getNumber("DriveParamMaxOut", defaultMaxOutput);
+		//scaledMaxOutput = SmartDashboard.getNumber("DriveParamMaxOut", defaultMaxOutput);
 		
-		sendLeftVoltage((SmartDashboard.getNumber("left Voltage", 5.4)));
-		sendRightVoltage((SmartDashboard.getNumber("right Voltage", 5)));
+		//sendLeftVoltage((SmartDashboard.getNumber("left Voltage", 5.4)));
+		//sendRightVoltage((SmartDashboard.getNumber("right Voltage", 5)));
 
 	}
 
@@ -422,7 +414,7 @@ public class Drive extends PIDSubsystem {
 		dashBoardUpdateControls();
     	SmartDashboard.putNumber("Gyro Yaw", ahrs.getYaw());
 
-		changeScaledMaxOutput(scaledMaxOutput);
+		//changeScaledMaxOutput(scaledMaxOutput);
 	}
 
 	public void zeroYaw() {

@@ -71,8 +71,8 @@ public class Shooter extends Subsystem {
 	public void log() {
 //		SmartDashboard.putNumber("Raw Motor Speed (native ticks/100ms)", drum.getSpeed());
 //		SmartDashboard.putNumber("Motor Speed (RPM?)", drum.get());
-		SmartDashboard.putNumber("Agitator getPower", getAgitatorPower());
-		SmartDashboard.putNumber("Shooter getPower", getShooterPower());
+		//SmartDashboard.putNumber("Agitator getPower", getAgitatorPower());
+		//SmartDashboard.putNumber("Shooter getPower", getShooterPower());
 	}
 
 

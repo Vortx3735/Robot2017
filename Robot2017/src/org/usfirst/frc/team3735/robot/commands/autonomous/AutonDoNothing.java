@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonomousDoNothing extends CommandGroup {
+public class AutonDoNothing extends CommandGroup {
 
-    public AutonomousDoNothing() {
+    public AutonDoNothing() {
     	addSequential(new DriveBrake());
         // Add Commands here:
         // e.g. addSequential(new Command1());

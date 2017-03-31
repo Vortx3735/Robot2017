@@ -46,8 +46,8 @@ public class DriveMoveDistancePIDBroken extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		startPositionLeftInches = Robot.drive.getInchesPositionLeftInches();
-		startPositionRightInches = Robot.drive.getInchesPositionRightInches();
+		startPositionLeftInches = Robot.drive.getLeftPositionInches();
+		startPositionRightInches = Robot.drive.getRightPositionInches();
 
 		endPositionLeftInches = startPositionLeftInches + displacementInches;
 		endPositionRightInches = startPositionRightInches + displacementInches;
@@ -69,13 +69,13 @@ public class DriveMoveDistancePIDBroken extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (Math.abs(Robot.drive.getInchesPositionLeftInches() - endPositionLeftInches) < 5
-				&& Math.abs(Robot.drive.getInchesPositionRightInches() - endPositionRightInches) < 5) {
+		if (Math.abs(Robot.drive.getLeftPositionInches() - endPositionLeftInches) < 5
+				&& Math.abs(Robot.drive.getRightPositionInches() - endPositionRightInches) < 5) {
 			//Robot.drive.setLeftRightDistance(endPositionLeftInches, endPositionRightInches);
 		//	Robot.drive.setPIDSettings(0.015, 0.0000, 0);
 
-			if (Math.abs(Robot.drive.getInchesPositionLeftInches() - endPositionLeftInches) < 1
-					&& Math.abs(Robot.drive.getInchesPositionRightInches() - endPositionRightInches) < 1) {
+			if (Math.abs(Robot.drive.getLeftPositionInches() - endPositionLeftInches) < 1
+					&& Math.abs(Robot.drive.getRightPositionInches() - endPositionRightInches) < 1) {
 				//Robot.drive.setUpDriveForSpeedControl();
 				//Robot.drive.arcadeDrive(0, 0, false);
 				done = true;

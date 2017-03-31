@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonForwardDrivePositionWithGearDropPinLeft extends CommandGroup {
+public class AutonLeftGearNaik extends CommandGroup {
 
-    public AutonForwardDrivePositionWithGearDropPinLeft(){
+    public AutonLeftGearNaik(){
     	addSequential(new DriveMoveDistanceNavxExpNaik(20)); /* Straight To Pin*/
     	addSequential(new DriveTurnToAngleArcadePIDNaik(60)); /* Turn 30*/
     	addSequential(new DriveMoveDistanceNavxExpNaik(20)); /* Straight To Pin*/

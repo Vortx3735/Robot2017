@@ -46,8 +46,8 @@ public class DriveMoveDistanceNavx extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	startDistanceLeft = Robot.drive.getInchesPositionLeftInches();
-    	startDistanceRight = Robot.drive.getInchesPositionRightInches();
+    	startDistanceLeft = Robot.drive.getLeftPositionInches();
+    	startDistanceRight = Robot.drive.getRightPositionInches();
     	endPositionLeft = startDistanceLeft + deltaDistance;
     	endPositionRight = startDistanceRight + deltaDistance;
     	
@@ -86,10 +86,10 @@ public class DriveMoveDistanceNavx extends Command {
     }
     
     private boolean isOnTarget(){
-    	return 	VortxMath.isWithinThreshold(Robot.drive.getInchesPositionLeftInches(),
+    	return 	VortxMath.isWithinThreshold(Robot.drive.getLeftPositionInches(),
 										   	endPositionLeft,
 										   	Constants.Drive.driveTolerance) &&
-    			VortxMath.isWithinThreshold(Robot.drive.getInchesPositionLeftInches(),
+    			VortxMath.isWithinThreshold(Robot.drive.getLeftPositionInches(),
 						   				   	endPositionRight,
 						   				   	Constants.Drive.driveTolerance);
     }

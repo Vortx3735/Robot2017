@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonForwardDrivePosition extends CommandGroup {
+public class AutonBaseline extends CommandGroup {
 
-    public AutonForwardDrivePosition(){
+    public AutonBaseline(){
     	/* Let Move FWD Only */
     	/* All the Timing Needs Adjustment     |    */ 
     	/*                                    This */

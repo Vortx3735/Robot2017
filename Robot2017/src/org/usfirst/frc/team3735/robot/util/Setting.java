@@ -14,7 +14,8 @@ public class Setting {
 	}
 	
 	public double getValue(){
-		return SmartDashboard.getNumber(name, value);
+		value = SmartDashboard.getNumber(name, value);
+		return value;
 	}
 	
 	

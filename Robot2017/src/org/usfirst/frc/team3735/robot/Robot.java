@@ -36,11 +36,10 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	final String defaultAuto = "Default";
-	final String autonomousTest = "AutonomousTest";
-	String autoSelected;
+
 	SendableChooser<Command> autonomousChooser;
 	Command autonomousCommand;
+	
 	public static BallIntake ballIntake;
 	public static Drive drive;
 	public static GearIntake gearIntake;
@@ -53,11 +52,8 @@ public class Robot extends IterativeRobot {
 	public static DriveOI oi;
 	public RobotMap robotmap;
 	
-	//SendableChooser lrChooser;
 	boolean rightSide = false;
-	
-	//camera stuff
-				//CameraServer server;
+
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -66,7 +62,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		robotmap = new RobotMap();
-		//cords = new CoordinateHandler();
 		gearIntake = new GearIntake();
 		shooter = new Shooter();
 		scaler = new Scaler();
@@ -76,39 +71,21 @@ public class Robot extends IterativeRobot {
 		ultra = new Ultrasonic();
 		vision = new Vision();
 		
-		oi = new GTAOI(); //must be instantiated after the subsystems
-	
-		//server.startAutomaticCapture().
-		
+		oi = new GTAOI(); //MUST be instantiated after the subsystems
+			
 		autonomousChooser = new SendableChooser<Command>();
-		autonomousChooser.addDefault ("Do Nothing", new AutonomousDoNothing());
-		autonomousChooser.addObject("TimedDriveBaseStraightOnlyToBase", new AutonTimedDriveTimedDriveStraightToBase());
-		autonomousChooser.addObject("Drive to Base Line", new AutonForwardDrivePosition());
-		autonomousChooser.addObject("Drive to middle and drop gear", new  AutonMiddleGearDrop());
-		autonomousChooser.addObject("Drive to side and drop gear", new  AutonSideWithGearDrop());
-		autonomousChooser.addObject("Drive to left side and drop gear", new  AutonForwardDrivePositionLeftWithGearDrop());
-		autonomousChooser.addObject("Drive to right side and drop gear", new  AutonForwardDrivePositionRightWithGearDrop());
-		autonomousChooser.addObject("Drive to middle drop gear and drive to baseline", new  AutonMiddleGearThenBaseline());
-		autonomousChooser.addObject("naiks middle", new  AutonForwardDrivePositionWithGearDropPinLeft());
-		autonomousChooser.addObject("naiks side gear", new  AutonForwardDrivePositionWithGearDropPinLeft());
+		
+		autonomousChooser.addDefault ("Do Nothing", new AutonDoNothing());
+		autonomousChooser.addObject("Base Line", new AutonBaseline());
+		autonomousChooser.addObject("Middle Gear", new  AutonMiddleGear());
+		autonomousChooser.addObject("Left Gear", new  AutonLeftGear());
+		autonomousChooser.addObject("Right Gear", new  AutonRightGear());
+		autonomousChooser.addObject("Naiks middle", new  AutonMiddleGearNaik());
+		autonomousChooser.addObject("Naiks left gear", new  AutonLeftGearNaik());
 
 		
-//		autonomousChooser.addObject("DriveBaseLeftOfAirShip", new AutonTimedDriveTimedStepsToLeft());
-//		autonomousChooser.addObject("DriveBaseRightOfAirShip", new AutonTimedDriveTimedStepsToRight());
-//		autonomousChooser.addObject("DriveStrightDropGear", new AutonTimedDriveTimedDropGear());
-//		autonomousChooser.addObject("DriveEncoderSquare", new AutonForwardDriveSquare());
-//		autonomousChooser.addObject("Drive Encoder Position Andrew", new AutonForwardDrivePositionAndrew());
-//		autonomousChooser.addObject("Top-Cross-Gear-Loader", new AutonomousTopCrossGearLoader());
-//		autonomousChooser.addObject("Top-Cross-Gear-Shoot", new AutonomousTopCrossGearShoot());
-//		autonomousChooser.addObject("Middle-Gear-Top-Loader", new AutonomousMiddleGearTopLoader());
-//		autonomousChooser.addObject("Middle-Gear-Bottom-Shoot", new AutonomousMiddleGearBottomShoot());
-//		autonomousChooser.addObject("Bottom-Cross-Gear-Loader", new AutonomousBottomCrossGearLoader());
-//		autonomousChooser.addObject("Bottom-Cross-Gear-Shoot", new AutonomousBottomCrossGearShoot());
-//		lrChooser.addDefault("Left Side Coords", false);
-//		lrChooser.addObject("Right Side Coords", true);
-//		chooser.addObject("Autonomous Test", autonomousTest);
-		
 		SmartDashboard.putData("AUTONOMOUS SELECTION", autonomousChooser);
+		
 		SmartDashboard.putData("Start Sending Turn Voltages", new RecordTrapTurnData());
 		SmartDashboard.putData("Start Sending Turn Voltages", new RecordAverageRate());
 
@@ -119,6 +96,7 @@ public class Robot extends IterativeRobot {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
+		
 		log();
 	}
 	
@@ -138,15 +116,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-//		THIS IS COMMENTED BY MR NAIK OUT SINCE NOT TESTED 	
-//		rightSide = (boolean) lrChooser.getSelected();
-//		if(rightSide){
-//			cords.switchToRightSide();
-//		}else{
-//			cords.switchToLeftSide();
-//		}
-		//drive.setupDriveForPositionControl();
-		Robot.drive.zeroYaw();
+		drive.zeroYaw();
+		navigation.zeroYaw();
         autonomousCommand = autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}

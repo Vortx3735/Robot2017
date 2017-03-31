@@ -13,11 +13,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RecordTrapTurnData extends Command {
 
 	Setting turnVoltage;
+	
     public RecordTrapTurnData() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
-    	turnVoltage = new Setting("turning voltage", 0);
+    	turnVoltage = new Setting("Turning Voltage", 0);
     	
     }
 

@@ -53,8 +53,8 @@ public class Ultrasonic extends Subsystem {
     }
     
     public void log() {
-    	SmartDashboard.putNumber("Ultrasonic distance in Inches", 
-    			Double.valueOf(String.format("%.1f",getInchesDistance())));
+//    	SmartDashboard.putNumber("Ultrasonic distance in Inches", 
+//    			Double.valueOf(String.format("%.1f",getInchesDistance())));
     }
 
 }

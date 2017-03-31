@@ -23,8 +23,8 @@ public class DriveMoveDistanceExp extends CommandGroup {
     	addSequential(new ExpDrive(power,0){
     		@Override
     		public boolean isFinished(){
-    			return(VortxMath.isWithinThreshold(Robot.drive.getInchesPositionLeftInches(), leftTargetDistance, 2) ||
-    				   VortxMath.isWithinThreshold(Robot.drive.getInchesPositionRightInches(), rightTargetDistance, 2));
+    			return(VortxMath.isWithinThreshold(Robot.drive.getLeftPositionInches(), leftTargetDistance, 2) ||
+    				   VortxMath.isWithinThreshold(Robot.drive.getRightPositionInches(), rightTargetDistance, 2));
     		}
     	});
     	
@@ -48,8 +48,8 @@ public class DriveMoveDistanceExp extends CommandGroup {
 
 	@Override
 	protected void initialize() {
-		leftTargetDistance = Robot.drive.getInchesPositionLeftInches() + deltaDistance;
-		rightTargetDistance = Robot.drive.getInchesPositionRightInches() + deltaDistance;
+		leftTargetDistance = Robot.drive.getLeftPositionInches() + deltaDistance;
+		rightTargetDistance = Robot.drive.getRightPositionInches() + deltaDistance;
 	}
     
     

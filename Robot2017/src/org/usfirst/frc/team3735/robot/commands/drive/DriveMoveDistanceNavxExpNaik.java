@@ -149,8 +149,8 @@ public class DriveMoveDistanceNavxExpNaik extends Command {
 			/*******************************
 			 * Set Start & End Position
 			 *******************************/
-			startPositionLeftInches = Robot.drive.getInchesPositionLeftInches();
-			startPositionRightInches = Robot.drive.getInchesPositionRightInches();
+			startPositionLeftInches = Robot.drive.getLeftPositionInches();
+			startPositionRightInches = Robot.drive.getRightPositionInches();
 
 			/********************/
 			if (typeistwist == false) {
@@ -238,8 +238,8 @@ public class DriveMoveDistanceNavxExpNaik extends Command {
 
 	protected boolean isTravelReachedEndPosition() {
 		boolean rval = false;
-		double ErrLeft = endPositionLeftInches-Robot.drive.getInchesPositionLeftInches();
-		double ErrRight = endPositionRightInches-  Robot.drive.getInchesPositionRightInches();
+		double ErrLeft = endPositionLeftInches-Robot.drive.getLeftPositionInches();
+		double ErrRight = endPositionRightInches-  Robot.drive.getRightPositionInches();
 
 		if (DriveMoveDistanceNavxExpNaik.ISCONSOLEDEBUG_ENABLED) {
 			System.out.format("[%08.3f]: <Lerr=%08.3f Rerr=%08.3f", stateDoWorkTime, ErrLeft, ErrRight);
@@ -254,8 +254,8 @@ public class DriveMoveDistanceNavxExpNaik extends Command {
 
 	protected boolean isPositionBeginZone() {
 		boolean rval = false;
-		double ErrLeft = Robot.drive.getInchesPositionLeftInches()- startPositionLeftInches;
-		double ErrRight =  Robot.drive.getInchesPositionRightInches()-startPositionRightInches;
+		double ErrLeft = Robot.drive.getLeftPositionInches()- startPositionLeftInches;
+		double ErrRight =  Robot.drive.getRightPositionInches()-startPositionRightInches;
 
 		if (ErrLeft< BEGINZONEINCHES
 				&& ErrRight < BEGINZONEINCHES) {
@@ -266,8 +266,8 @@ public class DriveMoveDistanceNavxExpNaik extends Command {
 
 	protected boolean isPositionEndZone() {
 		boolean rval = false;
-		double ErrLeft = endPositionLeftInches - Robot.drive.getInchesPositionLeftInches()- startPositionLeftInches;
-		double ErrRight = endPositionRightInches - Robot.drive.getInchesPositionRightInches()-startPositionRightInches;
+		double ErrLeft = endPositionLeftInches - Robot.drive.getLeftPositionInches()- startPositionLeftInches;
+		double ErrRight = endPositionRightInches - Robot.drive.getRightPositionInches()-startPositionRightInches;
 		
 		if (ErrLeft < ENDZONEINCHES
 				&& ErrRight< ENDZONEINCHES) {
@@ -304,7 +304,7 @@ public class DriveMoveDistanceNavxExpNaik extends Command {
 		 * Drive Only During Travel States
 		 *****************************************/
 		if (this.currentstate == STATE.REACHED) {
-			Robot.drive.arcadeDrive((endPositionLeftInches- Robot.drive.getInchesPositionLeftInches())/100, yawtwistcorrection, false);
+			Robot.drive.arcadeDrive((endPositionLeftInches- Robot.drive.getLeftPositionInches())/100, yawtwistcorrection, false);
 		}else if(this.currentstate == STATE.TRAVELUNTILREACHED){
 				Robot.drive.arcadeDrive(movespeed, yawtwistcorrection, false);
 		}else{

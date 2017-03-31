@@ -51,7 +51,7 @@ public class BallIntake extends Subsystem {
     }
     
     public void log(){
-    	SmartDashboard.putNumber("Ball Intake getPower", getPower());
+    	//SmartDashboard.putNumber("Ball Intake getPower", getPower());
     }
 }
 

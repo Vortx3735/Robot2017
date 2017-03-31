@@ -38,8 +38,8 @@ public class DriveMoveTwistAngleNaik extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	startPositionLeftInches = Robot.drive.getInchesPositionLeftInches();
-    	startPositionRightInches = Robot.drive.getInchesPositionRightInches();
+    	startPositionLeftInches = Robot.drive.getLeftPositionInches();
+    	startPositionRightInches = Robot.drive.getRightPositionInches();
 
     	endPositionLeftInches = startPositionLeftInches + Math.abs(55.0f * twistamount/180);
     	endPositionRightInches = startPositionRightInches - Math.abs(55.0f * twistamount/180);
@@ -70,8 +70,8 @@ public class DriveMoveTwistAngleNaik extends Command {
     		
     	}
     	else{
-    		if (Math.abs(Robot.drive.getInchesPositionLeftInches() - endPositionLeftInches )<0.5
-    				&& Math.abs(Robot.drive.getInchesPositionRightInches() - endPositionRightInches )<0.5    )
+    		if (Math.abs(Robot.drive.getLeftPositionInches() - endPositionLeftInches )<0.5
+    				&& Math.abs(Robot.drive.getRightPositionInches() - endPositionRightInches )<0.5    )
         		done = true;
     		Robot.drive.setLeftRightDistance(endPositionLeftInches,endPositionRightInches);
     		

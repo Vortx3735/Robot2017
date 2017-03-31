@@ -53,7 +53,7 @@ public class Navigation extends Subsystem implements PIDSource {
     	return ahrs.getRate();
     }
     public void log(){
-    	SmartDashboard.putNumber("Gyro Yaw", ahrs.getYaw());
+    	//SmartDashboard.putNumber("Gyro Yaw", ahrs.getYaw());
  //     displayDebugGyroData();
     }
     

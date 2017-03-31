@@ -32,8 +32,8 @@ public class DriveMoveDistanceProfile extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	lStartPosition = Robot.drive.getInchesPositionLeftInches();
-    	rStartPosition = Robot.drive.getInchesPositionRightInches();
+    	lStartPosition = Robot.drive.getLeftPositionInches();
+    	rStartPosition = Robot.drive.getRightPositionInches();
     	Robot.drive.changeControlMode(TalonControlMode.Voltage);
     	
     	lProfile = new TrapProfile(lStartPosition, lStartPosition + deltaDistance, V, A){
@@ -53,8 +53,8 @@ public class DriveMoveDistanceProfile extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	lProfile.step(Robot.drive.getInchesPositionLeftInches());
-    	rProfile.step(Robot.drive.getInchesPositionRightInches());
+    	lProfile.step(Robot.drive.getLeftPositionInches());
+    	rProfile.step(Robot.drive.getRightPositionInches());
 
     	Robot.drive.setLeft(lProfile.getOutput());
     	Robot.drive.setRight(rProfile.getOutput());
