@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
 	public static Ultrasonic ultra;
 	public static Vision vision;
 	
-	public static DriveOI oi;
+	public static GTAOI oi;
 	public RobotMap robotmap;
 	
 	boolean rightSide = false;
@@ -82,7 +82,8 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Right Gear", new  AutonRightGear());
 		autonomousChooser.addObject("Naiks middle", new  AutonMiddleGearNaik());
 		autonomousChooser.addObject("Naiks left gear", new  AutonLeftGearNaik());
-
+		autonomousChooser.addObject("Left Gear Balls", new  AutonLeftGearBalls());
+		autonomousChooser.addObject("Right Gear Balls", new  AutonRightGearBalls());
 		
 		SmartDashboard.putData("AUTONOMOUS SELECTION", autonomousChooser);
 		

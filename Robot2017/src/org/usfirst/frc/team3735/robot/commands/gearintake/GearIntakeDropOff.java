@@ -45,7 +45,8 @@ public class GearIntakeDropOff extends CommandGroup {
     }
     @Override
     public void execute(){
-    	if(Robot.oi.getMainLeftTrigger() > .05){
+    	if(Robot.oi.isOverriddenByDrive()){
+    		Robot.gearIntake.liftUp();
     		cancel();
     	}
     }

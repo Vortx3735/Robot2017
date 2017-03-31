@@ -9,22 +9,22 @@ public class DataRecorder {
 	
 	private static boolean isRecording = false;
 	private static boolean isOutOfData = false;
-	private static String fileName = "DefaultName";
+	private static String filePath = "DefaultName";
 	private static ArrayList<RecordableDevice> devices
 			= new ArrayList<RecordableDevice>();
 	private static int deviceLen;
 	private static Formatter formatter;
 	private static Scanner sc;
 	
-	public static void addDevice(RecordableDevice d){
+	public static synchronized void addDevice(RecordableDevice d){
 		devices.add(d);
 		deviceLen = devices.size();
 	}
 	
 	public static void startRecording(String name){
-		fileName = name;
+		filePath = "/home/lvuser/"  + name + ".txt";
 		try{
-			formatter = new Formatter(fileName + ".txt");
+			formatter = new Formatter(filePath + ".txt");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -36,7 +36,6 @@ public class DataRecorder {
 	
 	public static boolean outOfData(){
 		if(!sc.hasNextLine()){
-			formatter.close();
 			return true;
 		}else{
 			return false;
@@ -44,22 +43,27 @@ public class DataRecorder {
 	}
 	
 	public static void recordData(){
-		for(RecordableDevice d : devices){
-			formatter.format("%s", d.getData() + " ");
+		for(int i = 0; i < devices.size(); i++){
+			formatter.format("%s", devices.get(i).getData() + " ");
 		}
 		formatter.format("%s", System.getProperty("line.separator"));
 	}
 	
 	public static void startSending(String name){
+		filePath = "/home/lvuser/"  + name + ".txt";
 		try{
-			sc = new Scanner(new File(name + ".txt"));
+			sc = new Scanner(new File(filePath));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		for(int i = 0; i < devices.size(); i++){
+			devices.get(i).setUpForSending();
+		}
+
 	}
 	
 	
-	public static void sendData(){
+	public static synchronized void sendData(){
 		String line = sc.nextLine();
 		String[] data = line.split(" ");
 		if(data.length != deviceLen){
@@ -68,6 +72,17 @@ public class DataRecorder {
 		}
 		for(int i = 0; i < data.length; i++){
 			devices.get(i).sendData(data[i]);
+		}
+	}
+	
+	public static void endRecording(){
+		formatter.close();
+		System.out.println("closing the formatter");
+	}
+	
+	public static void endSending(){
+		for(int i = 0; i < devices.size(); i++){
+			devices.get(i).resestForNormal();
 		}
 	}
 	

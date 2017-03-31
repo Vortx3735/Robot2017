@@ -9,19 +9,36 @@ import com.ctre.CANTalon.TalonControlMode;
 public class RecordableCantalon extends CANTalon implements RecordableDevice{
 	
 	TalonControlMode prevMode;
-	
+	private boolean isSending;
+	private double voltage;
+
 	public RecordableCantalon(int port){
 		super(port);
 		DataRecorder.addDevice(this);
+		voltage = 0;
 	}
 	
 	@Override
 	public String getData(){
 		return String.format("%.4f", getOutputVoltage());
 	}
+	
 	@Override
-	public void sendData(String data) {
-		set(Double.parseDouble(data));
+	public synchronized void sendData(String data) {
+		try{
+			voltage = Double.parseDouble(data);
+		}catch(Exception e){
+			System.out.println("Cantalon " + this.getDeviceID() + " failed to parse a double");
+			e.printStackTrace();
+		}
+		super.set(voltage);
+	}
+	
+	@Override
+	public void set(double p){
+		if(!isSending){
+			super.set(p);
+		}
 	}
 
 	@Override
@@ -33,11 +50,13 @@ public class RecordableCantalon extends CANTalon implements RecordableDevice{
 	public void setUpForSending() {
 		prevMode = getControlMode();
 		changeControlMode(TalonControlMode.Voltage);
+		isSending = true;
 	}
 
 	@Override
 	public void resestForNormal() {
 		changeControlMode(prevMode);
+		isSending = false;
 	}
 
 
