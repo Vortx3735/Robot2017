@@ -15,6 +15,7 @@ public class DriveMoveDistanceExp extends CommandGroup {
 	private double rightTargetDistance;
 
 	public DriveMoveDistanceExp(double power, double distance) {
+		
     	deltaDistance = distance;
     	power = Math.abs(power);
     	if(distance < 0){
