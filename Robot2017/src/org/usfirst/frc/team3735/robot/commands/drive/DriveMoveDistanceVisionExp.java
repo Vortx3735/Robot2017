@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveMoveDistanceVisionExp extends CommandGroup {
 
 	private Command visAssist;
+	protected boolean done = false;
 	
     public DriveMoveDistanceVisionExp(Pipes p, double power, double distance) {
         // Add Commands here:
@@ -39,9 +40,20 @@ public class DriveMoveDistanceVisionExp extends CommandGroup {
     		@Override
     		public void end(){
     			super.end();
-    			visAssist.cancel();
-    			//this.cancel();
+    			//cancelGroup();
+    			done = true;
     		}
-    	},.5);
+    	},1);
+    	
     }
+    
+    private void cancelGroup(){
+    	this.cancel();
+    }
+
+	@Override
+	protected boolean isFinished() {
+		return done;
+	}
+    
 }

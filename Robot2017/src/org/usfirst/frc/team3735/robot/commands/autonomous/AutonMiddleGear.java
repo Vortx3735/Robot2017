@@ -2,6 +2,7 @@ package org.usfirst.frc.team3735.robot.commands.autonomous;
 
 import org.usfirst.frc.team3735.robot.commands.Wait;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveBrake;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceExp;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePID;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePIDBroken;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceVisionExp;
@@ -27,7 +28,9 @@ public class AutonMiddleGear extends CommandGroup {
     	//75.5 + 3 inches = 79
     	//addSequential(new DriveMoveDistanceInches(86),2.6); /* Straight To Pin*/
     	addSequential(new DriveMoveDistanceNavx(83),2.6); /* Straight To Pin*/
-    	//addSequential(new DriveMoveDistanceVisionExp(Pipes.Peg,.5,83));
+    	//addSequential(new DriveMoveDistanceVisionExp(Pipes.Peg,.7,83));
+    	//addSequential(new DriveMoveDistanceExp(.7,83));
+
     	//addSequential(new DriveMoveDistance(86),2.6); /* Straight To Pin*/
     	addSequential(new DriveBrake(),.4);
     	//addSequential(new Wait(.4));

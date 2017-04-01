@@ -24,7 +24,7 @@ public class DriveMoveDistanceNavx extends Command {
 	private double endPositionRight;
 	
 	private double timeOnTarget = 0;
-	private double finishTime = Constants.Drive.driveFinishTime;
+	private double finishTime = .3;
 	
 	private double p = .025;
 	private double i = 0.00000;
@@ -32,7 +32,7 @@ public class DriveMoveDistanceNavx extends Command {
 	private double f = 0;
 	
 	private double strongMultiplier = .6;	
-	private double yawThreshold = 1;	//degrees
+	private double yawThreshold = .4;	//degrees
 	private double targetYaw;
 	private double weakMultiplier = 1.4;
 
@@ -105,6 +105,7 @@ public class DriveMoveDistanceNavx extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.drive.setPIDSettings(p,i,d);
     	Robot.drive.setUpDriveForSpeedControl();
     }
 

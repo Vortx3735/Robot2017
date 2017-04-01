@@ -120,7 +120,7 @@ public class Drive extends PIDSubsystem {
 		l1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		l1.reverseSensor(true);
 		l1.configNominalOutputVoltage(0.0, -0.0);
-		l1.configPeakOutputVoltage(5.4, -5.4);
+		l1.configPeakOutputVoltage(5, -5);
 		l1.setPosition(0);
 
 		absolutePosition = r1.getPulseWidthPosition() & 0xFFF;

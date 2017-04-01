@@ -29,15 +29,14 @@ public class Scaler extends Subsystem {
 	
 	public Scaler(){
 		motor = new CANTalon(RobotMap.Scaler.motor);
-		motor.setCloseLoopRampRate(.2);
+		//motor.setCloseLoopRampRate(.2);
 		motor.setInverted(RobotMap.Scaler.scalerInverted);
 		motor2 = new CANTalon(RobotMap.Scaler.motor2);
-		motor2.setCloseLoopRampRate(.2);
+		//motor2.setCloseLoopRampRate(.2);
 		motor2.setInverted(RobotMap.Scaler.scalerInverted);
 		//motor.changeControlMode(CANTalon.TalonControlMode.Voltage);
 		//motor.setVoltageCompensationRampRate(voltageChangeSpeed);
-		SmartDashboard.putNumber("Scaler motor power", getPower());
-		SmartDashboard.putBoolean("Scaler overLoaded", isOverLoaded);
+		log();
 
 	}
 	
