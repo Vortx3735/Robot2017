@@ -50,7 +50,7 @@ public class Vision extends Subsystem {
 	}
 	
 	private void initThreads(){
-		gearThread = new VisionThread(camera1, new GearPipeline(), pipeline -> {
+		gearThread = new VisionThread(camera2, new GearPipeline(), pipeline -> {
             synchronized (imgLock) {
                 if(pipeline.getCenterX() != -1){
                     centerX = pipeline.getCenterX();

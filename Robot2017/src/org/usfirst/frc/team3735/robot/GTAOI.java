@@ -98,7 +98,7 @@ public class GTAOI implements DriveOI {
 		// layout for two drivers
 		
 		pov0.whileHeld(new DriveAddVisionAssist(Pipes.Peg));
-		//pov180.whileHeld(new DriveAddVisionAssist(Pipes.Gear));
+		pov180.whileHeld(new DriveAddVisionAssist(Pipes.Gear));
 		
 		lb.whileHeld(new DriveChangeBrakeMode());
 		
@@ -137,7 +137,8 @@ public class GTAOI implements DriveOI {
 //		pov270.whenPressed(new DriveTurnToAngleHyperbola(-90));
 //		pov315.whenPressed(new DriveTurnToAngleHyperbola(-60));
 		
-		cy.whenPressed(new ScalerUp());
+		cy.whenPressed(new ScalerUp(1));
+		//crb.whenPressed(new ScalerUp(1));
 		cx.whenPressed(new ScalerOff());
 		ca.whileHeld(new GearIntakeRollersIn());
 		cb.whileHeld(new GearIntakeRollersOut());

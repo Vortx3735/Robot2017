@@ -1,9 +1,9 @@
 package org.usfirst.frc.team3735.robot.pipelines;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -46,23 +46,23 @@ public class GearPipeline implements VisionPipeline {
 	@Override	public void process(Mat source0) {
 		// Step Resize_Image0:
 		Mat resizeImageInput = source0;
-		double resizeImageWidth = 320.0;
-		double resizeImageHeight = 240.0;
+		double resizeImageWidth = 640;
+		double resizeImageHeight = 480;
 		int resizeImageInterpolation = Imgproc.INTER_CUBIC;
 		resizeImage(resizeImageInput, resizeImageWidth, resizeImageHeight, resizeImageInterpolation, resizeImageOutput);
 
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = resizeImageOutput;
-		double[] hsvThresholdHue = {20.338983050847457, 25.989304812834227};
-		double[] hsvThresholdSaturation = {143.6723163841808, 255.0};
-		double[] hsvThresholdValue = {158.84180790960454, 245.9090909090909};
+		double[] hsvThresholdHue = {20.338983050847457, 29.197860962566843};
+		double[] hsvThresholdSaturation = {138.8700564971751, 255.0};
+		double[] hsvThresholdValue = {163.6440677966102, 255.0};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
 		// Step CV_erode0:
 		Mat cvErodeSrc = hsvThresholdOutput;
 		Mat cvErodeKernel = new Mat();
 		Point cvErodeAnchor = new Point(-1, -1);
-		double cvErodeIterations = 0.0;
+		double cvErodeIterations = 1.0;
 		int cvErodeBordertype = Core.BORDER_CONSTANT;
 		Scalar cvErodeBordervalue = new Scalar(-1);
 		cvErode(cvErodeSrc, cvErodeKernel, cvErodeAnchor, cvErodeIterations, cvErodeBordertype, cvErodeBordervalue, cvErodeOutput);
@@ -84,17 +84,17 @@ public class GearPipeline implements VisionPipeline {
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = convexHullsOutput;
-		double filterContoursMinArea = 180.0;
+		double filterContoursMinArea = 0.0;
 		double filterContoursMinPerimeter = 0.0;
 		double filterContoursMinWidth = 10.0;
-		double filterContoursMaxWidth = 300.0;
+		double filterContoursMaxWidth = 100000.0;
 		double filterContoursMinHeight = 10.0;
-		double filterContoursMaxHeight = 100.0;
+		double filterContoursMaxHeight = 100000.0;
 		double[] filterContoursSolidity = {0.0, 100.0};
 		double filterContoursMaxVertices = 1000000.0;
-		double filterContoursMinVertices = 0.0;
-		double filterContoursMinRatio = 0.0;
-		double filterContoursMaxRatio = 8.0;
+		double filterContoursMinVertices = 16.0;
+		double filterContoursMinRatio = 0.5;
+		double filterContoursMaxRatio = 2.0;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
 
 	}
@@ -154,67 +154,7 @@ public class GearPipeline implements VisionPipeline {
 	public ArrayList<MatOfPoint> filterContoursOutput() {
 		return filterContoursOutput;
 	}
-	
-	public double getCenterX(){
-//		if(filterContoursOutput().isEmpty()){
-//			return -1;
-//		}else 
-		if(filterContoursOutput().size() == 1){
-			Rect r= Imgproc.boundingRect(filterContoursOutput().get(0));
-			return r.x + (r.width / 2);
-		}else{
-			Rect r= Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput()));
-			return r.x + (r.width / 2);
-		}
-	}
-	public double getCenterY(){
-		if(filterContoursOutput().isEmpty()){
-			return -1;
-		}else if(filterContoursOutput().size() == 1){
-			Rect r= Imgproc.boundingRect(filterContoursOutput().get(0));
-			return r.y + (r.height / 2);
-		}else{
-			Rect r= Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput()));
-			return r.y + (r.height / 2);
-		}
-	}
-	public double getHeight(){
-		if(filterContoursOutput().isEmpty()){
-			return -1;			
-		}else if(filterContoursOutput().size() == 1){
-			return Imgproc.boundingRect(filterContoursOutput().get(0)).height;
-		}else{
-			return Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput())).height;
-		}
-	}
-	public double getWidth(){
-		if(filterContoursOutput().isEmpty()){
-			return -1;			
-		}else if(filterContoursOutput().size() == 1){
-				return Imgproc.boundingRect(filterContoursOutput().get(0)).width;
-		}else{
-				return Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput())).width;
-		}
-	}
-	
-	public double getArea(){
-		if(filterContoursOutput().isEmpty()){
-			return -1;			
-		}else if(filterContoursOutput().size() == 1){
-				return Imgproc.boundingRect(filterContoursOutput().get(0)).area();
-		}else{
-				return Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput())).area();
-		}
-	}
-	public MatOfPoint getLargestAreaMat(ArrayList<MatOfPoint> arr) {
-		MatOfPoint ret = arr.get(0);
-		for(MatOfPoint m : arr){
-			if(Imgproc.boundingRect(m).area() > Imgproc.boundingRect(ret).area()){
-				ret = m;
-			}
-		}
-		return ret;
-	}
+
 
 	/**
 	 * Scales and image to an exact size.
@@ -426,6 +366,68 @@ public class GearPipeline implements VisionPipeline {
 			if (ratio < minRatio || ratio > maxRatio) continue;
 			output.add(contour);
 		}
+	}
+
+
+	public double getCenterX(){
+//		if(filterContoursOutput().isEmpty()){
+//			return -1;
+//		}else 
+		if(filterContoursOutput().size() == 1){
+			Rect r= Imgproc.boundingRect(filterContoursOutput().get(0));
+			return r.x + (r.width / 2);
+		}else{
+			Rect r= Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput()));
+			return r.x + (r.width / 2);
+		}
+	}
+	public double getCenterY(){
+		if(filterContoursOutput().isEmpty()){
+			return -1;
+		}else if(filterContoursOutput().size() == 1){
+			Rect r= Imgproc.boundingRect(filterContoursOutput().get(0));
+			return r.y + (r.height / 2);
+		}else{
+			Rect r= Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput()));
+			return r.y + (r.height / 2);
+		}
+	}
+	public double getHeight(){
+		if(filterContoursOutput().isEmpty()){
+			return -1;			
+		}else if(filterContoursOutput().size() == 1){
+			return Imgproc.boundingRect(filterContoursOutput().get(0)).height;
+		}else{
+			return Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput())).height;
+		}
+	}
+	public double getWidth(){
+		if(filterContoursOutput().isEmpty()){
+			return -1;			
+		}else if(filterContoursOutput().size() == 1){
+				return Imgproc.boundingRect(filterContoursOutput().get(0)).width;
+		}else{
+				return Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput())).width;
+		}
+	}
+	
+	public double getArea(){
+		if(filterContoursOutput().isEmpty()){
+			return -1;			
+		}else if(filterContoursOutput().size() == 1){
+				return Imgproc.boundingRect(filterContoursOutput().get(0)).area();
+		}else{
+				return Imgproc.boundingRect(getLargestAreaMat(filterContoursOutput())).area();
+		}
+	}
+	public MatOfPoint getLargestAreaMat(ArrayList<MatOfPoint> arr) {
+		MatOfPoint ret = arr.get(0);
+		for(MatOfPoint m : arr){
+			if(Imgproc.boundingRect(m).area() > Imgproc.boundingRect(ret).area()){
+				ret = m;
+			}
+		}
+		return ret;
 	}
 
 

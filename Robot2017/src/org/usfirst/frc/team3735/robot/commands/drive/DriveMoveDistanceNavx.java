@@ -92,7 +92,7 @@ public class DriveMoveDistanceNavx extends Command {
     private boolean isOnTarget(){
     	return 	VortxMath.isWithinThreshold(Robot.drive.getLeftPositionInches(),
 										   	endPositionLeft,
-										   	Constants.Drive.driveTolerance) &&
+										   	Constants.Drive.driveTolerance) ||
     			VortxMath.isWithinThreshold(Robot.drive.getLeftPositionInches(),
 						   				   	endPositionRight,
 						   				   	Constants.Drive.driveTolerance);
