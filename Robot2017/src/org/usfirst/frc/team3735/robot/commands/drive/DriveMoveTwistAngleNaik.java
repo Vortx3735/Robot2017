@@ -68,12 +68,11 @@ public class DriveMoveTwistAngleNaik extends Command {
         		Robot.drive.setLeftRightDistance(startPositionLeftInches - adjustment, startPositionRightInches+adjustment);
     		}
     		
-    	}
-    	else{
-    		if (Math.abs(Robot.drive.getLeftPositionInches() - endPositionLeftInches )<0.5
-    				&& Math.abs(Robot.drive.getRightPositionInches() - endPositionRightInches )<0.5    )
+    	}else{
+    		if(Math.abs(Robot.drive.getLeftPositionInches() - endPositionLeftInches )<0.5
+			&& Math.abs(Robot.drive.getRightPositionInches() - endPositionRightInches )<0.5)
         		done = true;
-    		Robot.drive.setLeftRightDistance(endPositionLeftInches,endPositionRightInches);
+    			Robot.drive.setLeftRightDistance(endPositionLeftInches,endPositionRightInches);
     		
         
     	}
