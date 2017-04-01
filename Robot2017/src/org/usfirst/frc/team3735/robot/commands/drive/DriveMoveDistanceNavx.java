@@ -24,17 +24,17 @@ public class DriveMoveDistanceNavx extends Command {
 	private double endPositionRight;
 	
 	private double timeOnTarget = 0;
-	private double finishTime = Constants.Drive.driveFinishTime;
+	private double finishTime = .3;
 	
 	private double p = .025;
 	private double i = 0.00000;
 	private double d = 0;
 	private double f = 0;
 	
-	private double strongMultiplier = .8;	
-	private double yawThreshold = 2;	//degrees
+	private double strongMultiplier = .6;	
+	private double yawThreshold = .4;	//degrees
 	private double targetYaw;
-	private double weakMultiplier = 1.2;
+	private double weakMultiplier = 1.4;
 
     public DriveMoveDistanceNavx(double distance){
         // Use requires() here to declare subsystem dependencies
@@ -67,10 +67,14 @@ public class DriveMoveDistanceNavx extends Command {
     			Robot.drive.setLeftPID(p*strongMultiplier, i, d);
     			Robot.drive.setRightPID(p*weakMultiplier, i, d);
     			SmartDashboard.putBoolean("Navx Right", true);
+    			SmartDashboard.putBoolean("Navx Left", false);
+
     		}else{
     			Robot.drive.setLeftPID(p*weakMultiplier, i, d);
     			Robot.drive.setRightPID(p*strongMultiplier, i, d);
     			SmartDashboard.putBoolean("Navx Left", true);
+    			SmartDashboard.putBoolean("Navx Right", false);
+
     		}
     	}else{
         	Robot.drive.setPIDSettings(p,i,d);
@@ -101,6 +105,7 @@ public class DriveMoveDistanceNavx extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.drive.setPIDSettings(p,i,d);
     	Robot.drive.setUpDriveForSpeedControl();
     }
 

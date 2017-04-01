@@ -2,8 +2,7 @@ package org.usfirst.frc.team3735.robot.subsystems;
 
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team3735.robot.pipelines.GearPipeline;
-import org.usfirst.frc.team3735.robot.pipelines.PegPipeline;
+import org.usfirst.frc.team3735.robot.pipelines.*;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -20,7 +19,8 @@ public class Vision extends Subsystem {
 	private static final int IMG_WIDTH = 320;
 	private static final int IMG_HEIGHT = 240;
 	private VisionThread visionThread;
-	private UsbCamera camera;
+	private UsbCamera camera1;
+	private UsbCamera camera2;
 	private final Object imgLock = new Object();
 	
 	private double centerX = 0.0;
@@ -36,14 +36,21 @@ public class Vision extends Subsystem {
 	private VisionThread pegThread;
 	
 	public Vision(){
-		camera = CameraServer.getInstance().startAutomaticCapture();
-	    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+		camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+		
+		camera1.setFPS(16);
+		//camera2.setFPS(16);
+		
+	    camera1.setResolution(IMG_WIDTH, IMG_HEIGHT);
+	    camera2.setResolution(IMG_WIDTH, IMG_HEIGHT);
+	    
 	    initThreads();
 	    visionThread = pegThread;
 	}
 	
 	private void initThreads(){
-		gearThread = new VisionThread(camera, new GearPipeline(), pipeline -> {
+		gearThread = new VisionThread(camera1, new GearPipeline(), pipeline -> {
             synchronized (imgLock) {
                 if(pipeline.getCenterX() != -1){
                     centerX = pipeline.getCenterX();
@@ -63,7 +70,7 @@ public class Vision extends Subsystem {
 //			e.printStackTrace();
 //		}
 	    
-	    pegThread = new VisionThread(camera, new PegPipeline(), pipeline -> {
+	    pegThread = new VisionThread(camera1, new PegPipelineLSNTest4(), pipeline -> {
             synchronized (imgLock) {
             	if(pipeline.getCenterX() != -1){
                     centerX = pipeline.getCenterX();

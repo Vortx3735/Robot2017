@@ -3,6 +3,7 @@ package org.usfirst.frc.team3735.robot.subsystems;
 import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOff;
+import org.usfirst.frc.team3735.robot.util.Setting;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -27,13 +28,21 @@ public class Shooter extends Subsystem {
 	double drumVoltage;
 	double agitatorVoltage;
 	
-	String drumKey = "Shooter setVoltage";
-	String agitatorKey = "Agitator setVoltage";
+//	String drumKey = "Shooter setVoltage";
+//	String agitatorKey = "Agitator setVoltage";
+	
+	Setting drumSet;
+	Setting agitatorSet;
+	
+	Setting F;
+	Setting P;
+	Setting I;
+	Setting D;
 	
 //	public PIDController controller = new PIDController(1.0, 0.0, 0.0, drumEncoder, drum);
 	
 	public Shooter(){
-		drum.changeControlMode(TalonControlMode.Voltage);
+		drum.changeControlMode(TalonControlMode.Speed);
 		
 		drum2.changeControlMode(TalonControlMode.Follower);
 		drum2.set(drum.getDeviceID());
@@ -43,23 +52,30 @@ public class Shooter extends Subsystem {
 		drum.setInverted(RobotMap.Shooter.drumInverted);
 		agitator.setInverted(RobotMap.Shooter.agitatorInverted);
 		
-		drumVoltage = Constants.Shooter.shootVoltage;
-		agitatorVoltage = Constants.Shooter.agitatorVoltage;
-		
-		SmartDashboard.putNumber(drumKey, drumVoltage);
-		SmartDashboard.putNumber(agitatorKey, agitatorVoltage);
+		drumSet = new Setting("Shooter set", Constants.Shooter.shootVoltage);
+		agitatorSet = new Setting("Agitator set", Constants.Shooter.agitatorVoltage);
+//		drumVoltage = Constants.Shooter.shootVoltage;
+//		agitatorVoltage = Constants.Shooter.agitatorVoltage;
+//		
+//		SmartDashboard.putNumber(drumKey, drumVoltage);
+//		SmartDashboard.putNumber(agitatorKey, agitatorVoltage);
 		
 		//drum.changeControlMode(TalonControlMode.Speed);
 		//drum.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		F = new Setting("Shooter F", .1097);
+		P = new Setting("Shooter P", .22);
+		I = new Setting("Shooter I", .0);
+		D = new Setting("Shooter D", .0);
+
 		
-//        drum.configNominalOutputVoltage(+0.0f, -0.0f); 
-//        drum.configPeakOutputVoltage(+12.0f, -12.0f); 
-//
-//        drum.setProfile(0); 
-//        drum.setF(0.1097); 
-//        drum.setP(0.22); 
-//        drum.setI(0);  
-//        drum.setD(0); 
+        drum.configNominalOutputVoltage(0.0, -0.0); 
+        drum.configPeakOutputVoltage(12.0, -12.0); 
+
+        drum.setProfile(0); 
+        drum.setF(F.getValue()); 
+        drum.setP(P.getValue()); 
+        drum.setI(I.getValue());  
+        drum.setD(D.getValue()); 
 //        
 //        try{
 //    	SmartDashboard.putData(new ShooterSmartDashboard());
@@ -69,8 +85,12 @@ public class Shooter extends Subsystem {
 	} 
 	
 	public void log() {
-//		SmartDashboard.putNumber("Raw Motor Speed (native ticks/100ms)", drum.getSpeed());
-//		SmartDashboard.putNumber("Motor Speed (RPM?)", drum.get());
+		SmartDashboard.putNumber("Raw Motor Speed (native ticks/100ms)", drum.getSpeed());
+		SmartDashboard.putNumber("Motor Speed (RPM?)", drum.get());
+		drum.setF(F.getValue()); 
+        drum.setP(P.getValue()); 
+        drum.setI(I.getValue());  
+        drum.setD(D.getValue()); 
 		//SmartDashboard.putNumber("Agitator getPower", getAgitatorPower());
 		//SmartDashboard.putNumber("Shooter getPower", getShooterPower());
 	}
@@ -101,13 +121,14 @@ public class Shooter extends Subsystem {
     }
     
     public void setDrumSmartDashboard(){
-    	drumVoltage = SmartDashboard.getNumber(drumKey, drumVoltage);
-    	setDrumVoltage(drumVoltage);
+    	//drumVoltage = SmartDashboard.getNumber(drumKey, drumVoltage);
+    	drum.set(drumSet.getValue());
     }
     
     public void setAgitatorSmartDashboard(){
-    	agitatorVoltage = SmartDashboard.getNumber(agitatorKey, agitatorVoltage);
-    	setAgitatorVoltage(agitatorVoltage);
+//    	agitatorVoltage = SmartDashboard.getNumber(agitatorKey, agitatorVoltage);
+//    	setAgitatorVoltage(agitatorVoltage);
+    	agitator.set(agitatorSet.getValue());
     }
     
 

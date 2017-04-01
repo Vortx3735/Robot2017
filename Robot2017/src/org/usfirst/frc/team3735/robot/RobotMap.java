@@ -69,12 +69,12 @@ public class RobotMap {
 	}
 	public static class BallIntake{
 		public static int roller = 			1;
-		public static final boolean rollerInverted = false;
+		public static final boolean rollerInverted = true;
 	}
 	public static class Scaler{
 		public static int motor = 			3;
 		public static final int motor2 = 	9;
-		public static final boolean scalerInverted = false;
+		public static final boolean scalerInverted = true;
 
 	}
 		
