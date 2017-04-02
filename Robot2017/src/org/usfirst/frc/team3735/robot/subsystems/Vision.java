@@ -22,7 +22,7 @@ public class Vision extends Subsystem {
 	private UsbCamera camera1;
 	private UsbCamera camera2;
 	private final Object imgLock = new Object();
-	
+	//70/320) /180  *5
 	private double centerX = 0.0;
 	private double centerY = 0.0;	
 	private double area = 0.0;

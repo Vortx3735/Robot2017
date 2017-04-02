@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveMoveDistanceExpNavx extends Command {
 
-    private static final double K_FILTERCOEF_Y = 0.15;
+    private static final double moveFilter = 0.15;
 	private double deltaDistance;
 
    	
@@ -31,7 +31,7 @@ public class DriveMoveDistanceExpNavx extends Command {
 	private double endPositionLeft;
 	private double startDistanceRight;
 	
-	private double timeOnTarget = 0;
+	private double timeOnTarget;
 	private double finishTime = .2;
 	private double power;
    	
@@ -42,7 +42,8 @@ public class DriveMoveDistanceExpNavx extends Command {
     	deltaDistance = distance;
     	
     	requires(Robot.drive);
-    	coefficient = new Setting("Navx Drive Coeffecient", 1);
+    	coefficient = new Setting("Navx Drive Coeffecient", 5);
+    	timeOnTarget = 0;
 
     }
 
@@ -66,7 +67,7 @@ public class DriveMoveDistanceExpNavx extends Command {
     protected void execute() {
     	turnCorrection = (Robot.drive.getPIDController().getError()/180.0) * coefficient.getValue();
 	
-		moveMotor = (moveStick-moveMotorPrevious)*K_FILTERCOEF_Y + moveMotorPrevious;
+		moveMotor = (moveStick-moveMotorPrevious)*moveFilter + moveMotorPrevious;
 		//turnMotor = (ZDriveStick-ZDriveMotorPrevious)*K_FILTERCOEF_Z + ZDriveMotorPrevious;
 
 
@@ -77,7 +78,7 @@ public class DriveMoveDistanceExpNavx extends Command {
 		//turnMotor = turnMotor * Constants.Drive.scaledMaxTurn;
 		Robot.drive.arcadeDrive(moveMotor, turnCorrection, false);	
 		//log();
-		
+		System.out.println("executing exp navx command");
 		if(isOnTarget()){
     		timeOnTarget += .02;
     	}else{
@@ -87,7 +88,7 @@ public class DriveMoveDistanceExpNavx extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-		return timeOnTarget >= finishTime;
+		return isOnTarget();
     }
     
     private boolean isOnTarget(){

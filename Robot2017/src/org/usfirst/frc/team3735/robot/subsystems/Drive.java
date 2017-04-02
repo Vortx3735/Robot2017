@@ -236,8 +236,8 @@ public class Drive extends PIDSubsystem {
 	}
 
 	public void setLeftRightDistance(double left, double right) {
-		l1.set(left / (Constants.Drive.OneRotationInches )); //OneRotationInches
-		r1.set(right / (Constants.Drive.OneRotationInches ));
+		l1.set(left / (Constants.Drive.InchesPerRotation )); //OneRotationInches
+		r1.set(right / (Constants.Drive.InchesPerRotation ));
 	}
 
 	public void setLeftRightOutputs(double leftOutput, double rightOutput) {
@@ -257,11 +257,11 @@ public class Drive extends PIDSubsystem {
 	}
 
 	public double getLeftPositionInches() {
-		return getRotationsLeft() * (Constants.Drive.OneRotationInches);
+		return getRotationsLeft() * (Constants.Drive.InchesPerRotation);
 	}
 
 	public double getRightPositionInches() {
-		return getRotationsRight() * (Constants.Drive.OneRotationInches);
+		return getRotationsRight() * (Constants.Drive.InchesPerRotation);
 	}
 
 	public void changeScaledMaxOutput(double output) {
@@ -322,7 +322,7 @@ public class Drive extends PIDSubsystem {
 	 * Speed Control Setup
 	 *******************************/
 	public void setUpDriveForSpeedControl() {
-		setEnableBrake(false);
+		setEnableBrake(true);
 		l1.changeControlMode(TalonControlMode.PercentVbus);
 		r1.changeControlMode(TalonControlMode.PercentVbus);
 
@@ -356,10 +356,10 @@ public class Drive extends PIDSubsystem {
 	}
 	
 	public double getRightError(){
-		return r1.getClosedLoopError() * Constants.Drive.OneRotationInches ;
+		return r1.getClosedLoopError() * Constants.Drive.InchesPerRotation ;
 	}
 	public double getLeftError(){
-		return l1.getClosedLoopError() * Constants.Drive.OneRotationInches ;
+		return l1.getClosedLoopError() * Constants.Drive.InchesPerRotation ;
 	}
 
 

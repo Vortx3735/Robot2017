@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.drive;
 
 import org.usfirst.frc.team3735.robot.commands.vision.DriveAddVisionAssist;
+import org.usfirst.frc.team3735.robot.commands.vision.DriveAddVisionAssistNavx;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,12 +10,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class DriveMoveDistanceVisionExp extends CommandGroup {
+public class DriveMoveDistanceVisionExpNavx extends CommandGroup {
 
 	private Command visAssist;
 	protected boolean done = false;
 	
-    public DriveMoveDistanceVisionExp(Pipes p, double power, double distance) {
+    public DriveMoveDistanceVisionExpNavx(Pipes p, double power, double distance) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -31,11 +32,11 @@ public class DriveMoveDistanceVisionExp extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	visAssist = new DriveAddVisionAssist(p);
+    	visAssist = new DriveAddVisionAssistNavx(p);
     	
     	addParallel(visAssist);
-    	addSequential(new DriveChangeToGearDirection());
-    	addSequential(new DriveMoveDistanceExp(power, distance));
+    	//addSequential(new DriveChangeToGearDirection());
+    	addSequential(new DriveMoveDistanceExpNavx(distance, power));
     	//addSequential(new ExpDrive(-1,0),.5);
     	addSequential(new DriveBrake(){
     		@Override

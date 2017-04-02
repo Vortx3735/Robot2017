@@ -7,7 +7,7 @@ public class Constants {
 		public final static double cruiseVelocity = 4;	//???
 		public static final double wheelDiameter = 4.5;	//in inches
 		
-		public static final double OneRotationInches = 12.94;	//in inches
+		public static final double InchesPerRotation = 12.94;	//in inches
 		
 		
 		public static final double scaledMaxOutput = 1;	//(0,1] this is directly to the motor percentage
@@ -74,7 +74,7 @@ public class Constants {
 	}
 	
 	public class Shooter{
-		public final static double shootVoltage = 8.5;
+		public final static double shootVoltage = 5000;
 		
 		public static final double lowAgitatorVoltage = 3;
 		public static final double agitatorVoltage = 7;

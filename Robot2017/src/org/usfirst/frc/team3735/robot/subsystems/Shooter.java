@@ -62,8 +62,8 @@ public class Shooter extends Subsystem {
 		
 		//drum.changeControlMode(TalonControlMode.Speed);
 		//drum.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		F = new Setting("Shooter F", .1097);
-		P = new Setting("Shooter P", .22);
+		F = new Setting("Shooter F", .2097);
+		P = new Setting("Shooter P", .02);
 		I = new Setting("Shooter I", .0);
 		D = new Setting("Shooter D", .0);
 
