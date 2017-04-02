@@ -17,8 +17,8 @@ public class Constants {
 		public static final double sensitivity = .5;	//raise for sharper turns
 		
 		//exp drive
-		public static final double moveReactivity = .150;	//(0,1] (least reactive, most reactive]
-		public static final double turnReactivity = .200;	//(0,1] (least reactive, most reactive]	
+		public static final double moveReactivity = .300;	//(0,1] (least reactive, most reactive]
+		public static final double turnReactivity = .700;	//(0,1] (least reactive, most reactive]	
 		public static final double scaledMaxMove = 1;
 		public static final double scaledMaxTurn = .500;	//(0,1] directly to the arcadedrive turn value
 		//these retain the range but shift more of the action towards lower values as the exponent is raised higher
@@ -74,7 +74,7 @@ public class Constants {
 	}
 	
 	public class Shooter{
-		public final static double shootVoltage = 5000;
+		public final static double shootVoltage = 32000;
 		
 		public static final double lowAgitatorVoltage = 3;
 		public static final double agitatorVoltage = 7;

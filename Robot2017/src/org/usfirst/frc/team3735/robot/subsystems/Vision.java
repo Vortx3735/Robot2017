@@ -63,7 +63,7 @@ public class Vision extends Subsystem {
                 //width = pipeline.getWidth();
             }
 	    });
-	    gearThread.start();
+	    //gearThread.start();
 //	    try {
 //			gearThread.wait();
 //		} catch (Exception e) {
@@ -81,7 +81,7 @@ public class Vision extends Subsystem {
                 }
             }
 	    });
-	    pegThread.start();
+	    //pegThread.start();
 //	    try {
 //			pegThread.wait();
 //		} catch (Exception e) {

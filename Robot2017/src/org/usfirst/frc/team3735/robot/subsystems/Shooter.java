@@ -43,7 +43,7 @@ public class Shooter extends Subsystem {
 	
 	public Shooter(){
 		drum.changeControlMode(TalonControlMode.Speed);
-		
+		drum.setCloseLoopRampRate(6);
 		drum2.changeControlMode(TalonControlMode.Follower);
 		drum2.set(drum.getDeviceID());
 		
@@ -62,10 +62,10 @@ public class Shooter extends Subsystem {
 		
 		//drum.changeControlMode(TalonControlMode.Speed);
 		//drum.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		F = new Setting("Shooter F", .2097);
-		P = new Setting("Shooter P", .02);
+		F = new Setting("Shooter F", .022);
+		P = new Setting("Shooter P", .01);
 		I = new Setting("Shooter I", .0);
-		D = new Setting("Shooter D", .0);
+		D = new Setting("Shooter D", .0005);
 
 		
         drum.configNominalOutputVoltage(0.0, -0.0); 

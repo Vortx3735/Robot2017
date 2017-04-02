@@ -3,6 +3,8 @@ package org.usfirst.frc.team3735.robot.commands.drive;
 
 import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.util.Setting;
+import org.usfirst.frc.team3735.robot.util.VortxMath;
 
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -18,40 +20,51 @@ public class ExpDrive extends Command {
 	/* Constants						*/
 	/************************************/	
 	//Range is (0,1] , 1 is no filter, .333 or .167, .125 is recommended 
-	private static double K_FILTERCOEF_Y 		=  Constants.Drive.moveReactivity;  //this is for the move variable
-	private static double K_FILTERCOEF_Z 		= Constants.Drive.turnReactivity;	 //this is for the turning
 
-	private static double K_FILTERCOEF_Y_ORG 		=  3;  //this is for the move variable
-	private static double K_FILTERCOEF_Z_ORG 		= 3;	 //this is for the turning
+
 
 	/************************************/
 	/* Variables						*/
 	/************************************/	
 	
-	private double YDriveStick;
-	private double ZDriveStick;
+	private double moveSetValue;
+	private double turnSetValue;
 		
-	private double YDriveMotor;
-	private double ZDriveMotor;
+	private double moveMotor;
+	private double turnMotor;
 	
-	private double YDriveMotorPrevious;
-	private double ZDriveMotorPrevious;
+	private double moveMotorPrev;
+	private double turnMotorPrev;
 	
 	private boolean isJoystickInput;
 	
-	private String moveExponentKey = "Move Exponent";
-	private String turnExponentKey = "Turn Exponent";
-	private String scaledMaxMoveKey = "Scaled Max Move";
-	private String scaledMaxTurnKey = "Scaled Max Turn";
-	private String moveReactivityKey = "Move Reactivity";
-	private String turnReactivityKey = "Turn Reactivity";
 	
-	private double moveExponent = Constants.Drive.moveExponent;
-	private double turnExponent = Constants.Drive.turnExponent;
-	private double scaledMaxMove = Constants.Drive.scaledMaxMove;
-	private double scaledMaxTurn = Constants.Drive.scaledMaxTurn;
-	private double moveReactivity = Constants.Drive.moveReactivity;
-	private double turnReactivity = Constants.Drive.turnReactivity;
+	private double fodAngle;
+	private double fodMove;
+	private double fodTurn;
+	private Setting navxCo = new Setting("FOD Navx Coefficient", 1.38);
+	
+//	private String moveExponentKey = "Move Exponent";
+//	private String turnExponentKey = "Turn Exponent";
+//	private String scaledMaxMoveKey = "Scaled Max Move";
+//	private String scaledMaxTurnKey = "Scaled Max Turn";
+//	private String moveReactivityKey = "Move Reactivity";
+//	private String turnReactivityKey = "Turn Reactivity";
+//	
+//	private double moveExponent = Constants.Drive.moveExponent;
+//	private double turnExponent = Constants.Drive.turnExponent;
+//	private double scaledMaxMove = Constants.Drive.scaledMaxMove;
+//	private double scaledMaxTurn = Constants.Drive.scaledMaxTurn;
+//	private double moveReactivity = Constants.Drive.moveReactivity;
+//	private double turnReactivity = Constants.Drive.turnReactivity;
+	
+	private static Setting moveExponent = new Setting("Move Exponent", Constants.Drive.moveExponent);
+	private static Setting turnExponent = new Setting("Turn Exponent", Constants.Drive.turnExponent);
+	private static Setting scaledMaxMove = new Setting("Scaled Max Move", Constants.Drive.scaledMaxMove);
+	private static Setting scaledMaxTurn = new Setting("Scaled Max Turn", Constants.Drive.scaledMaxTurn);
+	private static Setting moveReactivity = new Setting("Move Reactivity", Constants.Drive.moveReactivity);
+	private static Setting turnReactivity = new Setting("Turn Reactivity", Constants.Drive.turnReactivity);
+	
 	
 	/************************************/
 	/* Code								*/
@@ -61,81 +74,84 @@ public class ExpDrive extends Command {
     	requires(Robot.drive);
 		isJoystickInput = true;
     	Robot.drive.setUpDriveForSpeedControl();
-
     }
     
     public ExpDrive(double move, double turn){
-    	YDriveStick = move;
-    	ZDriveStick = turn;
-    	System.out.println("Exp Move no Joystick");
-    	isJoystickInput = false;
+    	moveSetValue = move;
+    	turnSetValue = turn;
+    	//System.out.println("Exp Move no Joystick");
+    	
     	requires(Robot.drive);
+    	isJoystickInput = false;
+    	Robot.drive.setUpDriveForSpeedControl();
+
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drive.setUpDriveForSpeedControl();
     	if(isJoystickInput){
-    		YDriveStick			= 0.0;
-    		ZDriveStick			= 0.0;
+    		moveSetValue			= 0.0;
+    		turnSetValue			= 0.0;
     	}
-		YDriveMotor			= 0.0;
-		ZDriveMotor			= 0.0;
-		YDriveMotorPrevious = 0.0;
-		ZDriveMotorPrevious = 0.0;
+		moveMotor			= 0.0;
+		turnMotor			= 0.0;
+		moveMotorPrev = 0.0;
+		turnMotorPrev = 0.0;
 
-	
     }
 
     // Called repeatedly when this Command is scheduled to run
     public void execute() {
-		/***************************************/
-		/* First Refresh the Dash BoardSettings*/
-		/***************************************/
-		//GetDashBoardSettings();
-
-    	/************************************/
-		/* Lets Get the New Joy Stick Values*/
-		/************************************/
 		if(isJoystickInput){
-			moveExponent = SmartDashboard.getNumber(moveExponentKey, moveExponent);
-		    turnExponent = SmartDashboard.getNumber(turnExponentKey, turnExponent);
-			scaledMaxMove = SmartDashboard.getNumber(scaledMaxMoveKey, scaledMaxMove);
-			scaledMaxTurn = SmartDashboard.getNumber(scaledMaxTurnKey, scaledMaxTurn);
-			moveReactivity = SmartDashboard.getNumber(moveReactivityKey, moveReactivity);
-			turnReactivity = SmartDashboard.getNumber(turnReactivityKey, turnReactivity);
-			
-			YDriveStick = Robot.oi.getDriveMove();
-			ZDriveStick = Robot.oi.getDriveTurn();
+			moveSetValue = Robot.oi.getDriveMove();
+			turnSetValue = Robot.oi.getDriveTurn();
 		}
-	
-		/*********************************/
-		/* Lets Filter the Motor Outputs */
-		/*********************************/
-		/* Note We use the Saved Past Motor Drive Values to Make Calculations */
-		//this is old formula- literally the worst formula for the computer
-//		YDriveMotor = (YDriveStick  / K_FILTERCOEF_Y ) + (YDriveMotorPrevious*(K_FILTERCOEF_Y - 1 )/ K_FILTERCOEF_Y);
-//		ZDriveMotor = (ZDriveStick  / K_FILTERCOEF_Z ) + (ZDriveMotorPrevious*(K_FILTERCOEF_Z - 1 )/ K_FILTERCOEF_Z);
 		
-//these are new formulas, much better for CPU. These are the same forumlas, but the filters are inversed, and the range is 0<x<=1
-		YDriveMotor = (YDriveStick-YDriveMotorPrevious)*K_FILTERCOEF_Y + YDriveMotorPrevious;
-		ZDriveMotor = (ZDriveStick-ZDriveMotorPrevious)*K_FILTERCOEF_Z + ZDriveMotorPrevious;
+		
+		
+//		if(Robot.oi.getMainRightMagnitude() > .1){
+//			fodMove = Robot.oi.getMainRightMagnitude();
+//			fodAngle = Robot.oi.getMainRightAngle();
+//			Robot.drive.setSetpoint(fodAngle);
+//			fodTurn = (Robot.drive.getPIDController().getError()/180.0) * navxCo.getValue();
+//		}else{
+//			fodMove = 0;
+//			fodTurn = 0;
+//		}
+//		SmartDashboard.putNumber("FOD Move", fodMove);
+//		SmartDashboard.putNumber("FOD Turn", fodTurn);
+//
+//		moveSetValue = moveSetValue + fodMove;
+//		turnSetValue = turnSetValue + fodTurn;
+		
+		
+	
+		moveMotor = (moveSetValue-moveMotorPrev)*moveReactivity.getValue() + moveMotorPrev;
+		turnMotor = (turnSetValue-turnMotorPrev)*turnReactivity.getValue() + turnMotorPrev;
 
-		/****************************************/
-		/* Let Save the Motor Y and Z so we     */
-		/* Use the Value for future Calculations*/
-		/****************************************/
-		YDriveMotorPrevious = YDriveMotor; 
-		ZDriveMotorPrevious = ZDriveMotor;
+		moveMotorPrev = moveMotor;
+		turnMotorPrev = turnMotor;
+		
 					
-		/**************************************/
-		/* Let Update the Drive Train Y and Z */
-		/**************************************/
-		YDriveMotor = YDriveMotor * Math.pow(Math.abs(YDriveMotor), Constants.Drive.moveExponent - 1);
-		ZDriveMotor = ZDriveMotor * Math.pow(Math.abs(ZDriveMotor), Constants.Drive.turnExponent - 1);
-		YDriveMotor = YDriveMotor * Constants.Drive.scaledMaxMove;
-		ZDriveMotor = ZDriveMotor * Constants.Drive.scaledMaxTurn;
-		Robot.drive.arcadeDrive(YDriveMotor, ZDriveMotor, false);	
+		moveMotor = moveMotor * Math.pow(Math.abs(moveMotor), moveExponent.getValue() - 1);
+		turnMotor = turnMotor * Math.pow(Math.abs(turnMotor), turnExponent.getValue() - 1);
+		
+		moveMotor = moveMotor * scaledMaxMove.getValue();
+		turnMotor = turnMotor * scaledMaxTurn.getValue();
+		
+		turnMotor = turnMotor + Robot.oi.getCoLeftX() * .2;
+		
+
+//		SmartDashboard.putNumber("Move Motor", moveMotor);
+//		SmartDashboard.putNumber("Turn Motor", turnMotor);
+//		moveMotor = VortxMath.limit(moveMotor, -1, 1);
+//		turnMotor = VortxMath.limit(turnMotor, -1, 1);
+
+
+		Robot.drive.arcadeDrive(moveMotor, turnMotor, false);
+		
+		
 		log();
     }
 
@@ -157,11 +173,6 @@ public class ExpDrive extends Command {
     }
     
     private void log(){
-    	SmartDashboard.putNumber(moveExponentKey, moveExponent);
-    	SmartDashboard.putNumber(turnExponentKey, turnExponent);
-    	SmartDashboard.putNumber(scaledMaxMoveKey, scaledMaxMove);
-    	SmartDashboard.putNumber(scaledMaxTurnKey, scaledMaxTurn);
-    	SmartDashboard.putNumber(moveReactivityKey, moveReactivity);
-    	SmartDashboard.putNumber(turnReactivityKey, turnReactivity);
+
     }
 }
