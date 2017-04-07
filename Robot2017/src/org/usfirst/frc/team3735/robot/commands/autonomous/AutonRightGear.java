@@ -1,13 +1,12 @@
 package org.usfirst.frc.team3735.robot.commands.autonomous;
 
 import org.usfirst.frc.team3735.robot.commands.drive.DriveBrake;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceExpNavx;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePID;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePIDBroken;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceVisionExp;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAnglePID;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistancePIDBroken;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpNavx;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistancePID;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistancePIDBroken;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceVisionExp;
+import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePID;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 

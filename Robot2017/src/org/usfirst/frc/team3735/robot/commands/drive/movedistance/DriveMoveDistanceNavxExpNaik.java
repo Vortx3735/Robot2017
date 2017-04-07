@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3735.robot.commands.drive;
+package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
