@@ -2,19 +2,19 @@ package org.usfirst.frc.team3735.robot.util;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Setting {
+public class StringSetting {
 	
 	private String name;
-	private double value;
+	private String value;
 	
 	private boolean isReceiving;
 	private boolean isVisible;
 	
-	public Setting(String name, double defaultValue){
+	public StringSetting(String name, String defaultValue){
 		this.name = name;
 		this.value = defaultValue;
 		
-		SmartDashboard.putNumber(name, defaultValue);
+		SmartDashboard.putString(name, defaultValue);
 		isVisible = true;
 		isReceiving = true;
 	}
@@ -25,12 +25,12 @@ public class Setting {
 	 * 				if false, the setting does not appear on the SmartDasboard
 	 * 
 	 */
-	public Setting(String name, double defaultValue, boolean flag){
+	public StringSetting(String name, String defaultValue, boolean flag){
 		this.name = name;
 		this.value = defaultValue;
 		
 		if(flag){
-			SmartDashboard.putNumber(name, defaultValue);
+			SmartDashboard.putString(name, defaultValue);
 			isVisible = true;
 		}else{
 			isVisible = false;
@@ -39,19 +39,20 @@ public class Setting {
 	}
 
 	
-	public double getValue(){
+	public String getValue(){
 		if(isReceiving){
-			value = SmartDashboard.getNumber(name, value);
+			value = SmartDashboard.getString(name, value);
 		}
 		return value;
 	}
 	
-	public void setValue(double value){
+	public void setValue(String value){
 		this.value = value;
 		if(isVisible){
-			SmartDashboard.putNumber(name, this.value);
+			SmartDashboard.putString(name, this.value);
 		}
 	}
 	
 }
+
 

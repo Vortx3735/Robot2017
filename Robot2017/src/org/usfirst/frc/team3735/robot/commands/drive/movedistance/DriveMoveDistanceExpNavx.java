@@ -68,17 +68,13 @@ public class DriveMoveDistanceExpNavx extends Command {
     	turnCorrection = (Robot.drive.getPIDController().getError()/180.0) * coefficient.getValue();
 	
 		moveMotor = (moveStick-moveMotorPrevious)*moveFilter + moveMotorPrevious;
-		//turnMotor = (ZDriveStick-ZDriveMotorPrevious)*K_FILTERCOEF_Z + ZDriveMotorPrevious;
-
 
 		moveMotorPrevious = moveMotor; 
 					
 		moveMotor = moveMotor * Math.pow(Math.abs(moveMotor), Constants.Drive.moveExponent - 1);
-		//turnMotor = turnMotor * Math.pow(Math.abs(turnMotor), Constants.Drive.turnExponent - 1);
-		//turnMotor = turnMotor * Constants.Drive.scaledMaxTurn;
+		
 		Robot.drive.arcadeDrive(moveMotor, turnCorrection, false);	
-		//log();
-		System.out.println("executing exp navx command");
+		
 		if(isOnTarget()){
     		timeOnTarget += .02;
     	}else{

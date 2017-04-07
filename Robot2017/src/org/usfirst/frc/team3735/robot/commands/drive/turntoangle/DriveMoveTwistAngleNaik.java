@@ -45,7 +45,7 @@ public class DriveMoveTwistAngleNaik extends Command {
     	endPositionRightInches = startPositionRightInches - Math.abs(55.0f * twistamount/180);
     	
     	adjustment = 0;
-    	endadjustment = Math.abs(55.0f * twistamount/180) ; // FIXME MOVE CONST TO BETTER PLACE
+    	endadjustment = Math.abs(55 * twistamount/180) ; // FIXME MOVE CONST TO BETTER PLACE
     	//Robot.drive.setPIDSettings(0.07,0.000,0);
     	
     	Robot.drive.setPIDSettings(0.02, 0.0000, 0.0);
