@@ -42,21 +42,9 @@ public class ExpDrive extends Command {
 	private double fodAngle;
 	private double fodMove;
 	private double fodTurn;
-	private Setting navxCo = new Setting("FOD Navx Coefficient", 1.38);
-	
-//	private String moveExponentKey = "Move Exponent";
-//	private String turnExponentKey = "Turn Exponent";
-//	private String scaledMaxMoveKey = "Scaled Max Move";
-//	private String scaledMaxTurnKey = "Scaled Max Turn";
-//	private String moveReactivityKey = "Move Reactivity";
-//	private String turnReactivityKey = "Turn Reactivity";
-//	
-//	private double moveExponent = Constants.Drive.moveExponent;
-//	private double turnExponent = Constants.Drive.turnExponent;
-//	private double scaledMaxMove = Constants.Drive.scaledMaxMove;
-//	private double scaledMaxTurn = Constants.Drive.scaledMaxTurn;
-//	private double moveReactivity = Constants.Drive.moveReactivity;
-//	private double turnReactivity = Constants.Drive.turnReactivity;
+	private static Setting navxCo = new Setting("FOD Navx Coefficient", 2.5);
+	private static Setting navxPow = new Setting("FOD Power Coefficient", 1);
+
 	
 	private static Setting moveExponent = new Setting("Move Exponent", Constants.Drive.moveExponent);
 	private static Setting turnExponent = new Setting("Turn Exponent", Constants.Drive.turnExponent);
@@ -110,20 +98,23 @@ public class ExpDrive extends Command {
 		
 		
 		
-//		if(Robot.oi.getMainRightMagnitude() > .1){
-//			fodMove = Robot.oi.getMainRightMagnitude();
-//			fodAngle = Robot.oi.getMainRightAngle();
-//			Robot.drive.setSetpoint(fodAngle);
-//			fodTurn = (Robot.drive.getPIDController().getError()/180.0) * navxCo.getValue();
-//		}else{
-//			fodMove = 0;
-//			fodTurn = 0;
-//		}
-//		SmartDashboard.putNumber("FOD Move", fodMove);
-//		SmartDashboard.putNumber("FOD Turn", fodTurn);
-//
-//		moveSetValue = moveSetValue + fodMove;
-//		turnSetValue = turnSetValue + fodTurn;
+		if(Robot.oi.getMainRightMagnitude() > .1){
+			fodMove = Robot.oi.getMainRightMagnitude();
+			fodAngle = Robot.oi.getMainRightAngle();
+			Robot.drive.setSetpoint(fodAngle);
+			
+			fodTurn = (Math.pow(Robot.drive.getPIDController().getError(), navxPow.getValue())/180.0) * navxCo.getValue();
+			
+		
+		}else{
+			fodMove = 0;
+			fodTurn = 0;
+		}
+		SmartDashboard.putNumber("FOD Move", fodMove);
+		SmartDashboard.putNumber("FOD Turn", fodTurn);
+
+		moveSetValue = moveSetValue + fodMove;
+		turnSetValue = turnSetValue + fodTurn;
 		
 		
 	

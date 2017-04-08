@@ -3,6 +3,7 @@ package org.usfirst.frc.team3735.robot.commands;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.util.DataRecorder;
 import org.usfirst.frc.team3735.robot.util.Setting;
+import org.usfirst.frc.team3735.robot.util.StringSetting;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class SendSmartDashboardFile extends Command {
 
-	Setting fileName = new Setting("Sending File", "default file");
+	StringSetting fileName = new StringSetting("Sending File", "default file");
 	
     public SendSmartDashboardFile() {
         // Use requires() here to declare subsystem dependencies
@@ -29,7 +30,7 @@ public class SendSmartDashboardFile extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DataRecorder.startSending(fileName.getStringValue());
+    	DataRecorder.startSending(fileName.getValue());
     }
 
     // Called repeatedly when this Command is scheduled to run

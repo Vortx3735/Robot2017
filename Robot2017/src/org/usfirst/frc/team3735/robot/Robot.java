@@ -3,7 +3,9 @@ package org.usfirst.frc.team3735.robot;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3735.robot.commands.RecordAverageRate;
+import org.usfirst.frc.team3735.robot.commands.RecordSmartDashboardFile;
 import org.usfirst.frc.team3735.robot.commands.RecordTrapTurnData;
+import org.usfirst.frc.team3735.robot.commands.SendSmartDashboardFile;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
 import org.usfirst.frc.team3735.robot.pipelines.GearPipeline;
 import org.usfirst.frc.team3735.robot.pipelines.StickyNotePipeline;
@@ -87,8 +89,11 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("AUTONOMOUS SELECTION", autonomousChooser);
 		
-		SmartDashboard.putData("Start Sending Turn Voltages", new RecordTrapTurnData());
-		SmartDashboard.putData("Start Sending Turn Voltages", new RecordAverageRate());
+		//SmartDashboard.putData("Start Sending Turn Voltages", new RecordTrapTurnData());
+		//SmartDashboard.putData("Start Sending Turn Voltages", new RecordAverageRate());
+
+		SmartDashboard.putData("Record Data", new RecordSmartDashboardFile());
+		SmartDashboard.putData("Send Data", new SendSmartDashboardFile());
 
 		//old camera code
 //    	try {

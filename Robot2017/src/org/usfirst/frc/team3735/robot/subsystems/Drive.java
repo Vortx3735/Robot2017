@@ -19,6 +19,7 @@ import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
+import org.usfirst.frc.team3735.robot.util.RecordableCantalon;
 
 
 /**
@@ -27,13 +28,17 @@ import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
 
 public class Drive extends PIDSubsystem {
 	
-	private CANTalon l1,l2,l3,r1,r2,r3;
-//	
-//	MultiSpeedController leftMotors = 
-//			new MultiSpeedController(new CANTalon[] {l1, l2, l3}, "Drive", "left Motors");
-//	MultiSpeedController rightMotors = 
-//			new MultiSpeedController(new CANTalon[] {r1, r2, r3}, "Drive", "left Motors");
-//	
+	private RecordableCantalon l1;
+
+	private CANTalon l2;
+	private CANTalon l3;
+	
+	private RecordableCantalon r1;
+	
+	private CANTalon r2;
+	private CANTalon r3;
+
+
 	RobotDrive driveTrain;
 	
 	private AHRS ahrs;
@@ -77,14 +82,14 @@ public class Drive extends PIDSubsystem {
 		/******************
 		 * Drivetrain Left
 		 ******************/
-		l1 = new CANTalon(RobotMap.Drive.leftMotor1);
+		l1 = new RecordableCantalon(RobotMap.Drive.leftMotor1);
 		l2 = new CANTalon(RobotMap.Drive.leftMotor2);
 		l3 = new CANTalon(RobotMap.Drive.leftMotor3);
 
 		/******************
 		 * Drivetrain Right
 		 ******************/
-		r1 = new CANTalon(RobotMap.Drive.rightMotor1);
+		r1 = new RecordableCantalon(RobotMap.Drive.rightMotor1);
 		r2 = new CANTalon(RobotMap.Drive.rightMotor2);
 		r3 = new CANTalon(RobotMap.Drive.rightMotor3);
 		/* Setup Encoders and Controls Scaling */
@@ -132,7 +137,6 @@ public class Drive extends PIDSubsystem {
 		r1.configNominalOutputVoltage(0.0f, -0.0);
 		r1.configPeakOutputVoltage(5, -5);
 		r1.setPosition(0);
-
 
 	}
 	

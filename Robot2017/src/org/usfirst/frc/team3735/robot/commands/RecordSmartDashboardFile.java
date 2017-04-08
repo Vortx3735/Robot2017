@@ -3,6 +3,7 @@ package org.usfirst.frc.team3735.robot.commands;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.util.DataRecorder;
 import org.usfirst.frc.team3735.robot.util.Setting;
+import org.usfirst.frc.team3735.robot.util.StringSetting;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,28 +12,29 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RecordSmartDashboardFile extends Command {
 
-	Setting fileName = new Setting("Recording File", "default file");
+	StringSetting fileName = new StringSetting("Recording File", "default file");
 	
     public RecordSmartDashboardFile() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.drive);
-    	requires(Robot.ballIntake);
-    	requires(Robot.gearIntake);
-    	requires(Robot.navigation);
-    	requires(Robot.scaler);
-    	requires(Robot.shooter);
-    	requires(Robot.ultra);
-    	requires(Robot.vision);
+//    	requires(Robot.drive);
+//    	requires(Robot.ballIntake);
+//    	requires(Robot.gearIntake);
+//    	requires(Robot.navigation);
+//    	requires(Robot.scaler);
+//    	requires(Robot.shooter);
+//    	requires(Robot.ultra);
+//    	requires(Robot.vision);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DataRecorder.startRecording(fileName.getStringValue());
+    	DataRecorder.startRecording(fileName.getValue());
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     	DataRecorder.recordData();
     }
 

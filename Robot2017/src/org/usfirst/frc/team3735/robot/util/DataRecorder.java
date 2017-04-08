@@ -24,7 +24,7 @@ public class DataRecorder {
 	public static void startRecording(String name){
 		filePath = "/home/lvuser/"  + name + ".txt";
 		try{
-			formatter = new Formatter(filePath + ".txt");
+			formatter = new Formatter(filePath);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -76,6 +76,7 @@ public class DataRecorder {
 	}
 	
 	public static void endRecording(){
+		formatter.flush();
 		formatter.close();
 		System.out.println("closing the formatter");
 	}
