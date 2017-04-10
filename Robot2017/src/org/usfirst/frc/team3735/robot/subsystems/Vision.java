@@ -7,6 +7,7 @@ import org.usfirst.frc.team3735.robot.pipelines.*;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.vision.VisionThread;
@@ -18,6 +19,7 @@ public class Vision extends Subsystem {
 
 	private static final int IMG_WIDTH = 320;
 	private static final int IMG_HEIGHT = 240;
+	
 	private VisionThread visionThread;
 	private UsbCamera camera1;
 	private UsbCamera camera2;
@@ -34,6 +36,8 @@ public class Vision extends Subsystem {
 	
 	private VisionThread gearThread;
 	private VisionThread pegThread;
+	
+	private static NetworkTable table = NetworkTable.getTable("GRIP/myContoursReport");
 	
 	public Vision(){
 		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
@@ -133,17 +137,25 @@ public class Vision extends Subsystem {
 		SmartDashboard.putNumber("height", getHeight());
 		SmartDashboard.putNumber("width", getWidth());
 		SmartDashboard.putNumber("area", getArea());
+		
+		table.putNumberArray("centerX", new double[]{getCenterX()});
+		table.putNumberArray("centerY", new double[]{getCenterY()});
+		table.putNumberArray("height", new double[]{getHeight()});
+		table.putNumberArray("width", new double[]{getWidth()});
+
+		
     }
 
     
     
-//    public double getCenterX(){
-//    	double centerX;
-//		synchronized (imgLock) {
-//			centerX = this.centerX;
-//		}
-//		return centerX;
-//    }
+    public double getCenterX(){
+    	double centerX;
+		synchronized (imgLock) {
+			centerX = this.centerX;
+		}
+		return centerX;
+    }
+    
     public double getRelativeCX(){
     	double centerX;
 		synchronized (imgLock) {
