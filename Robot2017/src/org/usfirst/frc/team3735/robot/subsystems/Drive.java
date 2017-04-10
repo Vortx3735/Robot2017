@@ -30,13 +30,13 @@ public class Drive extends PIDSubsystem {
 	
 	private RecordableCantalon l1;
 
-	private CANTalon l2;
-	private CANTalon l3;
+	private RecordableCantalon l2;
+	private RecordableCantalon l3;
 	
 	private RecordableCantalon r1;
 	
-	private CANTalon r2;
-	private CANTalon r3;
+	private RecordableCantalon r2;
+	private RecordableCantalon r3;
 
 
 	RobotDrive driveTrain;
@@ -83,15 +83,15 @@ public class Drive extends PIDSubsystem {
 		 * Drivetrain Left
 		 ******************/
 		l1 = new RecordableCantalon(RobotMap.Drive.leftMotor1);
-		l2 = new CANTalon(RobotMap.Drive.leftMotor2);
-		l3 = new CANTalon(RobotMap.Drive.leftMotor3);
+		l2 = new RecordableCantalon(RobotMap.Drive.leftMotor2);
+		l3 = new RecordableCantalon(RobotMap.Drive.leftMotor3);
 
 		/******************
 		 * Drivetrain Right
 		 ******************/
 		r1 = new RecordableCantalon(RobotMap.Drive.rightMotor1);
-		r2 = new CANTalon(RobotMap.Drive.rightMotor2);
-		r3 = new CANTalon(RobotMap.Drive.rightMotor3);
+		r2 = new RecordableCantalon(RobotMap.Drive.rightMotor2);
+		r3 = new RecordableCantalon(RobotMap.Drive.rightMotor3);
 		/* Setup Encoders and Controls Scaling */
 		initSensors();
 		setupSlaves();
@@ -371,7 +371,7 @@ public class Drive extends PIDSubsystem {
 	/*******************************
 	 * Slaves Setup
 	 *******************************/
-	private void setupSlaves() {
+	public void setupSlaves() {
 
 		l2.changeControlMode(CANTalon.TalonControlMode.Follower);
 		l3.changeControlMode(CANTalon.TalonControlMode.Follower);

@@ -20,7 +20,7 @@ public class RecordableCantalon extends CANTalon implements RecordableDevice{
 	
 	@Override
 	public String getData(){
-		return String.format("%.4f", getOutputVoltage());
+		return String.format("%.6f", getOutputVoltage());
 	}
 	
 	@Override
