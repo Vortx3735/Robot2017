@@ -56,15 +56,18 @@ public class Vision extends Subsystem {
 	private void initThreads(){
 		gearThread = new VisionThread(camera2, new GearPipeline(), pipeline -> {
             synchronized (imgLock) {
-                if(pipeline.getCenterX() != -1){
+            	if(pipeline.getCenterX() != -1){
                     centerX = pipeline.getCenterX();
                 }
-                //centerY = pipeline.getCenterY();
-                if(pipeline.getArea() != -1){
-                    area = pipeline.getArea();
+            	if(pipeline.getCenterY() != -1){
+                    centerY = pipeline.getCenterY();
                 }
-                ///height = pipeline.getHeight();
-                //width = pipeline.getWidth();
+                if(pipeline.getWidth() != -1){
+                    width = pipeline.getWidth();
+                }
+                if(pipeline.getHeight() != -1){
+                    height = pipeline.getHeight();
+                }
             }
 	    });
 	    //gearThread.start();
@@ -79,13 +82,18 @@ public class Vision extends Subsystem {
             	if(pipeline.getCenterX() != -1){
                     centerX = pipeline.getCenterX();
                 }
-                //centerY = pipeline.getCenterY();
-                if(pipeline.getArea() != -1){
-                    area = pipeline.getArea();
+            	if(pipeline.getCenterY() != -1){
+                    centerY = pipeline.getCenterY();
+                }
+                if(pipeline.getWidth() != -1){
+                    width = pipeline.getWidth();
+                }
+                if(pipeline.getHeight() != -1){
+                    height = pipeline.getHeight();
                 }
             }
 	    });
-	    //pegThread.start();
+	    pegThread.start();
 //	    try {
 //			pegThread.wait();
 //		} catch (Exception e) {

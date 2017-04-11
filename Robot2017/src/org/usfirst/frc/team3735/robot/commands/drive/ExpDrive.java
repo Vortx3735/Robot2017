@@ -42,9 +42,10 @@ public class ExpDrive extends Command {
 	private double fodAngle;
 	private double fodMove;
 	private double fodTurn;
+	
 	private static Setting navxCo = new Setting("FOD Navx Coefficient", 2.5);
 	private static Setting navxPow = new Setting("FOD Power Coefficient", 1);
-
+	private static Setting fodMoveCo = new Setting("FOD Move Exponent", 3);
 	
 	private static Setting moveExponent = new Setting("Move Exponent", Constants.Drive.moveExponent);
 	private static Setting turnExponent = new Setting("Turn Exponent", Constants.Drive.turnExponent);
@@ -98,8 +99,8 @@ public class ExpDrive extends Command {
 		
 		
 		
-		if(Robot.oi.getMainRightMagnitude() > .1){
-			fodMove = Robot.oi.getMainRightMagnitude();
+		if(Robot.oi.getMainRightMagnitude() > .05){
+			fodMove = Math.pow(Robot.oi.getMainRightMagnitude(), fodMoveCo.getValue());
 			fodAngle = Robot.oi.getMainRightAngle();
 			Robot.drive.setSetpoint(fodAngle);
 			
