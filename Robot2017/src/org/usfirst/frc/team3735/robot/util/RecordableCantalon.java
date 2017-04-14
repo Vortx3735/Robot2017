@@ -20,7 +20,7 @@ public class RecordableCantalon extends CANTalon implements RecordableDevice{
 	
 	@Override
 	public String getData(){
-		return String.format("%.6f", getOutputVoltage());
+		return String.format("%.6f", this.get());
 	}
 	
 	@Override
@@ -49,7 +49,7 @@ public class RecordableCantalon extends CANTalon implements RecordableDevice{
 	@Override
 	public void setUpForSending() {
 		prevMode = getControlMode();
-		changeControlMode(TalonControlMode.Voltage);
+		changeControlMode(TalonControlMode.PercentVbus);
 		isSending = true;
 	}
 

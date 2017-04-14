@@ -122,11 +122,11 @@ public class Vision extends Subsystem {
 	}
 	
 	public void pause(){
-		try {
-			visionThread.wait();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			visionThread.wait();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 		
 	public void resume(){

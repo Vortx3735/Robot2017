@@ -22,6 +22,7 @@ public class VisionHandler {
 	private double height = 0.0;
 	private double width = 0.0;
 	
+	
 	public VisionHandler(ContoursOutputPipeline pipe, VideoSource source, int numTargets){
 		thread = new VisionThread(source, (VisionPipeline)pipe, pipeline -> {
             synchronized (imgLock) {
@@ -54,6 +55,38 @@ public class VisionHandler {
 	    });
 		
 	}
+	
+    
+    public double getCenterX(){
+    	double centerX;
+		synchronized (imgLock) {
+			centerX = this.centerX;
+		}
+		return centerX;
+    }
+
+    public double getCenterY(){
+    	double centerY;
+		synchronized (imgLock) {
+			centerY = this.centerY;
+		}
+		return centerY;
+    }
+
+    public double getWidth(){
+    	double width;
+		synchronized (imgLock) {
+			width = this.width;
+		}
+		return width;
+    }
+    public double getHeight(){
+    	double height;
+		synchronized (imgLock) {
+			height = this.height;
+		}
+		return height;
+    }
 	
 	public void startThread(){
 		thread.start();

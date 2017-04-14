@@ -17,6 +17,7 @@ import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team3735.robot.subsystems.Vision;
+import org.usfirst.frc.team3735.robot.subsystems.Vision2;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 
 import edu.wpi.cscore.UsbCamera;
@@ -49,7 +50,7 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Navigation navigation;
 	public static Ultrasonic ultra;
-	public static Vision vision;
+	public static Vision2 vision;
 	
 	public static GTAOI oi;
 	public RobotMap robotmap;
@@ -71,7 +72,7 @@ public class Robot extends IterativeRobot {
 		ballIntake = new BallIntake();
 		navigation = new Navigation();
 		ultra = new Ultrasonic();
-		vision = new Vision();
+		vision = new Vision2();
 		
 		oi = new GTAOI(); //MUST be instantiated after the subsystems
 			
@@ -86,7 +87,8 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Naiks left gear", new  AutonLeftGearNaik());
 		autonomousChooser.addObject("Left Gear Balls", new  AutonLeftGearBalls());
 		autonomousChooser.addObject("Right Gear Balls", new  AutonRightGearBalls());
-		
+		autonomousChooser.addObject("Testing", new  AutonDriveForwardTest());
+
 		SmartDashboard.putData("AUTONOMOUS SELECTION", autonomousChooser);
 		
 		//SmartDashboard.putData("Start Sending Turn Voltages", new RecordTrapTurnData());

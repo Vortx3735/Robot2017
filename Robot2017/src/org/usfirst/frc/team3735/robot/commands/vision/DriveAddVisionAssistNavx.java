@@ -26,7 +26,8 @@ public class DriveAddVisionAssistNavx extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//Robot.vision.pause();
-    	Robot.vision.setPipeline(pipeline);
+    	//Robot.vision.setPipeline(pipeline);
+    	//Robot.vision.setHandler(pipeline);
 		Robot.drive.setVisionAssist(0);
 
     	//Robot.vision.resume();
