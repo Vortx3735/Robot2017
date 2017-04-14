@@ -13,72 +13,60 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveTurnToAnglePIDCtrl extends Command implements PIDOutput, PIDSource{
+public class DriveTurnToAnglePIDCtrl extends Command{
 	
     private double targetAngle;
-    private static PIDCtrl controller;
+    
+	private double finishTime = .5;
+	private double timeOnTarget = 0;
+	
     private static Setting iZone = new Setting("Turning IZone", 10);
+    private static Setting actingI = new Setting("Acting I Value", 0);
     
 	public DriveTurnToAnglePIDCtrl(double angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
+    	requires(Robot.navigation);
     	this.targetAngle = angle;
-    	controller = new PIDCtrl(.015,0.0,0.0,this,this);
-    	controller.setOutputRange(-.25, .25);
-    	controller.setInputRange(-180, 180);
-    	controller.setContinuous();
-    	controller.setIsUsingIZone(true);
-    	controller.setIZone(10);
-    	SmartDashboard.putData("PID Ctrl turning Controller",controller);
 
-    	
     }
+	
+	
+
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	controller.setSetpoint(targetAngle);
+    	Robot.navigation.getController().setSetpoint(targetAngle);
+    	Robot.navigation.getController().enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	controller.setIZone(iZone.getValue());
-    	controller.updateI();
+    	Robot.navigation.getController().setIZone(iZone.getValue());
+    	Robot.navigation.getController().updateI(actingI.getValue());
+    	
+    	if(Robot.navigation.getController().onTarget()){
+    		timeOnTarget += .02;
+    	}else{
+    		timeOnTarget = 0;
+    	}
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+	// Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return null;
+		return timeOnTarget >= finishTime;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.navigation.getController().disable();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 
-	@Override
-	public void setPIDSourceType(PIDSourceType pidSource) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public PIDSourceType getPIDSourceType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public double pidGet() {
-		return Robot.drive.getPIDController().getError();
-	}
-
-	@Override
-	public void pidWrite(double output) {
-		Robot.drive.setLeftRightOutputs(output, -output);
-	}
 }

@@ -40,7 +40,8 @@ public class PIDCtrl extends PIDController{
 		isUsingIZone = b;
 	}
 	
-	public synchronized void updateI(){
+	public synchronized void updateI(double i){
+		actingI = i;
 		if(isUsingIZone){
 			if(Math.abs(super.getError()) < iZone){
 				super.setPID(super.getP(), actingI, super.getD());

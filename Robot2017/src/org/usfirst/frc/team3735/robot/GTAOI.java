@@ -7,6 +7,7 @@ import org.usfirst.frc.team3735.robot.util.JoystickTriggerButton;
 import org.usfirst.frc.team3735.robot.commands.*;
 import org.usfirst.frc.team3735.robot.commands.ballintake.*;
 import org.usfirst.frc.team3735.robot.commands.drive.*;
+import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePIDCtrl;
 import org.usfirst.frc.team3735.robot.commands.gearintake.*;
 import org.usfirst.frc.team3735.robot.commands.scaler.*;
 import org.usfirst.frc.team3735.robot.commands.shooter.*;
@@ -18,6 +19,7 @@ import org.usfirst.frc.team3735.robot.subsystems.Vision2.Pipes;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GTAOI implements DriveOI {
@@ -97,7 +99,7 @@ public class GTAOI implements DriveOI {
 		
 		// layout for two drivers
 		
-		pov0.whileHeld(new DriveAddVisionAssist(Pipes.Peg));
+		//pov0.whileHeld(new DriveAddVisionAssist(Pipes.Peg));
 		//pov180.whileHeld(new DriveAddVisionAssist(Pipes.Gear));
 		
 		lb.whileHeld(new DriveChangeBrakeMode());
@@ -109,6 +111,16 @@ public class GTAOI implements DriveOI {
 
 		start.whenPressed(new DriveChangeToGearDirection());
 		back.whenPressed(new DriveChangeToBallDirection());
+		
+		
+		pov0.whenPressed(new DriveTurnToAnglePIDCtrl(0));
+		pov45.whenPressed(new DriveTurnToAnglePIDCtrl(60));
+		pov90.whenPressed(new DriveTurnToAnglePIDCtrl(90));
+		pov135.whenPressed(new DriveTurnToAnglePIDCtrl(150));
+		pov180.whenPressed(new DriveTurnToAnglePIDCtrl(180));
+		pov225.whenPressed(new DriveTurnToAnglePIDCtrl(-150));
+		pov270.whenPressed(new DriveTurnToAnglePIDCtrl(-90));
+		pov315.whenPressed(new DriveTurnToAnglePIDCtrl(-60));
 
 //		pov0.whenPressed(new DriveMoveDistanceTwist(0));
 //		pov45.whenPressed(new DriveMoveDistanceTwist(60));
@@ -136,6 +148,7 @@ public class GTAOI implements DriveOI {
 //		pov225.whenPressed(new DriveTurnToAngleHyperbola(-150));
 //		pov270.whenPressed(new DriveTurnToAngleHyperbola(-90));
 //		pov315.whenPressed(new DriveTurnToAngleHyperbola(-60));
+
 		
 		cy.whenPressed(new ScalerUp(1));
 		//crb.whenPressed(new ScalerUp(1));

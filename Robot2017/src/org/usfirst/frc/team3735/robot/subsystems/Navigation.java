@@ -7,6 +7,7 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -17,20 +18,32 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3735.robot.Constants;
+import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
+import org.usfirst.frc.team3735.robot.util.PIDCtrl;
 
 
 /***********************************************
  *
  ***********************************************/
 
-public class Navigation extends Subsystem implements PIDSource {
+public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 	private AHRS ahrs;
 	
+	private PIDCtrl controller = new PIDCtrl(.015,0,0,this,this);
+	
 	public Navigation(){
-			ahrs = new AHRS(SPI.Port.kMXP);
+		ahrs = new AHRS(SPI.Port.kMXP);
+		controller = new PIDCtrl(.015,0.0,0.0,this,this);
+    	controller.setOutputRange(-.25, .25);
+    	controller.setInputRange(-180, 180);
+    	controller.setContinuous();
+    	controller.setIsUsingIZone(true);
+    	controller.setIZone(10);
+    	controller.setAbsoluteTolerance(1);
+    	
 	}
 
 	
@@ -53,7 +66,7 @@ public class Navigation extends Subsystem implements PIDSource {
     	return ahrs.getRate();
     }
     public void log(){
-    	//SmartDashboard.putNumber("Gyro Yaw", ahrs.getYaw());
+    	SmartDashboard.putNumber("Navigation Gyro Yaw", ahrs.getYaw());
  //     displayDebugGyroData();
     }
     
@@ -144,7 +157,7 @@ public class Navigation extends Subsystem implements PIDSource {
 
 	@Override
 	public void setPIDSourceType(PIDSourceType pidSource) {
-
+		
 	}
 
 
@@ -158,6 +171,19 @@ public class Navigation extends Subsystem implements PIDSource {
 	public double pidGet() {
 		return ahrs.getYaw();
 	}
+
+
+	public PIDCtrl getController() {
+		return controller;
+	}
+
+
+	@Override
+	public void pidWrite(double output) {
+		Robot.drive.setLeftRightOutputs(output, -output);
+	}
+	
+	
     
 }
 
