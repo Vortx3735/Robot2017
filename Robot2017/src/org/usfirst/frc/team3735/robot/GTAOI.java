@@ -8,6 +8,7 @@ import org.usfirst.frc.team3735.robot.commands.*;
 import org.usfirst.frc.team3735.robot.commands.ballintake.*;
 import org.usfirst.frc.team3735.robot.commands.drive.*;
 import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePIDCtrl;
+import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePIDCtrlVision;
 import org.usfirst.frc.team3735.robot.commands.gearintake.*;
 import org.usfirst.frc.team3735.robot.commands.scaler.*;
 import org.usfirst.frc.team3735.robot.commands.shooter.*;
@@ -100,6 +101,7 @@ public class GTAOI implements DriveOI {
 		// layout for two drivers
 		
 		//pov0.whileHeld(new DriveAddVisionAssist(Pipes.Peg));
+		pov0.whenPressed(new DriveTurnToAnglePIDCtrlVision());
 		//pov180.whileHeld(new DriveAddVisionAssist(Pipes.Gear));
 		
 		lb.whileHeld(new DriveChangeBrakeMode());
@@ -113,14 +115,14 @@ public class GTAOI implements DriveOI {
 		back.whenPressed(new DriveChangeToBallDirection());
 		
 		
-		pov0.whenPressed(new DriveTurnToAnglePIDCtrl(0));
-		pov45.whenPressed(new DriveTurnToAnglePIDCtrl(60));
-		pov90.whenPressed(new DriveTurnToAnglePIDCtrl(90));
-		pov135.whenPressed(new DriveTurnToAnglePIDCtrl(150));
-		pov180.whenPressed(new DriveTurnToAnglePIDCtrl(180));
-		pov225.whenPressed(new DriveTurnToAnglePIDCtrl(-150));
-		pov270.whenPressed(new DriveTurnToAnglePIDCtrl(-90));
-		pov315.whenPressed(new DriveTurnToAnglePIDCtrl(-60));
+//		pov0.whenPressed(new DriveTurnToAnglePIDCtrl(0));
+//		pov45.whenPressed(new DriveTurnToAnglePIDCtrl(60));
+//		pov90.whenPressed(new DriveTurnToAnglePIDCtrl(90));
+//		pov135.whenPressed(new DriveTurnToAnglePIDCtrl(150));
+//		pov180.whenPressed(new DriveTurnToAnglePIDCtrl(180));
+//		pov225.whenPressed(new DriveTurnToAnglePIDCtrl(-150));
+//		pov270.whenPressed(new DriveTurnToAnglePIDCtrl(-90));
+//		pov315.whenPressed(new DriveTurnToAnglePIDCtrl(-60));
 
 //		pov0.whenPressed(new DriveMoveDistanceTwist(0));
 //		pov45.whenPressed(new DriveMoveDistanceTwist(60));

@@ -13,22 +13,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveTurnToAnglePIDCtrl extends Command{
+public class DriveTurnToAnglePIDCtrlVision extends Command{
 	
     private double targetAngle;
     
 	private double finishTime = .5;
 	private double timeOnTarget = 0;
-	
-    public static Setting iZone = new Setting("Turning IZone", 10);
-    public static Setting actingI = new Setting("Acting I Value", 0.004);
+
     
-	public DriveTurnToAnglePIDCtrl(double angle) {
+	public DriveTurnToAnglePIDCtrlVision() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
     	requires(Robot.navigation);
-    	this.targetAngle = angle;
 
     }
 	
@@ -37,14 +34,14 @@ public class DriveTurnToAnglePIDCtrl extends Command{
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.navigation.getController().setSetpoint(targetAngle);
+    	Robot.navigation.getController().setSetpoint(Robot.navigation.getYaw() + (Robot.vision.getRelativeCX() * .140625));
     	Robot.navigation.getController().enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.navigation.getController().setIZone(iZone.getValue());
-    	Robot.navigation.getController().updateI(actingI.getValue());
+    	Robot.navigation.getController().setIZone(DriveTurnToAnglePIDCtrl.iZone.getValue());
+    	Robot.navigation.getController().updateI(DriveTurnToAnglePIDCtrl.actingI.getValue());
     	
     	if(Robot.navigation.getController().onTarget()){
     		timeOnTarget += .02;

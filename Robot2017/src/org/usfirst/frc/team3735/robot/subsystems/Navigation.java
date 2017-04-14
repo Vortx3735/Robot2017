@@ -32,17 +32,19 @@ import org.usfirst.frc.team3735.robot.util.PIDCtrl;
 public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 	private AHRS ahrs;
 	
-	private PIDCtrl controller = new PIDCtrl(.015,0,0,this,this);
+	private PIDCtrl controller;
 	
 	public Navigation(){
 		ahrs = new AHRS(SPI.Port.kMXP);
-		controller = new PIDCtrl(.015,0.0,0.0,this,this);
-    	controller.setOutputRange(-.25, .25);
+		controller = new PIDCtrl(.016,0.0,0.061,this,this);
+    	controller.setOutputRange(-.5, .5);
     	controller.setInputRange(-180, 180);
     	controller.setContinuous();
     	controller.setIsUsingIZone(true);
     	controller.setIZone(10);
     	controller.setAbsoluteTolerance(1);
+    	
+    	SmartDashboard.putData("Navigation Turning Controller", controller);
     	
 	}
 

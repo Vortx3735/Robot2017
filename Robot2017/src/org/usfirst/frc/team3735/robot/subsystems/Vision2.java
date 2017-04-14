@@ -46,7 +46,7 @@ public class Vision2 extends Subsystem {
 	
 	public Vision2(){
 		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-		//camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+		camera2 = CameraServer.getInstance().startAutomaticCapture(1);
 		
 		camera1.setFPS(16);
 		//camera2.setFPS(16);

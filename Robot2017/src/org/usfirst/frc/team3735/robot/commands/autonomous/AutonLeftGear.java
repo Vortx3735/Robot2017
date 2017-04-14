@@ -9,6 +9,7 @@ import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDista
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceVisionExp;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceVisionExpNavx;
 import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePID;
+import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePIDCtrl;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.subsystems.Vision2.Pipes;
 
@@ -27,7 +28,7 @@ public class AutonLeftGear extends CommandGroup {
     	addSequential(new DriveMoveDistanceExpNavx(70,.7),2.6);
     	addSequential(new DriveBrake(),.4);
     	
-    	addSequential(new DriveTurnToAnglePID(60),2);
+    	addSequential(new DriveTurnToAnglePIDCtrl(60),2);
     	//addSequential(new ExpDrive(.6,4),1);
     	
     	//addSequential(new DriveMoveDistanceNavx(88.7),3);

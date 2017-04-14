@@ -7,6 +7,7 @@ import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDista
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistancePIDBroken;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceVisionExp;
 import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePID;
+import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePIDCtrl;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.subsystems.Vision2.Pipes;
 
@@ -27,15 +28,24 @@ public class AutonRightGear extends CommandGroup {
 //    	addSequential(new DriveMoveDistancePIDBroken(60.7),3);
 //    	addSequential(new GearIntakeDropOff(),3);
     	
-    	addSequential(new DriveMoveDistanceExpNavx(60,.7),2.6);
+    	addSequential(new DriveMoveDistanceExpNavx(70,.7),2.6);
     	addSequential(new DriveBrake(),.4);
     	
-    	addSequential(new DriveTurnToAnglePID(-55),2);
+    	addSequential(new DriveTurnToAnglePIDCtrl(-60),2);
     	//addSequential(new ExpDrive(.6,4),1);
     	
     	//addSequential(new DriveMoveDistanceNavx(88.7),3);
     	addSequential(new DriveMoveDistanceVisionExp(Pipes.Peg, .7, 89),3);
-    	
+    	//addSequential(new DriveMoveDistanceVisionExpNavx(Pipes.Peg, .7, 89),3);
+
     	addSequential(new GearIntakeDropOff(),3);
+    	
+    	addSequential(new DriveMoveDistanceExpNavx(-10,-1),1);
+    	addSequential(new DriveBrake(),.4);
+    	addSequential(new DriveTurnToAnglePIDCtrl(0),2);
+    	
+    	addSequential(new DriveMoveDistanceExpNavx(200,1),4);
+
+
      }
 }

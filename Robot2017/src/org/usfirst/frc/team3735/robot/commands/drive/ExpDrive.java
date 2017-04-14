@@ -44,7 +44,7 @@ public class ExpDrive extends Command {
 	private double fodTurn;
 	
 	private static Setting navxCo = new Setting("FOD Navx Coefficient", 2.5);
-	private static Setting navxPow = new Setting("FOD Power Coefficient", 1);
+	private static Setting navxPow = new Setting("FOD Navx Exponent", 1);
 	private static Setting fodMoveCo = new Setting("FOD Move Exponent", 3);
 	
 	private static Setting moveExponent = new Setting("Move Exponent", Constants.Drive.moveExponent);
