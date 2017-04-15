@@ -179,7 +179,7 @@ public class Drive extends PIDSubsystem {
 		driveTrain.arcadeDrive(move, (rotate + leftAddTurn + rightAddTurn + turnCorrection + visionAssist) * -1, squareValues);
 	}
 
-	public void normalDrive(double move, double curve) {
+	public void radialDrive(double move, double curve) {
 		driveTrain.drive(move, curve);
 	}
 	

@@ -1,35 +1,30 @@
-package org.usfirst.frc.team3735.robot.commands;
+package org.usfirst.frc.team3735.robot.commands.drive;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.util.Setting;
-
-import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class RecordTrapTurnData extends Command {
+public class TurnWithTime extends Command {
 
-	Setting turnVoltage;
-	
-    public RecordTrapTurnData() {
+	private double power;
+    public TurnWithTime(double power) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	this.power = power;
     	requires(Robot.drive);
-    	turnVoltage = new Setting("Turning Voltage", 0);
-    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drive.changeControlMode(TalonControlMode.Voltage);
+    	Robot.drive.setUpDriveForSpeedControl();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.setLeftRightOutputs(turnVoltage.getValue(), -turnVoltage.getValue());
+    	Robot.drive.arcadeDrive(0,power,false);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -39,10 +34,13 @@ public class RecordTrapTurnData extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.drive.setLeftRightOutputs(0, 0);
+
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

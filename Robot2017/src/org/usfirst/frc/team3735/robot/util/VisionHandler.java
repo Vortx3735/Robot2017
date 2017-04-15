@@ -9,6 +9,7 @@ import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3735.robot.pipelines.GearPipeline;
 
 import edu.wpi.cscore.VideoSource;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
@@ -22,8 +23,19 @@ public class VisionHandler {
 	private double height = 0.0;
 	private double width = 0.0;
 	
+	double[] centerXs;
+	double[] centerYs;
+	double[] widths;
+	double[] heights;
 	
-	public VisionHandler(ContoursOutputPipeline pipe, VideoSource source, int numTargets){
+	private NetworkTable mainTargetTable;
+	private NetworkTable allSquaresTable;
+
+	private ArrayList<MatOfPoint> output;
+	
+	public VisionHandler(ContoursOutputPipeline pipe, VideoSource source, int numTargets, String pubAddress){
+		mainTargetTable = NetworkTable.getTable(pubAddress);
+		allSquaresTable = NetworkTable.getTable(pubAddress + "All");
 		thread = new VisionThread(source, (VisionPipeline)pipe, pipeline -> {
             synchronized (imgLock) {
 //            	for(MatOfPoint m : filterContoursOutput() ){
@@ -37,10 +49,9 @@ public class VisionHandler {
             		width = -1;
             		height = -1;
             	}else{
-            		ArrayList<MatOfPoint> output = pipe.filterContoursOutput();
+            		output = pipe.filterContoursOutput();
             		ArrayList<MatOfPoint> targets = new ArrayList<MatOfPoint>();
-            		for(int i = 0; i < output.size(); i++){
-            			if(i >= numTargets)break;
+            		for(int i = 0; i < output.size() && i < numTargets; i++){
             			targets.add(output.get(i));
             		}
             		Rect r = boundRects(targets);
@@ -109,6 +120,34 @@ public class VisionHandler {
 		}
 		return new Rect(tl,br);
 		
+	}
+	
+	public void publishTarget(){
+		if(mainTargetTable != null){
+			mainTargetTable.putNumberArray("centerX", new double[]{getCenterX()});
+			mainTargetTable.putNumberArray("centerY", new double[]{getCenterY()});
+			mainTargetTable.putNumberArray("height", new double[]{getHeight()});
+			mainTargetTable.putNumberArray("width", new double[]{getWidth()});
+		}
+		
+	}
+	
+	public void publishAll(){
+		if(allSquaresTable != null && output != null){
+			centerXs = new double[output.size()];
+			centerYs = new double[output.size()];
+			widths = new double[output.size()];
+			heights = new double[output.size()];
+			
+			for(int i = 0; i < output.size(); i++){
+				Rect r = Imgproc.boundingRect(output.get(i));
+				centerXs[i] = r.x + r.width/2;
+				centerYs[i] = r.y + r.height/2;
+				widths[i] = r.width;
+				heights[i] = r.height;
+			}
+		}
+
 	}
 
 

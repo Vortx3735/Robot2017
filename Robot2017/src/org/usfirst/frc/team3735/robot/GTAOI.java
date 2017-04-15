@@ -15,7 +15,7 @@ import org.usfirst.frc.team3735.robot.commands.shooter.*;
 import org.usfirst.frc.team3735.robot.commands.vision.*;
 
 
-import org.usfirst.frc.team3735.robot.subsystems.Vision2.Pipes;
+import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;

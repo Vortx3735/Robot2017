@@ -2,11 +2,11 @@ package org.usfirst.frc.team3735.robot;
 
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team3735.robot.commands.RecordAverageRate;
-import org.usfirst.frc.team3735.robot.commands.RecordSmartDashboardFile;
-import org.usfirst.frc.team3735.robot.commands.RecordTrapTurnData;
-import org.usfirst.frc.team3735.robot.commands.SendSmartDashboardFile;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
+import org.usfirst.frc.team3735.robot.commands.drive.RecordAverageRate;
+import org.usfirst.frc.team3735.robot.commands.drive.RecordTrapTurnData;
+import org.usfirst.frc.team3735.robot.commands.recorder.RecordSmartDashboardFile;
+import org.usfirst.frc.team3735.robot.commands.recorder.SendSmartDashboardFile;
 import org.usfirst.frc.team3735.robot.pipelines.GearPipeline;
 import org.usfirst.frc.team3735.robot.pipelines.StickyNotePipeline;
 import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
@@ -17,7 +17,7 @@ import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team3735.robot.subsystems.Vision;
-import org.usfirst.frc.team3735.robot.subsystems.Vision2;
+import org.usfirst.frc.team3735.robot.subsystems.Vision;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 
 import edu.wpi.cscore.UsbCamera;
@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Navigation navigation;
 	public static Ultrasonic ultra;
-	public static Vision2 vision;
+	public static Vision vision;
 	
 	public static GTAOI oi;
 	public RobotMap robotmap;
@@ -72,7 +72,7 @@ public class Robot extends IterativeRobot {
 		ballIntake = new BallIntake();
 		navigation = new Navigation();
 		ultra = new Ultrasonic();
-		vision = new Vision2();
+		vision = new Vision();
 		
 		oi = new GTAOI(); //MUST be instantiated after the subsystems
 			

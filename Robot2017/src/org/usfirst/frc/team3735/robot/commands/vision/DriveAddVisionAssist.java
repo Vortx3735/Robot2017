@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.vision;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.subsystems.Vision2.Pipes;
+import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -23,13 +23,12 @@ public class DriveAddVisionAssist extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//Robot.vision.pause();
-    	Robot.vision.setHandler(pipeline);
     	//Robot.vision.resume();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double in = Robot.vision.getRelativeCX();
+    	double in = Robot.vision.getRelativeCX(pipeline);
     	if(in == -161){
     		Robot.drive.setVisionAssist(prevWorking * -1 * .006);
     		//Robot.drive.setVisionAssist(0);

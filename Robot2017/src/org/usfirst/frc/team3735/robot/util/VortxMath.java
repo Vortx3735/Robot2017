@@ -17,4 +17,14 @@ public class VortxMath {
 		}
 		return value;
 	}
+	
+	public static double continuousLimit(double value, double minValue, double maxValue){
+		if(value < minValue){
+			return value + (maxValue - minValue);
+		}else if(value > maxValue){
+			return value - (maxValue - minValue);
+		}else{
+			return value;
+		}
+	}
 }
