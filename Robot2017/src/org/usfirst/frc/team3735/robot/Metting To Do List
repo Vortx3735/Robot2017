@@ -1,16 +1,20 @@
-
 To Test:
 	
-	Controls:
-		test if left trigger will override dropoff sequence
-		test if south pov will align robot with gear
-		
-	Auto:
-		add recordable cantalons, and try to get them working
-
-To Make:
-
-	make a function for dps / volt for the turnng trap profile
-	make a function for inches per second per volt for moving trap profile
+	test driving and make sure the clean up didn't fuck up anything
+	optimize moving and turning values so it doesn't jitter
+	see if slow reverse driving is a code problem or mechanical
 	
+	test and optimize the new dropoff sequence
+		test if the command will finish on its own by putting it on smartdashboard
+	test the new vision setup by testing side auto
+		test if making a gear filter will slow down and mess up the peg one
+	test new values for accel in DriveMoveDistanceExpNavx
+	record bumping values, set them, and test the new bump stop on the DMD vision command
+	calibrate sensitivity and equation for driving in a circle
+		then test in an auto routine
+	test the three different shooter speeds for the pov buttons instead of different agitator speeds
+	test the drive move distance that slows down until stopped after doing the normal drive thing
+	test the spin move buttons
+		
+To Make:
 	

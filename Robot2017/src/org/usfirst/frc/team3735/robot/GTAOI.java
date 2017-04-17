@@ -7,6 +7,7 @@ import org.usfirst.frc.team3735.robot.util.JoystickTriggerButton;
 import org.usfirst.frc.team3735.robot.commands.*;
 import org.usfirst.frc.team3735.robot.commands.ballintake.*;
 import org.usfirst.frc.team3735.robot.commands.drive.*;
+import org.usfirst.frc.team3735.robot.commands.drive.spinnyspin.DriveSpinMove;
 import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePIDCtrl;
 import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePIDCtrlVision;
 import org.usfirst.frc.team3735.robot.commands.gearintake.*;
@@ -103,9 +104,9 @@ public class GTAOI implements DriveOI {
 		//pov0.whileHeld(new DriveAddVisionAssist(Pipes.Peg));
 		pov0.whenPressed(new DriveTurnToAnglePIDCtrlVision());
 		//pov180.whileHeld(new DriveAddVisionAssist(Pipes.Gear));
-		
-		lb.whileHeld(new DriveChangeBrakeMode());
-		
+		pov270.whenPressed(new DriveSpinMove(-1));
+		pov90.whenPressed(new DriveSpinMove(1));
+
 		b.whenPressed(new GearIntakeDropOff());
 		a.whileHeld(new GearIntakeFeeding());
 		x.whileHeld(new DriveAddSensitiveLeft());
@@ -124,44 +125,17 @@ public class GTAOI implements DriveOI {
 //		pov270.whenPressed(new DriveTurnToAnglePIDCtrl(-90));
 //		pov315.whenPressed(new DriveTurnToAnglePIDCtrl(-60));
 
-//		pov0.whenPressed(new DriveMoveDistanceTwist(0));
-//		pov45.whenPressed(new DriveMoveDistanceTwist(60));
-//		pov90.whenPressed(new DriveMoveDistanceTwist(90));
-//		pov135.whenPressed(new DriveMoveDistanceTwist(120));
-//		pov180.whenPressed(new DriveMoveDistanceTwist(180));
-//		pov225.whenPressed(new DriveMoveDistanceTwist(-120));
-//		pov270.whenPressed(new DriveMoveDistanceTwist(-90));
-//		pov315.whenPressed(new DriveMoveDistanceTwist(-60));
-		
-//		pov0.whenPressed(new DriveTurnToAngle(0));
-//		pov45.whenPressed(new DriveTurnToAngle(60));
-//		pov90.whenPressed(new DriveTurnToAngle(90));
-//		pov135.whenPressed(new DriveTurnToAngle(150));
-//		pov180.whenPressed(new DriveTurnToAngle(180));
-//		pov225.whenPressed(new DriveTurnToAngle(-150));
-//		pov270.whenPressed(new DriveTurnToAngle(-90));
-//		pov315.whenPressed(new DriveTurnToAngle(-60));
-		
-//		pov0.whenPressed(new DriveTurnToAngleHyperbola(0));
-//		pov45.whenPressed(new DriveTurnToAngleHyperbola(60));
-//		pov90.whenPressed(new DriveTurnToAngleHyperbola(90));
-//		pov135.whenPressed(new DriveTurnToAngleHyperbola(150));
-//		pov180.whenPressed(new DriveTurnToAngleHyperbola(180));
-//		pov225.whenPressed(new DriveTurnToAngleHyperbola(-150));
-//		pov270.whenPressed(new DriveTurnToAngleHyperbola(-90));
-//		pov315.whenPressed(new DriveTurnToAngleHyperbola(-60));
 
 		
 		cy.whenPressed(new ScalerUp(1));
-		//crb.whenPressed(new ScalerUp(1));
 		cx.whenPressed(new ScalerOff());
 		ca.whileHeld(new GearIntakeRollersIn());
 		cb.whileHeld(new GearIntakeRollersOut());
 
-		cpov0.whenPressed(new ShooterOnAgitatorHigh());
-		cpov90.whenPressed(new ShooterOnAgitatorSmartDash());
-		cpov180.whenPressed(new ShooterOnAgitatorLow());
-		cpov270.whenPressed(new ShooterOff());
+		cpov0.whenPressed(new ShooterAgitatorOn(35000, 10));
+		cpov90.whenPressed(new ShooterAgitatorOn(32000, 10));
+		cpov180.whenPressed(new ShooterAgitatorOn(30000, 10));
+		cpov270.whenPressed(new ShooterAgitatorOff());
 		
 		clt.whenPressed(new BallIntakeRollerOff());
 		clb.whenPressed(new BallIntakeRollerIn());

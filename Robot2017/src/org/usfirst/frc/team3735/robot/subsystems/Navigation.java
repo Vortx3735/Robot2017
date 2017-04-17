@@ -23,6 +23,7 @@ import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
 import org.usfirst.frc.team3735.robot.util.PIDCtrl;
+import org.usfirst.frc.team3735.robot.util.Setting;
 
 
 /***********************************************
@@ -30,10 +31,18 @@ import org.usfirst.frc.team3735.robot.util.PIDCtrl;
  ***********************************************/
 
 public class Navigation extends Subsystem implements PIDSource, PIDOutput {
+	private static final int BUMP_THRESHOLD = 100;
+
 	private AHRS ahrs;
 	
 	private PIDCtrl controller;
 	
+    public static Setting iZone = new Setting("Turning IZone", 10);
+    public static Setting actingI = new Setting("Acting I Value", 0.004);
+    
+	public static Setting coefficient = new Setting("Navx Drive Coeffecient", 5);
+
+    
 	public Navigation(){
 		ahrs = new AHRS(SPI.Port.kMXP);
 		controller = new PIDCtrl(.016,0.0,0.061,this,this);
@@ -67,8 +76,16 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     public double getRate(){
     	return ahrs.getRate();
     }
+    
+    public AHRS getAHRS(){
+    	return ahrs;
+    }
     public void log(){
     	SmartDashboard.putNumber("Navigation Gyro Yaw", ahrs.getYaw());
+    	SmartDashboard.putNumber("Gyro Acceleration X", ahrs.getWorldLinearAccelX());
+    	SmartDashboard.putNumber("Gyro Acceleration Y", ahrs.getWorldLinearAccelY());
+    	SmartDashboard.putNumber("Gyro Accel XY Vector", getXYAcceleration());
+
  //     displayDebugGyroData();
     }
     
@@ -183,6 +200,15 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 	@Override
 	public void pidWrite(double output) {
 		Robot.drive.setLeftRightOutputs(output, -output);
+	}
+
+
+	public boolean isBumped() {
+		return getXYAcceleration() > BUMP_THRESHOLD;
+	}
+	
+	public double getXYAcceleration(){
+		return Math.hypot(ahrs.getWorldLinearAccelY(), ahrs.getWorldLinearAccelX());
 	}
 	
 	

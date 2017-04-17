@@ -2,6 +2,7 @@ package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
 
 import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.util.Setting;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
 
@@ -13,8 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveMoveDistanceExpNavx extends Command {
 
-    private static final double moveFilter = 0.15;
-	private double deltaDistance;
+    private double MOVE_FILTER = 0.15;	//(0,1]
+	private static final double TOLERANCE = 2;		//in inches
+	private static final double MOVE_EXPONENT = 3;
+	private Double deltaDistance;
 
    	
 	private double moveStick;
@@ -24,39 +27,69 @@ public class DriveMoveDistanceExpNavx extends Command {
 	private double moveMotorPrevious;
 	private double turnCorrection;
 	
-	private Setting coefficient;
+
 	
 	private double startDistanceLeft;
 	private double endPositionRight;
 	private double endPositionLeft;
 	private double startDistanceRight;
 	
-	private double timeOnTarget;
-	private double finishTime = .2;
 	private double power;
+	private Double targetAngle = null;
    	
     public DriveMoveDistanceExpNavx(double distance, double power) {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	this.power = Math.signum(distance) * Math.abs(power);
+    	deltaDistance = distance;
+    	
+    	requires(Robot.drive);
+    }
+    
+    public DriveMoveDistanceExpNavx(Double distance, double power) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	this.power = power;
     	deltaDistance = distance;
     	
     	requires(Robot.drive);
-    	coefficient = new Setting("Navx Drive Coeffecient", 5);
-    	timeOnTarget = 0;
-
+    }
+    public DriveMoveDistanceExpNavx(double distance, double power, double angle) {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	this.power = Math.signum(distance) * Math.abs(power);
+    	deltaDistance = distance;
+    	
+    	requires(Robot.drive);
+    	
+    	targetAngle = angle;
+    }
+    
+    public DriveMoveDistanceExpNavx(double distance, double power, Double angle, double filter) {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	this.power = Math.signum(distance) * Math.abs(power);
+    	deltaDistance = distance;
+    	
+    	requires(Robot.drive);
+    	MOVE_FILTER = filter;
+    	targetAngle = angle;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	moveStick = power;
+    	moveStick = Math.signum(deltaDistance) * Math.abs(power);
+
      	startDistanceLeft = Robot.drive.getLeftPositionInches();
     	startDistanceRight = Robot.drive.getRightPositionInches();
     	endPositionLeft = startDistanceLeft + deltaDistance;
     	endPositionRight = startDistanceRight + deltaDistance;
     	
-    	Robot.drive.setSetpoint(Robot.drive.getYaw());
-    	
+    	if(targetAngle == null){
+        	Robot.navigation.getController().setSetpoint(Robot.navigation.getYaw());
+    	}else{
+        	Robot.navigation.getController().setSetpoint(targetAngle.doubleValue());
+    	}
     	Robot.drive.setUpDriveForSpeedControl();
     	
 		moveMotor			= 0.0;
@@ -65,21 +98,14 @@ public class DriveMoveDistanceExpNavx extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	turnCorrection = (Robot.drive.getPIDController().getError()/180.0) * coefficient.getValue();
+    	turnCorrection = (Robot.navigation.getController().getError()/180.0) * Navigation.coefficient.getValue();
 	
-		moveMotor = (moveStick-moveMotorPrevious)*moveFilter + moveMotorPrevious;
-
+		moveMotor = (moveStick-moveMotorPrevious)*MOVE_FILTER + moveMotorPrevious;
 		moveMotorPrevious = moveMotor; 
-					
-		moveMotor = moveMotor * Math.pow(Math.abs(moveMotor), Constants.Drive.moveExponent - 1);
+		moveMotor = moveMotor * Math.pow(Math.abs(moveMotor), MOVE_EXPONENT - 1);
 		
 		Robot.drive.arcadeDrive(moveMotor, turnCorrection, false);	
 		
-		if(isOnTarget()){
-    		timeOnTarget += .02;
-    	}else{
-    		timeOnTarget = 0;
-    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -90,10 +116,10 @@ public class DriveMoveDistanceExpNavx extends Command {
     private boolean isOnTarget(){
     	return 	VortxMath.isWithinThreshold(Robot.drive.getLeftPositionInches(),
 										   	endPositionLeft,
-										   	Constants.Drive.driveTolerance) ||
+										   	TOLERANCE) ||
     			VortxMath.isWithinThreshold(Robot.drive.getLeftPositionInches(),
 						   				   	endPositionRight,
-						   				   	Constants.Drive.driveTolerance);
+						   				   	TOLERANCE);
     }
 
     // Called once after isFinished returns true

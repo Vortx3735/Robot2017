@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveMoveDistanceNavx extends Command {
+public class DriveMoveDistancePIDNavx extends Command {
 	
 	private double deltaDistance;
 	private double startDistanceLeft;
@@ -36,7 +36,7 @@ public class DriveMoveDistanceNavx extends Command {
 	private double targetYaw;
 	private double weakMultiplier = 1.4;
 
-    public DriveMoveDistanceNavx(double distance){
+    public DriveMoveDistancePIDNavx(double distance){
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
@@ -55,15 +55,15 @@ public class DriveMoveDistanceNavx extends Command {
     	//Robot.drive.setPIDSettings(0.1,0.00015,0);
     	Robot.drive.setPIDSettings(p,i,d);
     	//Robot.drive.setLeftRightDistance(endPositionLeft, endPositionRight);
-    	targetYaw = Robot.drive.getYaw();
+    	targetYaw = Robot.navigation.getYaw();
     	timeOnTarget = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//strongMultiplier = SmartDashboard.get
-    	if(!VortxMath.isWithinThreshold(Robot.drive.getYaw(), targetYaw, yawThreshold)){
-    		if(Robot.drive.getYaw() > targetYaw){
+    	if(!VortxMath.isWithinThreshold(Robot.navigation.getYaw(), targetYaw, yawThreshold)){
+    		if(Robot.navigation.getYaw() > targetYaw){
     			Robot.drive.setLeftPID(p*strongMultiplier, i, d);
     			Robot.drive.setRightPID(p*weakMultiplier, i, d);
     			SmartDashboard.putBoolean("Navx Right", true);

@@ -30,15 +30,15 @@ public class DriveTurnToAnglePID extends Command{
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drive.setSetpoint(setpoint);
-    	Robot.drive.enable();
+    	Robot.navigation.getController().setSetpoint(setpoint);
+    	Robot.navigation.getController().enable();
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	System.out.println("Turning to angle");
-    	if(Robot.drive.onTarget()){
+    	if(Robot.navigation.getController().onTarget()){
     		timeOnTarget += .02;
     	}else{
     		timeOnTarget = 0;
@@ -52,7 +52,7 @@ public class DriveTurnToAnglePID extends Command{
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drive.disable();
+    	Robot.navigation.getController().disable();
     }
 
     // Called when another command which requires one or more of the same

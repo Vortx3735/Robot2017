@@ -26,13 +26,10 @@ public class GearIntake extends Subsystem {
 	
 	public GearIntake(){
 		roller = new CANTalon(RobotMap.GearIntake.topRoller);
-		//bottomRoller = new CANTalon(RobotMap.GearIntake.bottomRoller);
 		
 		roller.changeControlMode(TalonControlMode.Voltage);
-		//bottomRoller.changeControlMode(TalonControlMode.Voltage);
 		
 		roller.setInverted(RobotMap.GearIntake.topRollerInverted);
-		//bottomRoller.setInverted(Constants.GearIntake.bottomRollerInverted);
 		
 		liftSolenoid = new Solenoid(RobotMap.GearIntake.liftSolenoid);
 		liftUp();

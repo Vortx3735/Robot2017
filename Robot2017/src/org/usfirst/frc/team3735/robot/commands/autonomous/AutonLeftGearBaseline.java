@@ -7,6 +7,9 @@ import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDista
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistancePID;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistancePIDBroken;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpVision;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpNavxVision;
+import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePID;
+import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePIDCtrl;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 
@@ -15,22 +18,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonDriveForwardTest extends CommandGroup {
+public class AutonLeftGearBaseline extends CommandGroup {
 
-    public AutonDriveForwardTest(){
-    	/* Let Move FWD Only */
-    	/* All the Timing Needs Adjustment     |    */ 
-    	/*                                    This */
-    	/*                                     |   */
-    	//112 + 20
-    	//addSequential(new DriveMoveDistanceInches(86),2.6); /* Straight To Pin*/
-    	//addSequential(new DriveMoveDistanceNavx(86),2.6); /* Straight To Pin*/
-    	addSequential(new DriveMoveDistanceExpVision(75, .7, Pipes.Peg));
-    	//addSequential(new DriveMoveDistanceExpNavx(75,.7),2.6);
-
-    	//addSequential(new DriveMoveDistance(86),2.6); /* Straight To Pin*/
+    public AutonLeftGearBaseline(){
+    	addSequential(new AutonLeftGear());
+    	
+    	addSequential(new DriveMoveDistanceExpNavx(-10,1),1);
     	addSequential(new DriveBrake(),.4);
-    	//addSequential(new Wait(.4));
-    	//addSequential(new GearIntakeDropOff(),4);
+    	addSequential(new DriveTurnToAnglePIDCtrl(0),2);
+    	addSequential(new DriveMoveDistanceExpNavx(200,1),4);
      }
 }

@@ -24,11 +24,12 @@ public class DriveAddVisionAssist extends Command {
     protected void initialize() {
     	//Robot.vision.pause();
     	//Robot.vision.resume();
+    	Robot.vision.setMainHandler(pipeline);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double in = Robot.vision.getRelativeCX(pipeline);
+    	double in = Robot.vision.getRelativeCX();
     	if(in == -161){
     		Robot.drive.setVisionAssist(prevWorking * -1 * .006);
     		//Robot.drive.setVisionAssist(0);

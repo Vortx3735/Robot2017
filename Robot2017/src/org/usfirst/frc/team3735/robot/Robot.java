@@ -3,8 +3,11 @@ package org.usfirst.frc.team3735.robot;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveAcquireGear;
+import org.usfirst.frc.team3735.robot.commands.drive.DrivePlaceGear;
 import org.usfirst.frc.team3735.robot.commands.drive.RecordAverageRate;
 import org.usfirst.frc.team3735.robot.commands.drive.RecordTrapTurnData;
+import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.recorder.RecordSmartDashboardFile;
 import org.usfirst.frc.team3735.robot.commands.recorder.SendSmartDashboardFile;
 import org.usfirst.frc.team3735.robot.pipelines.GearPipeline;
@@ -25,6 +28,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -80,12 +84,16 @@ public class Robot extends IterativeRobot {
 		
 		autonomousChooser.addDefault ("Do Nothing", new AutonDoNothing());
 		autonomousChooser.addObject("Base Line", new AutonBaseline());
-		autonomousChooser.addObject("Middle Gear", new  AutonMiddleGear());
 		autonomousChooser.addObject("Left Gear", new  AutonLeftGear());
-		autonomousChooser.addObject("Right Gear", new  AutonRightGear());
-		autonomousChooser.addObject("Naiks middle", new  AutonMiddleGearNaik());
-		autonomousChooser.addObject("Naiks left gear", new  AutonLeftGearNaik());
+		autonomousChooser.addObject("Left Gear Baseline", new  AutonLeftGearBaseline());
 		autonomousChooser.addObject("Left Gear Balls", new  AutonLeftGearBalls());
+		autonomousChooser.addObject("Middle Gear Left Balls", new  AutonMiddleGearLeftBalls());
+		autonomousChooser.addObject("Middle Gear Left Balls", new  AutonMiddleGearLeftBalls());
+		autonomousChooser.addObject("Middle Gear", new  AutonMiddleGear());
+		autonomousChooser.addObject("Middle Gear Right Balls", new  AutonMiddleGearRightBalls());
+		autonomousChooser.addObject("Middle Gear Right Balls", new  AutonMiddleGearRightBalls());
+		autonomousChooser.addObject("Right Gear", new  AutonRightGear());
+		autonomousChooser.addObject("Right Gear Baseline", new  AutonRightGearBaseline());
 		autonomousChooser.addObject("Right Gear Balls", new  AutonRightGearBalls());
 		autonomousChooser.addObject("Testing", new  AutonDriveForwardTest());
 
@@ -96,14 +104,26 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData("Record Data", new RecordSmartDashboardFile());
 		SmartDashboard.putData("Send Data", new SendSmartDashboardFile());
+		SmartDashboard.putData("Gear Dropoff", new GearIntakeDropOff());
+		
+		SmartDashboard.putData("Resume Thread", new InstantCommand(){
+			@Override
+			public void initialize(){
+				Robot.vision.resume();
+			}
+		});
+		
+		SmartDashboard.putData("Pause Thread", new InstantCommand(){
+			@Override
+			public void initialize(){
+				Robot.vision.pause();
+			}
+		});
+		
+		SmartDashboard.putData("Acquire Gear", new  DriveAcquireGear());
+		SmartDashboard.putData("Place Gear", new  DrivePlaceGear());
 
-		//old camera code
-//    	try {
-//			server = CameraServer.getInstance();
-//			server.startAutomaticCapture();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		
 		
 		log();
 	}

@@ -29,15 +29,15 @@ public class DriveTurnToAngleHyperbola extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drive.setSetpoint(setpoint);
+    	Robot.navigation.getController().setSetpoint(setpoint);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute(){
-    	error = Robot.drive.getPIDController().getError();
+    	error = Robot.navigation.getController().getError();
     	Robot.drive.arcadeDrive(0, hype(error), false);
     	System.out.println("Turning to angle hype");
-    	if(Robot.drive.onTarget()){
+    	if(Robot.navigation.getController().onTarget()){
     		timeOnTarget += .02;
     	}else{
     		timeOnTarget = 0;

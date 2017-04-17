@@ -5,10 +5,10 @@ import org.usfirst.frc.team3735.robot.commands.drive.DriveBrake;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExp;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpNavx;
-import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceNavx;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistancePIDNavx;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistancePID;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistancePIDBroken;
-import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceVisionExp;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpVision;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 

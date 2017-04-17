@@ -21,8 +21,6 @@ public class ExpDrive extends Command {
 	/************************************/	
 	//Range is (0,1] , 1 is no filter, .333 or .167, .125 is recommended 
 
-
-
 	/************************************/
 	/* Variables						*/
 	/************************************/	
@@ -102,9 +100,9 @@ public class ExpDrive extends Command {
 		if(Robot.oi.getMainRightMagnitude() > .05){
 			fodMove = Math.pow(Robot.oi.getMainRightMagnitude(), fodMoveCo.getValue());
 			fodAngle = Robot.oi.getMainRightAngle();
-			Robot.drive.setSetpoint(fodAngle);
+			Robot.navigation.getController().setSetpoint(fodAngle);
 			
-			fodTurn = (Math.pow(Robot.drive.getPIDController().getError(), navxPow.getValue())/180.0) * navxCo.getValue();
+			fodTurn = (Math.pow(Robot.navigation.getController().getError(), navxPow.getValue())/180.0) * navxCo.getValue();
 			
 		
 		}else{
@@ -159,9 +157,7 @@ public class ExpDrive extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     public void interrupted() {
-//    	if(!isJoystickInput){
-//    		Robot.drive.arcadeDrive(0, 0, false);
-//    	}
+
     }
     
     private void log(){

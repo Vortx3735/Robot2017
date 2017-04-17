@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3735.robot.commands.drive.turntoangle;
 
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.subsystems.Navigation;
+import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.util.PIDCtrl;
 import org.usfirst.frc.team3735.robot.util.Setting;
 
@@ -14,34 +16,32 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveTurnToAnglePIDCtrlVision extends Command{
-	
-    private double targetAngle;
-    
+	    
 	private double finishTime = .5;
 	private double timeOnTarget = 0;
+	private Pipes pipeline;
 
     
-	public DriveTurnToAnglePIDCtrlVision() {
+	public DriveTurnToAnglePIDCtrlVision(Pipes p) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+		this.pipeline = p;
     	requires(Robot.drive);
     	requires(Robot.navigation);
 
     }
-	
-	
-
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.navigation.getController().setSetpoint(Robot.navigation.getYaw() + (Robot.vision.getRelativeCX() * .140625));
+    	Robot.vision.setMainHandler(pipeline);
+    	Robot.navigation.getController().setSetpoint(Robot.navigation.getYaw() + (Robot.vision.getRelativeCX() * Robot.vision.dpp.getValue()));
     	Robot.navigation.getController().enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.navigation.getController().setIZone(DriveTurnToAnglePIDCtrl.iZone.getValue());
-    	Robot.navigation.getController().updateI(DriveTurnToAnglePIDCtrl.actingI.getValue());
+    	Robot.navigation.getController().setIZone(Navigation.iZone.getValue());
+    	Robot.navigation.getController().updateI(Navigation.actingI.getValue());
     	
     	if(Robot.navigation.getController().onTarget()){
     		timeOnTarget += .02;

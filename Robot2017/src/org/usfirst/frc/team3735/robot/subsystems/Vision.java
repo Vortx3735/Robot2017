@@ -5,6 +5,7 @@ import org.usfirst.frc.team3735.robot.pipelines.PegPipelineLSNTest4;
 import org.usfirst.frc.team3735.robot.pipelines.PegPipelineLSNTest5;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.util.ContoursOutputPipeline;
+import org.usfirst.frc.team3735.robot.util.Setting;
 import org.usfirst.frc.team3735.robot.util.VisionHandler;
 
 import edu.wpi.cscore.UsbCamera;
@@ -23,13 +24,15 @@ public class Vision extends Subsystem {
 
 	private static final int IMG_WIDTH = 320;
 	private static final int IMG_HEIGHT = 240;
+	public static Setting dpp = new Setting("Vision Degrees per Pixel", .28125);
 	
 	private UsbCamera camera1;
 	private UsbCamera camera2;
 	
-
-	VisionHandler pegs;
 	
+	VisionHandler pegs;
+	//VisionHandler gears;
+	VisionHandler mainHandler;
 	
 	public Vision(){
 		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
@@ -44,6 +47,10 @@ public class Vision extends Subsystem {
 	    pegs = new VisionHandler(new PegPipelineLSNTest5(), camera1, 2, "GRIP/PegTracker");
 	    pegs.startThread();
 	    
+//	    gears = new VisionHandler(new GearPipeline(), camera1, 1, "GRIP/GearTracker");
+//	    gears.startThread();
+	    
+	    mainHandler = pegs;
 	    
 	    
 	}
@@ -69,9 +76,14 @@ public class Vision extends Subsystem {
 		
     }
 
-	public double getRelativeCX(Pipes p) {
-		return getHandler(p).getCenterX() - IMG_WIDTH/2;
-	}
+    public double getRelativeCX(){
+    	return mainHandler.getCenterX() - IMG_WIDTH/2;
+    }
+    public double getWidth(){
+    	return mainHandler.getWidth();
+    }
+
+
 	
 	public VisionHandler getHandler(Pipes p){
 		switch(p){
@@ -81,7 +93,18 @@ public class Vision extends Subsystem {
 				return pegs;
 		}
 	}
+	
+	public void setMainHandler(Pipes p){
+		mainHandler = getHandler(p);
+	}
+	
+	public void pause(){
+		mainHandler.pause();
+	}
 
+	public void resume(){
+		mainHandler.resume();
+	}
     
     
 

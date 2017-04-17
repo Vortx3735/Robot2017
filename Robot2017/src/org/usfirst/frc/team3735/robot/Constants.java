@@ -3,9 +3,6 @@ package org.usfirst.frc.team3735.robot;
 public class Constants {
 	
 	public class Drive{
-		public final static double acceleration = 1;	//???
-		public final static double cruiseVelocity = 4;	//???
-		public static final double wheelDiameter = 4.5;	//in inches
 		
 		public static final double InchesPerRotation = 12.94;	//in inches
 		
@@ -74,7 +71,7 @@ public class Constants {
 	}
 	
 	public class Shooter{
-		public final static double shootVoltage = 32000;
+		public final static double shootSpeed = 32000;	//in rpms
 		
 		public static final double lowAgitatorVoltage = 3;
 		public static final double agitatorVoltage = 7;

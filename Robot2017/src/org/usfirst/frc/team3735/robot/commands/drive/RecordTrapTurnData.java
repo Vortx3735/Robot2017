@@ -18,7 +18,7 @@ public class RecordTrapTurnData extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
-    	turnVoltage = new Setting("Turning Voltage", 0);
+    	turnVoltage = new Setting("Turning Voltage", 0, false);
     	
     }
 

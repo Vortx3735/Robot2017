@@ -26,41 +26,28 @@ import org.usfirst.frc.team3735.robot.util.RecordableCantalon;
  *
  */
 
-public class Drive extends PIDSubsystem {
+public class Drive extends Subsystem {
 	
 	private RecordableCantalon l1;
-
-	private RecordableCantalon l2;
-	private RecordableCantalon l3;
+	private CANTalon l2;
+	private CANTalon l3;
 	
 	private RecordableCantalon r1;
-	
-	private RecordableCantalon r2;
-	private RecordableCantalon r3;
+	private CANTalon r2;
+	private CANTalon r3;
 
 
 	RobotDrive driveTrain;
 	
-	private AHRS ahrs;
 	private boolean reversed = false;
 	
-	//values for rotation
-	
-	private static double P = 0.015;//this = max magnitude/180
-	private static double I = 0.000;
-	private static double D = 0.005;
-	private static double F = 0.005;
-	
-//	private static double P = .0045;//this = max magnitude/180
-//	private static double I = 0.00029;
-//	private static double D = 0.009;
-//	private static double F = 0.0;
 	
 	private static double dP = 1.0;
 	private static double dI = 0.0;
 	private static double dD = 0.0;
 	private static double dF = 0.0;
 
+	//unused motion magic variables
 	private static double accel = 30;			//rpm/s
 	private static double cruiseVelocity = 120;	//rpm
 	
@@ -69,30 +56,16 @@ public class Drive extends PIDSubsystem {
 	private double visionAssist = 0;
 
 	
-	private String turnCorrectionKey = "Turn Correction";
-	private static double defaultTurnCorrection = Constants.Drive.turnCorrection;
-	private double turnCorrection;
-	
-	private String maxOutputKey = "Drive Scaled Max Output";
-	private static double defaultMaxOutput = Constants.Drive.scaledMaxOutput;
-	private double scaledMaxOutput;
 
 	public Drive() {
-		super("Drive",P,I,D,F);
-		/******************
-		 * Drivetrain Left
-		 ******************/
 		l1 = new RecordableCantalon(RobotMap.Drive.leftMotor1);
-		l2 = new RecordableCantalon(RobotMap.Drive.leftMotor2);
-		l3 = new RecordableCantalon(RobotMap.Drive.leftMotor3);
+		l2 = new CANTalon(RobotMap.Drive.leftMotor2);
+		l3 = new CANTalon(RobotMap.Drive.leftMotor3);
 
-		/******************
-		 * Drivetrain Right
-		 ******************/
 		r1 = new RecordableCantalon(RobotMap.Drive.rightMotor1);
-		r2 = new RecordableCantalon(RobotMap.Drive.rightMotor2);
-		r3 = new RecordableCantalon(RobotMap.Drive.rightMotor3);
-		/* Setup Encoders and Controls Scaling */
+		r2 = new CANTalon(RobotMap.Drive.rightMotor2);
+		r3 = new CANTalon(RobotMap.Drive.rightMotor3);
+
 		initSensors();
 		setupSlaves();
 		setEnableBrake(false);
@@ -100,22 +73,11 @@ public class Drive extends PIDSubsystem {
 		driveTrain = new RobotDrive(l1, r1);
 		reversed = false;
 		setUpDriveTrain();
-		
-		ahrs = new AHRS(SPI.Port.kMXP);
-		getPIDController().setAbsoluteTolerance(Constants.Drive.turnTolerance);
-		getPIDController().setInputRange(-180, 180);
-		getPIDController().setContinuous();
-		getPIDController().setOutputRange(-.25, .25);
-        //LiveWindow.addActuator("Drive", "turn Controller", getPIDController());
-		SmartDashboard.putData("Turning PID Controller",getPIDController());
-		
+						
 //		SmartDashboard.putNumber("left Voltage", 5.4);
 //		SmartDashboard.putNumber("right Voltage", 5);
 	}
 
-	/*******************************
-	 * Default Commend For Drive
-	 *******************************/
 	public void initSensors() {
 		
 		int absolutePosition = l1.getPulseWidthPosition() & 0xFFF;
@@ -166,23 +128,25 @@ public class Drive extends PIDSubsystem {
 	}
 	
 	/*******************************
-	 * Default Commend For Drive
+	 * Default Command For Drive
 	 *******************************/
 	public void initDefaultCommand() {
 		setDefaultCommand(new ExpDrive());
 	}
 
 	/*******************************
-	 * The Main Robot Arcade Drive
+	 * Drive Functions
 	 *******************************/
 	public void arcadeDrive(double move, double rotate, boolean squareValues) {
-		driveTrain.arcadeDrive(move, (rotate + leftAddTurn + rightAddTurn + turnCorrection + visionAssist) * -1, squareValues);
+		driveTrain.arcadeDrive(move, (rotate + leftAddTurn + rightAddTurn + visionAssist) * -1, squareValues);
 	}
-
 	public void radialDrive(double move, double curve) {
 		driveTrain.drive(move, curve);
 	}
 	
+	/*******************************
+	 * Additive setters
+	 *******************************/
 	public void setLeftTurn(double turn){
     	leftAddTurn = turn;
     }
@@ -194,15 +158,14 @@ public class Drive extends PIDSubsystem {
 	}
 
 	/*******************************
-	 * Setup Config Items for Drive
+	 * Value setups
 	 *******************************/
 	public void setUpDriveTrain() {
 		driveTrain.setSensitivity(Constants.Drive.sensitivity);
-		driveTrain.setMaxOutput(Constants.Drive.scaledMaxOutput);
 	}
 
 	/*******************************
-	 * Direction Change
+	 * Direction Changes
 	 *******************************/
 	public void changeDirection() {
 		if (reversed) {
@@ -211,10 +174,6 @@ public class Drive extends PIDSubsystem {
 			changeToReverse();
 		}
 	}
-
-	/*******************************
-	 * Direction Change Forward
-	 *******************************/
 	public void changeToForward() {
 		if (reversed) {
 			driveTrain = new RobotDrive(l1, r1);
@@ -222,10 +181,6 @@ public class Drive extends PIDSubsystem {
 			setUpDriveTrain();
 		}
 	}
-
-	/*******************************
-	 * Direction Change Reverse
-	 *******************************/
 	public void changeToReverse() {
 		if (!reversed) {
 			driveTrain = new RobotDrive(r1, l1);
@@ -233,7 +188,10 @@ public class Drive extends PIDSubsystem {
 			setUpDriveTrain();
 		}
 	}
-
+	
+	/*******************************
+	 * Left and Right Setters
+	 *******************************/
 	public void setLeftRightRotations(double left, double right) {
 		l1.set(left);
 		r1.set(right);
@@ -248,30 +206,27 @@ public class Drive extends PIDSubsystem {
 		driveTrain.setLeftRightMotorOutputs(leftOutput, rightOutput);
 	}
 
-	public double getAveragePositionInches() {
-		return .5 * (getLeftPositionInches() + getRightPositionInches());
-	}
-
+	
+	/*********************************
+	 * Left and Right position getters
+	 *********************************/
 	public double getRotationsLeft() {
 		return l1.getPosition();
 	}
-
 	public double getRotationsRight() {
 		return r1.getPosition();
 	}
-
 	public double getLeftPositionInches() {
 		return getRotationsLeft() * (Constants.Drive.InchesPerRotation);
 	}
-
 	public double getRightPositionInches() {
 		return getRotationsRight() * (Constants.Drive.InchesPerRotation);
 	}
 
-	public void changeScaledMaxOutput(double output) {
-		driveTrain.setMaxOutput(output);
-	}
 	
+	/*********************************
+	 * Configuring left and right PID Peak Voltages
+	 */
 	public void setLeftPeakVoltage(double vol){
 		l1.configPeakOutputVoltage(vol, -vol);
 	}
@@ -279,21 +234,26 @@ public class Drive extends PIDSubsystem {
 		r1.configPeakOutputVoltage(vol, -vol);
 	}
 	
+	/***************************
+	 * Basic left and right setters
+	 ***************************/
 	public void setLeft(double output) {
 		l1.set(output);
 	}
-
 	public void setRight(double output) {
 		r1.set(output);
 	}
 	
+	/******************************
+	 * changing the talon control mode
+	 */
 	public void changeControlMode(TalonControlMode t){
 		l1.changeControlMode(t);
 		r1.changeControlMode(t);
 	}
 
 	/*******************************
-	 * Position Control Setup
+	 * Setups for Position and Speed
 	 *******************************/
 	public void setupDriveForPositionControl() {
 		l1.setAllowableClosedLoopErr(0);
@@ -304,9 +264,6 @@ public class Drive extends PIDSubsystem {
 		l1.setD(dD);
 		l1.changeControlMode(TalonControlMode.Position);
 		l1.setIZone(2);
-		
-		// l1.setMotionMagicCruiseVelocity(cruiseVelocity);
-		// l1.setMotionMagicAcceleration(accel);
 
 		r1.setAllowableClosedLoopErr(0);
 		r1.setProfile(0);
@@ -317,9 +274,7 @@ public class Drive extends PIDSubsystem {
 		r1.changeControlMode(TalonControlMode.Position);
 		r1.setIZone(2);
 		
-		setEnableBrake(true);
-		// r1.setMotionMagicCruiseVelocity(cruiseVelocity);
-		// r1.setMotionMagicAcceleration(accel);
+		setEnableBrake(true);		
 	}
 
 	/*******************************
@@ -329,7 +284,6 @@ public class Drive extends PIDSubsystem {
 		setEnableBrake(true);
 		l1.changeControlMode(TalonControlMode.PercentVbus);
 		r1.changeControlMode(TalonControlMode.PercentVbus);
-
 	}
 	
 	/*******************************
@@ -343,20 +297,6 @@ public class Drive extends PIDSubsystem {
 		r1.enableBrakeMode(b);
 		r2.enableBrakeMode(b);
 		r3.enableBrakeMode(b);
-
-	}
-	
-	public double getYaw(){
-		return ahrs.getYaw();
-	}
-	
-	@Override
-	protected double returnPIDInput() {
-		return ahrs.getYaw();
-	}
-	@Override
-	protected void usePIDOutput(double output) {
-		driveTrain.setLeftRightMotorOutputs(output, -output);
 	}
 	
 	public double getRightError(){
@@ -372,7 +312,6 @@ public class Drive extends PIDSubsystem {
 	 * Slaves Setup
 	 *******************************/
 	public void setupSlaves() {
-
 		l2.changeControlMode(CANTalon.TalonControlMode.Follower);
 		l3.changeControlMode(CANTalon.TalonControlMode.Follower);
 		r2.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -416,22 +355,22 @@ public class Drive extends PIDSubsystem {
 	public void log() {
 		dashBoardUpdateDisplays();
 		dashBoardUpdateControls();
-    	SmartDashboard.putNumber("Gyro Yaw", ahrs.getYaw());
 
 		//changeScaledMaxOutput(scaledMaxOutput);
 	}
 
-	public void zeroYaw() {
-		ahrs.zeroYaw();
-	}
-
-	public double getRate() {
-		return ahrs.getRate();
-	}
 
 	public void setPIDSettings(double kp, double ki, double kd, double kf, int kz, double kramp) {
 		l1.setPID(kp, ki, kd, kf, kz, kramp, 0);
 		r1.setPID(kp, ki, kd, kf, kz, kramp, 0);		
+	}
+
+	public int getLeftSpeed() {
+		return l1.getSpeed();
+	}
+	
+	public int getRightSpeed() {
+		return r1.getSpeed();
 	}
 
 

@@ -34,7 +34,7 @@ public class RecordAverageRate extends Command {
     	if((timer) > endTime){
     		done = true;
     	}
-    	sum += Robot.drive.getRate();
+    	sum += Robot.navigation.getRate();
     	numValues++;
     }
 

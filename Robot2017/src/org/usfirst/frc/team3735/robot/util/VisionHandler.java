@@ -103,6 +103,23 @@ public class VisionHandler {
 		thread.start();
 	}
 	
+	public void pause(){
+		try {
+			thread.wait();
+		} catch (Exception e) {
+			System.out.println("Error in pausing thread");
+			e.printStackTrace();
+		}
+	}
+	public void resume(){
+		try {
+			thread.notify();
+		} catch (Exception e) {
+			System.out.println("Error in resuming thread");
+			e.printStackTrace();
+		}
+	}
+	
 	
 	private Rect boundRects(ArrayList<MatOfPoint> targets) {
 		ArrayList<Rect> rects = new ArrayList<Rect>();

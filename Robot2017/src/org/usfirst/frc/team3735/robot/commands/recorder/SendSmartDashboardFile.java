@@ -50,7 +50,6 @@ public class SendSmartDashboardFile extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	DataRecorder.endSending();
-    	Robot.drive.setupSlaves();
     	Robot.drive.changeControlMode(TalonControlMode.PercentVbus);
     }
 

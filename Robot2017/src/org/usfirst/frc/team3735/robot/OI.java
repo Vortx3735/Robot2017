@@ -10,7 +10,7 @@ import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAngl
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
-import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOff;
+import org.usfirst.frc.team3735.robot.commands.shooter.ShooterAgitatorOff;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterSwitchEnabled;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 import org.usfirst.frc.team3735.robot.util.JoystickPOVButton;

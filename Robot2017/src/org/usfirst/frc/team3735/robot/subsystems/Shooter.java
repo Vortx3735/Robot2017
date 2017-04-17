@@ -2,7 +2,7 @@ package org.usfirst.frc.team3735.robot.subsystems;
 
 import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.RobotMap;
-import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOff;
+import org.usfirst.frc.team3735.robot.commands.shooter.ShooterAgitatorOff;
 import org.usfirst.frc.team3735.robot.util.Setting;
 
 import com.ctre.CANTalon;
@@ -19,10 +19,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Shooter extends Subsystem {
 
-	CANTalon drum = new CANTalon(RobotMap.Shooter.drum);
-	CANTalon drum2 = new CANTalon(RobotMap.Shooter.drum2);
+	CANTalon drum;
+	CANTalon drum2;
 
-	CANTalon agitator = new CANTalon(RobotMap.Shooter.agitator);
+	CANTalon agitator;
 //	Encoder drumEncoder = new Encoder(RobotMap.Shooter.encoder1, RobotMap.Shooter.encoder2);
 	
 	double drumVoltage;
@@ -42,26 +42,25 @@ public class Shooter extends Subsystem {
 //	public PIDController controller = new PIDController(1.0, 0.0, 0.0, drumEncoder, drum);
 	
 	public Shooter(){
+		drum = new CANTalon(RobotMap.Shooter.drum);
+		drum.setInverted(RobotMap.Shooter.drumInverted);
 		drum.changeControlMode(TalonControlMode.Speed);
+		drum.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		drum.setCloseLoopRampRate(6);
+		
+		drum2 = new CANTalon(RobotMap.Shooter.drum2);
 		drum2.changeControlMode(TalonControlMode.Follower);
 		drum2.set(drum.getDeviceID());
 		
+		agitator = new CANTalon(RobotMap.Shooter.agitator);
+		agitator.setInverted(RobotMap.Shooter.agitatorInverted);
 		agitator.changeControlMode(TalonControlMode.Voltage);
 		
-		drum.setInverted(RobotMap.Shooter.drumInverted);
-		agitator.setInverted(RobotMap.Shooter.agitatorInverted);
 		
-		drumSet = new Setting("Shooter set", Constants.Shooter.shootVoltage);
+		drumSet = new Setting("Shooter set", Constants.Shooter.shootSpeed);
 		agitatorSet = new Setting("Agitator set", Constants.Shooter.agitatorVoltage);
-//		drumVoltage = Constants.Shooter.shootVoltage;
-//		agitatorVoltage = Constants.Shooter.agitatorVoltage;
-//		
-//		SmartDashboard.putNumber(drumKey, drumVoltage);
-//		SmartDashboard.putNumber(agitatorKey, agitatorVoltage);
+
 		
-		//drum.changeControlMode(TalonControlMode.Speed);
-		//drum.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		F = new Setting("Shooter F", .022);
 		P = new Setting("Shooter P", .01);
 		I = new Setting("Shooter I", .0);
@@ -85,25 +84,26 @@ public class Shooter extends Subsystem {
 	} 
 	
 	public void log() {
-		SmartDashboard.putNumber("Raw Motor Speed (native ticks/100ms)", drum.getSpeed());
-		SmartDashboard.putNumber("Motor Speed (RPM?)", drum.get());
+		SmartDashboard.putNumber("Shooter Motor getSpeed", drum.getSpeed());
+		SmartDashboard.putNumber("Shooter Motor get", drum.get());
 		drum.setF(F.getValue()); 
         drum.setP(P.getValue()); 
         drum.setI(I.getValue());  
         drum.setD(D.getValue()); 
+        
 		//SmartDashboard.putNumber("Agitator getPower", getAgitatorPower());
 		//SmartDashboard.putNumber("Shooter getPower", getShooterPower());
 	}
 
 
   	public void initDefaultCommand() {
-  		setDefaultCommand(new ShooterOff());
+  		setDefaultCommand(new ShooterAgitatorOff());
   	}
   
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    public void setDrumVoltage(double d){
+    public void setDrumSpeed(double d){
 //    	if(isEnabled){
 //    		drum.set(d);
 //    	}else{
@@ -126,16 +126,21 @@ public class Shooter extends Subsystem {
     }
     
     public void setAgitatorSmartDashboard(){
-//    	agitatorVoltage = SmartDashboard.getNumber(agitatorKey, agitatorVoltage);
-//    	setAgitatorVoltage(agitatorVoltage);
     	agitator.set(agitatorSet.getValue());
     }
     
-
+    public void setDrumSmartDashboard(double speed){
+    	drumSet.setValue(speed);
+    	drum.set(speed);
+    }
     
-//    public void toggleEnabled(){
-//    	isEnabled = !isEnabled;
-//    }
+    public void setAgitatorSmartDashboard(double voltage){
+    	agitatorSet.setValue(voltage);
+    	agitator.set(voltage);
+    }
+    
+
+   
     
     public double getAgitatorPower(){
     	return Math.abs(agitator.getOutputCurrent() * agitator.getOutputVoltage());

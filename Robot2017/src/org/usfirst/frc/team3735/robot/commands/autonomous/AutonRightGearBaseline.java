@@ -16,15 +16,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonRightGear extends CommandGroup {
+public class AutonRightGearBaseline extends CommandGroup {
 
-    public AutonRightGear(){
-    	addSequential(new DriveMoveDistanceExpNavx(70,.7),2.6);
-    	addSequential(new DriveBrake(),.4);
-    	addSequential(new DriveTurnToAnglePIDCtrl(-60),2);
-    	//addSequential(new DriveMoveDistanceNavx(88.7),3);
-    	addSequential(new DriveMoveDistanceExpVision(89, .7, Pipes.Peg),3);
-    	addSequential(new GearIntakeDropOff(),3);
+    public AutonRightGearBaseline(){
+    	addSequential(new AutonRightGear());
     	
+    	addSequential(new DriveMoveDistanceExpNavx(-10,1),1);
+    	addSequential(new DriveBrake(),.4);
+    	addSequential(new DriveTurnToAnglePIDCtrl(0),2);
+    	addSequential(new DriveMoveDistanceExpNavx(200,1),4);
      }
 }

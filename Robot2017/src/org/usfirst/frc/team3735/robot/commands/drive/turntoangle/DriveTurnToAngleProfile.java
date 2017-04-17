@@ -30,7 +30,7 @@ public class DriveTurnToAngleProfile extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	startAngle = Robot.drive.getYaw();
+    	startAngle = Robot.navigation.getYaw();
     	if(targetAngle - startAngle > 180){
     		cont  = -1;
     	}else if(targetAngle - startAngle < -180){
@@ -47,7 +47,7 @@ public class DriveTurnToAngleProfile extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double yaw = Robot.drive.getYaw();
+    	double yaw = Robot.navigation.getYaw();
 		if(cont != 0){
 			if(cont == -1 && yaw > 0){
 				yaw += cont * contAdd;

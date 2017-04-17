@@ -21,7 +21,7 @@ public class Setting {
 
 	
 	/*
-	 * @param flag	if true, it displays to the SmartDashboard but doesn't read take input from it
+	 * @param flag	if true, it displays to the SmartDashboard but doesn't take input from it
 	 * 				if false, the setting does not appear on the SmartDasboard
 	 * 
 	 */
