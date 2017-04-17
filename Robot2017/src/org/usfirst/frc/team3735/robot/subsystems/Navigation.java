@@ -31,7 +31,7 @@ import org.usfirst.frc.team3735.robot.util.Setting;
  ***********************************************/
 
 public class Navigation extends Subsystem implements PIDSource, PIDOutput {
-	private static final int BUMP_THRESHOLD = 100;
+	private static final int BUMP_THRESHOLD = 1;
 
 	private AHRS ahrs;
 	
@@ -82,9 +82,9 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     }
     public void log(){
     	SmartDashboard.putNumber("Navigation Gyro Yaw", ahrs.getYaw());
-    	SmartDashboard.putNumber("Gyro Acceleration X", ahrs.getWorldLinearAccelX());
-    	SmartDashboard.putNumber("Gyro Acceleration Y", ahrs.getWorldLinearAccelY());
-    	SmartDashboard.putNumber("Gyro Accel XY Vector", getXYAcceleration());
+//    	SmartDashboard.putNumber("Gyro Acceleration X", ahrs.getWorldLinearAccelX());
+//    	SmartDashboard.putNumber("Gyro Acceleration Y", ahrs.getWorldLinearAccelY());
+//    	SmartDashboard.putNumber("Gyro Accel XY Vector", getXYAcceleration());
 
  //     displayDebugGyroData();
     }

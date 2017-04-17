@@ -2,8 +2,6 @@ package org.usfirst.frc.team3735.robot.commands.autonomous;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.commands.Wait;
-import org.usfirst.frc.team3735.robot.commands.autonomous.AutonMiddleGearLeftGear.RecordFinalDistance;
-import org.usfirst.frc.team3735.robot.commands.autonomous.AutonMiddleGearLeftGear.RecordInitialDistance;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveAcquireGear;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveBrake;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;

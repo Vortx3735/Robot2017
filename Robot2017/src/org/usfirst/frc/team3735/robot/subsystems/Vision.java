@@ -24,14 +24,14 @@ public class Vision extends Subsystem {
 
 	private static final int IMG_WIDTH = 320;
 	private static final int IMG_HEIGHT = 240;
-	public static Setting dpp = new Setting("Vision Degrees per Pixel", .28125);
+	public static Setting dpp = new Setting("Vision Degrees per Pixel", 0.13125);
 	
 	private UsbCamera camera1;
 	private UsbCamera camera2;
 	
 	
 	VisionHandler pegs;
-	//VisionHandler gears;
+	VisionHandler gears;
 	VisionHandler mainHandler;
 	
 	public Vision(){
@@ -47,8 +47,8 @@ public class Vision extends Subsystem {
 	    pegs = new VisionHandler(new PegPipelineLSNTest5(), camera1, 2, "GRIP/PegTracker");
 	    pegs.startThread();
 	    
-//	    gears = new VisionHandler(new GearPipeline(), camera1, 1, "GRIP/GearTracker");
-//	    gears.startThread();
+	    gears = new VisionHandler(new GearPipeline(), camera1, 1, "GRIP/GearTracker");
+	    gears.startThread();
 	    
 	    mainHandler = pegs;
 	    
@@ -70,9 +70,10 @@ public class Vision extends Subsystem {
 		//SmartDashboard.putNumber("CenterY", getCenterY());
 //		SmartDashboard.putNumber("Relative CX", getRelativeCX());
 //		SmartDashboard.putNumber("height", mainHandler.getHeight());
-//		SmartDashboard.putNumber("width", mainHandler.getWidth());
+		SmartDashboard.putNumber("width", mainHandler.getWidth());
 		//SmartDashboard.putNumber("area", mainHandler.getArea());
 		pegs.publishTarget();
+		gears.publishTarget();
 		
     }
 
@@ -89,6 +90,8 @@ public class Vision extends Subsystem {
 		switch(p){
 			case Peg:
 				return pegs;
+			case Gear:
+				return gears;
 			default:
 				return pegs;
 		}

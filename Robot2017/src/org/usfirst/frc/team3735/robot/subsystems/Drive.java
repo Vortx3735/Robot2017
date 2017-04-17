@@ -365,11 +365,11 @@ public class Drive extends Subsystem {
 		r1.setPID(kp, ki, kd, kf, kz, kramp, 0);		
 	}
 
-	public int getLeftSpeed() {
+	public double getLeftSpeed() {
 		return l1.getSpeed();
 	}
 	
-	public int getRightSpeed() {
+	public double getRightSpeed() {
 		return r1.getSpeed();
 	}
 

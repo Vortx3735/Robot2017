@@ -67,12 +67,12 @@ public class DriveTurnToAnglePIDCtrl extends Command{
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(pipeline != null){
-    		targetAngle = VortxMath.continuousLimit(
-    				Robot.navigation.getYaw() + (Robot.vision.getRelativeCX() * Robot.vision.dpp.getValue()),
-    				-180, 180);
-    		Robot.navigation.getController().setSetpoint(targetAngle);
-    	}
+//    	if(pipeline != null){
+//    		targetAngle = VortxMath.continuousLimit(
+//    				Robot.navigation.getYaw() + (Robot.vision.getRelativeCX() * Robot.vision.dpp.getValue()),
+//    				-180, 180);
+//    		Robot.navigation.getController().setSetpoint(targetAngle);
+//    	}
     	Robot.navigation.getController().setIZone(Navigation.iZone.getValue());
     	Robot.navigation.getController().updateI(Navigation.actingI.getValue());
     	

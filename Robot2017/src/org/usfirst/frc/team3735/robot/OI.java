@@ -1,11 +1,9 @@
 package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToCustomDriveSettings;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveResetPosition;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistancePIDBroken;
-import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveMoveTwistAngleNaik;
 import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePID;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
@@ -79,7 +77,6 @@ public class OI implements DriveOI{
 		y.whenPressed(new ShooterSwitchEnabled());
 		
 		start.whenPressed(new DriveSwitchDirection());
-		back.toggleWhenPressed(new DriveChangeToCustomDriveSettings());
 		
 		pov0.whenPressed(new DriveTurnToAnglePID(0));
 		pov45.whenPressed(new DriveTurnToAnglePID(45));
@@ -93,7 +90,6 @@ public class OI implements DriveOI{
 		//x.
 		//SmartDashboard.putData("DriveDistance 10", new DriveMoveDistance(12.5) );
 		x.whenPressed(new DriveMoveDistancePIDBroken(25));
-		a.whenPressed(new DriveMoveTwistAngleNaik(90));
 		SmartDashboard.putData("DriveResetPosition", new DriveResetPosition() );
 		
 		   

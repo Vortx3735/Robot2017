@@ -122,7 +122,12 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Acquire Gear", new  DriveAcquireGear());
 		SmartDashboard.putData("Place Gear", new  DrivePlaceGear());
-
+		SmartDashboard.putData("Zero Yaw", new InstantCommand(){
+			@Override
+			public void initialize(){
+				Robot.navigation.zeroYaw();
+			}
+		});
 		
 		
 		log();
@@ -144,7 +149,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		drive.zeroYaw();
+		navigation.zeroYaw();
 		navigation.zeroYaw();
         autonomousCommand = autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
@@ -192,6 +197,7 @@ public class Robot extends IterativeRobot {
 		shooter.log();
 		ballIntake.log();
 		gearIntake.log();
+		navigation.log();
 		ultra.log();
 		vision.log();
 	}

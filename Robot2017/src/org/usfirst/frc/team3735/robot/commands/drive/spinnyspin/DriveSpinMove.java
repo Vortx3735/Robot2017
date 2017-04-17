@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class DriveSpinMove extends CommandGroup {
 
-    protected static final double yawThreshold = 4;
+    protected static final double yawThreshold = 30;
 	private double targetAngle = 0;
     private double move = 1;
 
@@ -23,7 +23,7 @@ public class DriveSpinMove extends CommandGroup {
         		return VortxMath.isWithinThreshold(Robot.navigation.getYaw(), targetAngle, yawThreshold);
         	}
         });
-        addSequential(new DriveMoveDistanceExpNavx(100, 1));
+        addSequential(new DriveMoveDistanceExpNavx(100, 1, null, .7));
     }
 
 	@Override
