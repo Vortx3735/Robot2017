@@ -17,63 +17,47 @@ public class DriveMoveDistanceExpNavx extends Command {
     private double MOVE_FILTER = 0.15;	//(0,1]
 	private static final double TOLERANCE = 2;		//in inches
 	private static final double MOVE_EXPONENT = 3;
-	private Double deltaDistance;
-
-   	
+	private Double deltaDistance;   	
 	private double moveStick;
-		
 	private double moveMotor;
-	
 	private double moveMotorPrevious;
 	private double turnCorrection;
-	
-
-	
 	private double startDistanceLeft;
 	private double endPositionRight;
 	private double endPositionLeft;
 	private double startDistanceRight;
-	
 	private double power;
 	private Double targetAngle = null;
    	
     public DriveMoveDistanceExpNavx(double distance, double power) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	this.power = Math.signum(distance) * Math.abs(power);
     	deltaDistance = distance;
-    	
     	requires(Robot.drive);
+    	requires(Robot.navigation);
     }
     
     public DriveMoveDistanceExpNavx(Double distance, double power) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	this.power = power;
     	deltaDistance = distance;
-    	
     	requires(Robot.drive);
+    	requires(Robot.navigation);
     }
+    
     public DriveMoveDistanceExpNavx(double distance, double power, double angle) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	this.power = Math.signum(distance) * Math.abs(power);
     	deltaDistance = distance;
-    	
     	requires(Robot.drive);
-    	
     	targetAngle = angle;
+    	requires(Robot.navigation);
     }
     
     public DriveMoveDistanceExpNavx(double distance, double power, Double angle, double filter) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	this.power = Math.signum(distance) * Math.abs(power);
     	deltaDistance = distance;
-    	
     	requires(Robot.drive);
     	MOVE_FILTER = filter;
     	targetAngle = angle;
+    	requires(Robot.navigation);
     }
 
     // Called just before this Command runs the first time

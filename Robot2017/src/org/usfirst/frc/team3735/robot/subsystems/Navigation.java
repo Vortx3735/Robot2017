@@ -24,6 +24,7 @@ import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
 import org.usfirst.frc.team3735.robot.util.PIDCtrl;
 import org.usfirst.frc.team3735.robot.util.Setting;
+import org.usfirst.frc.team3735.robot.util.VortxMath;
 
 
 /***********************************************
@@ -41,8 +42,9 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     public static Setting actingI = new Setting("Acting I Value", 0.004);
     
 	public static Setting coefficient = new Setting("Navx Drive Coeffecient", 5);
-
-    
+	private static Setting outputExponent = new Setting("Nav Output Exponent", 1);
+	private static Setting inputExponent = new Setting("Nav Input Exponent", 1);
+	
 	public Navigation(){
 		ahrs = new AHRS(SPI.Port.kMXP);
 		controller = new PIDCtrl(.016,0.0,0.061,this,this);
@@ -188,7 +190,8 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 
 	@Override
 	public double pidGet() {
-		return ahrs.getYaw();
+		//return ahrs.getYaw();
+		return VortxMath.curveAround(ahrs.getYaw(), inputExponent.getValue(), 180);
 	}
 
 
@@ -199,6 +202,7 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 
 	@Override
 	public void pidWrite(double output) {
+		output = VortxMath.curve(output, outputExponent.getValue());
 		Robot.drive.setLeftRightOutputs(output, -output);
 	}
 

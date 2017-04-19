@@ -101,6 +101,17 @@ public class GTAOI implements DriveOI {
 		
 		// layout for two drivers
 		
+		
+//		pov0.whenPressed(new DriveTurnToAnglePIDCtrl(0));
+//		pov45.whenPressed(new DriveTurnToAnglePIDCtrl(60));
+//		pov90.whenPressed(new DriveTurnToAnglePIDCtrl(90));
+//		pov135.whenPressed(new DriveTurnToAnglePIDCtrl(150));
+//		pov180.whenPressed(new DriveTurnToAnglePIDCtrl(180));
+//		pov225.whenPressed(new DriveTurnToAnglePIDCtrl(-150));
+//		pov270.whenPressed(new DriveTurnToAnglePIDCtrl(-90));
+//		pov315.whenPressed(new DriveTurnToAnglePIDCtrl(-60));
+
+
 		//pov0.whileHeld(new DriveAddVisionAssist(Pipes.Peg));
 		pov0.whenPressed(new DriveTurnToAnglePIDCtrl(Pipes.Peg));
 		//pov180.whileHeld(new DriveAddVisionAssist(Pipes.Gear));
@@ -117,16 +128,7 @@ public class GTAOI implements DriveOI {
 		back.whenPressed(new DriveChangeToBallDirection());
 		
 		
-//		pov0.whenPressed(new DriveTurnToAnglePIDCtrl(0));
-//		pov45.whenPressed(new DriveTurnToAnglePIDCtrl(60));
-//		pov90.whenPressed(new DriveTurnToAnglePIDCtrl(90));
-//		pov135.whenPressed(new DriveTurnToAnglePIDCtrl(150));
-//		pov180.whenPressed(new DriveTurnToAnglePIDCtrl(180));
-//		pov225.whenPressed(new DriveTurnToAnglePIDCtrl(-150));
-//		pov270.whenPressed(new DriveTurnToAnglePIDCtrl(-90));
-//		pov315.whenPressed(new DriveTurnToAnglePIDCtrl(-60));
-
-
+		//Co-Driver
 		
 		cy.whenPressed(new ScalerUp(1));
 		cx.whenPressed(new ScalerOff());

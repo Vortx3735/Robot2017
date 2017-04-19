@@ -27,4 +27,13 @@ public class VortxMath {
 			return value;
 		}
 	}
+	
+	public static double curve(double value, double exponent){
+		return value * Math.pow(Math.abs(value), exponent - 1);
+		//return Math.signum(value) * Math.pow(Math.abs(value), exponent);
+	}
+	
+	public static double curveAround(double value, double exponent, double stagnant){
+		return curve(value / stagnant, exponent) * stagnant;
+	}
 }

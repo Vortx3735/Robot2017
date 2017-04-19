@@ -27,20 +27,20 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
  */
 public class AutonMiddleGearLeftGear extends CommandGroup {
 
-	private Double distanceToMove;
+	private Double distanceToMove = new Double(0);
 	private double initialDistance;
 	private double finalDistance;
 	
     public AutonMiddleGearLeftGear(){
     	addSequential(new AutonMiddleGear());
-    	addSequential(new DriveTurnToAnglePIDCtrl(-135));
+    	addSequential(new DriveTurnToAnglePIDCtrl(-135),1);
     	addSequential(new DriveTurnToAnglePIDCtrl(Pipes.Gear));
     	addSequential(new RecordInitialDistance());
     	addSequential(new DriveAcquireGear());
     	addSequential(new RecordFinalDistance());
-    	addSequential(new DriveMoveDistanceExpNavx(distanceToMove, .3));
-    	addSequential(new DriveTurnToAnglePIDCtrl(0));
-    	addSequential(new DriveMoveDistanceExpVisionBumped(100, .3, Pipes.Peg));
+    	addSequential(new DriveMoveDistanceExpNavx(distanceToMove, .4));
+    	addSequential(new DriveTurnToAnglePIDCtrl(0),1);
+    	addSequential(new DriveMoveDistanceExpVisionBumped(100, .5, Pipes.Peg));
     	addSequential(new GearIntakeDropOff());
      }
     
