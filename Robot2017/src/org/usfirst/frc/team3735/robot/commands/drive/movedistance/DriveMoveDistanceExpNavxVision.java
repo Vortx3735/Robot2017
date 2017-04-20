@@ -13,31 +13,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class DriveMoveDistanceExpNavxVision extends CommandGroup {
 
-	private Command visAssist;
 	protected boolean done = false;
 	
     public DriveMoveDistanceExpNavxVision(double distance, double power, Pipes p) {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
-    	visAssist = new DriveAddVisionAssistNavx(p);
     	
-    	addParallel(visAssist);
+    	addParallel(new DriveAddVisionAssistNavx(p));
     	//addSequential(new DriveChangeToGearDirection());
-    	addSequential(new DriveMoveDistanceExpNavx(distance, power));
+    	addSequential(new DriveMoveDistanceExp(distance, power));
     	//addSequential(new ExpDrive(-1,0),.5);
     	addSequential(new DriveBrake(){
     		@Override
@@ -49,10 +31,13 @@ public class DriveMoveDistanceExpNavxVision extends CommandGroup {
     	},.1);
     	
     }
-    
-    private void cancelGroup(){
-    	this.cancel();
-    }
+
+
+	@Override
+	protected void initialize() {
+		done = false;
+	}
+
 
 	@Override
 	protected boolean isFinished() {

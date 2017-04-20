@@ -33,37 +33,97 @@ public class VisionHandler {
 
 	private ArrayList<MatOfPoint> output;
 	
-	public VisionHandler(ContoursOutputPipeline pipe, VideoSource source, int numTargets, String pubAddress){
+	public enum VisionType{
+		Normal,
+		NeedsNumTargets
+	}
+	
+//	for(MatOfPoint m : filterContoursOutput() ){
+//		Rect w = Imgproc.boundingRect(m);
+//		System.out.print(w.x + "  ");
+//	}
+//	System.out.println();
+	
+	public VisionHandler(ContoursOutputPipeline pipe, VideoSource source, int numTargets, String pubAddress, VisionType type){
 		mainTargetTable = NetworkTable.getTable(pubAddress);
 		allSquaresTable = NetworkTable.getTable(pubAddress + "All");
-		thread = new VisionThread(source, (VisionPipeline)pipe, pipeline -> {
-            synchronized (imgLock) {
-//            	for(MatOfPoint m : filterContoursOutput() ){
-//        			Rect w = Imgproc.boundingRect(m);
-//        			System.out.print(w.x + "  ");
-//        		}
-//        		System.out.println();
-            	if(pipe.filterContoursOutput().isEmpty()){
-            		centerX = -1;
-            		centerY = -1;
-            		width = -1;
-            		height = -1;
-            	}else{
-            		output = pipe.filterContoursOutput();
-            		ArrayList<MatOfPoint> targets = new ArrayList<MatOfPoint>();
-            		for(int i = 0; i < output.size() && i < numTargets; i++){
-            			targets.add(output.get(i));
-            		}
-            		Rect r = boundRects(targets);
-            		centerX = r.x + r.width/2;
-            		centerY = r.y + r.height/2;
-            		width = r.width;
-            		height = r.height;
-            		
-            	}
-            	
-            }
-	    });
+		
+		switch(type){
+			case Normal:
+			thread = new VisionThread(source, (VisionPipeline)pipe, pipeline -> {
+	            synchronized (imgLock) {
+	            	if(pipe.filterContoursOutput().isEmpty()){
+	            		centerX = -1;
+	            		centerY = -1;
+	            		width = -1;
+	            		height = -1;
+	            	}else{
+	            		output = pipe.filterContoursOutput();
+	            		ArrayList<MatOfPoint> targets = new ArrayList<MatOfPoint>();
+	            		for(int i = 0; i < output.size() && i < numTargets; i++){
+	            			targets.add(output.get(i));
+	            		}
+	            		Rect r = boundRects(targets);
+	            		centerX = r.x + r.width/2;
+	            		centerY = r.y + r.height/2;
+	            		width = r.width;
+	            		height = r.height;
+	            		
+	            	}
+	            	
+	            }
+			});
+			break;
+			case NeedsNumTargets:
+				thread = new VisionThread(source, (VisionPipeline)pipe, pipeline -> {
+		            synchronized (imgLock) {
+		            	if(pipe.filterContoursOutput().isEmpty()){
+		            		centerX = -1;
+		            		centerY = -1;
+		            		width = -1;
+		            		height = -1;
+		            	}else if(pipe.filterContoursOutput().size() >= numTargets){
+		            		output = pipe.filterContoursOutput();
+		            		ArrayList<MatOfPoint> targets = new ArrayList<MatOfPoint>();
+		            		for(int i = 0; i < output.size() && i < numTargets; i++){
+		            			targets.add(output.get(i));
+		            		}
+		            		Rect r = boundRects(targets);
+		            		centerX = r.x + r.width/2;
+		            		centerY = r.y + r.height/2;
+		            		width = r.width;
+		            		height = r.height;
+		            		
+		            	}
+		            	
+		            }
+				});
+				break;
+			default:
+				thread = new VisionThread(source, (VisionPipeline)pipe, pipeline -> {
+		            synchronized (imgLock) {
+		            	if(pipe.filterContoursOutput().isEmpty()){
+		            		centerX = -1;
+		            		centerY = -1;
+		            		width = -1;
+		            		height = -1;
+		            	}else{
+		            		output = pipe.filterContoursOutput();
+		            		ArrayList<MatOfPoint> targets = new ArrayList<MatOfPoint>();
+		            		for(int i = 0; i < output.size() && i < numTargets; i++){
+		            			targets.add(output.get(i));
+		            		}
+		            		Rect r = boundRects(targets);
+		            		centerX = r.x + r.width/2;
+		            		centerY = r.y + r.height/2;
+		            		width = r.width;
+		            		height = r.height;
+		            		
+		            	}
+		            	
+		            }
+				});
+		}
 		
 	}
 	
@@ -143,8 +203,8 @@ public class VisionHandler {
 		if(mainTargetTable != null){
 			mainTargetTable.putNumberArray("centerX", new double[]{getCenterX()});
 			mainTargetTable.putNumberArray("centerY", new double[]{getCenterY()});
-			mainTargetTable.putNumberArray("height", new double[]{getHeight()});
 			mainTargetTable.putNumberArray("width", new double[]{getWidth()});
+			mainTargetTable.putNumberArray("height", new double[]{getHeight()});
 		}
 		
 	}
@@ -164,6 +224,11 @@ public class VisionHandler {
 				heights[i] = r.height;
 			}
 		}
+		
+		allSquaresTable.putNumberArray("centerX", centerXs);
+		allSquaresTable.putNumberArray("centerY", centerYs);
+		allSquaresTable.putNumberArray("width", widths);
+		allSquaresTable.putNumberArray("height", heights);
 
 	}
 

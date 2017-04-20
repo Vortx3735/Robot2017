@@ -87,11 +87,11 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Left Gear", new  AutonLeftGear());
 		autonomousChooser.addObject("Left Gear Baseline", new  AutonLeftGearBaseline());
 		autonomousChooser.addObject("Left Gear Balls", new  AutonLeftGearBalls());
-		autonomousChooser.addObject("Middle Gear Left Balls", new  AutonMiddleGearLeftBalls());
+		autonomousChooser.addObject("Middle Gear Left Gear", new  AutonMiddleGearLeftGear());
 		autonomousChooser.addObject("Middle Gear Left Balls", new  AutonMiddleGearLeftBalls());
 		autonomousChooser.addObject("Middle Gear", new  AutonMiddleGear());
 		autonomousChooser.addObject("Middle Gear Right Balls", new  AutonMiddleGearRightBalls());
-		autonomousChooser.addObject("Middle Gear Right Balls", new  AutonMiddleGearRightBalls());
+		autonomousChooser.addObject("Middle Gear Right Gear", new  AutonMiddleGearRightGear());
 		autonomousChooser.addObject("Right Gear", new  AutonRightGear());
 		autonomousChooser.addObject("Right Gear Baseline", new  AutonRightGearBaseline());
 		autonomousChooser.addObject("Right Gear Balls", new  AutonRightGearBalls());

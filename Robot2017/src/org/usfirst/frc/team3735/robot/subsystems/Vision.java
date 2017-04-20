@@ -7,6 +7,7 @@ import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.util.ContoursOutputPipeline;
 import org.usfirst.frc.team3735.robot.util.Setting;
 import org.usfirst.frc.team3735.robot.util.VisionHandler;
+import org.usfirst.frc.team3735.robot.util.VisionHandler.VisionType;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -44,11 +45,11 @@ public class Vision extends Subsystem {
 	    camera1.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    camera2.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    
-	    pegs = new VisionHandler(new PegPipelineLSNTest5(), camera1, 2, "GRIP/PegTracker");
+	    pegs = new VisionHandler(new PegPipelineLSNTest4(), camera1, 2, "GRIP/PegTracker", VisionType.Normal);
 	    pegs.startThread();
 	    
-	    gears = new VisionHandler(new GearPipeline(), camera1, 1, "GRIP/GearTracker");
-	    gears.startThread();
+	    gears = new VisionHandler(new GearPipeline(), camera2, 1, "GRIP/GearTracker", VisionType.Normal);
+	    //gears.startThread();
 	    
 	    mainHandler = pegs;
 	    
@@ -66,12 +67,13 @@ public class Vision extends Subsystem {
     }
     
     public void log(){
-		//SmartDashboard.putNumber("CenterX", getCenterX());
-		//SmartDashboard.putNumber("CenterY", getCenterY());
+//		SmartDashboard.putNumber("CenterX", mainHandler.getCenterX());
+//		SmartDashboard.putNumber("CenterY", mainHandler.getCenterY());
 //		SmartDashboard.putNumber("Relative CX", getRelativeCX());
 //		SmartDashboard.putNumber("height", mainHandler.getHeight());
-		SmartDashboard.putNumber("width", mainHandler.getWidth());
-		//SmartDashboard.putNumber("area", mainHandler.getArea());
+//		SmartDashboard.putNumber("area", mainHandler.getArea());
+
+		SmartDashboard.putNumber("Gear CenterY", gears.getCenterY());
 		pegs.publishTarget();
 		gears.publishTarget();
 		

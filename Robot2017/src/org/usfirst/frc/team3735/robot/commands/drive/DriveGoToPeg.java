@@ -3,6 +3,7 @@ package org.usfirst.frc.team3735.robot.commands.drive;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExp;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpVisionBumped;
+import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePIDCtrl;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeLiftDown;
 import org.usfirst.frc.team3735.robot.commands.vision.DriveAddVisionAssist;
@@ -18,6 +19,7 @@ public class DriveGoToPeg extends CommandGroup {
 
 	public DriveGoToPeg() {
     	addSequential(new DriveChangeToGearDirection());
+    	addSequential(new DriveTurnToAnglePIDCtrl(Pipes.Peg));
     	addSequential(new DriveMoveDistanceExpVisionBumped(100, .7, Pipes.Peg));
     }
 

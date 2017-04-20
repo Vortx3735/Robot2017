@@ -18,10 +18,8 @@ public class DriveMoveDistanceExp extends CommandGroup {
 	public DriveMoveDistanceExp(double distance, double power) {
 		
     	deltaDistance = distance;
-    	power = Math.abs(power);
-    	if(distance < 0){
-    		 power *= -1;
-    	}
+    	power = Math.signum(distance) * Math.abs(power);
+    	
     	addSequential(new ExpDrive(power,0){
     		@Override
     		public boolean isFinished(){
