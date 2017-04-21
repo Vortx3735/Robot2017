@@ -14,7 +14,7 @@ public class Constants {
 		public static final double sensitivity = .5;	//raise for sharper turns
 		
 		//exp drive
-		public static final double moveReactivity = .300;	//(0,1] (least reactive, most reactive]
+		public static final double moveReactivity = .600;	//(0,1] (least reactive, most reactive]
 		public static final double turnReactivity = .700;	//(0,1] (least reactive, most reactive]	
 		public static final double scaledMaxMove = 1;
 		public static final double scaledMaxTurn = 1;	//(0,1] directly to the arcadedrive turn value

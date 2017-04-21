@@ -3,6 +3,7 @@ package org.usfirst.frc.team3735.robot.subsystems;
 import org.usfirst.frc.team3735.robot.pipelines.GearPipeline;
 import org.usfirst.frc.team3735.robot.pipelines.PegPipelineLSNTest4;
 import org.usfirst.frc.team3735.robot.pipelines.PegPipelineLSNTest5;
+import org.usfirst.frc.team3735.robot.pipelines.Test4ModdedMore;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.util.ContoursOutputPipeline;
 import org.usfirst.frc.team3735.robot.util.Setting;
@@ -45,7 +46,7 @@ public class Vision extends Subsystem {
 	    camera1.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    camera2.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    
-	    pegs = new VisionHandler(new PegPipelineLSNTest4(), camera1, 2, "GRIP/PegTracker", VisionType.Normal);
+	    pegs = new VisionHandler(new Test4ModdedMore(), camera1, 2, "GRIP/PegTracker", VisionType.Normal);
 	    pegs.startThread();
 	    
 	    gears = new VisionHandler(new GearPipeline(), camera2, 1, "GRIP/GearTracker", VisionType.Normal);
@@ -69,7 +70,7 @@ public class Vision extends Subsystem {
     public void log(){
 //		SmartDashboard.putNumber("CenterX", mainHandler.getCenterX());
 //		SmartDashboard.putNumber("CenterY", mainHandler.getCenterY());
-//		SmartDashboard.putNumber("Relative CX", getRelativeCX());
+		SmartDashboard.putNumber("Relative CX", getRelativeCX());
 //		SmartDashboard.putNumber("height", mainHandler.getHeight());
 //		SmartDashboard.putNumber("area", mainHandler.getArea());
 

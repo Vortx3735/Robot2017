@@ -45,7 +45,7 @@ public class Shooter extends Subsystem {
 		drum = new CANTalon(RobotMap.Shooter.drum);
 		drum.setInverted(RobotMap.Shooter.drumInverted);
 		drum.changeControlMode(TalonControlMode.Speed);
-		drum.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		//drum.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		drum.setCloseLoopRampRate(6);
 		
 		drum2 = new CANTalon(RobotMap.Shooter.drum2);

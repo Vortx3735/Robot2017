@@ -84,6 +84,7 @@ public class Robot extends IterativeRobot {
 		
 		autonomousChooser.addDefault ("Do Nothing", new AutonDoNothing());
 		autonomousChooser.addObject("Base Line", new AutonBaseline());
+		autonomousChooser.addObject("Left Gear SMASH THAT HOPPER NIBBA", new  AutonLeftGearSMASHTHATHOPPERNIBBA());
 		autonomousChooser.addObject("Left Gear", new  AutonLeftGear());
 		autonomousChooser.addObject("Left Gear Baseline", new  AutonLeftGearBaseline());
 		autonomousChooser.addObject("Left Gear Balls", new  AutonLeftGearBalls());

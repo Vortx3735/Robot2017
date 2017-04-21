@@ -26,6 +26,6 @@ public class AutonLeftGearBaseline extends CommandGroup {
     	addSequential(new DriveMoveDistanceExpNavx(-10,1),1);
     	addSequential(new DriveBrake(),.4);
     	addSequential(new DriveTurnToAnglePIDCtrl(0),2);
-    	addSequential(new DriveMoveDistanceExpNavx(200,1),4);
+    	addSequential(new DriveMoveDistanceExpNavx(150,1),4);
      }
 }

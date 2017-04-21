@@ -3,6 +3,7 @@ package org.usfirst.frc.team3735.robot.commands.autonomous;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveBrake;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpNavx;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpNavxBumped;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistancePIDNavx;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistancePID;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistancePIDBroken;
@@ -28,6 +29,15 @@ public class AutonLeftGear extends CommandGroup {
     	//addSequential(new DriveMoveDistanceNavx(88.7),3);
     	addSequential(new DriveMoveDistanceExpVisionBumped(89, .7, Pipes.Peg),3);
     	addSequential(new GearIntakeDropOff(),3);
+    	
+//    	addSequential(new DriveMoveDistanceExpNavx(70,.7),2.6);
+//    	addSequential(new DriveBrake(),.4);
+//    	addSequential(new DriveTurnToAnglePIDCtrl(60),2);
+//    	addSequential(new DriveTurnToAnglePIDCtrl(Pipes.Peg),2);
+//    	//addSequential(new DriveMoveDistanceNavx(88.7),3);
+//    	//addSequential(new DriveMoveDistanceExpVisionBumped(89, .7, Pipes.Peg),3);
+//    	addSequential(new DriveMoveDistanceExpNavxBumped(70, .7),3);
+//    	addSequential(new GearIntakeDropOff(),3);
     	
      }
 }
