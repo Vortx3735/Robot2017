@@ -5,6 +5,7 @@ import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDista
 import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.util.Setting;
+import org.usfirst.frc.team3735.robot.util.VortxMath;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -35,11 +36,16 @@ public class DriveAddVisionAssistNavx extends Command {
     	if(input != -161){
     		if(input != prevWorking){
 		    	Robot.navigation.getController().setSetpoint(
-					Robot.navigation.getYaw() + input * Robot.vision.dpp.getValue()
+		    			VortxMath.continuousLimit(
+		        				Robot.navigation.getYaw() + (input * Robot.vision.dpp.getValue()),
+		        				-180, 180)
 				);
 				prevWorking = input;
 			}
-    		Robot.drive.setVisionAssist(Robot.navigation.getController().getError());
+    		Robot.drive.setVisionAssist((Robot.navigation.getController().getError()/180) * 5);
+    	}else{
+    		Robot.drive.setVisionAssist(0);
+
     	}
     	
     	
