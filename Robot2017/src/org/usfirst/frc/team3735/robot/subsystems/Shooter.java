@@ -61,12 +61,15 @@ public class Shooter extends Subsystem {
 		agitatorSet = new Setting("Agitator set", Constants.Shooter.agitatorVoltage);
 
 		
-		F = new Setting("Shooter F", .022);
-		P = new Setting("Shooter P", .01);
-		I = new Setting("Shooter I", .0);
-		D = new Setting("Shooter D", .0005);
+//		F = new Setting("Shooter F", .022);
+//		P = new Setting("Shooter P", .01);
+//		I = new Setting("Shooter I", .0);
+//		D = new Setting("Shooter D", .0005);
 
-		
+		F = new Setting("Shooter F", .028);
+		P = new Setting("Shooter P", .03);
+		I = new Setting("Shooter I", .0);
+		D = new Setting("Shooter D", 1);
         drum.configNominalOutputVoltage(0.0, -0.0); 
         drum.configPeakOutputVoltage(12.0, -12.0); 
 

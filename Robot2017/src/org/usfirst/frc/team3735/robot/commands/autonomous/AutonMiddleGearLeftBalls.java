@@ -23,9 +23,10 @@ public class AutonMiddleGearLeftBalls extends CommandGroup {
 
     public AutonMiddleGearLeftBalls(){
     	addSequential(new AutonMiddleGear());
-    	addSequential(new DriveTurnToAnglePIDCtrl(-120));
-    	addSequential(new DriveMoveDistanceExpNavx(40,.8,new Double(-120),.4));
-    	addSequential(new ShooterAgitatorOn(30000, 10),10);
+    	addSequential(new DriveMoveDistanceExpNavx(-10,1),1);
+    	addSequential(new DriveTurnToAnglePIDCtrl(-105),2);
+    	addSequential(new DriveMoveDistanceExpNavx(40,.8,new Double(-105),.4));
+    	addSequential(new ShooterAgitatorOn(28000, 10),10);
     	
      }
 }

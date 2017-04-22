@@ -4,6 +4,7 @@ import org.usfirst.frc.team3735.robot.pipelines.GearPipeline;
 import org.usfirst.frc.team3735.robot.pipelines.PegPipelineLSNTest4;
 import org.usfirst.frc.team3735.robot.pipelines.PegPipelineLSNTest5;
 import org.usfirst.frc.team3735.robot.pipelines.Test4ModdedMore;
+import org.usfirst.frc.team3735.robot.pipelines.Test4ModdedMorem;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.util.ContoursOutputPipeline;
 import org.usfirst.frc.team3735.robot.util.Setting;
@@ -46,7 +47,7 @@ public class Vision extends Subsystem {
 	    camera1.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    camera2.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    
-	    pegs = new VisionHandler(new Test4ModdedMore(), camera1, 2, "GRIP/PegTracker", VisionType.Normal);
+	    pegs = new VisionHandler(new Test4ModdedMorem(), camera1, 2, "GRIP/PegTracker", VisionType.getCorrectRatio);
 	    pegs.startThread();
 	    
 	    gears = new VisionHandler(new GearPipeline(), camera2, 1, "GRIP/GearTracker", VisionType.Normal);
@@ -76,6 +77,7 @@ public class Vision extends Subsystem {
 
 		SmartDashboard.putNumber("Gear CenterY", gears.getCenterY());
 		pegs.publishTarget();
+		pegs.publishAll();
 		gears.publishTarget();
 		
     }

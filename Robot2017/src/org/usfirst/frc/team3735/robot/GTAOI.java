@@ -136,9 +136,9 @@ public class GTAOI implements DriveOI {
 		ca.whileHeld(new GearIntakeRollersIn());
 		cb.whileHeld(new GearIntakeRollersOut());
 
-		cpov0.whenPressed(new ShooterAgitatorOn(35000, 10));
-		cpov90.whenPressed(new ShooterAgitatorOn(32000, 10));
-		cpov180.whenPressed(new ShooterAgitatorOn(30000, 10));
+		cpov0.whenPressed(new ShooterAgitatorOn(31000, 10));
+		cpov90.whenPressed(new ShooterAgitatorOn(28000, 10));
+		cpov180.whenPressed(new ShooterAgitatorOn(25000, 10));
 		cpov270.whenPressed(new ShooterAgitatorOff());
 		
 		clt.whenPressed(new BallIntakeRollerOff());

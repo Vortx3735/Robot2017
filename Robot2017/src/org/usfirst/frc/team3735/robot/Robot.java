@@ -10,6 +10,7 @@ import org.usfirst.frc.team3735.robot.commands.drive.RecordTrapTurnData;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.recorder.RecordSmartDashboardFile;
 import org.usfirst.frc.team3735.robot.commands.recorder.SendSmartDashboardFile;
+import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
 import org.usfirst.frc.team3735.robot.pipelines.GearPipeline;
 import org.usfirst.frc.team3735.robot.pipelines.StickyNotePipeline;
 import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
@@ -106,6 +107,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Record Data", new RecordSmartDashboardFile());
 		SmartDashboard.putData("Send Data", new SendSmartDashboardFile());
 		SmartDashboard.putData("Gear Dropoff", new GearIntakeDropOff());
+		SmartDashboard.putData("Scaler Start", new ScalerUp(1));
 		
 		SmartDashboard.putData("Resume Thread", new InstantCommand(){
 			@Override
