@@ -104,8 +104,8 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putData("Start Sending Turn Voltages", new RecordTrapTurnData());
 		//SmartDashboard.putData("Start Sending Turn Voltages", new RecordAverageRate());
 
-		SmartDashboard.putData("Record Data", new RecordSmartDashboardFile());
-		SmartDashboard.putData("Send Data", new SendSmartDashboardFile());
+//		SmartDashboard.putData("Record Data", new RecordSmartDashboardFile());
+//		SmartDashboard.putData("Send Data", new SendSmartDashboardFile());
 		SmartDashboard.putData("Gear Dropoff", new GearIntakeDropOff());
 		SmartDashboard.putData("Scaler Start", new ScalerUp(1));
 		

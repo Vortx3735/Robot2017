@@ -24,7 +24,7 @@ public class AutonTest extends CommandGroup {
     	/*                                     |   */
     	//112 + 20
     	//addSequential(new DriveMoveDistanceExpNavx(132, .7)); /* Straight To Pin*/
-    	addSequential(new DriveMoveDistanceExpNavxVision(40,.7,Pipes.Peg),3);
+    	addSequential(new DriveMoveDistanceExpNavxVision(30,.7,Pipes.Peg),3);
     	//addSequential(new DriveMoveDistanceNavxExpNaik(132));
     	//addSequential(new DriveMoveDistance(10));
      }

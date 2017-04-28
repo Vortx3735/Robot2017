@@ -28,11 +28,11 @@ import org.usfirst.frc.team3735.robot.util.RecordableCantalon;
 
 public class Drive extends Subsystem {
 	
-	private RecordableCantalon l1;
+	private CANTalon l1;
 	private CANTalon l2;
 	private CANTalon l3;
 	
-	private RecordableCantalon r1;
+	private CANTalon r1;
 	private CANTalon r2;
 	private CANTalon r3;
 
@@ -58,11 +58,11 @@ public class Drive extends Subsystem {
 	
 
 	public Drive() {
-		l1 = new RecordableCantalon(RobotMap.Drive.leftMotor1);
+		l1 = new CANTalon(RobotMap.Drive.leftMotor1);
 		l2 = new CANTalon(RobotMap.Drive.leftMotor2);
 		l3 = new CANTalon(RobotMap.Drive.leftMotor3);
 
-		r1 = new RecordableCantalon(RobotMap.Drive.rightMotor1);
+		r1 = new CANTalon(RobotMap.Drive.rightMotor1);
 		r2 = new CANTalon(RobotMap.Drive.rightMotor2);
 		r3 = new CANTalon(RobotMap.Drive.rightMotor3);
 
