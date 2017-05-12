@@ -23,13 +23,9 @@ import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
 import org.usfirst.frc.team3735.robot.util.PIDCtrl;
-import org.usfirst.frc.team3735.robot.util.Setting;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
+import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
-
-/***********************************************
- *
- ***********************************************/
 
 public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 	private static final int BUMP_THRESHOLD = 1;

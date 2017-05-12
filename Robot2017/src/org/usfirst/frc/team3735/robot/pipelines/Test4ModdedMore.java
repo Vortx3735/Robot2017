@@ -18,7 +18,7 @@ import org.opencv.features2d.FeatureDetector;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.*;
 import org.opencv.objdetect.*;
-import org.usfirst.frc.team3735.robot.util.ContoursOutputPipeline;
+import org.usfirst.frc.team3735.robot.util.vision.ContoursOutputPipeline;
 
 /**
 * TestModdedMore class.

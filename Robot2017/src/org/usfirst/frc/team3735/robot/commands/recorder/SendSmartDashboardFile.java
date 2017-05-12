@@ -1,9 +1,9 @@
 package org.usfirst.frc.team3735.robot.commands.recorder;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.util.DataRecorder;
-import org.usfirst.frc.team3735.robot.util.Setting;
-import org.usfirst.frc.team3735.robot.util.StringSetting;
+import org.usfirst.frc.team3735.robot.util.recording.DataRecorder;
+import org.usfirst.frc.team3735.robot.util.settings.Setting;
+import org.usfirst.frc.team3735.robot.util.settings.StringSetting;
 
 import com.ctre.CANTalon.TalonControlMode;
 

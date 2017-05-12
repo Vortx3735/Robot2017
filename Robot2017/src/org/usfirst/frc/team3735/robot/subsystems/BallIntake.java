@@ -3,6 +3,7 @@ package org.usfirst.frc.team3735.robot.subsystems;
 import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
+import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 import com.ctre.CANTalon;
 
@@ -19,16 +20,13 @@ public class BallIntake extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	private CANTalon motor;
-	private double rollerSpeed;
-	private String key = "Ball Intake setSpeed";
-	
+	private Setting speed;
 	
 	public BallIntake(){
 		motor = new CANTalon(RobotMap.BallIntake.roller);
 		motor.setInverted(RobotMap.BallIntake.rollerInverted);
 		
-    	rollerSpeed = Constants.BallIntake.rollerInSpeed;
-    	SmartDashboard.putNumber(key, rollerSpeed);
+    	speed = new Setting("Ball Intake setSpeed", Constants.BallIntake.rollerInSpeed);
 
 	}
 
@@ -42,8 +40,7 @@ public class BallIntake extends Subsystem {
     	motor.set(speed);
     }
     public void setRollerSmartDashboard(){
-    	rollerSpeed = SmartDashboard.getNumber(key, rollerSpeed);
-    	setRollerCurrent(rollerSpeed);
+    	setRollerCurrent(speed.getValue());
     }
     
     public double getPower(){

@@ -6,10 +6,10 @@ import org.usfirst.frc.team3735.robot.pipelines.PegPipelineLSNTest5;
 import org.usfirst.frc.team3735.robot.pipelines.Test4ModdedMore;
 import org.usfirst.frc.team3735.robot.pipelines.Test4ModdedMorem;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
-import org.usfirst.frc.team3735.robot.util.ContoursOutputPipeline;
-import org.usfirst.frc.team3735.robot.util.Setting;
-import org.usfirst.frc.team3735.robot.util.VisionHandler;
-import org.usfirst.frc.team3735.robot.util.VisionHandler.VisionType;
+import org.usfirst.frc.team3735.robot.util.settings.Setting;
+import org.usfirst.frc.team3735.robot.util.vision.ContoursOutputPipeline;
+import org.usfirst.frc.team3735.robot.util.vision.VisionHandler;
+import org.usfirst.frc.team3735.robot.util.vision.VisionHandler.VisionType;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;

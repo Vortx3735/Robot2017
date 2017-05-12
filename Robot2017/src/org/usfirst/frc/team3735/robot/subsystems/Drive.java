@@ -15,11 +15,12 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3735.robot.Constants;
+import org.usfirst.frc.team3735.robot.Dimensions;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
-import org.usfirst.frc.team3735.robot.util.RecordableCantalon;
+import org.usfirst.frc.team3735.robot.util.recording.RecordableCantalon;
 
 
 /**
@@ -54,6 +55,7 @@ public class Drive extends Subsystem {
 	private double leftAddTurn = 0;
 	private double rightAddTurn = 0;
 	private double visionAssist = 0;
+	private double voltageAssist;
 
 	
 
@@ -140,7 +142,7 @@ public class Drive extends Subsystem {
 	public void arcadeDrive(double move, double rotate, boolean squareValues) {
 		driveTrain.arcadeDrive(move, (rotate + leftAddTurn + rightAddTurn + visionAssist) * -1, squareValues);
 	}
-	public void radialDrive(double move, double curve) {
+	public void normalDrive(double move, double curve) {
 		driveTrain.drive(move, curve);
 	}
 	
@@ -204,6 +206,49 @@ public class Drive extends Subsystem {
 
 	public void setLeftRightOutputs(double leftOutput, double rightOutput) {
 		driveTrain.setLeftRightMotorOutputs(leftOutput, rightOutput);
+	}
+	
+	public void voltageDrive(double voltage, double turn){
+		double moveValue = voltge;
+		double rotateValue = turn + voltageAssist;
+		double leftMotorSpeed = 0;
+		double rightMotorSpeed = 0;
+		if (moveValue > 0.0) {
+			if (rotateValue > 0.0) {
+				leftMotorSpeed = moveValue - rotateValue;
+				rightMotorSpeed = Math.max(moveValue, rotateValue);
+		    }else {
+		    	leftMotorSpeed = Math.max(moveValue, -rotateValue);
+		    	rightMotorSpeed = moveValue + rotateValue;
+		    }
+		  }else{
+		    if (rotateValue > 0.0) {
+		      leftMotorSpeed = -Math.max(-moveValue, rotateValue);
+		      rightMotorSpeed = moveValue + rotateValue;
+		    } else {
+		      leftMotorSpeed = moveValue - rotateValue;
+		      rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
+		    }
+		}
+		setLeftRight(leftMotorSpeed, rightMotorSpeed);
+
+	}
+	
+	public void radialDrive(double radius, double voltage){
+		double left;
+		double right;
+		if(radius > 0){
+			radius = Math.abs(radius);
+			left = voltage;
+			right = voltage * (radius - Dimensions.HALFWIDTH)/
+							  (radius + Dimensions.HALFWIDTH);
+		}else{
+			radius = Math.abs(radius);
+			right = voltage;
+			left = voltage * (radius - Dimensions.HALFWIDTH)/
+				  			 (radius + Dimensions.HALFWIDTH);
+		}
+		setLeftRight(left, right);
 	}
 
 	
@@ -355,7 +400,7 @@ public class Drive extends Subsystem {
 	public void log() {
 		dashBoardUpdateDisplays();
 		dashBoardUpdateControls();
-
+		SmartDashboard.putNumber("Inches per Second", getAverageSpeedInches());
 		//changeScaledMaxOutput(scaledMaxOutput);
 	}
 
@@ -371,6 +416,27 @@ public class Drive extends Subsystem {
 	
 	public double getRightSpeed() {
 		return r1.getSpeed();
+	}
+
+	public double getAverageSpeed() {
+		return .5 * (getLeftSpeed() + getRightSpeed());
+	}
+	
+	public double getLeftSpeedInches() {
+		return l1.getSpeed() * Constants.Drive.InchesPerRotation;
+	}
+	
+	public double getRightSpeedInches() {
+		return r1.getSpeed() * Constants.Drive.InchesPerRotation;
+	}
+	
+	public double getAverageSpeedInches() {
+		return (.5 * ((getLeftSpeed() + getRightSpeed())) * Constants.Drive.InchesPerRotation)/60;
+	}
+
+	public void setLeftRight(double left, double right) {
+		l1.set(left); 
+		r1.set(right);
 	}
 
 

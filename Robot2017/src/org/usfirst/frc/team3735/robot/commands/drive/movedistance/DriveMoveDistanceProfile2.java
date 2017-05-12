@@ -1,0 +1,136 @@
+package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
+
+import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.triggers.HasMoved;
+import org.usfirst.frc.team3735.robot.util.TrapProfile;
+import org.usfirst.frc.team3735.robot.util.VortxMath;
+import org.usfirst.frc.team3735.robot.util.cmds.VortxCommand;
+
+import com.ctre.CANTalon.TalonControlMode;
+
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+/**
+ *
+ */
+public class DriveMoveDistanceProfile2 extends VortxCommand {
+
+
+	private static final double FRAMERATE = 50;
+	
+	
+    private double cruiseVelocity;	//inches per second
+	private double acceleration;	//inches per second^2
+	private double exitVelocity;	//inches per second
+
+	private double currentSpeed;
+	private State state;
+	private double acc;
+	
+	private HasMoved distHandler;
+	
+	
+	private enum State{
+		rampingUp,
+		cruising,
+		rampingDown
+	}
+
+	public DriveMoveDistanceProfile2(double distance, double v, double a, double exitV) {
+		if(Math.abs(exitV) > v){
+			exitV = v;
+		}
+		acceleration = Math.copySign(a, distance);
+		cruiseVelocity = Math.copySign(v, distance);
+		exitVelocity = Math.copySign(exitV, distance);
+
+    	requires(Robot.drive);
+    	distHandler = new HasMoved(distance);
+    	addTrigger(distHandler);
+    	acc = acceleration/FRAMERATE;
+
+    }
+
+    // Called just before this Command runs the first time
+    protected void initialize() {
+    	super.initialize();
+    	currentSpeed = Robot.drive.getAverageSpeedInches();
+    	Robot.drive.changeControlMode(TalonControlMode.Voltage);
+    	state = State.rampingUp;
+    	acc = acceleration/FRAMERATE;
+    	if(Math.signum(currentSpeed) != Math.signum(exitVelocity)){
+    		System.out.println("Profile Error: Robot is moving in the wrong direction");
+    	}
+
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
+    	sendErrorReport();
+		
+    	if(needsToRampDown()){
+    		System.out.println("Profile: Starting Ramp Down");
+			acc = calcAcceleration() / FRAMERATE;
+			state = State.rampingDown;
+		}
+    	
+    	switch(state){
+	    	case rampingUp:
+	    		currentSpeed += acc;
+	    		if(Math.abs(currentSpeed) > Math.abs(cruiseVelocity)){
+	    			currentSpeed = cruiseVelocity;
+	    			state = State.cruising;
+	    		}
+	    		break;
+	    	case cruising:
+	    		
+	    		break;
+	    	case rampingDown:
+	    		currentSpeed -= acc;
+	    		break;    			
+    	}
+    	Robot.drive.setLeftRightOutputs(speedToVoltage(currentSpeed), speedToVoltage(currentSpeed));
+    }
+
+    private void sendErrorReport() {
+    	SmartDashboard.putNumber("Profile currentSpeed: ", currentSpeed);
+    	SmartDashboard.putNumber("Profile actual Speed", Robot.drive.getAverageSpeedInches());
+    	SmartDashboard.putNumber("Profile Error", currentSpeed - Robot.drive.getAverageSpeedInches());
+    }
+
+	private double calcAcceleration() {
+    	return (Math.pow(exitVelocity, 2) - Math.pow(Robot.drive.getAverageSpeedInches(), 2)) / 
+ 			   (2 * (distHandler.distanceToGo()));
+	}
+
+	private boolean needsToRampDown() {
+		return Math.abs(calcAcceleration()) > Math.abs(acceleration);
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+        return super.isFinished() || isProfileFinished();
+    }
+
+    private boolean isProfileFinished() {
+		if(exitVelocity > 0){
+			return (state == State.rampingDown) && (Robot.drive.getAverageSpeedInches() < exitVelocity);
+		}else{
+			return (state == State.rampingDown) && (Robot.drive.getAverageSpeedInches() > exitVelocity);
+		}
+	}
+
+	// Called once after isFinished returns true
+    protected void end() {
+    }
+
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+    }
+    
+    private double speedToVoltage(double spd){
+    	return spd;
+    }
+}

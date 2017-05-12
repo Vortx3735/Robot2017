@@ -3,7 +3,7 @@ package org.usfirst.frc.team3735.robot.subsystems;
 import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterAgitatorOff;
-import org.usfirst.frc.team3735.robot.util.Setting;
+import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;

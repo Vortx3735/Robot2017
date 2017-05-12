@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.drive;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.util.Setting;
+import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 import com.ctre.CANTalon.TalonControlMode;
 

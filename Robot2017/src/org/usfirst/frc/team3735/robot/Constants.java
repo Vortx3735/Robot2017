@@ -42,32 +42,16 @@ public class Constants {
 		public final static double rollerOutVoltage = 3;
 		public final static double rollerInVoltage = -10;
 		public final static double feedingVoltage = -6;
-		
-		//public final static boolean topRollerInverted = true;
-		//public final static boolean bottomRollerInverted = true;
-
-		//constants for dropping off the gear
-		public static final double dropOffRollDelay = .5;
-		public static final double dropOffJerkDelay = 1;
-		public static final double dropOffEndDelay = .5;
-		public static final double dropOffDriveTime = .6;
-		public static final double dropOffTotalTime = 
-			dropOffRollDelay + dropOffJerkDelay + dropOffEndDelay + dropOffDriveTime;
-		public static final double dropOffDrivePercent = -.8;
-
 	}
 	
 	public class Scaler{
-
 		public final static double upCurrent = 1.0;
-		public final static double powerMax = 20000; //350;
-		//public final static boolean scalerInverted = true;
+		public final static double powerMax = 20000; //350
 		public static final double rampRate = .02;
 	}
 	
 	public class BallIntake{
 		public final static double rollerInSpeed = .7;
-		//public final static boolean rollerInverted = true;
 	}
 	
 	public class Shooter{
@@ -76,11 +60,6 @@ public class Constants {
 		public static final double lowAgitatorVoltage = 3;
 		public static final double agitatorVoltage = 7;
 		public static final double highAgitatorVoltage = 12;
-		
-		//public final static boolean drumInverted = false;
-		//public final static boolean agitatorInverted = false;
-
-		
 	}
 
 }
