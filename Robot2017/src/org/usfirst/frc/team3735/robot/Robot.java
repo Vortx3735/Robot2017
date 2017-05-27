@@ -1,20 +1,12 @@
 package org.usfirst.frc.team3735.robot;
 
-import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3735.robot.commands.RecordVoltageData;
 import org.usfirst.frc.team3735.robot.commands.SendSDVoltage;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
-import org.usfirst.frc.team3735.robot.commands.drive.RecordAverageRate;
-import org.usfirst.frc.team3735.robot.commands.drive.RecordTrapTurnData;
-import org.usfirst.frc.team3735.robot.commands.recorder.RecordSmartDashboardFile;
-import org.usfirst.frc.team3735.robot.commands.recorder.SendSmartDashboardFile;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
 import org.usfirst.frc.team3735.robot.commands.sequences.DriveAcquireGear;
 import org.usfirst.frc.team3735.robot.commands.sequences.DrivePlaceGear;
 import org.usfirst.frc.team3735.robot.commands.sequences.GearIntakeDropOff;
-import org.usfirst.frc.team3735.robot.pipelines.GearPipeline;
-import org.usfirst.frc.team3735.robot.pipelines.StickyNotePipeline;
 import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.subsystems.GearIntake;
@@ -23,20 +15,13 @@ import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team3735.robot.subsystems.Vision;
-import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
-import org.usfirst.frc.team3735.robot.subsystems.Vision;
-
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -87,7 +72,7 @@ public class Robot extends IterativeRobot {
 		
 		autonomousChooser.addDefault ("Do Nothing", new AutonDoNothing());
 		autonomousChooser.addObject("Base Line", new AutonBaseline());
-		autonomousChooser.addObject("Left Gear SMASH THAT HOPPER NIBBA", new  AutonLeftGearHopper());
+		autonomousChooser.addObject("Left Gear Hopper", new  AutonLeftGearHopper());
 		autonomousChooser.addObject("Left Gear", new  AutonLeftGear());
 		autonomousChooser.addObject("Left Gear Baseline", new  AutonLeftGearBaseline());
 		autonomousChooser.addObject("Left Gear Balls", new  AutonLeftGearBalls());
@@ -157,7 +142,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		navigation.zeroYaw();
 		navigation.zeroYaw();
         autonomousCommand = autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
