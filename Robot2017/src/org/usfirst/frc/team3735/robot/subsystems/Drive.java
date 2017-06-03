@@ -209,7 +209,7 @@ public class Drive extends Subsystem {
 	}
 	
 	public void voltageDrive(double voltage, double turn){
-		double moveValue = voltge;
+		double moveValue = voltage;
 		double rotateValue = turn + voltageAssist;
 		double leftMotorSpeed = 0;
 		double rightMotorSpeed = 0;
