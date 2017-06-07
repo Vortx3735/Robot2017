@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
 
+import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.triggers.HasMoved;
 import org.usfirst.frc.team3735.robot.util.TrapProfile;
@@ -47,7 +48,7 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 
     	requires(Robot.drive);
     	distHandler = new HasMoved(distance);
-    	addTrigger(distHandler);
+    	//addTrigger(distHandler);
     	acc = acceleration/FRAMERATE;
 
     }
@@ -55,11 +56,11 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	super.initialize();
-    	currentSpeed = Robot.drive.getAverageSpeedInches();
-    	Robot.drive.changeControlMode(TalonControlMode.Voltage);
-    	state = State.rampingUp;
     	acc = acceleration/FRAMERATE;
-    	if(Math.signum(currentSpeed) != Math.signum(exitVelocity)){
+    	currentSpeed = Robot.drive.getAverageSpeedInches();
+    	Robot.drive.changeControlMode(TalonControlMode.PercentVbus);
+    	state = State.rampingUp;
+    	if(currentSpeed * exitVelocity < 0){
     		System.out.println("Profile Error: Robot is moving in the wrong direction");
     	}
 
@@ -71,7 +72,7 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 		
     	if(needsToRampDown()){
     		System.out.println("Profile: Starting Ramp Down");
-			acc = calcAcceleration() / FRAMERATE;
+			acc = Math.abs(calcAcceleration()) / FRAMERATE;
 			state = State.rampingDown;
 		}
     	
@@ -90,7 +91,8 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 	    		currentSpeed -= acc;
 	    		break;    			
     	}
-    	Robot.drive.setLeftRightOutputs(speedToVoltage(currentSpeed), speedToVoltage(currentSpeed));
+    	//Robot.drive.setLeftRightOutputs(speedToPercent(currentSpeed), speedToPercent(currentSpeed));
+    	Robot.drive.arcadeDrive(speedToPercent(currentSpeed), 0, false);
     }
 
     private void sendErrorReport() {
@@ -130,7 +132,15 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
     protected void interrupted() {
     }
     
-    private double speedToVoltage(double spd){
-    	return spd;
+    /**
+     * 
+     * @param spd	the target speed in inches per second
+     * @return	the percent, which converts spd into normal getspeed units (rpm), and then
+     * 			compensates for the deadzone using gathered data
+     */
+    private double speedToPercent(double spd){
+    	double speed = Math.abs(spd)/Constants.Drive.InchesPerRotation;
+    	speed*=60;
+    	return Math.copySign(0.00113174*speed + 0.0944854, spd);
     }
 }

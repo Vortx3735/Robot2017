@@ -55,7 +55,7 @@ public class Drive extends Subsystem {
 	private double leftAddTurn = 0;
 	private double rightAddTurn = 0;
 	private double visionAssist = 0;
-	private double voltageAssist;
+	private double voltageAssist = 0;
 
 	
 
@@ -70,7 +70,7 @@ public class Drive extends Subsystem {
 
 		initSensors();
 		setupSlaves();
-		setEnableBrake(false);
+		setEnableBrake(true);
 		
 		driveTrain = new RobotDrive(l1, r1);
 		reversed = false;
@@ -209,7 +209,7 @@ public class Drive extends Subsystem {
 	}
 	
 	public void voltageDrive(double voltage, double turn){
-		double moveValue = voltge;
+		double moveValue = voltage;
 		double rotateValue = turn + voltageAssist;
 		double leftMotorSpeed = 0;
 		double rightMotorSpeed = 0;
@@ -369,9 +369,9 @@ public class Drive extends Subsystem {
 	}
 
 	/******************************************
-	 * Dashboard Update Display Variables
+	 * The Logs
 	 ******************************************/
-	public void dashBoardUpdateDisplays() {
+	public void log() {
 		SmartDashboard.putNumber("Drive Left Position", l1.getPosition());
 		SmartDashboard.putNumber("Drive Right Position", r1.getPosition());
 
@@ -380,27 +380,8 @@ public class Drive extends Subsystem {
 
 		SmartDashboard.putNumber("Drive Left Get", l1.get());
 		SmartDashboard.putNumber("Drive Right Get", r1.get());
-
-	}
-
-	/******************************************
-	 * Dashboard Update Setting Variables
-	 ******************************************/
-	public void dashBoardUpdateControls() {
-		//scaledMaxOutput = SmartDashboard.getNumber("DriveParamMaxOut", defaultMaxOutput);
 		
-		//sendLeftVoltage((SmartDashboard.getNumber("left Voltage", 5.4)));
-		//sendRightVoltage((SmartDashboard.getNumber("right Voltage", 5)));
-
-	}
-
-	/******************************************
-	 * The Logs
-	 ******************************************/
-	public void log() {
-		dashBoardUpdateDisplays();
-		dashBoardUpdateControls();
-		SmartDashboard.putNumber("Inches per Second", getAverageSpeedInches());
+		SmartDashboard.putNumber("Drive avg speed", getAverageSpeedInches());
 		//changeScaledMaxOutput(scaledMaxOutput);
 	}
 

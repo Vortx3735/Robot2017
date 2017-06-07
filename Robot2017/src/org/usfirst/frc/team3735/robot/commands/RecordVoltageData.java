@@ -14,10 +14,10 @@ public class RecordVoltageData extends Command {
 	private RollingAverage roll;
 	
     public RecordVoltageData() {
-        roll = new RollingAverage(1){
+        roll = new RollingAverage(3){
         	@Override
         	public double get(){
-        		return Robot.drive.getAverageSpeedInches();
+        		return Robot.drive.getAverageSpeed();
         	}
         };
     }
