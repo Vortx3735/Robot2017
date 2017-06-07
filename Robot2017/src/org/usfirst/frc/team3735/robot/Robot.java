@@ -16,6 +16,7 @@ import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team3735.robot.subsystems.Vision;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
@@ -45,7 +46,7 @@ public class Robot extends IterativeRobot {
 	public static Ultrasonic ultra;
 	public static Vision vision;
 	
-	public static GTAOI oi;
+	public static ChineseOI oi;
 	public RobotMap robotmap;
 	
 	boolean rightSide = false;
@@ -67,7 +68,7 @@ public class Robot extends IterativeRobot {
 		ultra = new Ultrasonic();
 		vision = new Vision();
 		
-		oi = new GTAOI(); //MUST be instantiated after the subsystems
+		oi = new ChineseOI(); //MUST be instantiated after the subsystems
 			
 		autonomousChooser = new SendableChooser<Command>();
 		
@@ -184,7 +185,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void log(){
-		oi.log();
+		//oi.log();
 		scaler.log();
 		drive.log();
 		shooter.log();

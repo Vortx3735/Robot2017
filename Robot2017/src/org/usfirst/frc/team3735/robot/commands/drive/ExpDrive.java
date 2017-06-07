@@ -112,8 +112,8 @@ public class ExpDrive extends Command {
 		SmartDashboard.putNumber("FOD Move", fodMove);
 		SmartDashboard.putNumber("FOD Turn", fodTurn);
 
-		moveSetValue = moveSetValue + fodMove;
-		turnSetValue = turnSetValue + fodTurn;
+//		moveSetValue = moveSetValue + fodMove;
+//		turnSetValue = turnSetValue + fodTurn;
 		
 		
 	
@@ -130,7 +130,7 @@ public class ExpDrive extends Command {
 		moveMotor = moveMotor * scaledMaxMove.getValue();
 		turnMotor = turnMotor * scaledMaxTurn.getValue();
 		
-		turnMotor = turnMotor + Robot.oi.getCoLeftX() * .2;
+		//turnMotor = turnMotor + Robot.oi.getCoLeftX() * .2; you suck James
 		
 
 //		SmartDashboard.putNumber("Move Motor", moveMotor);
