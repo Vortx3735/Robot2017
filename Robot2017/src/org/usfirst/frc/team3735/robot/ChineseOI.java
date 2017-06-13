@@ -16,15 +16,16 @@ import org.usfirst.frc.team3735.robot.commands.sequences.DriveGoToPeg;
 import org.usfirst.frc.team3735.robot.commands.sequences.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterAgitatorOff;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterAgitatorOn;
-import org.usfirst.frc.team3735.robot.util.oi.Chinese;
 //import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
+import org.usfirst.frc.team3735.robot.util.oi.ChineseBoard;
+import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
 
-public class ChineseOI {
+public class ChineseOI implements DriveOI{
 	
-	Chinese joystick;
+	ChineseBoard joystick;
 	
 	public ChineseOI() {
-		joystick = new Chinese();
+		joystick = new ChineseBoard();
 		joystick.l.whenPressed(new DriveGoToPeg());
 		joystick.mJoyButton.whenPressed(new GearIntakeDropOff());
 		joystick.rJoyButton.whileHeld(new GearIntakeFeeding());
@@ -104,6 +105,24 @@ public class ChineseOI {
 	 
 	public double getCoLeftY() {
 		return joystick.getLeftY();
+	}
+
+	@Override
+	public double getFODMag() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getFODAngle() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void log() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

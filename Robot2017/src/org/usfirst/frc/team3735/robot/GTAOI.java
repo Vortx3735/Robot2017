@@ -32,7 +32,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class GTAOI implements DriveOI {
+public class GTAOI implements DriveOI{
 
 	public XboxController main;
 	public XboxController co;
@@ -42,6 +42,7 @@ public class GTAOI implements DriveOI {
 		main = new XboxController(0);
 		co = new XboxController(1);
 
+		//Baby Driver
 		main.pov180.whenPressed(new DriveGoToPeg());
 
 		main.b.whenPressed(new GearIntakeDropOff());
@@ -53,8 +54,7 @@ public class GTAOI implements DriveOI {
 		main.back.whenPressed(new DriveChangeToBallDirection());
 		
 		
-		//Co-Driver
-		
+		//CoDriver
 		co.y.whenPressed(new ScalerUp(1));
 		co.x.whenPressed(new ScalerOff());
 		co.a.whileHeld(new GearIntakeRollersIn());
@@ -74,90 +74,105 @@ public class GTAOI implements DriveOI {
 		
 	}
 	
-	public boolean isOverriddenByDrive(){
-		return Math.abs(getMainLeftX()) > .1 || getMainLeftTrigger() > .1 || getMainRightTrigger() > .1;
+	
+	public double getDriveMove() {
+		return (main.getRightTrigger() - main.getLeftTrigger());
 	}
 
-	@Override
-	public double getMainLeftX() {
+	public double getDriveTurn() {
 		return main.getLeftX();
 	}
-
-	@Override
-	public double getMainLeftY() {
-		return main.getLeftY();
-	}
-
-	@Override
-	public double getMainRightX() {
-		return main.getRightX();
-	}
-
-	@Override
-	public double getMainRightY() {
-		return main.getRightY();
-	}
-
-	@Override
-	public double getMainLeftTrigger() {
-		return main.getLeftTrigger();
-	}
-
-	@Override
-	public double getMainRightTrigger() {
-		return main.getRightTrigger();
-	}
-
-	public double getMainRightMagnitude() {
-		return main.getRightMagnitude();
-	}
-
-	// returns the angle of the right main joystick in degrees in the range
-	// (-180, 180]
-	public double getMainRightAngle() {
+	
+	public double getFODAngle(){
 		return main.getRightAngle();
 	}
-
-	@Override
-	public double getDriveMove() {
-		return (getMainRightTrigger() - getMainLeftTrigger());
+	
+	public double getFODMagnitude(){
+		return 0;
+		//return main.getRightMagnitude();
+	}
+	
+	public boolean isOverriddenByDrive(){
+		return Math.abs(main.getLeftX()) > .1 || main.getLeftTrigger() > .1 || main.getRightTrigger() > .1;
 	}
 
-	@Override
-	public double getDriveTurn() {
-		return getMainLeftX();
-	}
+	
+//	@Override
+//	public double getMainLeftX() {
+//		return main.getLeftX();
+//	}
+//
+//	@Override
+//	public double getMainLeftY() {
+//		return main.getLeftY();
+//	}
+//
+//	@Override
+//	public double getMainRightX() {
+//		return main.getRightX();
+//	}
+//
+//	@Override
+//	public double getMainRightY() {
+//		return main.getRightY();
+//	}
+//
+//	@Override
+//	public double getMainLeftTrigger() {
+//		return main.getLeftTrigger();
+//	}
+//
+//	@Override
+//	public double getMainRightTrigger() {
+//		return main.getRightTrigger();
+//	}
+//	public double getMainRightMagnitude() {
+//		return main.getRightMagnitude();
+//	}
+//
+//	// returns the angle of the right main joystick in degrees in the range
+//	// (-180, 180]
+//	public double getMainRightAngle() {
+//		return main.getRightAngle();
+//	}
+//
+//	public double getCoLeftX() {
+//		return co.getLeftX();
+//	}
+//
+//	public double getCoLeftY() {
+//		return co.getLeftY();
+//	}
+//
+//	public double getCoRightX() {
+//		return co.getRightX();
+//	}
+//
+//	public double getCoRightY() {
+//		return co.getRightY();
+//	}
+//
+//	public double getCoLeftTrigger() {
+//		return co.getLeftTrigger();
+//	}
+//
+//	public double getCoRightTrigger() {
+//		return co.getRightTrigger();
+//	}
 
-	public double getCoLeftX() {
-		return co.getLeftX();
-	}
-
-	public double getCoLeftY() {
-		return co.getLeftY();
-	}
-
-	public double getCoRightX() {
-		return co.getRightX();
-	}
-
-	public double getCoRightY() {
-		return co.getRightY();
-	}
-
-	public double getCoLeftTrigger() {
-		return co.getLeftTrigger();
-	}
-
-	public double getCoRightTrigger() {
-		return co.getRightTrigger();
-	}
-
-	@Override
+	
 	public void log() {
 //		SmartDashboard.putNumber("right joystick angle", getMainRightAngle());
 //		SmartDashboard.putNumber("right joystick magnitude",
 //				getMainRightMagnitude());
 
 	}
+
+
+@Override
+public double getFODMag() {
+	// TODO Auto-generated method stub
+	return 0;
+}
 
 }

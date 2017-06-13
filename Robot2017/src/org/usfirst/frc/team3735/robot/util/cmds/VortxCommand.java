@@ -3,6 +3,7 @@ package org.usfirst.frc.team3735.robot.util.cmds;
 import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /*
  * A class that allows users to make triggers, that one can add to a command, that
@@ -14,13 +15,26 @@ import edu.wpi.first.wpilibj.command.Command;
 public class VortxCommand extends Command{
 
 	ArrayList<ComTrigger> triggers = new ArrayList<ComTrigger>();
+	ArrayList<ComAssist> assists = new ArrayList<ComAssist>();
 	
 	@Override
 	protected void initialize() {
 		for(ComTrigger t : triggers){
 			t.initialize();
 		}
+		for(ComAssist c : assists){
+			c.initialize();
+		}
 	}
+	
+	@Override
+	protected void execute(){
+		for(ComAssist c : assists){
+			c.execute();
+		}
+	}
+
+
 
 	@Override
 	protected boolean isFinished() {
@@ -34,6 +48,11 @@ public class VortxCommand extends Command{
 	
 	public VortxCommand addTrigger(ComTrigger t){
 		triggers.add(t);
+		return this;
+	}
+	
+	public VortxCommand addParallel(ComAssist c){
+		assists.add(c);
 		return this;
 	}
 	

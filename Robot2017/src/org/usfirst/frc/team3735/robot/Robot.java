@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
 	public static Ultrasonic ultra;
 	public static Vision vision;
 	
-	public static ChineseOI oi;
+	public static GTAOI oi;
 	public RobotMap robotmap;
 	
 	boolean rightSide = false;
@@ -68,7 +68,7 @@ public class Robot extends IterativeRobot {
 		ultra = new Ultrasonic();
 		vision = new Vision();
 		
-		oi = new ChineseOI(); //MUST be instantiated after the subsystems
+		oi = new GTAOI(); //MUST be instantiated after the subsystems
 			
 		autonomousChooser = new SendableChooser<Command>();
 		

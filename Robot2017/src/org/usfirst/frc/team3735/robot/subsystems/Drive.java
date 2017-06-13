@@ -55,6 +55,7 @@ public class Drive extends Subsystem {
 	private double leftAddTurn = 0;
 	private double rightAddTurn = 0;
 	private double visionAssist = 0;
+	private double navxAssist = 0;
 	private double voltageAssist = 0;
 
 	
@@ -140,7 +141,7 @@ public class Drive extends Subsystem {
 	 * Drive Functions
 	 *******************************/
 	public void arcadeDrive(double move, double rotate, boolean squareValues) {
-		driveTrain.arcadeDrive(move, (rotate + leftAddTurn + rightAddTurn + visionAssist) * -1, squareValues);
+		driveTrain.arcadeDrive(move, (rotate + leftAddTurn + rightAddTurn + visionAssist + navxAssist) * -1, squareValues);
 	}
 	public void normalDrive(double move, double curve) {
 		driveTrain.drive(move, curve);
@@ -418,6 +419,10 @@ public class Drive extends Subsystem {
 	public void setLeftRight(double left, double right) {
 		l1.set(left); 
 		r1.set(right);
+	}
+
+	public void setNavxAssist(double error) {
+		
 	}
 
 

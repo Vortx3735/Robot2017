@@ -21,9 +21,9 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 	private static final double FRAMERATE = 50;
 	
 	
-    private double cruiseVelocity;	//inches per second
-	private double acceleration;	//inches per second^2
-	private double exitVelocity;	//inches per second
+    private final double cruiseVelocity;	//inches per second
+	private final double acceleration;	//inches per second^2
+	private final double exitVelocity;	//inches per second
 
 	private double currentSpeed;
 	private State state;
@@ -48,7 +48,7 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 
     	requires(Robot.drive);
     	distHandler = new HasMoved(distance);
-    	//addTrigger(distHandler);
+    	addTrigger(distHandler);
     	acc = acceleration/FRAMERATE;
 
     }
@@ -68,11 +68,12 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	super.execute();
     	sendErrorReport();
 		
     	if(needsToRampDown()){
     		System.out.println("Profile: Starting Ramp Down");
-			acc = Math.abs(calcAcceleration()) / FRAMERATE;
+			acc = calcAcceleration()/ FRAMERATE;
 			state = State.rampingDown;
 		}
     	
@@ -88,7 +89,7 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 	    		
 	    		break;
 	    	case rampingDown:
-	    		currentSpeed -= acc;
+	    		currentSpeed += acc;
 	    		break;    			
     	}
     	//Robot.drive.setLeftRightOutputs(speedToPercent(currentSpeed), speedToPercent(currentSpeed));
@@ -112,7 +113,7 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 
 	// Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return super.isFinished() || isProfileFinished();
+        return isProfileFinished();// || super.isFinished();
     }
 
     private boolean isProfileFinished() {

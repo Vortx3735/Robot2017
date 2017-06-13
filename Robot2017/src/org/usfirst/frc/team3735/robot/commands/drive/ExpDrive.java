@@ -97,20 +97,21 @@ public class ExpDrive extends Command {
 		
 		
 		
-		if(Robot.oi.getMainRightMagnitude() > .05){
-			fodMove = Math.pow(Robot.oi.getMainRightMagnitude(), fodMoveCo.getValue());
-			fodAngle = Robot.oi.getMainRightAngle();
-			Robot.navigation.getController().setSetpoint(fodAngle);
-			
-			fodTurn = (Math.pow(Robot.navigation.getController().getError(), navxPow.getValue())/180.0) * navxCo.getValue();
-			
+//		if(Robot.oi.getFODMagnitude() > .05){
+//			fodMove = Math.pow(Robot.oi.getFODMagnitude(), fodMoveCo.getValue());
+//			fodAngle = Robot.oi.getFODAngle();
+//			Robot.navigation.getController().setSetpoint(fodAngle);
+//			
+//			fodTurn = (Math.pow(Robot.navigation.getController().getError(), navxPow.getValue())/180.0) * navxCo.getValue();
+//			
+//		
+//		}else{
+//			fodMove = 0;
+//			fodTurn = 0;
+//		}
 		
-		}else{
-			fodMove = 0;
-			fodTurn = 0;
-		}
-		SmartDashboard.putNumber("FOD Move", fodMove);
-		SmartDashboard.putNumber("FOD Turn", fodTurn);
+//		SmartDashboard.putNumber("FOD Move", fodMove);
+//		SmartDashboard.putNumber("FOD Turn", fodTurn);
 
 //		moveSetValue = moveSetValue + fodMove;
 //		turnSetValue = turnSetValue + fodTurn;
