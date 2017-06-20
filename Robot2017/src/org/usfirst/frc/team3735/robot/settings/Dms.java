@@ -1,12 +1,23 @@
-package org.usfirst.frc.team3735.robot;
+package org.usfirst.frc.team3735.robot.settings;
 
-public class Dimensions {
+public class Dms {
+	//all in inches
 
-	public static final double WIDTH = 28;
-	public static final double HALFWIDTH = WIDTH/2;
+	public class Bot{
+
+		public static final double WIDTH = 28;
+		public static final double HALFWIDTH = WIDTH/2;
+		public static final double LENGTH = 28;
+		public static final double HALFLENGTH = LENGTH/2;
+		
+	}
 	
-	public static final double LENGTH = 28;
-	public static final double HALFLENGTH = LENGTH/2;
+	public class Field{
+		//just guesses rn
+		public static final double Length = 1000;
+		public static final double Height = 500;
+	}
+	
 	
 	
 	

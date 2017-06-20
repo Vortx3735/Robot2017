@@ -9,27 +9,33 @@ public class HasReachedAngle extends ComTrigger{
 	private Double targetAngle;
 	private double startAngle;
 	private Double deltaAngle;
+	private boolean isRelative;
 
 	public HasReachedAngle(Double angle){
-		this.targetAngle = angle;
+		this(angle, false);
 	}
 	
 	public HasReachedAngle(double angle){
 		this(new Double(angle));
 	}
 	
-	public HasReachedAngle(Double angle, boolean flag){
+	public HasReachedAngle(Double angle, boolean isRelative){
 		this.deltaAngle = angle;
+		this.isRelative = isRelative;
 	}
 	
-	public HasReachedAngle(double angle, boolean flag){
-		this(new Double(angle), flag);
+	public HasReachedAngle(double angle, boolean isRelative){
+		this(new Double(angle), isRelative);
 	}
 
 	@Override
 	public void initialize() {
 		startAngle = Robot.navigation.getYaw();
-		deltaAngle = degreesToGo();
+		if(isRelative){
+			targetAngle = limit(startAngle + deltaAngle);
+		}else{
+			deltaAngle = degreesToGo();
+		}
 	}
 	
 	@Override
@@ -42,16 +48,25 @@ public class HasReachedAngle extends ComTrigger{
 	}
 
 	public double degreesTraveled(){
-		return VortxMath.continuousLimit(Robot.navigation.getYaw() - startAngle, -180, 180);
+		return limit(Robot.navigation.getYaw() - startAngle);
 	}
 	
 	public double degreesToGo(){
-		return VortxMath.continuousLimit(targetAngle - Robot.navigation.getYaw(), -180, 180);
+		return limit(targetAngle - Robot.navigation.getYaw());
 	}
 	
-	public boolean isWtihinThresh(double d){
-		return Math.abs(degreesToGo()) < d;
+	public double limit(double a){
+		return VortxMath.continuousLimit(a, -180, 180);
 	}
+	
+	public void setTargetAngle(double angle){
+		targetAngle = limit(angle);
+	}
+	
+	public boolean isRelative(){
+		return isRelative;
+	}
+	
 	
 	
 }

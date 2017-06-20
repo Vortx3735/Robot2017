@@ -1,9 +1,9 @@
 package org.usfirst.frc.team3735.robot.subsystems;
 
-import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerOff;
+import org.usfirst.frc.team3735.robot.settings.Constants;
+import org.usfirst.frc.team3735.robot.settings.RobotMap;
 
 import com.ctre.CANTalon;
 

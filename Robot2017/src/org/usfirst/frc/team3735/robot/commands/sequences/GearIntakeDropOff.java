@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3735.robot.commands.sequences;
 
-import org.usfirst.frc.team3735.robot.Constants;
-import org.usfirst.frc.team3735.robot.Constants.GearIntake;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.commands.Wait;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
@@ -12,6 +10,8 @@ import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeLiftDown;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeLiftUp;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersOut;
+import org.usfirst.frc.team3735.robot.settings.Constants;
+import org.usfirst.frc.team3735.robot.settings.Constants.GearIntake;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 import edu.wpi.first.wpilibj.Timer;

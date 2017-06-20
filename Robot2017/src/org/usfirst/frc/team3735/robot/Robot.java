@@ -8,6 +8,8 @@ import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
 import org.usfirst.frc.team3735.robot.commands.sequences.DriveAcquireGear;
 import org.usfirst.frc.team3735.robot.commands.sequences.DrivePlaceGear;
 import org.usfirst.frc.team3735.robot.commands.sequences.GearIntakeDropOff;
+import org.usfirst.frc.team3735.robot.ois.NormieOI;
+import org.usfirst.frc.team3735.robot.settings.Dms;
 import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.subsystems.GearIntake;
@@ -16,6 +18,10 @@ import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team3735.robot.subsystems.Vision;
+import org.usfirst.frc.team3735.robot.triggers.NavxAssist;
+import org.usfirst.frc.team3735.robot.util.Position;
+import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
+import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -34,8 +40,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	SendableChooser<Command> autonomousChooser;
-	Command autonomousCommand;
+	static SendableChooser<Command> autonomousChooser;
+	static Command autonomousCommand;
 	
 	public static BallIntake ballIntake;
 	public static Drive drive;
@@ -45,20 +51,22 @@ public class Robot extends IterativeRobot {
 	public static Navigation navigation;
 	public static Ultrasonic ultra;
 	public static Vision vision;
+	public static DriveOI oi;
 	
-	public static GTAOI oi;
-	public RobotMap robotmap;
-	
-	boolean rightSide = false;
 
+	public enum Side{
+		Left,Right
+	}
 
+	static SendableChooser<Side> sideChooser;
+	public static Side side;
+	static Setting verticalOffset = new Setting("Vertical Offset", 0);
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		robotmap = new RobotMap();
 		gearIntake = new GearIntake();
 		shooter = new Shooter();
 		scaler = new Scaler();
@@ -68,10 +76,9 @@ public class Robot extends IterativeRobot {
 		ultra = new Ultrasonic();
 		vision = new Vision();
 		
-		oi = new GTAOI(); //MUST be instantiated after the subsystems
+		oi = new NormieOI(); //MUST be instantiated after the subsystems
 			
 		autonomousChooser = new SendableChooser<Command>();
-		
 		autonomousChooser.addDefault ("Do Nothing", new AutonDoNothing());
 		autonomousChooser.addObject("Base Line", new AutonBaseline());
 		autonomousChooser.addObject("Left Gear Hopper", new  AutonLeftGearHopper());
@@ -89,6 +96,10 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Testing", new  AutonDriveForwardTest());
 
 		SmartDashboard.putData("AUTONOMOUS SELECTION", autonomousChooser);
+		
+		sideChooser = new SendableChooser<Side>();
+		sideChooser.addDefault("Red", Side.Left);
+		sideChooser.addDefault("Blue", Side.Right);
 		
 		//SmartDashboard.putData("Start Sending Turn Voltages", new RecordTrapTurnData());
 		//SmartDashboard.putData("Start Sending Turn Voltages", new RecordAverageRate());
@@ -123,7 +134,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData(new RecordVoltageData());
 		SmartDashboard.putData(new SendSDVoltage());
-		SmartDashboard.putData(new DriveMoveDistanceProfile2(100, 80, 20, 0));
+		SmartDashboard.putData(new DriveMoveDistanceProfile2(100.0, 30, 20, 0));//.addParallel(new NavxAssist()));
 		
 		log();
 	}
@@ -145,6 +156,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		navigation.zeroYaw();
+		side = sideChooser.getSelected();
+		navigation.setPosition(getStartingPosition());
+		
         autonomousCommand = autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}
@@ -209,6 +223,14 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 
+	}
+
+	public static Position getStartingPosition() {
+		if(sideChooser.getSelected().equals(Side.Left)){
+			return new Position(Dms.Bot.HALFLENGTH, verticalOffset.getValue(), 0);
+		}else{
+			return new Position(Dms.Field.Length - Dms.Bot.HALFLENGTH, verticalOffset.getValue(), 180);
+		}
 	}
 }
 

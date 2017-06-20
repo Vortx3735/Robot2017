@@ -62,7 +62,7 @@ public class DriveTurnToAngleArcadePIDNaik extends Command  implements PIDOutput
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.drive.arcadeDrive(0, rotateToAngleRate, false);
+		Robot.drive.arcadeDrive(0, rotateToAngleRate);
 		showDashTestInfo();
 	}
 
@@ -84,7 +84,7 @@ public class DriveTurnToAngleArcadePIDNaik extends Command  implements PIDOutput
 	// Called once after isFinished returns true
 	protected void end() {
 		turnController.disable();
-		Robot.drive.arcadeDrive(0, 0, false);	
+		Robot.drive.arcadeDrive(0, 0);	
 		Robot.drive.setEnableBrake(true);
 	}
 

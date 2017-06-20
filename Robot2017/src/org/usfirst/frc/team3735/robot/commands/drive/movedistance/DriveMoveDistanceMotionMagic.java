@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
 
-import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.settings.Constants;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
 
 import com.ctre.CANTalon;

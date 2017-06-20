@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
 
-import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.settings.Constants;
 import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
@@ -76,7 +76,7 @@ public class DriveMoveDistanceExpNavx extends Command {
     	}
     	Robot.drive.setUpDriveForSpeedControl();
     	
-		moveMotor			= 0.0;
+		moveMotor		  = 0.0;
 		moveMotorPrevious = 0.0;
     }
 
@@ -88,7 +88,7 @@ public class DriveMoveDistanceExpNavx extends Command {
 		moveMotorPrevious = moveMotor; 
 		moveMotor = moveMotor * Math.pow(Math.abs(moveMotor), MOVE_EXPONENT - 1);
 		
-		Robot.drive.arcadeDrive(moveMotor, turnCorrection, false);	
+		Robot.drive.arcadeDrive(moveMotor, turnCorrection);	
 		
     }
 

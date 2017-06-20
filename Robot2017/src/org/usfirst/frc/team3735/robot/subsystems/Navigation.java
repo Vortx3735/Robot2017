@@ -1,28 +1,19 @@
 package org.usfirst.frc.team3735.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.TalonControlMode;
-
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.RobotMap;
-import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
-import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
+import org.usfirst.frc.team3735.robot.Robot.Side;
+import org.usfirst.frc.team3735.robot.settings.Dms;
 import org.usfirst.frc.team3735.robot.util.PIDCtrl;
+import org.usfirst.frc.team3735.robot.util.Position;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
@@ -37,9 +28,23 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     public static Setting iZone = new Setting("Turning IZone", 10);
     public static Setting actingI = new Setting("Acting I Value", 0.004);
     
-	public static Setting coefficient = new Setting("Navx Drive Coeffecient", 5);
+	public static Setting coefficient = new Setting("Navx Assist Coeffecient", 5);
 	private static Setting outputExponent = new Setting("Nav Output Exponent", 1);
 	private static Setting inputExponent = new Setting("Nav Input Exponent", 1);
+	
+	Position pos;
+	NetworkTable table = NetworkTable.getTable("Robot Position");
+
+	private static Setting pixPerInch = new Setting("Map Pixels Per Inch", 1);
+	private static Setting offset = new Setting("Map offset", 0);
+
+	private double prevLeft;
+
+	private double prevRight;
+
+	private double curLeft;
+
+	private double curRight;
 	
 	public Navigation(){
 		ahrs = new AHRS(SPI.Port.kMXP);
@@ -52,14 +57,36 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     	controller.setAbsoluteTolerance(1);
     	
     	SmartDashboard.putData("Navigation Turning Controller", controller);
-    	
 	}
 
+	public void setPosition(Position p){
+		pos = p;
+	}
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
+    }
+    
+    public void integrate(){
+    	curLeft = Robot.drive.getLeftPositionInches();
+    	curRight = Robot.drive.getRightPositionInches();
+    	
+    	double dd = ((curLeft-prevLeft) + (curRight-prevRight)) * .5;
+    	double angle;
+    	if(Robot.side.equals(Side.Left)){
+    		angle = getYaw() * -1;
+    	}else{
+    		angle = (getYaw() + 180) * -1;
+    	}
+		pos.x += Math.cos(Math.toRadians(angle)) * dd;
+		pos.y += Math.sin(Math.toRadians(angle)) * dd;
+		pos.angle = angle;
+		
+    	prevLeft = curLeft;
+    	prevRight = curRight;
+    	
     }
     
     public double getYaw(){
@@ -85,6 +112,11 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 //    	SmartDashboard.putNumber("Gyro Accel XY Vector", getXYAcceleration());
 
  //     displayDebugGyroData();
+    	double scale = pixPerInch.getValue();
+    	table.putNumberArray("centerX", new double[]{pos.x * scale});
+		table.putNumberArray("centerY", new double[]{pos.y * scale});
+		table.putNumberArray("width", new double[]{Dms.Bot.WIDTH * scale});
+		table.putNumberArray("height", new double[]{Dms.Bot.LENGTH * scale});
     }
     
     

@@ -42,7 +42,7 @@
 
 //values for the final robot
 
-package org.usfirst.frc.team3735.robot;
+package org.usfirst.frc.team3735.robot.settings;
 
 public class RobotMap {
 

@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3735.robot.commands.drive;
 
 
-import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.settings.Constants;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
@@ -16,15 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class ExpDrive extends Command {
-	/************************************/
-	/* Constants						*/
-	/************************************/	
-	//Range is (0,1] , 1 is no filter, .333 or .167, .125 is recommended 
 
-	/************************************/
-	/* Variables						*/
-	/************************************/	
-	
 	private double moveSetValue;
 	private double turnSetValue;
 		
@@ -67,7 +59,7 @@ public class ExpDrive extends Command {
     	moveSetValue = move;
     	turnSetValue = turn;
     	//System.out.println("Exp Move no Joystick");
-    	
+     	
     	requires(Robot.drive);
     	isJoystickInput = false;
     	Robot.drive.setUpDriveForSpeedControl();
@@ -97,24 +89,24 @@ public class ExpDrive extends Command {
 		
 		
 		
-//		if(Robot.oi.getFODMagnitude() > .05){
-//			fodMove = Math.pow(Robot.oi.getFODMagnitude(), fodMoveCo.getValue());
-//			fodAngle = Robot.oi.getFODAngle();
-//			Robot.navigation.getController().setSetpoint(fodAngle);
-//			
-//			fodTurn = (Math.pow(Robot.navigation.getController().getError(), navxPow.getValue())/180.0) * navxCo.getValue();
-//			
-//		
-//		}else{
-//			fodMove = 0;
-//			fodTurn = 0;
-//		}
+		if(Robot.oi.getFODMag() > .05){
+			fodMove = Math.pow(Robot.oi.getFODMag(), fodMoveCo.getValue());
+			fodAngle = Robot.oi.getFODAngle();
+			Robot.navigation.getController().setSetpoint(fodAngle);
+			
+			fodTurn = (Math.pow(Robot.navigation.getController().getError(), navxPow.getValue())/180.0) * navxCo.getValue();
+			
+		
+		}else{
+			fodMove = 0;
+			fodTurn = 0;
+		}
 		
 //		SmartDashboard.putNumber("FOD Move", fodMove);
 //		SmartDashboard.putNumber("FOD Turn", fodTurn);
 
-//		moveSetValue = moveSetValue + fodMove;
-//		turnSetValue = turnSetValue + fodTurn;
+		//moveSetValue = moveSetValue + fodMove;
+		turnSetValue = turnSetValue + fodTurn;
 		
 		
 	
@@ -140,7 +132,7 @@ public class ExpDrive extends Command {
 //		turnMotor = VortxMath.limit(turnMotor, -1, 1);
 
 
-		Robot.drive.arcadeDrive(moveMotor, turnMotor, false);
+		Robot.drive.arcadeDrive(moveMotor, turnMotor);
 		
 		
 		log();

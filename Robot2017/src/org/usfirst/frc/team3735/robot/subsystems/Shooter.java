@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3735.robot.subsystems;
 
-import org.usfirst.frc.team3735.robot.Constants;
-import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterAgitatorOff;
+import org.usfirst.frc.team3735.robot.settings.Constants;
+import org.usfirst.frc.team3735.robot.settings.RobotMap;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 import com.ctre.CANTalon;

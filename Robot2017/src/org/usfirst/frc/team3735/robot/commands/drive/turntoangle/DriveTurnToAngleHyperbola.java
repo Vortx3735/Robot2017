@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.drive.turntoangle;
 
-import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.settings.Constants;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,7 +35,7 @@ public class DriveTurnToAngleHyperbola extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute(){
     	error = Robot.navigation.getController().getError();
-    	Robot.drive.arcadeDrive(0, hype(error), false);
+    	Robot.drive.arcadeDrive(0, hype(error));
     	System.out.println("Turning to angle hype");
     	if(Robot.navigation.getController().onTarget()){
     		timeOnTarget += .02;
@@ -58,7 +58,7 @@ public class DriveTurnToAngleHyperbola extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drive.arcadeDrive(0, hype(error), false);
+    	Robot.drive.arcadeDrive(0, hype(error));
     }
 
     // Called when another command which requires one or more of the same

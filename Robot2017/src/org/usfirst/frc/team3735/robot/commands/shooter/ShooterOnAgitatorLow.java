@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.shooter;
 
-import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.settings.Constants;
 
 import edu.wpi.first.wpilibj.command.Command;
 

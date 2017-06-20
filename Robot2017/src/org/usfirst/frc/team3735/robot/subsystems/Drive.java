@@ -14,11 +14,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team3735.robot.Constants;
-import org.usfirst.frc.team3735.robot.Dimensions;
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.RobotMap;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
+import org.usfirst.frc.team3735.robot.settings.Constants;
+import org.usfirst.frc.team3735.robot.settings.Dms;
+import org.usfirst.frc.team3735.robot.settings.RobotMap;
 import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
 import org.usfirst.frc.team3735.robot.util.recording.RecordableCantalon;
 
@@ -106,13 +106,8 @@ public class Drive extends Subsystem {
 	}
 	
 	public void setPIDSettings(double kp, double ki, double kd){
-		l1.setP(kp);
-		l1.setI(ki);
-		l1.setD(kd);
-		
-		r1.setP(kp);
-		r1.setI(ki);
-		r1.setD(kd);
+		setLeftPID(kp, ki, kd);
+		setRightPID(kp, ki, kd);
 	}
 	
 	public void setLeftPID(double kp, double ki, double kd){
@@ -131,7 +126,7 @@ public class Drive extends Subsystem {
 	}
 	
 	/*******************************
-	 * Default Command For Drive
+	 * Default Command For Driving
 	 *******************************/
 	public void initDefaultCommand() {
 		setDefaultCommand(new ExpDrive());
@@ -140,8 +135,8 @@ public class Drive extends Subsystem {
 	/*******************************
 	 * Drive Functions
 	 *******************************/
-	public void arcadeDrive(double move, double rotate, boolean squareValues) {
-		driveTrain.arcadeDrive(move, (rotate + leftAddTurn + rightAddTurn + visionAssist + navxAssist) * -1, squareValues);
+	public void arcadeDrive(double move, double rotate) {
+		driveTrain.arcadeDrive(move, (rotate + leftAddTurn + rightAddTurn + visionAssist + navxAssist) * -1, false);
 	}
 	public void normalDrive(double move, double curve) {
 		driveTrain.drive(move, curve);
@@ -241,13 +236,13 @@ public class Drive extends Subsystem {
 		if(radius > 0){
 			radius = Math.abs(radius);
 			left = voltage;
-			right = voltage * (radius - Dimensions.HALFWIDTH)/
-							  (radius + Dimensions.HALFWIDTH);
+			right = voltage * (radius - Dms.Bot.HALFWIDTH)/
+							  (radius + Dms.Bot.HALFWIDTH);
 		}else{
 			radius = Math.abs(radius);
 			right = voltage;
-			left = voltage * (radius - Dimensions.HALFWIDTH)/
-				  			 (radius + Dimensions.HALFWIDTH);
+			left = voltage * (radius - Dms.Bot.HALFWIDTH)/
+				  			 (radius + Dms.Bot.HALFWIDTH);
 		}
 		setLeftRight(left, right);
 	}
@@ -383,7 +378,6 @@ public class Drive extends Subsystem {
 		SmartDashboard.putNumber("Drive Right Get", r1.get());
 		
 		SmartDashboard.putNumber("Drive avg speed", getAverageSpeedInches());
-		//changeScaledMaxOutput(scaledMaxOutput);
 	}
 
 
@@ -413,7 +407,7 @@ public class Drive extends Subsystem {
 	}
 	
 	public double getAverageSpeedInches() {
-		return (.5 * ((getLeftSpeed() + getRightSpeed())) * Constants.Drive.InchesPerRotation)/60;
+		return (.5 * ((getLeftSpeed() + getRightSpeed())) * Constants.Drive.InchesPerRotation)/60.0;
 	}
 
 	public void setLeftRight(double left, double right) {
@@ -422,8 +416,19 @@ public class Drive extends Subsystem {
 	}
 
 	public void setNavxAssist(double error) {
-		
+		this.navxAssist = (error/180.0) * Navigation.coefficient.getValue();
 	}
+	
+    /**
+     * 
+     * @param spd	the target speed in inches per second
+     * @return	the percent, which converts spd into normal getspeed units (rpm), and then
+     * 			compensates for the deadzone using gathered data
+     */
+    public static double speedToPercent(double spd){
+    	double speed = Math.abs(spd) *60.0 /Constants.Drive.InchesPerRotation;
+    	return Math.copySign(0.00113174*speed + 0.0944854, spd);
+    }
 
 
 

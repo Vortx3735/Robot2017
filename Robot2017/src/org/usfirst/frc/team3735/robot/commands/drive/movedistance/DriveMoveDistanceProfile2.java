@@ -1,7 +1,8 @@
 package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
 
-import org.usfirst.frc.team3735.robot.Constants;
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.settings.Constants;
+import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.triggers.HasMoved;
 import org.usfirst.frc.team3735.robot.util.TrapProfile;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
@@ -25,11 +26,11 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 	private final double acceleration;	//inches per second^2
 	private final double exitVelocity;	//inches per second
 
-	private double currentSpeed;
+	public double currentSpeed;
 	private State state;
 	private double acc;
 	
-	private HasMoved distHandler;
+	public HasMoved distHandler;
 	
 	
 	private enum State{
@@ -38,7 +39,7 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 		rampingDown
 	}
 
-	public DriveMoveDistanceProfile2(double distance, double v, double a, double exitV) {
+	public DriveMoveDistanceProfile2(Double distance, double v, double a, double exitV) {
 		if(Math.abs(exitV) > v){
 			exitV = v;
 		}
@@ -54,7 +55,7 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {
+    public void initialize() {
     	super.initialize();
     	acc = acceleration/FRAMERATE;
     	currentSpeed = Robot.drive.getAverageSpeedInches();
@@ -67,10 +68,16 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+    public void execute() {
     	super.execute();
     	sendErrorReport();
-		
+		updateProfile();
+
+    	//Robot.drive.setLeftRightOutputs(speedToPercent(currentSpeed), speedToPercent(currentSpeed));
+    	Robot.drive.arcadeDrive(Drive.speedToPercent(currentSpeed), 0);
+    }
+
+    public void updateProfile() {
     	if(needsToRampDown()){
     		System.out.println("Profile: Starting Ramp Down");
 			acc = calcAcceleration()/ FRAMERATE;
@@ -91,12 +98,10 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 	    	case rampingDown:
 	    		currentSpeed += acc;
 	    		break;    			
-    	}
-    	//Robot.drive.setLeftRightOutputs(speedToPercent(currentSpeed), speedToPercent(currentSpeed));
-    	Robot.drive.arcadeDrive(speedToPercent(currentSpeed), 0, false);
-    }
+    	}		
+	}
 
-    private void sendErrorReport() {
+	private void sendErrorReport() {
     	SmartDashboard.putNumber("Profile currentSpeed: ", currentSpeed);
     	SmartDashboard.putNumber("Profile actual Speed", Robot.drive.getAverageSpeedInches());
     	SmartDashboard.putNumber("Profile Error", currentSpeed - Robot.drive.getAverageSpeedInches());
@@ -112,7 +117,7 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return isProfileFinished();// || super.isFinished();
     }
 
@@ -133,15 +138,5 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
     protected void interrupted() {
     }
     
-    /**
-     * 
-     * @param spd	the target speed in inches per second
-     * @return	the percent, which converts spd into normal getspeed units (rpm), and then
-     * 			compensates for the deadzone using gathered data
-     */
-    private double speedToPercent(double spd){
-    	double speed = Math.abs(spd)/Constants.Drive.InchesPerRotation;
-    	speed*=60;
-    	return Math.copySign(0.00113174*speed + 0.0944854, spd);
-    }
+
 }

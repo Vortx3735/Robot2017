@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3735.robot;
+package org.usfirst.frc.team3735.robot.ois;
 
 //import org.usfirst.frc.team3735.robot.commands.DriveTurnToAngleHyperbola;
 import org.usfirst.frc.team3735.robot.commands.*;
@@ -44,6 +44,7 @@ public class GTAOI implements DriveOI{
 
 		//Baby Driver
 		main.pov180.whenPressed(new DriveGoToPeg());
+	
 
 		main.b.whenPressed(new GearIntakeDropOff());
 		main.a.whileHeld(new GearIntakeFeeding());
@@ -77,88 +78,29 @@ public class GTAOI implements DriveOI{
 	
 	public double getDriveMove() {
 		return (main.getRightTrigger() - main.getLeftTrigger());
+		//return main.getLeftY();
 	}
 
 	public double getDriveTurn() {
 		return main.getLeftX();
+		//return main.getRightX();
+	}
+	
+	@Override
+	public double getFODMag() {
+		//return main.getRightMagnitude();
+		return 0;
 	}
 	
 	public double getFODAngle(){
-		return main.getRightAngle();
-	}
-	
-	public double getFODMagnitude(){
+		//return main.getRightAngle();
 		return 0;
-		//return main.getRightMagnitude();
-	}
-	
-	public boolean isOverriddenByDrive(){
-		return Math.abs(main.getLeftX()) > .1 || main.getLeftTrigger() > .1 || main.getRightTrigger() > .1;
 	}
 
 	
-//	@Override
-//	public double getMainLeftX() {
-//		return main.getLeftX();
-//	}
-//
-//	@Override
-//	public double getMainLeftY() {
-//		return main.getLeftY();
-//	}
-//
-//	@Override
-//	public double getMainRightX() {
-//		return main.getRightX();
-//	}
-//
-//	@Override
-//	public double getMainRightY() {
-//		return main.getRightY();
-//	}
-//
-//	@Override
-//	public double getMainLeftTrigger() {
-//		return main.getLeftTrigger();
-//	}
-//
-//	@Override
-//	public double getMainRightTrigger() {
-//		return main.getRightTrigger();
-//	}
-//	public double getMainRightMagnitude() {
-//		return main.getRightMagnitude();
-//	}
-//
-//	// returns the angle of the right main joystick in degrees in the range
-//	// (-180, 180]
-//	public double getMainRightAngle() {
-//		return main.getRightAngle();
-//	}
-//
-//	public double getCoLeftX() {
-//		return co.getLeftX();
-//	}
-//
-//	public double getCoLeftY() {
-//		return co.getLeftY();
-//	}
-//
-//	public double getCoRightX() {
-//		return co.getRightX();
-//	}
-//
-//	public double getCoRightY() {
-//		return co.getRightY();
-//	}
-//
-//	public double getCoLeftTrigger() {
-//		return co.getLeftTrigger();
-//	}
-//
-//	public double getCoRightTrigger() {
-//		return co.getRightTrigger();
-//	}
+	public boolean isOverriddenByDrive(){
+		return Math.abs(getDriveMove()) > .1 || Math.abs(getDriveTurn()) > .1;
+	}
 
 	
 	public void log() {
@@ -169,10 +111,6 @@ public class GTAOI implements DriveOI{
 	}
 
 
-@Override
-public double getFODMag() {
-	// TODO Auto-generated method stub
-	return 0;
-}
+
 
 }
