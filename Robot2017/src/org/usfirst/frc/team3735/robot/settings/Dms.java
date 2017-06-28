@@ -1,21 +1,29 @@
 package org.usfirst.frc.team3735.robot.settings;
 
+//it stands for Dimensions if you haven't figured that out
 public class Dms {
 	//all in inches
 
 	public class Bot{
 
-		public static final double WIDTH = 28;
-		public static final double HALFWIDTH = WIDTH/2;
-		public static final double LENGTH = 28;
-		public static final double HALFLENGTH = LENGTH/2;
+		public static final double WIDTH = 37;
+		public static final double HALFWIDTH = WIDTH/2.0;
+		public static final double LENGTH = 31;
+		public static final double HALFLENGTH = LENGTH/2.0;
 		
 	}
 	
 	public class Field{
 		//just guesses rn
-		public static final double Length = 1000;
-		public static final double Height = 500;
+		public static final double LENGTH = 1000;
+		public static final double WIDTH = 500;
+		public static final double BASELINE = 0;
+
+		public class AirShip{
+			public static final double SIDELENGTH = 0;
+			public static final double DISTANCEFROMWALL = 0;
+
+		}
 	}
 	
 	

@@ -22,101 +22,52 @@ import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
 
 public class ChineseOI implements DriveOI{
 	
-	ChineseBoard joystick;
+	ChineseBoard board;
 	
 	public ChineseOI() {
-		joystick = new ChineseBoard();
-		joystick.l.whenPressed(new DriveGoToPeg());
-		joystick.mJoyButton.whenPressed(new GearIntakeDropOff());
-		joystick.rJoyButton.whileHeld(new GearIntakeFeeding());
+		board = new ChineseBoard();
+		board.l.whenPressed(new DriveGoToPeg());
+		board.mJoyButton.whenPressed(new GearIntakeDropOff());
+		board.rJoyButton.whileHeld(new GearIntakeFeeding());
 		//main.x.whileHeld(new DriveAddSensitiveLeft());
 		//main.y.whileHeld(new DriveAddSensitiveRight());
-		joystick.k.whenPressed(new DriveChangeToGearDirection());
-		joystick.m.whenPressed(new DriveChangeToBallDirection());
+		board.k.whenPressed(new DriveChangeToGearDirection());
+		board.m.whenPressed(new DriveChangeToBallDirection());
 		//Co-Driver
-		joystick.lWhiteButton.whenPressed(new ScalerUp(1));
-		joystick.rWhiteButton.whenPressed(new ScalerOff());
-		joystick.a.whileHeld(new GearIntakeRollersIn());
-		joystick.b.whileHeld(new GearIntakeRollersOut());
-		joystick.c.whenPressed(new ShooterAgitatorOn(31000, 10));
-		joystick.d.whenPressed(new ShooterAgitatorOn(28000, 10));
-		joystick.e.whenPressed(new ShooterAgitatorOn(25000, 10));
-		joystick.f.whenPressed(new ShooterAgitatorOff());	
-		joystick.g.whenPressed(new BallIntakeRollerOff());
-		joystick.h.whenPressed(new BallIntakeRollerIn());
-		joystick.j.whenPressed(new InterruptOperations());
+		board.lWhiteButton.whenPressed(new ScalerUp(1));
+		board.rWhiteButton.whenPressed(new ScalerOff());
+		board.a.whileHeld(new GearIntakeRollersIn());
+		board.b.whileHeld(new GearIntakeRollersOut());
+		board.c.whenPressed(new ShooterAgitatorOn(31000, 10));
+		board.d.whenPressed(new ShooterAgitatorOn(28000, 10));
+		board.e.whenPressed(new ShooterAgitatorOn(25000, 10));
+		board.f.whenPressed(new ShooterAgitatorOff());	
+		board.g.whenPressed(new BallIntakeRollerOff());
+		board.h.whenPressed(new BallIntakeRollerIn());
+		board.j.whenPressed(new InterruptOperations());
 	}
 
 	public double getDriveMove() {
-		return getMainRightY();
+		return board.getMiddleY();
 	}
 
 	 
 	public double getDriveTurn() {
-		return getMainRightX()* + getMainLeftX() + getMainRightZ()*.6;
+		return board.getRightX() * .7 + board.getMiddleX() * .3 + board.getRightZ() * .2;
 	}
 	
-	public double getMainRightMagnitude() {
-		return joystick.getMiddleMagnitude();
-	}
-	
-	public boolean isOverriddenByDrive(){
-		return Math.abs(getMainLeftX()) > .1 || getDriveMove() > .1;
-	}
-
-	// returns the angle of the right main joystick in degrees in the range
-	// (-180, 180]
-	public double getMainRightAngle() {
-		return joystick.getMiddleAngle();
-	}
-
-	 
-	public double getMainLeftX() {
-		return joystick.getMiddleX();
-	}
-
-	 
-	public double getMainLeftY() {
-		return joystick.getMiddleY();
-	}
-	
-	public double getMainLeftZ() {
-		return joystick.getMiddleZ();
-	}
-	
-	public double getMainRightZ() {
-		return joystick.getRightZ();
-	}
-
-	 
-	public double getMainRightX() {
-		return joystick.getRightX();
-	}
-
-	 
-	public double getMainRightY() {
-		return joystick.getRightY();
-	}
-	 
-	public double getCoLeftX() {
-		return joystick.getLeftX();
-	}
-
-	 
-	public double getCoLeftY() {
-		return joystick.getLeftY();
-	}
-
 	@Override
 	public double getFODMag() {
-		// TODO Auto-generated method stub
-		return 0;
+		return board.getLeftMagnitude();
 	}
 
 	@Override
 	public double getFODAngle() {
-		// TODO Auto-generated method stub
-		return 0;
+		return board.getLeftAngle();
+	}
+	
+	public boolean isOverriddenByDrive(){
+		return Math.abs(getDriveTurn()) > .1 || Math.abs(getDriveMove()) > .1;
 	}
 
 	@Override

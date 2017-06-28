@@ -1,5 +1,9 @@
 package org.usfirst.frc.team3735.robot.util.cmds;
 
+import java.util.ArrayList;
+
+import edu.wpi.first.wpilibj.command.Subsystem;
+
 /*
  * A class that can be added to a VortxCommand.
  * when get returns true, the command will halt.
@@ -8,12 +12,17 @@ package org.usfirst.frc.team3735.robot.util.cmds;
  */
 public abstract class ComTrigger {
 	
+	public ArrayList<Subsystem> requirements = new ArrayList<Subsystem>();
 
 	
 	public abstract boolean get();
 
 	public void initialize(){
 		
+	}
+	
+	public void requires(Subsystem s){
+		requirements.add(s);
 	}
 	
 }

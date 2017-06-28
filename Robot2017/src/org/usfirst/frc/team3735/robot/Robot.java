@@ -1,13 +1,17 @@
 package org.usfirst.frc.team3735.robot;
 
+import org.usfirst.frc.team3735.robot.assists.NavxAssist;
 import org.usfirst.frc.team3735.robot.commands.RecordVoltageData;
 import org.usfirst.frc.team3735.robot.commands.SendSDVoltage;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceProfile2;
+import org.usfirst.frc.team3735.robot.commands.drive.spinnyspin.DriveMoveInCircleProfile;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
 import org.usfirst.frc.team3735.robot.commands.sequences.DriveAcquireGear;
 import org.usfirst.frc.team3735.robot.commands.sequences.DrivePlaceGear;
 import org.usfirst.frc.team3735.robot.commands.sequences.GearIntakeDropOff;
+import org.usfirst.frc.team3735.robot.ois.DemoOI;
+import org.usfirst.frc.team3735.robot.ois.GTAOI;
 import org.usfirst.frc.team3735.robot.ois.NormieOI;
 import org.usfirst.frc.team3735.robot.settings.Dms;
 import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
@@ -18,7 +22,6 @@ import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team3735.robot.subsystems.Vision;
-import org.usfirst.frc.team3735.robot.triggers.NavxAssist;
 import org.usfirst.frc.team3735.robot.util.Position;
 import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
@@ -40,8 +43,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	static SendableChooser<Command> autonomousChooser;
-	static Command autonomousCommand;
+	SendableChooser<Command> autonomousChooser;
+	Command autonomousCommand;
 	
 	public static BallIntake ballIntake;
 	public static Drive drive;
@@ -54,13 +57,12 @@ public class Robot extends IterativeRobot {
 	public static DriveOI oi;
 	
 
-	public enum Side{
+	public static enum Side{
 		Left,Right
 	}
 
-	static SendableChooser<Side> sideChooser;
+	public static SendableChooser<Side> sideChooser;
 	public static Side side;
-	static Setting verticalOffset = new Setting("Vertical Offset", 0);
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -76,7 +78,7 @@ public class Robot extends IterativeRobot {
 		ultra = new Ultrasonic();
 		vision = new Vision();
 		
-		oi = new NormieOI(); //MUST be instantiated after the subsystems
+		oi = new DemoOI(); //MUST be instantiated after the subsystems
 			
 		autonomousChooser = new SendableChooser<Command>();
 		autonomousChooser.addDefault ("Do Nothing", new AutonDoNothing());
@@ -99,11 +101,17 @@ public class Robot extends IterativeRobot {
 		
 		sideChooser = new SendableChooser<Side>();
 		sideChooser.addDefault("Red", Side.Left);
-		sideChooser.addDefault("Blue", Side.Right);
-		
+		sideChooser.addObject("Blue", Side.Right);
+		SmartDashboard.putData("Side Selection", sideChooser);
 		//SmartDashboard.putData("Start Sending Turn Voltages", new RecordTrapTurnData());
 		//SmartDashboard.putData("Start Sending Turn Voltages", new RecordAverageRate());
-
+		SmartDashboard.putData("Reset Position", new InstantCommand(){
+			@Override
+			public void initialize(){
+				navigation.setPosition(navigation.getStartingPosition());
+				this.setRunWhenDisabled(true);
+			}
+		});
 //		SmartDashboard.putData("Record Data", new RecordSmartDashboardFile());
 //		SmartDashboard.putData("Send Data", new SendSmartDashboardFile());
 		SmartDashboard.putData("Gear Dropoff", new GearIntakeDropOff());
@@ -134,8 +142,9 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData(new RecordVoltageData());
 		SmartDashboard.putData(new SendSDVoltage());
-		SmartDashboard.putData(new DriveMoveDistanceProfile2(100.0, 30, 20, 0));//.addParallel(new NavxAssist()));
-		
+		SmartDashboard.putData(new DriveMoveDistanceProfile2(100.0, 30, 30, 0));//.addParallel(new NavxAssist()));
+		SmartDashboard.putData(new DriveMoveInCircleProfile(50, 90, true, 30, 60, 0));
+		side = Side.Left;
 		log();
 	}
 	
@@ -156,8 +165,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		navigation.zeroYaw();
-		side = sideChooser.getSelected();
-		navigation.setPosition(getStartingPosition());
+		if(sideChooser.getSelected() != null){
+			side = sideChooser.getSelected();
+		};
+		navigation.setPosition(navigation.getStartingPosition());
 		
         autonomousCommand = autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
@@ -169,6 +180,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		navigation.integrate();
 		log();
 	}
 
@@ -187,6 +199,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        navigation.integrate();
         log();
 	}
 
@@ -225,12 +238,6 @@ public class Robot extends IterativeRobot {
 
 	}
 
-	public static Position getStartingPosition() {
-		if(sideChooser.getSelected().equals(Side.Left)){
-			return new Position(Dms.Bot.HALFLENGTH, verticalOffset.getValue(), 0);
-		}else{
-			return new Position(Dms.Field.Length - Dms.Bot.HALFLENGTH, verticalOffset.getValue(), 180);
-		}
-	}
+
 }
 

@@ -20,8 +20,13 @@ public class HasReachedAngle extends ComTrigger{
 	}
 	
 	public HasReachedAngle(Double angle, boolean isRelative){
-		this.deltaAngle = angle;
 		this.isRelative = isRelative;
+		if(isRelative){
+			this.deltaAngle = angle;
+		}else{
+			this.targetAngle = angle;
+		}
+
 	}
 	
 	public HasReachedAngle(double angle, boolean isRelative){

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /*
  * A class that allows users to make triggers, that one can add to a command, that
@@ -48,11 +49,17 @@ public class VortxCommand extends Command{
 	
 	public VortxCommand addTrigger(ComTrigger t){
 		triggers.add(t);
+		for(Subsystem s : t.requirements){
+			requires(s);
+		}
 		return this;
 	}
 	
 	public VortxCommand addParallel(ComAssist c){
 		assists.add(c);
+		for(Subsystem s : c.requirements){
+			requires(s);
+		}
 		return this;
 	}
 	

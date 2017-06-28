@@ -32,79 +32,77 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class GTAOI implements DriveOI{
+public class DemoOI implements DriveOI{
 
 	public XboxController main;
 	public XboxController co;
-
-	public GTAOI() {
+	
+	private boolean driveEnabled = true;
+	public DemoOI() {
 
 		main = new XboxController(0);
 		co = new XboxController(1);
 
 		//Baby Driver
-		//main.pov180.whenPressed(new DriveGoToPeg());
-		main.pov90.whileHeld(new DriveAddSensitiveRight());
-		main.pov270.whileHeld(new DriveAddSensitiveLeft());
-
-
-		main.b.whenPressed(new GearIntakeDropOff());
-		main.a.whileHeld(new GearIntakeFeeding());
-//		main.x.whileHeld(new DriveAddSensitiveLeft());
-//		main.y.whileHeld(new DriveAddSensitiveRight());
-
-		main.start.whenPressed(new DriveChangeToGearDirection());
-		main.back.whenPressed(new DriveChangeToBallDirection());
 		
+		main.lt.whenPressed(new GearIntakeDropOff());
+		main.rt.whileHeld(new GearIntakeFeeding());
 		
 		//CoDriver
-		co.y.whenPressed(new ScalerUp(1));
-		co.x.whenPressed(new ScalerOff());
-		co.a.whileHeld(new GearIntakeRollersIn());
-		co.b.whileHeld(new GearIntakeRollersOut());
-
 		co.pov0.whenPressed(new ShooterAgitatorOn(31000, 10));
 		co.pov90.whenPressed(new ShooterAgitatorOn(28000, 10));
 		co.pov180.whenPressed(new ShooterAgitatorOn(25000, 10));
 		co.pov270.whenPressed(new ShooterAgitatorOff());
 		
+		co.start.whenPressed(new InterruptOperations());
+		
+		co.a.whileHeld(new GearIntakeRollersIn());
+		co.b.whileHeld(new GearIntakeRollersOut());
+
 		co.lt.whenPressed(new BallIntakeRollerOff());
 		co.lb.whenPressed(new BallIntakeRollerIn());
 		
-		co.start.whenPressed(new InterruptOperations());
-		
-		
-		
+		co.x.whenPressed(new InstantCommand(){
+			@Override
+			public void initialize(){
+				driveEnabled = false;
+			}
+		});
+		co.y.whenPressed(new InstantCommand(){
+			@Override
+			public void initialize(){
+				driveEnabled = true;
+			}
+		});
+
 	}
 	
-	
+	@Override
 	public double getDriveMove() {
-		return (main.getRightTrigger() - main.getLeftTrigger());
-		//return main.getLeftY();
+		return driveEnabled ? main.getLeftY() : 0;
 	}
 
+	@Override
 	public double getDriveTurn() {
-		return main.getLeftX();
-		//return main.getRightX();
+		return driveEnabled ? main.getRightX() : 0;
 	}
 	
 	@Override
 	public double getFODMag() {
-		return main.getRightMagnitude();
-		//return 0;
+		return 0;
 	}
 	
+	@Override
 	public double getFODAngle(){
-		return main.getRightAngle();
-		//return 0;
+		return 0;
 	}
 
-	
+	@Override
 	public boolean isOverriddenByDrive(){
 		return Math.abs(getDriveMove()) > .1 || Math.abs(getDriveTurn()) > .1;
 	}
 
-	
+	@Override
 	public void log() {
 //		SmartDashboard.putNumber("right joystick angle", getMainRightAngle());
 //		SmartDashboard.putNumber("right joystick magnitude",

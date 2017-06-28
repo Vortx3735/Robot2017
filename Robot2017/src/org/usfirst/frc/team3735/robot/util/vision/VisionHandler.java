@@ -32,7 +32,9 @@ public class VisionHandler {
 	private ArrayList<MatOfPoint> contOutput;
 	ArrayList<Rect> rects = new ArrayList<Rect>();
 
-	private Rect target = new Rect();
+	public Rect target = new Rect();
+	
+	public static Rect nullTarget = new Rect(-1,-1,-1,-1);
 	
 	public enum VisionType{
 		Normal,
@@ -352,26 +354,32 @@ public class VisionHandler {
 	double[] heights = {0};
 	
 	public void publishAll(){
-		if(allSquaresTable != null && rects != null){
-			centerXs = new double[rects.size()];
-			centerYs = new double[rects.size()];
-			widths = new double[rects.size()];
-			heights = new double[rects.size()];
-			
-			for(int i = 0; i < rects.size(); i++){
-				Rect r = rects.get(i);
-				centerXs[i] = getCX(r);
-				centerYs[i] = getCY(r);
-				widths[i] = r.width;
-				heights[i] = r.height;
+		synchronized(imgLock){
+			if(allSquaresTable != null && rects != null){
+				centerXs = new double[rects.size()];
+				centerYs = new double[rects.size()];
+				widths = new double[rects.size()];
+				heights = new double[rects.size()];
+				
+				for(int i = 0; i < rects.size(); i++){
+					Rect r = rects.get(i);
+					if(r != null){
+						centerXs[i] = getCX(r);
+						centerYs[i] = getCY(r);
+						widths[i] = r.width;
+						heights[i] = r.height;
+					}
+					
+				}
 			}
+			
+			allSquaresTable.putNumberArray("centerX", centerXs);
+			allSquaresTable.putNumberArray("centerY", centerYs);
+			allSquaresTable.putNumberArray("width", widths);
+			allSquaresTable.putNumberArray("height", heights);
+
 		}
 		
-		allSquaresTable.putNumberArray("centerX", centerXs);
-		allSquaresTable.putNumberArray("centerY", centerYs);
-		allSquaresTable.putNumberArray("width", widths);
-		allSquaresTable.putNumberArray("height", heights);
-
 	}
 
 

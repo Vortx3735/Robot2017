@@ -57,11 +57,12 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
     // Called just before this Command runs the first time
     public void initialize() {
     	super.initialize();
+    	distHandler.initialize();
     	acc = acceleration/FRAMERATE;
     	currentSpeed = Robot.drive.getAverageSpeedInches();
     	Robot.drive.changeControlMode(TalonControlMode.PercentVbus);
     	state = State.rampingUp;
-    	if(currentSpeed * exitVelocity < 0){
+    	if(currentSpeed * distHandler.distance() < 0){
     		System.out.println("Profile Error: Robot is moving in the wrong direction");
     	}
 
@@ -118,11 +119,18 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 
 	// Make this return true when this Command no longer needs to run execute()
     public boolean isFinished() {
-        return isProfileFinished();// || super.isFinished();
+        if(super.isFinished()){
+        	System.out.println("Profile canceled by distance");
+        	return true;
+        }else if(isProfileFinished()){
+        	System.out.println("Profile canceled by itself");
+        	return true;
+        }
+        return false;
     }
 
     private boolean isProfileFinished() {
-		if(exitVelocity > 0){
+		if(cruiseVelocity > 0){
 			return (state == State.rampingDown) && (Robot.drive.getAverageSpeedInches() < exitVelocity);
 		}else{
 			return (state == State.rampingDown) && (Robot.drive.getAverageSpeedInches() > exitVelocity);

@@ -16,8 +16,8 @@ public class Constants {
 		//exp drive
 		public static final double moveReactivity = .600;	//(0,1] (least reactive, most reactive]
 		public static final double turnReactivity = .700;	//(0,1] (least reactive, most reactive]	
-		public static final double scaledMaxMove = 1;
-		public static final double scaledMaxTurn = 1;	//(0,1] directly to the arcadedrive turn value
+		public static final double scaledMaxMove = .4;
+		public static final double scaledMaxTurn = .4;	//(0,1] directly to the arcadedrive turn value
 		//these retain the range but shift more of the action towards lower values as the exponent is raised higher
 		//graph y = x * x^(p-1) {-1 < x < 1} for visualization
 		public static final double moveExponent = 3;		//[1,inf) 1 is linear, 2 is squared (normal), etc.

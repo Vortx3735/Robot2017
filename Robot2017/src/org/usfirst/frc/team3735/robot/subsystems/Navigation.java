@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.Robot.Side;
+//import org.usfirst.frc.team3735.robot.Robot.Side;
 import org.usfirst.frc.team3735.robot.settings.Dms;
 import org.usfirst.frc.team3735.robot.util.PIDCtrl;
 import org.usfirst.frc.team3735.robot.util.Position;
@@ -24,29 +25,24 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 	private AHRS ahrs;
 	
 	private PIDCtrl controller;
-	
+
     public static Setting iZone = new Setting("Turning IZone", 10);
     public static Setting actingI = new Setting("Acting I Value", 0.004);
-    
+    public static Setting verticalOffset = new Setting("Vertical Offset", 0);
 	public static Setting coefficient = new Setting("Navx Assist Coeffecient", 5);
 	private static Setting outputExponent = new Setting("Nav Output Exponent", 1);
 	private static Setting inputExponent = new Setting("Nav Input Exponent", 1);
 	
-	Position pos;
-	NetworkTable table = NetworkTable.getTable("Robot Position");
-
-	private static Setting pixPerInch = new Setting("Map Pixels Per Inch", 1);
-	private static Setting offset = new Setting("Map offset", 0);
+	Position pos = new Position(0,0,0);
+	NetworkTable table;
 
 	private double prevLeft;
-
 	private double prevRight;
-
 	private double curLeft;
-
 	private double curRight;
 	
 	public Navigation(){
+		table = NetworkTable.getTable("MAP");
 		ahrs = new AHRS(SPI.Port.kMXP);
 		controller = new PIDCtrl(.016,0.0,0.061,this,this);
     	controller.setOutputRange(-.5, .5);
@@ -74,7 +70,7 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     	curRight = Robot.drive.getRightPositionInches();
     	
     	double dd = ((curLeft-prevLeft) + (curRight-prevRight)) * .5;
-    	double angle;
+    	double angle = 0;
     	if(Robot.side.equals(Side.Left)){
     		angle = getYaw() * -1;
     	}else{
@@ -82,7 +78,7 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     	}
 		pos.x += Math.cos(Math.toRadians(angle)) * dd;
 		pos.y += Math.sin(Math.toRadians(angle)) * dd;
-		pos.angle = angle;
+		pos.angle = angle * -1;
 		
     	prevLeft = curLeft;
     	prevRight = curRight;
@@ -112,11 +108,9 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 //    	SmartDashboard.putNumber("Gyro Accel XY Vector", getXYAcceleration());
 
  //     displayDebugGyroData();
-    	double scale = pixPerInch.getValue();
-    	table.putNumberArray("centerX", new double[]{pos.x * scale});
-		table.putNumberArray("centerY", new double[]{pos.y * scale});
-		table.putNumberArray("width", new double[]{Dms.Bot.WIDTH * scale});
-		table.putNumberArray("height", new double[]{Dms.Bot.LENGTH * scale});
+    	table.putNumberArray("centerX", new double[]{pos.x});
+		table.putNumberArray("centerY", new double[]{pos.y});
+		table.putNumberArray("angle", new double[]{pos.angle});
     }
     
     
@@ -243,7 +237,13 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 		return Math.hypot(ahrs.getWorldLinearAccelY(), ahrs.getWorldLinearAccelX());
 	}
 	
-	
+	public Position getStartingPosition() {
+		if(Robot.side.equals(Side.Left)){
+			return new Position(Dms.Bot.HALFLENGTH, verticalOffset.getValue(), 0);
+		}else{
+			return new Position(Dms.Field.LENGTH - Dms.Bot.HALFLENGTH, verticalOffset.getValue(), 180);
+		}
+	}
     
 }
 

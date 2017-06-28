@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3735.robot.triggers;
+package org.usfirst.frc.team3735.robot.assists;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.util.cmds.ComAssist;

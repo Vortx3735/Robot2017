@@ -36,11 +36,15 @@ public class HasMoved extends ComTrigger{
 
 	
 	public double distanceTraveled(){
-		return .5 * ((Robot.drive.getLeftPositionInches() - lsd) + (Robot.drive.getRightPositionInches() - lsd));
+		return .5 * ((Robot.drive.getLeftPositionInches() - lsd) + (Robot.drive.getRightPositionInches() - rsd));
 	}
 	
 	public double distanceToGo(){
 		return deltaDistance - distanceTraveled();
+	}
+	
+	public double distance(){
+		return deltaDistance.doubleValue();
 	}
 	
 	
