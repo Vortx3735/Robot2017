@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3735.robot.util.settings;
 
+import java.util.ArrayList;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Setting {
@@ -10,6 +12,9 @@ public class Setting {
 	private boolean isReceiving;
 	private boolean isVisible;
 	
+	private static ArrayList<Setting> settings = new ArrayList<Setting>();
+	private static int fIteration;
+	
 	public Setting(String name, double defaultValue){
 		this.name = name;
 		this.value = defaultValue;
@@ -17,6 +22,7 @@ public class Setting {
 		SmartDashboard.putNumber(name, defaultValue);
 		isVisible = true;
 		isReceiving = true;
+		settings.add(this);
 	}
 
 	
@@ -40,16 +46,47 @@ public class Setting {
 
 	
 	public double getValue(){
-		if(isReceiving){
-			value = SmartDashboard.getNumber(name, value);
-		}
 		return value;
 	}
+	
+	public double getValueFetched() {
+		fetch();
+		return value;
+	}
+	
+	public void fetch() {
+		if(isReceiving) {
+			value = SmartDashboard.getNumber(name, value);
+		}
+	}
+	
+
 	
 	public void setValue(double value){
 		this.value = value;
 		if(isVisible){
 			SmartDashboard.putNumber(name, this.value);
+		}
+	}
+	
+	public static void fetchAll() {
+		for(Setting s : settings) {
+			s.fetch();
+		}
+	}
+	
+	/**
+	 * This method is designed to be called every tick, and only fetches one setting at a time,
+	 * which helps by not retrieving everything from the SDB at once every tick, or once every second.
+	 * Number of Settings as of 6/29: 19. so every setting is updated every .4 seconds
+	 */
+	public static void fetchAround() {
+		if(settings != null && !settings.isEmpty()) {
+			fIteration++;
+			if(fIteration >= settings.size()) {
+				fIteration = 0;
+			}
+			settings.get(fIteration).fetch();
 		}
 	}
 	

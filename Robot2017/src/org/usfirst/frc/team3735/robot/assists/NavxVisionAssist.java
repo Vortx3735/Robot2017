@@ -1,16 +1,17 @@
 package org.usfirst.frc.team3735.robot.assists;
 
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.subsystems.Vision;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
 import org.usfirst.frc.team3735.robot.util.cmds.ComAssist;
+import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 public class NavxVisionAssist extends ComAssist{
 
     private Pipes pipe;
 	private double prevWorking = 0;
-	
 
 	public NavxVisionAssist(Pipes p){
 		this.pipe = p;
@@ -37,9 +38,9 @@ public class NavxVisionAssist extends ComAssist{
 				);
 				prevWorking = input;
 			}
-    		Robot.drive.setNavxAssist((Robot.navigation.getController().getError()));
+    		Robot.drive.setVisionAssist((Robot.navigation.getController().getError()/180.0) * Navigation.navVisCo.getValue());
     	}else{
-    		Robot.drive.setNavxAssist(0);
+    		Robot.drive.setVisionAssist(0);
     	}
 	}
 	

@@ -2,6 +2,7 @@ package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.assists.NavxAssist;
 import org.usfirst.frc.team3735.robot.commands.RecordVoltageData;
+import org.usfirst.frc.team3735.robot.commands.ResetPosition;
 import org.usfirst.frc.team3735.robot.commands.SendSDVoltage;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceProfile2;
@@ -81,56 +82,47 @@ public class Robot extends IterativeRobot {
 		oi = new DemoOI(); //MUST be instantiated after the subsystems
 			
 		autonomousChooser = new SendableChooser<Command>();
-		autonomousChooser.addDefault ("Do Nothing", new AutonDoNothing());
-		autonomousChooser.addObject("Base Line", new AutonBaseline());
-		autonomousChooser.addObject("Left Gear Hopper", new  AutonLeftGearHopper());
-		autonomousChooser.addObject("Left Gear", new  AutonLeftGear());
-		autonomousChooser.addObject("Left Gear Baseline", new  AutonLeftGearBaseline());
-		autonomousChooser.addObject("Left Gear Balls", new  AutonLeftGearBalls());
-		autonomousChooser.addObject("Middle Gear Left Gear", new  AutonMiddleGearLeftGear());
-		autonomousChooser.addObject("Middle Gear Left Balls", new  AutonMiddleGearLeftBalls());
-		autonomousChooser.addObject("Middle Gear", new  AutonMiddleGear());
-		autonomousChooser.addObject("Middle Gear Right Balls", new  AutonMiddleGearRightBalls());
-		autonomousChooser.addObject("Middle Gear Right Gear", new  AutonMiddleGearRightGear());
-		autonomousChooser.addObject("Right Gear", new  AutonRightGear());
-		autonomousChooser.addObject("Right Gear Baseline", new  AutonRightGearBaseline());
-		autonomousChooser.addObject("Right Gear Balls", new  AutonRightGearBalls());
-		autonomousChooser.addObject("Testing", new  AutonDriveForwardTest());
-
+			autonomousChooser.addDefault ("Do Nothing", new AutonDoNothing());
+			autonomousChooser.addObject("Base Line", new AutonBaseline());
+			autonomousChooser.addObject("Left Gear Hopper", new  AutonLeftGearHopper());
+			autonomousChooser.addObject("Left Gear", new  AutonLeftGear());
+			autonomousChooser.addObject("Left Gear Baseline", new  AutonLeftGearBaseline());
+			autonomousChooser.addObject("Left Gear Balls", new  AutonLeftGearBalls());
+			autonomousChooser.addObject("Middle Gear Left Gear", new  AutonMiddleGearLeftGear());
+			autonomousChooser.addObject("Middle Gear Left Balls", new  AutonMiddleGearLeftBalls());
+			autonomousChooser.addObject("Middle Gear", new  AutonMiddleGear());
+			autonomousChooser.addObject("Middle Gear Right Balls", new  AutonMiddleGearRightBalls());
+			autonomousChooser.addObject("Middle Gear Right Gear", new  AutonMiddleGearRightGear());
+			autonomousChooser.addObject("Right Gear", new  AutonRightGear());
+			autonomousChooser.addObject("Right Gear Baseline", new  AutonRightGearBaseline());
+			autonomousChooser.addObject("Right Gear Balls", new  AutonRightGearBalls());
+			autonomousChooser.addObject("Testing", new  AutonDriveForwardTest());
 		SmartDashboard.putData("AUTONOMOUS SELECTION", autonomousChooser);
 		
 		sideChooser = new SendableChooser<Side>();
-		sideChooser.addDefault("Red", Side.Left);
-		sideChooser.addObject("Blue", Side.Right);
+			sideChooser.addDefault("Red", Side.Left);
+			sideChooser.addObject("Blue", Side.Right);
 		SmartDashboard.putData("Side Selection", sideChooser);
+		
 		//SmartDashboard.putData("Start Sending Turn Voltages", new RecordTrapTurnData());
 		//SmartDashboard.putData("Start Sending Turn Voltages", new RecordAverageRate());
-		SmartDashboard.putData("Reset Position", new InstantCommand(){
-			@Override
-			public void initialize(){
-				navigation.setPosition(navigation.getStartingPosition());
-				this.setRunWhenDisabled(true);
-			}
-		});
+		SmartDashboard.putData("Reset Position", new ResetPosition());
 //		SmartDashboard.putData("Record Data", new RecordSmartDashboardFile());
 //		SmartDashboard.putData("Send Data", new SendSmartDashboardFile());
 		SmartDashboard.putData("Gear Dropoff", new GearIntakeDropOff());
 		SmartDashboard.putData("Scaler Start", new ScalerUp(1));
-		
-		SmartDashboard.putData("Resume Thread", new InstantCommand(){
-			@Override
-			public void initialize(){
-				Robot.vision.resume();
-			}
-		});
-		
-		SmartDashboard.putData("Pause Thread", new InstantCommand(){
-			@Override
-			public void initialize(){
-				Robot.vision.pause();
-			}
-		});
-		
+//		SmartDashboard.putData("Resume Thread", new InstantCommand(){
+//			@Override
+//			public void initialize(){
+//				Robot.vision.resume();
+//			}
+//		});
+//		SmartDashboard.putData("Pause Thread", new InstantCommand(){
+//			@Override
+//			public void initialize(){
+//				Robot.vision.pause();
+//			}
+//		});
 		SmartDashboard.putData("Acquire Gear", new  DriveAcquireGear());
 		SmartDashboard.putData("Place Gear", new  DrivePlaceGear());
 		SmartDashboard.putData("Zero Yaw", new InstantCommand(){
@@ -143,13 +135,14 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new RecordVoltageData());
 		SmartDashboard.putData(new SendSDVoltage());
 		SmartDashboard.putData(new DriveMoveDistanceProfile2(100.0, 30, 30, 0));//.addParallel(new NavxAssist()));
-		SmartDashboard.putData(new DriveMoveInCircleProfile(50, 90, true, 30, 60, 0));
+		SmartDashboard.putData(new DriveMoveInCircleProfile(90, 90, true, 30, 60, 0));
 		side = Side.Left;
 		log();
 	}
 	
 	@Override
 	public void robotPeriodic() {
+		Setting.fetchAround();
 	}
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select

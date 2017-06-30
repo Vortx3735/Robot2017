@@ -3,6 +3,7 @@ package org.usfirst.frc.team3735.robot.assists;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.subsystems.Vision;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.util.cmds.ComAssist;
 
@@ -26,7 +27,7 @@ public class VisionAssist extends ComAssist{
 	@Override
 	public void execute() {
 		double in = Robot.vision.getRelativeCX();
-    	if(in == -161){
+    	if(in == Vision.nullValue){
     		Robot.drive.setVisionAssist(0);
     	}else{
     		prevWorking = in;

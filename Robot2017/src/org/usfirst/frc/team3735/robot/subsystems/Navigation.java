@@ -25,13 +25,16 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 	private AHRS ahrs;
 	
 	private PIDCtrl controller;
-
+	//PID Controller stuff
+	private static Setting outputExponent = new Setting("Nav Output Exponent", 1);
     public static Setting iZone = new Setting("Turning IZone", 10);
     public static Setting actingI = new Setting("Acting I Value", 0.004);
+    
     public static Setting verticalOffset = new Setting("Vertical Offset", 0);
-	public static Setting coefficient = new Setting("Navx Assist Coeffecient", 5);
-	private static Setting outputExponent = new Setting("Nav Output Exponent", 1);
-	private static Setting inputExponent = new Setting("Nav Input Exponent", 1);
+    
+	public static Setting navCo = new Setting("Navx Assist Coeffecient", 5);
+	public static Setting navVisCo = new Setting("Navx Vision Assist Coeffecient", 5);
+
 	
 	Position pos = new Position(0,0,0);
 	NetworkTable table;
@@ -212,8 +215,7 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 
 	@Override
 	public double pidGet() {
-		//return ahrs.getYaw();
-		return VortxMath.curveAround(ahrs.getYaw(), inputExponent.getValue(), 180);
+		return ahrs.getYaw();
 	}
 
 

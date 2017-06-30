@@ -64,7 +64,7 @@ public class AutonLeftGear extends CommandGroup {
     	addSequential(new DriveTurnToAnglePIDCtrl(60),2);
     	//addSequential(new DriveTurnToAnglePIDCtrl(Pipes.Peg),2);
     	//addSequential(new DriveMoveDistanceNavx(88.7),3);
-    	//addSequential(new DriveMoveDistanceExpNavxVision(89, .7, Pipes.Peg),3);
+    	addSequential(new DriveMoveDistanceExpNavxVision(89, .7, Pipes.Peg),3);
     	//addSequential(new DriveMoveDistanceExpNavx(, m_startTime))
     	//addSequential(new DriveMoveDistanceExpNavxBumped(89, .7),3);
     	addSequential(new GearIntakeDropOff(),3);

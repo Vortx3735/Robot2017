@@ -83,7 +83,7 @@ public class DriveMoveDistanceExpNavx extends VortxCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	turnCorrection = (Robot.navigation.getController().getError()/180.0) * Navigation.coefficient.getValue();
+    	turnCorrection = (Robot.navigation.getController().getError()/180.0) * Navigation.navCo.getValue();
 	
 		moveMotor = (moveStick-moveMotorPrevious)*MOVE_FILTER + moveMotorPrevious;
 		moveMotorPrevious = moveMotor; 

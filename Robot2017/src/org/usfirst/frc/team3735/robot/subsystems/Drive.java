@@ -1,26 +1,17 @@
 package org.usfirst.frc.team3735.robot.subsystems;
 
-import com.kauailabs.navx.frc.AHRS;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.settings.Constants;
 import org.usfirst.frc.team3735.robot.settings.Dms;
 import org.usfirst.frc.team3735.robot.settings.RobotMap;
-import org.usfirst.frc.team3735.robot.util.MultiSpeedController;
-import org.usfirst.frc.team3735.robot.util.recording.RecordableCantalon;
 
 
 /**
@@ -416,7 +407,7 @@ public class Drive extends Subsystem {
 	}
 
 	public void setNavxAssist(double error) {
-		this.navxAssist = (error/180.0) * Navigation.coefficient.getValue();
+		this.navxAssist = (error/180.0) * Navigation.navCo.getValue();
 	}
 	
     /**

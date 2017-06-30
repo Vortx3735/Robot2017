@@ -55,7 +55,7 @@ public class VortxCommand extends Command{
 		return this;
 	}
 	
-	public VortxCommand addParallel(ComAssist c){
+	public VortxCommand addAssist(ComAssist c){
 		assists.add(c);
 		for(Subsystem s : c.requirements){
 			requires(s);
