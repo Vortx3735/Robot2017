@@ -87,8 +87,7 @@ public class Shooter extends Subsystem {
 	} 
 	
 	public void log() {
-		SmartDashboard.putNumber("Shooter Motor getSpeed", drum.getSpeed());
-		SmartDashboard.putNumber("Shooter Motor get", drum.get());
+
 		drum.setF(F.getValue()); 
         drum.setP(P.getValue()); 
         drum.setI(I.getValue());  
@@ -152,5 +151,10 @@ public class Shooter extends Subsystem {
     public double getShooterPower(){
     	return Math.abs(drum.getOutputCurrent() * drum.getOutputVoltage());
     }
+
+	public void debugLog() {
+		SmartDashboard.putNumber("Shooter Motor getSpeed", drum.getSpeed());
+		SmartDashboard.putNumber("Shooter Motor get", drum.get());
+	}
 }
 

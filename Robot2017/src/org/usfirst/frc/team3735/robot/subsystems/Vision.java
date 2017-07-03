@@ -5,6 +5,7 @@ import org.usfirst.frc.team3735.robot.pipelines.PegPipelineLSNTest4;
 import org.usfirst.frc.team3735.robot.pipelines.PegPipelineLSNTest5;
 import org.usfirst.frc.team3735.robot.pipelines.Test4ModdedMore;
 import org.usfirst.frc.team3735.robot.pipelines.Test4ModdedMorem;
+import org.usfirst.frc.team3735.robot.pipelines.TestModdedMoreTRI;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 import org.usfirst.frc.team3735.robot.util.vision.ContoursOutputPipeline;
@@ -43,13 +44,13 @@ public class Vision extends Subsystem {
 		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
 		camera2 = CameraServer.getInstance().startAutomaticCapture(1);
 		
-		camera1.setFPS(10);
+		camera1.setFPS(16);
 		//camera2.setFPS(16);
 		
 	    camera1.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    camera2.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    
-	    pegs = new VisionHandler(new Test4ModdedMorem(), camera1, 2, "GRIP/PegTracker", VisionType.getCorrectRatio);
+	    pegs = new VisionHandler(new TestModdedMoreTRI(), camera1, 2, "GRIP/PegTracker", VisionType.getCorrectRatio);
 	    pegs.startThread();
 	    
 	    gears = new VisionHandler(new GearPipeline(), camera2, 1, "GRIP/GearTracker", VisionType.Normal);
@@ -71,16 +72,7 @@ public class Vision extends Subsystem {
     }
     
     public void log(){
-//		SmartDashboard.putNumber("CenterX", mainHandler.getCenterX());
-//		SmartDashboard.putNumber("CenterY", mainHandler.getCenterY());
-		SmartDashboard.putNumber("Relative CX", getRelativeCX());
-//		SmartDashboard.putNumber("height", mainHandler.getHeight());
-//		SmartDashboard.putNumber("area", mainHandler.getArea());
 
-		SmartDashboard.putNumber("Gear CenterY", gears.getCenterY());
-		pegs.publishTarget();
-		pegs.publishAll();
-		gears.publishTarget();
 		
     }
 
@@ -114,10 +106,24 @@ public class Vision extends Subsystem {
 	
 	public void pause(){
 		mainHandler.pause();
+
 	}
 
 	public void resume(){
 		mainHandler.resume();
+	}
+
+	public void debugLog() {
+//		SmartDashboard.putNumber("CenterX", mainHandler.getCenterX());
+//		SmartDashboard.putNumber("CenterY", mainHandler.getCenterY());
+		SmartDashboard.putNumber("Relative CX", getRelativeCX());
+//		SmartDashboard.putNumber("height", mainHandler.getHeight());
+//		SmartDashboard.putNumber("area", mainHandler.getArea());
+
+		SmartDashboard.putNumber("Gear CenterY", gears.getCenterY());
+		pegs.publishTarget();
+		pegs.publishAll();
+		gears.publishTarget();
 	}
     
     

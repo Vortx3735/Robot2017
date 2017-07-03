@@ -66,7 +66,11 @@ public class GearIntake extends Subsystem {
     }
     
     public void log(){
-    	SmartDashboard.putNumber("Gear Roller getPower", getRollerPower());
     }
+
+	public void debugLog() {
+    	SmartDashboard.putNumber("Gear Roller getPower", getRollerPower());
+		
+	}
 }
 

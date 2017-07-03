@@ -50,11 +50,13 @@ public class GTAOI implements DriveOI{
 
 		main.b.whenPressed(new GearIntakeDropOff());
 		main.a.whileHeld(new GearIntakeFeeding());
+		main.x.whenPressed(new GearIntakeLiftDown());
+		main.y.whenPressed(new GearIntakeLiftUp());
 //		main.x.whileHeld(new DriveAddSensitiveLeft());
 //		main.y.whileHeld(new DriveAddSensitiveRight());
 
-		main.start.whenPressed(new DriveChangeToGearDirection());
-		main.back.whenPressed(new DriveChangeToBallDirection());
+//		main.start.whenPressed(new DriveChangeToGearDirection());
+//		main.back.whenPressed(new DriveChangeToBallDirection());
 		
 		
 		//CoDriver
@@ -90,18 +92,18 @@ public class GTAOI implements DriveOI{
 	
 	@Override
 	public double getFODMag() {
-		return main.getRightMagnitude();
-		//return 0;
+		//return main.getRightMagnitude();
+		return 0;
 	}
 	
 	public double getFODAngle(){
-		return main.getRightAngle();
-		//return 0;
+		//return main.getRightAngle();
+		return 0;
 	}
 
 	
 	public boolean isOverriddenByDrive(){
-		return Math.abs(getDriveMove()) > .1 || Math.abs(getDriveTurn()) > .1;
+		return Math.abs(getDriveMove()) > .4 || Math.abs(getDriveTurn()) > .4;
 	}
 
 	

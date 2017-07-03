@@ -57,5 +57,10 @@ public class Ultrasonic extends Subsystem {
 //    			Double.valueOf(String.format("%.1f",getInchesDistance())));
     }
 
+	public void debugLog() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 

@@ -43,7 +43,7 @@ public class NormieOI implements DriveOI{
 		co = new XboxController(1);
 
 		//Baby Driver
-		main.pov180.whenPressed(new DriveGoToPeg());
+		//main.pov180.whenPressed(new DriveGoToPeg());
 
 		main.start.whenPressed(new DriveChangeToGearDirection());
 		main.back.whenPressed(new DriveChangeToBallDirection());

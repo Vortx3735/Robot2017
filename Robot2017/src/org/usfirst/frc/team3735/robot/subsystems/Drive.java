@@ -359,16 +359,7 @@ public class Drive extends Subsystem {
 	 * The Logs
 	 ******************************************/
 	public void log() {
-		SmartDashboard.putNumber("Drive Left Position", l1.getPosition());
-		SmartDashboard.putNumber("Drive Right Position", r1.getPosition());
-
-		SmartDashboard.putNumber("Drive Left Speed", l1.getSpeed());
-		SmartDashboard.putNumber("Drive Right Speed", r1.getSpeed());
-
-		SmartDashboard.putNumber("Drive Left Get", l1.get());
-		SmartDashboard.putNumber("Drive Right Get", r1.get());
 		
-		SmartDashboard.putNumber("Drive avg speed", getAverageSpeedInches());
 	}
 
 
@@ -420,6 +411,19 @@ public class Drive extends Subsystem {
     	double speed = Math.abs(spd) *60.0 /Constants.Drive.InchesPerRotation;
     	return Math.copySign(0.00113174*speed + 0.0944854, spd);
     }
+
+	public void debugLog() {
+		SmartDashboard.putNumber("Drive Left Position", l1.getPosition());
+		SmartDashboard.putNumber("Drive Right Position", r1.getPosition());
+
+		SmartDashboard.putNumber("Drive Left Speed", l1.getSpeed());
+		SmartDashboard.putNumber("Drive Right Speed", r1.getSpeed());
+
+		SmartDashboard.putNumber("Drive Left Get", l1.get());
+		SmartDashboard.putNumber("Drive Right Get", r1.get());
+		
+		SmartDashboard.putNumber("Drive avg speed", getAverageSpeedInches());
+	}
 
 
 

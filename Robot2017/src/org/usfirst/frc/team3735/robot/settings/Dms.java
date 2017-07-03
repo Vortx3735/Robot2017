@@ -15,7 +15,7 @@ public class Dms {
 	
 	public class Field{
 		//just guesses rn
-		public static final double LENGTH = 1000;
+		public static final double LENGTH = 653;
 		public static final double WIDTH = 500;
 		public static final double BASELINE = 0;
 

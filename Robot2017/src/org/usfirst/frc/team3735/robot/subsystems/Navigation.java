@@ -111,6 +111,10 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 //    	SmartDashboard.putNumber("Gyro Accel XY Vector", getXYAcceleration());
 
  //     displayDebugGyroData();
+
+    }
+    
+    public void displayPosition(){
     	table.putNumberArray("centerX", new double[]{pos.x});
 		table.putNumberArray("centerY", new double[]{pos.y});
 		table.putNumberArray("angle", new double[]{pos.angle});
@@ -245,6 +249,11 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 		}else{
 			return new Position(Dms.Field.LENGTH - Dms.Bot.HALFLENGTH, verticalOffset.getValue(), 180);
 		}
+	}
+
+	public void debugLog() {
+		// TODO Auto-generated method stub
+		
 	}
     
 }

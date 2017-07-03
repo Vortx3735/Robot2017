@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveMoveDistanceExpNavx extends VortxCommand {
+public class DriveMoveDistanceExpNavx extends Command {
 
     private double MOVE_FILTER = 0.15;	//(0,1]
 	private static final double TOLERANCE = 2;		//in inches
@@ -102,7 +102,7 @@ public class DriveMoveDistanceExpNavx extends VortxCommand {
     	return 	VortxMath.isWithinThreshold(Robot.drive.getLeftPositionInches(),
 										   	endPositionLeft,
 										   	TOLERANCE) ||
-    			VortxMath.isWithinThreshold(Robot.drive.getLeftPositionInches(),
+    			VortxMath.isWithinThreshold(Robot.drive.getRightPositionInches(),
 						   				   	endPositionRight,
 						   				   	TOLERANCE);
     }

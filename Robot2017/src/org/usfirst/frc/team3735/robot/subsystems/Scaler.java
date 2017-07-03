@@ -47,9 +47,7 @@ public class Scaler extends Subsystem {
     }
 	
 	public void log(){
-		SmartDashboard.putNumber("Scaler motor getPower", getPower());
-		//SmartDashboard.putNumber("Scaler motor joystick value", Robot.oi.getMainRightY());
-		SmartDashboard.putBoolean("Scaler overLoaded", isOverLoaded);
+		
 	}
 	
 	public void setCurrent(double current){
@@ -81,6 +79,12 @@ public class Scaler extends Subsystem {
 	
 	public boolean getOverloaded(){
 		return isOverLoaded;
+	}
+
+	public void debugLog() {
+		SmartDashboard.putNumber("Scaler motor getPower", getPower());
+		//SmartDashboard.putNumber("Scaler motor joystick value", Robot.oi.getMainRightY());
+		SmartDashboard.putBoolean("Scaler overLoaded", isOverLoaded);
 	}
 }
 

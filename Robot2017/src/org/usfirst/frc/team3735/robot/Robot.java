@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
 		ultra = new Ultrasonic();
 		vision = new Vision();
 		
-		oi = new DemoOI(); //MUST be instantiated after the subsystems
+		oi = new GTAOI(); //MUST be instantiated after the subsystems
 			
 		autonomousChooser = new SendableChooser<Command>();
 			autonomousChooser.addDefault ("Do Nothing", new AutonDoNothing());
@@ -143,6 +143,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotPeriodic() {
 		Setting.fetchAround();
+        //vision.debugLog();
+        navigation.integrate();
+        navigation.displayPosition();
+        drive.debugLog();
+        log();
+
 	}
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -166,15 +172,22 @@ public class Robot extends IterativeRobot {
         autonomousCommand = autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}
+	
+	public static void retrieveSide(){
+		if(sideChooser.getSelected() != null){
+			side = sideChooser.getSelected();
+		};
+	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
-		navigation.integrate();
-		log();
+		 Scheduler.getInstance().run();
+//		 navigation.integrate();
+//		 navigation.displayPosition();
+//		 log();
 	}
 
 	
@@ -192,8 +205,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        navigation.integrate();
-        log();
+        
 	}
 
 	/**
@@ -215,6 +227,18 @@ public class Robot extends IterativeRobot {
 		ultra.log();
 		vision.log();
 	}
+	
+	public void debugLog(){
+		scaler.debugLog();
+		drive.debugLog();
+		shooter.debugLog();
+		ballIntake.debugLog();
+		gearIntake.debugLog();
+		navigation.debugLog();
+		ultra.debugLog();
+		vision.debugLog();
+	}
+	
 	
 	
 	/**

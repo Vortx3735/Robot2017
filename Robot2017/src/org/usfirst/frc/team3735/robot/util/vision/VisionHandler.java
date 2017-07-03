@@ -163,7 +163,8 @@ public class VisionHandler {
 		}
 		
 	}
-	
+
+
 	private void updateRects(ContoursOutputPipeline pipe) {
 		contOutput = pipe.filterContoursOutput();
 		rects.clear();
@@ -323,7 +324,7 @@ public class VisionHandler {
 	
 	public void pause(){
 		try {
-			thread.wait();
+			//thread.interrupt();
 		} catch (Exception e) {
 			System.out.println("Error in pausing thread");
 			e.printStackTrace();
@@ -331,7 +332,7 @@ public class VisionHandler {
 	}
 	public void resume(){
 		try {
-			thread.notify();
+			
 		} catch (Exception e) {
 			System.out.println("Error in resuming thread");
 			e.printStackTrace();
