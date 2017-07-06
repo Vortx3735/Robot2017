@@ -6,8 +6,6 @@ import org.usfirst.frc.team3735.robot.commands.ballintake.*;
 import org.usfirst.frc.team3735.robot.commands.drive.*;
 import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveAddSensitiveLeft;
 import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveAddSensitiveRight;
-import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveChangeToBallDirection;
-import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveChangeToGearDirection;
 import org.usfirst.frc.team3735.robot.commands.drive.spinnyspin.DriveSpinMove;
 import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePIDCtrl;
 import org.usfirst.frc.team3735.robot.commands.drive.turntoangle.DriveTurnToAnglePIDCtrlVision;
@@ -45,8 +43,6 @@ public class NormieOI implements DriveOI{
 		//Baby Driver
 		//main.pov180.whenPressed(new DriveGoToPeg());
 
-		main.start.whenPressed(new DriveChangeToGearDirection());
-		main.back.whenPressed(new DriveChangeToBallDirection());
 		
 		main.x.whileHeld(new DriveAddSensitiveLeft());
 		main.y.whileHeld(new DriveAddSensitiveRight());

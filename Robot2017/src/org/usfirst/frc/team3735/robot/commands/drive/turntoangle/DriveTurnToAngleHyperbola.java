@@ -21,7 +21,7 @@ public class DriveTurnToAngleHyperbola extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
-    	Robot.drive.setUpDriveForSpeedControl();
+    	Robot.drive.setupDriveForSpeedControl();
     	setpoint = angle;
     	SmartDashboard.putNumber("min turn value", .2);
 

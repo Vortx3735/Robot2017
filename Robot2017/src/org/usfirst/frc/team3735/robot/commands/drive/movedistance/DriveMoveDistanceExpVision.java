@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
 
 import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveBrake;
-import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveChangeToGearDirection;
 import org.usfirst.frc.team3735.robot.commands.vision.DriveAddVisionAssist;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 
@@ -17,7 +16,6 @@ public class DriveMoveDistanceExpVision extends CommandGroup {
 	
     public DriveMoveDistanceExpVision(double distance, double power, Pipes p) {
     	addParallel(new DriveAddVisionAssist(p));
-    	addSequential(new DriveChangeToGearDirection());
     	addSequential(new DriveMoveDistanceExp(distance, power));
     	//addSequential(new ExpDrive(-1,0),.5);
     	addSequential(new DriveBrake(){

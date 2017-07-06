@@ -28,6 +28,7 @@ import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -57,6 +58,8 @@ public class Robot extends IterativeRobot {
 	public static Vision vision;
 	public static DriveOI oi;
 	
+	public double dt;
+	private double prevTime;
 
 	public static enum Side{
 		Left,Right
@@ -134,20 +137,24 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData(new RecordVoltageData());
 		SmartDashboard.putData(new SendSDVoltage());
-		SmartDashboard.putData(new DriveMoveDistanceProfile2(100.0, 30, 30, 0));//.addParallel(new NavxAssist()));
-		SmartDashboard.putData(new DriveMoveInCircleProfile(90, 90, true, 30, 60, 0));
+		SmartDashboard.putData(new DriveMoveDistanceProfile2(100.0, 30, 30, 0).addAssist(new NavxAssist()));
+		SmartDashboard.putData(new DriveMoveInCircleProfile(90, 60, true, 30, 30, 30));
 		side = Side.Left;
-		log();
+		prevTime = Timer.getFPGATimestamp();
 	}
 	
 	@Override
 	public void robotPeriodic() {
+		dt = Timer.getFPGATimestamp() - prevTime;
+		prevTime += dt;
+		
 		Setting.fetchAround();
         //vision.debugLog();
         navigation.integrate();
         navigation.displayPosition();
         drive.debugLog();
         log();
+        
 
 	}
 	/**
@@ -163,21 +170,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		navigation.zeroYaw();
-		if(sideChooser.getSelected() != null){
-			side = sideChooser.getSelected();
-		};
-		navigation.setPosition(navigation.getStartingPosition());
+		navigation.resetPosition();
 		
         autonomousCommand = autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}
-	
-	public static void retrieveSide(){
-		if(sideChooser.getSelected() != null){
-			side = sideChooser.getSelected();
-		};
-	}
+
 
 	/**
 	 * This function is called periodically during autonomous
@@ -185,9 +183,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		 Scheduler.getInstance().run();
-//		 navigation.integrate();
-//		 navigation.displayPosition();
-//		 log();
 	}
 
 	
@@ -253,6 +248,13 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 
+	}
+	
+	
+	public static void retrieveSide(){
+		if(sideChooser.getSelected() != null){
+			side = sideChooser.getSelected();
+		};
 	}
 
 

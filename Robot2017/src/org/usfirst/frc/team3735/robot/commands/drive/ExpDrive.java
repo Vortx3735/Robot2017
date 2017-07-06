@@ -52,7 +52,7 @@ public class ExpDrive extends Command {
         // Use requires() here to declare subsystem dependencies
     	requires(Robot.drive);
 		isJoystickInput = true;
-    	Robot.drive.setUpDriveForSpeedControl();
+    	Robot.drive.setupDriveForSpeedControl();
     }
     
     public ExpDrive(double move, double turn){
@@ -62,13 +62,13 @@ public class ExpDrive extends Command {
      	
     	requires(Robot.drive);
     	isJoystickInput = false;
-    	Robot.drive.setUpDriveForSpeedControl();
+    	Robot.drive.setupDriveForSpeedControl();
 
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drive.setUpDriveForSpeedControl();
+    	Robot.drive.setupDriveForSpeedControl();
     	if(isJoystickInput){
     		moveSetValue			= 0.0;
     		turnSetValue			= 0.0;

@@ -19,7 +19,7 @@ import org.usfirst.frc.team3735.robot.settings.RobotMap;
  */
 
 public class Drive extends Subsystem {
-	
+	RobotDrive d;
 	private CANTalon l1;
 	private CANTalon l2;
 	private CANTalon l3;
@@ -27,13 +27,7 @@ public class Drive extends Subsystem {
 	private CANTalon r1;
 	private CANTalon r2;
 	private CANTalon r3;
-
-
-	RobotDrive driveTrain;
-	
-	private boolean reversed = false;
-	
-	
+		
 	private static double dP = 1.0;
 	private static double dI = 0.0;
 	private static double dD = 0.0;
@@ -63,13 +57,62 @@ public class Drive extends Subsystem {
 		initSensors();
 		setupSlaves();
 		setEnableBrake(true);
+	}
+
+	/*******************************
+	 * Default Command For Driving
+	 *******************************/
+	public void initDefaultCommand() {
+		setDefaultCommand(new ExpDrive());
+	}
+
+	/*******************************
+	 * Setups for Position and Speed
+	 *******************************/
+	public void setupForPositionControl() {
+		l1.setAllowableClosedLoopErr(0);
+		l1.setProfile(0);
+		l1.setF(dF);
+		l1.setP(dP);
+		l1.setI(dI);
+		l1.setD(dD);
+		l1.changeControlMode(TalonControlMode.Position);
+		l1.setIZone(2);
+	
+		r1.setAllowableClosedLoopErr(0);
+		r1.setProfile(0);
+		r1.setF(dF);
+		r1.setP(dP);
+		r1.setI(dI);
+		r1.setD(dD);
+		r1.changeControlMode(TalonControlMode.Position);
+		r1.setIZone(2);
 		
-		driveTrain = new RobotDrive(l1, r1);
-		reversed = false;
-		setUpDriveTrain();
-						
-//		SmartDashboard.putNumber("left Voltage", 5.4);
-//		SmartDashboard.putNumber("right Voltage", 5);
+		setEnableBrake(true);		
+	}
+
+	/*******************************
+	 * Speed Control Setup
+	 *******************************/
+	public void setupDriveForSpeedControl() {
+		setEnableBrake(true);
+		l1.changeControlMode(TalonControlMode.PercentVbus);
+		r1.changeControlMode(TalonControlMode.PercentVbus);
+	}
+
+	/*******************************
+	 * Slaves Setup
+	 *******************************/
+	public void setupSlaves() {
+		l2.changeControlMode(CANTalon.TalonControlMode.Follower);
+		l3.changeControlMode(CANTalon.TalonControlMode.Follower);
+		r2.changeControlMode(CANTalon.TalonControlMode.Follower);
+		r3.changeControlMode(CANTalon.TalonControlMode.Follower);
+	
+		l2.set(l1.getDeviceID());
+		l3.set(l1.getDeviceID());
+		r2.set(r1.getDeviceID());
+		r3.set(r1.getDeviceID());
 	}
 
 	public void initSensors() {
@@ -101,6 +144,11 @@ public class Drive extends Subsystem {
 		setRightPID(kp, ki, kd);
 	}
 	
+	public void setPIDSettings(double kp, double ki, double kd, double kf, int kz, double kramp) {
+		l1.setPID(kp, ki, kd, kf, kz, kramp, 0);
+		r1.setPID(kp, ki, kd, kf, kz, kramp, 0);		
+	}
+
 	public void setLeftPID(double kp, double ki, double kd){
 		l1.setP(kp);
 		l1.setI(ki);
@@ -111,115 +159,68 @@ public class Drive extends Subsystem {
 		r1.setI(ki);
 		r1.setD(kd);
 	}
+	/******************************
+	 * changing the Talon control mode
+	 */
+	public void changeControlMode(TalonControlMode t){
+		l1.changeControlMode(t);
+		r1.changeControlMode(t);
+	}
+
+	/*********************************
+	 * Configuring left and right PID Peak Voltages
+	 */
+	public void setLeftPeakVoltage(double vol){
+		l1.configPeakOutputVoltage(vol, -vol);
+	}
+
+	public void setRightPeakVoltage(double vol){
+		r1.configPeakOutputVoltage(vol, -vol);
+	}
+
 	public void resetEncodersPositions(){
 		l1.setPosition(0);
 		r1.setPosition(0);
 	}
 	
 	/*******************************
-	 * Default Command For Driving
-	 *******************************/
-	public void initDefaultCommand() {
-		setDefaultCommand(new ExpDrive());
-	}
-
-	/*******************************
 	 * Drive Functions
 	 *******************************/
 	public void arcadeDrive(double move, double rotate) {
-		driveTrain.arcadeDrive(move, (rotate + leftAddTurn + rightAddTurn + visionAssist + navxAssist) * -1, false);
-	}
-	public void normalDrive(double move, double curve) {
-		driveTrain.drive(move, curve);
-	}
-	
-	/*******************************
-	 * Additive setters
-	 *******************************/
-	public void setLeftTurn(double turn){
-    	leftAddTurn = turn;
-    }
-    public void setRightTurn(double turn){
-    	rightAddTurn = turn;
-    }
-	public void setVisionAssist(double j) {
-		visionAssist = j;
-	}
-
-	/*******************************
-	 * Value setups
-	 *******************************/
-	public void setUpDriveTrain() {
-		driveTrain.setSensitivity(Constants.Drive.sensitivity);
-	}
-
-	/*******************************
-	 * Direction Changes
-	 *******************************/
-	public void changeDirection() {
-		if (reversed) {
-			changeToForward();
-		} else {
-			changeToReverse();
-		}
-	}
-	public void changeToForward() {
-		if (reversed) {
-			driveTrain = new RobotDrive(l1, r1);
-			reversed = false;
-			setUpDriveTrain();
-		}
-	}
-	public void changeToReverse() {
-		if (!reversed) {
-			driveTrain = new RobotDrive(r1, l1);
-			reversed = true;
-			setUpDriveTrain();
-		}
+		//copied from RobotDrive class. essentially lowers the speed of one motor first, rather than increases
+		//one and decreases the other at the same time.
+		
+		double leftMotorSpeed;
+		double rightMotorSpeed;
+		
+		double moveValue = move;
+		double rotateValue = rotate + leftAddTurn + rightAddTurn + visionAssist + navxAssist;
+	    if (moveValue > 0.0) {
+	        if (rotateValue < 0.0) {
+	          leftMotorSpeed = moveValue + rotateValue;
+	          rightMotorSpeed = Math.max(moveValue, -rotateValue);
+	        } else {
+	          leftMotorSpeed = Math.max(moveValue, rotateValue);
+	          rightMotorSpeed = moveValue - rotateValue;
+	        }
+	      } else {
+	        if (rotateValue < 0.0) {
+	          leftMotorSpeed = -Math.max(-moveValue, -rotateValue);
+	          rightMotorSpeed = moveValue - rotateValue;
+	        } else {
+	          leftMotorSpeed = moveValue + rotateValue;
+	          rightMotorSpeed = -Math.max(-moveValue, rotateValue);
+	        }
+	      }
+	      setLeftRight(leftMotorSpeed, rightMotorSpeed);
 	}
 	
-	/*******************************
-	 * Left and Right Setters
-	 *******************************/
-	public void setLeftRightRotations(double left, double right) {
-		l1.set(left);
-		r1.set(right);
-	}
-
-	public void setLeftRightDistance(double left, double right) {
-		l1.set(left / (Constants.Drive.InchesPerRotation )); //OneRotationInches
-		r1.set(right / (Constants.Drive.InchesPerRotation ));
-	}
-
-	public void setLeftRightOutputs(double leftOutput, double rightOutput) {
-		driveTrain.setLeftRightMotorOutputs(leftOutput, rightOutput);
-	}
 	
-	public void voltageDrive(double voltage, double turn){
-		double moveValue = voltage;
-		double rotateValue = turn + voltageAssist;
-		double leftMotorSpeed = 0;
-		double rightMotorSpeed = 0;
-		if (moveValue > 0.0) {
-			if (rotateValue > 0.0) {
-				leftMotorSpeed = moveValue - rotateValue;
-				rightMotorSpeed = Math.max(moveValue, rotateValue);
-		    }else {
-		    	leftMotorSpeed = Math.max(moveValue, -rotateValue);
-		    	rightMotorSpeed = moveValue + rotateValue;
-		    }
-		  }else{
-		    if (rotateValue > 0.0) {
-		      leftMotorSpeed = -Math.max(-moveValue, rotateValue);
-		      rightMotorSpeed = moveValue + rotateValue;
-		    } else {
-		      leftMotorSpeed = moveValue - rotateValue;
-		      rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
-		    }
-		}
-		setLeftRight(leftMotorSpeed, rightMotorSpeed);
-
+	public void normalDrive(double move, double rotate){
+		double rotateValue = rotate + leftAddTurn + rightAddTurn + visionAssist + navxAssist;
+		setLeftRight(move + rotateValue, move - rotateValue);
 	}
+
 	
 	public void radialDrive(double radius, double voltage){
 		double left;
@@ -238,88 +239,25 @@ public class Drive extends Subsystem {
 		setLeftRight(left, right);
 	}
 
-	
-	/*********************************
-	 * Left and Right position getters
-	 *********************************/
-	public double getRotationsLeft() {
-		return l1.getPosition();
-	}
-	public double getRotationsRight() {
-		return r1.getPosition();
-	}
-	public double getLeftPositionInches() {
-		return getRotationsLeft() * (Constants.Drive.InchesPerRotation);
-	}
-	public double getRightPositionInches() {
-		return getRotationsRight() * (Constants.Drive.InchesPerRotation);
-	}
-
-	
-	/*********************************
-	 * Configuring left and right PID Peak Voltages
-	 */
-	public void setLeftPeakVoltage(double vol){
-		l1.configPeakOutputVoltage(vol, -vol);
-	}
-	public void setRightPeakVoltage(double vol){
-		r1.configPeakOutputVoltage(vol, -vol);
-	}
-	
-	/***************************
-	 * Basic left and right setters
-	 ***************************/
-	public void setLeft(double output) {
-		l1.set(output);
-	}
-	public void setRight(double output) {
-		r1.set(output);
-	}
-	
-	/******************************
-	 * changing the talon control mode
-	 */
-	public void changeControlMode(TalonControlMode t){
-		l1.changeControlMode(t);
-		r1.changeControlMode(t);
-	}
-
 	/*******************************
-	 * Setups for Position and Speed
+	 * Additive setters
 	 *******************************/
-	public void setupDriveForPositionControl() {
-		l1.setAllowableClosedLoopErr(0);
-		l1.setProfile(0);
-		l1.setF(dF);
-		l1.setP(dP);
-		l1.setI(dI);
-		l1.setD(dD);
-		l1.changeControlMode(TalonControlMode.Position);
-		l1.setIZone(2);
-
-		r1.setAllowableClosedLoopErr(0);
-		r1.setProfile(0);
-		r1.setF(dF);
-		r1.setP(dP);
-		r1.setI(dI);
-		r1.setD(dD);
-		r1.changeControlMode(TalonControlMode.Position);
-		r1.setIZone(2);
-		
-		setEnableBrake(true);		
+	public void setLeftTurn(double turn){
+    	leftAddTurn = turn;
+    }
+    public void setRightTurn(double turn){
+    	rightAddTurn = turn;
+    }
+	public void setVisionAssist(double j) {
+		visionAssist = j;
+	}	
+	public void setNavxAssist(double error) {
+		this.navxAssist = (error/180.0) * Navigation.navCo.getValue();
 	}
 
-	/*******************************
-	 * Speed Control Setup
-	 *******************************/
-	public void setUpDriveForSpeedControl() {
-		setEnableBrake(true);
-		l1.changeControlMode(TalonControlMode.PercentVbus);
-		r1.changeControlMode(TalonControlMode.PercentVbus);
-	}
 	
 	/*******************************
-	 * Speed Enable Brake
+	 * Brake Mode
 	 *******************************/
 	public void setEnableBrake(boolean b) {
 		l1.enableBrakeMode(b);
@@ -331,41 +269,30 @@ public class Drive extends Subsystem {
 		r3.enableBrakeMode(b);
 	}
 	
-	public double getRightError(){
-		return r1.getClosedLoopError() * Constants.Drive.InchesPerRotation ;
-	}
-	public double getLeftError(){
+	public double getLeftErrorInches(){
 		return l1.getClosedLoopError() * Constants.Drive.InchesPerRotation ;
 	}
 
-
-
-	/*******************************
-	 * Slaves Setup
-	 *******************************/
-	public void setupSlaves() {
-		l2.changeControlMode(CANTalon.TalonControlMode.Follower);
-		l3.changeControlMode(CANTalon.TalonControlMode.Follower);
-		r2.changeControlMode(CANTalon.TalonControlMode.Follower);
-		r3.changeControlMode(CANTalon.TalonControlMode.Follower);
-
-		l2.set(l1.getDeviceID());
-		l3.set(l1.getDeviceID());
-		r2.set(r1.getDeviceID());
-		r3.set(r1.getDeviceID());
+	public double getRightErrorInches(){
+		return r1.getClosedLoopError() * Constants.Drive.InchesPerRotation ;
+	}
+	/*********************************
+	 * Left and Right position getters
+	 *********************************/
+	public double getLeftPosition() {
+		return l1.getPosition();
 	}
 
-	/******************************************
-	 * The Logs
-	 ******************************************/
-	public void log() {
-		
+	public double getRightPosition() {
+		return r1.getPosition();
 	}
 
+	public double getLeftPositionInches() {
+		return getLeftPosition() * (Constants.Drive.InchesPerRotation);
+	}
 
-	public void setPIDSettings(double kp, double ki, double kd, double kf, int kz, double kramp) {
-		l1.setPID(kp, ki, kd, kf, kz, kramp, 0);
-		r1.setPID(kp, ki, kd, kf, kz, kramp, 0);		
+	public double getRightPositionInches() {
+		return getRightPosition() * (Constants.Drive.InchesPerRotation);
 	}
 
 	public double getLeftSpeed() {
@@ -381,27 +308,23 @@ public class Drive extends Subsystem {
 	}
 	
 	public double getLeftSpeedInches() {
-		return l1.getSpeed() * Constants.Drive.InchesPerRotation;
+		return (l1.getSpeed() * Constants.Drive.InchesPerRotation) /60.0;
 	}
 	
 	public double getRightSpeedInches() {
-		return r1.getSpeed() * Constants.Drive.InchesPerRotation;
+		return (r1.getSpeed() * Constants.Drive.InchesPerRotation) /60.0;
 	}
 	
 	public double getAverageSpeedInches() {
-		return (.5 * ((getLeftSpeed() + getRightSpeed())) * Constants.Drive.InchesPerRotation)/60.0;
+		return (getAverageSpeed() * Constants.Drive.InchesPerRotation)/60.0;
 	}
 
 	public void setLeftRight(double left, double right) {
 		l1.set(left); 
-		r1.set(right);
+		r1.set(-right);
 	}
 
-	public void setNavxAssist(double error) {
-		this.navxAssist = (error/180.0) * Navigation.navCo.getValue();
-	}
-	
-    /**
+	/**
      * 
      * @param spd	the target speed in inches per second
      * @return	the percent, which converts spd into normal getspeed units (rpm), and then
@@ -411,6 +334,13 @@ public class Drive extends Subsystem {
     	double speed = Math.abs(spd) *60.0 /Constants.Drive.InchesPerRotation;
     	return Math.copySign(0.00113174*speed + 0.0944854, spd);
     }
+
+	/******************************************
+	 * The Logs
+	 ******************************************/
+	public void log() {
+		
+	}
 
 	public void debugLog() {
 		SmartDashboard.putNumber("Drive Left Position", l1.getPosition());

@@ -231,7 +231,7 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 	@Override
 	public void pidWrite(double output) {
 		output = VortxMath.curve(output, outputExponent.getValue());
-		Robot.drive.setLeftRightOutputs(output, -output);
+		Robot.drive.setLeftRight(output, -output);
 	}
 
 
@@ -254,6 +254,12 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 	public void debugLog() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void resetPosition() {
+		zeroYaw();
+		Robot.retrieveSide();
+		setPosition(getStartingPosition());
 	}
     
 }

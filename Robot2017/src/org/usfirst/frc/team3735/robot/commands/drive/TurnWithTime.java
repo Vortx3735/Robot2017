@@ -19,7 +19,7 @@ public class TurnWithTime extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drive.setUpDriveForSpeedControl();
+    	Robot.drive.setupDriveForSpeedControl();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -34,7 +34,7 @@ public class TurnWithTime extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drive.setLeftRightOutputs(0, 0);
+    	Robot.drive.setLeftRight(0, 0);
 
     }
 

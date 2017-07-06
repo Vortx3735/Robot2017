@@ -5,8 +5,6 @@ import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
 import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
 import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveAddSensitiveLeft;
 import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveAddSensitiveRight;
-import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveChangeToBallDirection;
-import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveChangeToGearDirection;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersIn;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersOut;
@@ -31,8 +29,6 @@ public class ChineseOI implements DriveOI{
 		board.rJoyButton.whileHeld(new GearIntakeFeeding());
 		//main.x.whileHeld(new DriveAddSensitiveLeft());
 		//main.y.whileHeld(new DriveAddSensitiveRight());
-		board.k.whenPressed(new DriveChangeToGearDirection());
-		board.m.whenPressed(new DriveChangeToBallDirection());
 		//Co-Driver
 		board.lWhiteButton.whenPressed(new ScalerUp(1));
 		board.rWhiteButton.whenPressed(new ScalerOff());

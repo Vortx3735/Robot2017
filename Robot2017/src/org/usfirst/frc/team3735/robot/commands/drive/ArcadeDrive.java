@@ -18,7 +18,7 @@ public class ArcadeDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drive.setupDriveForPositionControl();
+    	Robot.drive.setupForPositionControl();
     	//Robot.drive.setControlMode(TalonControlMode.PercentVbus);
     }
 

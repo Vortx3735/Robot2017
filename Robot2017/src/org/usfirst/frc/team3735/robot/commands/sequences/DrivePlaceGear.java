@@ -3,7 +3,6 @@ package org.usfirst.frc.team3735.robot.commands.sequences;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExp;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpVisionBumped;
-import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveChangeToGearDirection;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeLiftDown;
 import org.usfirst.frc.team3735.robot.commands.vision.DriveAddVisionAssist;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
@@ -17,7 +16,6 @@ public class DrivePlaceGear extends CommandGroup {
 
 
 	public DrivePlaceGear() {
-    	addSequential(new DriveChangeToGearDirection());
     	addSequential(new DriveMoveDistanceExpVisionBumped(100, .7, Pipes.Peg));
     	addSequential(new GearIntakeDropOff());
     }

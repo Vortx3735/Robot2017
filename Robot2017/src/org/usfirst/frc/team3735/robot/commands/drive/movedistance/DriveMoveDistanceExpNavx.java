@@ -75,7 +75,7 @@ public class DriveMoveDistanceExpNavx extends Command {
     	}else{
         	Robot.navigation.getController().setSetpoint(targetAngle.doubleValue());
     	}
-    	Robot.drive.setUpDriveForSpeedControl();
+    	Robot.drive.setupDriveForSpeedControl();
     	
 		moveMotor		  = 0.0;
 		moveMotorPrevious = 0.0;
