@@ -70,6 +70,7 @@ public class ExpDrive extends VortxCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	super.initialize();
+
     	Robot.drive.setupDriveForSpeedControl();
     	if(isJoystickInput){
     		moveSetValue			= 0.0;
@@ -135,9 +136,9 @@ public class ExpDrive extends VortxCommand {
 //		turnMotor = VortxMath.limit(turnMotor, -1, 1);
 
 
-		Robot.drive.arcadeDrive(moveMotor, turnMotor);
+		Robot.drive.normalDrive(moveMotor, turnMotor);
 		
-		
+    	super.execute();
 		log();
     }
 
@@ -155,6 +156,7 @@ public class ExpDrive extends VortxCommand {
     // subsystems is scheduled to run
     public void interrupted() {
     	super.interrupted();
+    	end();
     }
     
     private void log(){

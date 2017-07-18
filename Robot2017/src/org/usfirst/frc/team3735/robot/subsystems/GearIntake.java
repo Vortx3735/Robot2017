@@ -18,7 +18,6 @@ public class GearIntake extends Subsystem {
 	CANTalon roller;
 	//CANTalon bottomRoller;
 	Solenoid liftSolenoid;
-	Solenoid topFeederSolenoid;
 
 	private boolean isDown = false;
     // Put methods for controlling this subsystem
@@ -26,11 +25,8 @@ public class GearIntake extends Subsystem {
 	
 	public GearIntake(){
 		roller = new CANTalon(RobotMap.GearIntake.topRoller);
-		
 		roller.changeControlMode(TalonControlMode.Voltage);
-		
 		roller.setInverted(RobotMap.GearIntake.topRollerInverted);
-		
 		liftSolenoid = new Solenoid(RobotMap.GearIntake.liftSolenoid);
 		liftUp();
 	}
@@ -55,6 +51,11 @@ public class GearIntake extends Subsystem {
     public void liftUp(){
     	liftSolenoid.set(false);
     	isDown = false;
+    }
+    
+    public void setIsDown(boolean down) {
+    	liftSolenoid.set(down);
+    	isDown = down;
     }
     
     public void switchLift(){

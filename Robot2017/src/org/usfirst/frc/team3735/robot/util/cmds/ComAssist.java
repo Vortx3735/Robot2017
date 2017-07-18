@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ComAssist {
 	
-	public ArrayList<Subsystem> requirements;
+	public ArrayList<Subsystem> requirements = new ArrayList<Subsystem>();
 
 	public void initialize(){
 		

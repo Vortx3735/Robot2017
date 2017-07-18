@@ -1,10 +1,13 @@
 package org.usfirst.frc.team3735.robot.commands.drive.turntoangle;
 
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.Robot.Side;
 import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
+import org.usfirst.frc.team3735.robot.util.Func;
 import org.usfirst.frc.team3735.robot.util.PIDCtrl;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
+import org.usfirst.frc.team3735.robot.util.profiling.Location;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -24,6 +27,10 @@ public class DriveTurnToAnglePIDCtrl extends Command{
 	private Pipes pipeline;
 	private boolean isRelative;
 	private double deltaAngle;
+	private boolean isLocation;
+	private Location targetLocation;
+	Func getAngle;
+	
 
 	public DriveTurnToAnglePIDCtrl(double angle) {
     	requires(Robot.drive);
@@ -51,6 +58,17 @@ public class DriveTurnToAnglePIDCtrl extends Command{
     	isRelative = false;
     }
 	
+	public DriveTurnToAnglePIDCtrl(Location loc) {
+    	requires(Robot.drive);
+    	requires(Robot.navigation);
+    	targetLocation = loc;
+    	
+    }
+	
+	public DriveTurnToAnglePIDCtrl(Func fun) {
+		getAngle = fun;
+	}
+	
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -58,6 +76,10 @@ public class DriveTurnToAnglePIDCtrl extends Command{
     		targetAngle = VortxMath.continuousLimit(
     				Robot.navigation.getYaw() + (Robot.vision.getRelativeCX() * Robot.vision.dpp.getValue()),
     				-180, 180);
+    	}else if(targetLocation != null) {
+    		targetAngle = Robot.navigation.getAngleToLocationCorrected(targetLocation);
+    	}else if(getAngle != null) {
+    		targetAngle = getAngle.get();
     	}else if(isRelative){
     		targetAngle = VortxMath.continuousLimit(Robot.navigation.getYaw() + deltaAngle, -180, 180);
     	}
