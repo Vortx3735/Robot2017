@@ -13,9 +13,11 @@ import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.Robot.Side;
 //import org.usfirst.frc.team3735.robot.Robot.Side;
 import org.usfirst.frc.team3735.robot.settings.Dms;
+import org.usfirst.frc.team3735.robot.settings.Waypoints;
 import org.usfirst.frc.team3735.robot.util.PIDCtrl;
-import org.usfirst.frc.team3735.robot.util.Position;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
+import org.usfirst.frc.team3735.robot.util.profiling.Location;
+import org.usfirst.frc.team3735.robot.util.profiling.Position;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 
@@ -73,15 +75,15 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     	curRight = Robot.drive.getRightPositionInches();
     	
     	double dd = ((curLeft-prevLeft) + (curRight-prevRight)) * .5;
-    	double angle = 0;
-    	if(Robot.side.equals(Side.Left)){
-    		angle = getYaw() * -1;
+    	double angle = getYaw();
+    	if(Robot.side.equals(Side.Left)){ //simplified version of getFieldYaw without limits
+    		angle *= -1;
     	}else{
-    		angle = (getYaw() + 180) * -1;
+    		angle = (angle + 180) * -1;
     	}
 		pos.x += Math.cos(Math.toRadians(angle)) * dd;
 		pos.y += Math.sin(Math.toRadians(angle)) * dd;
-		pos.angle = angle * -1;
+		pos.yaw = angle * -1;
 		
     	prevLeft = curLeft;
     	prevRight = curRight;
@@ -90,6 +92,16 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     
     public double getYaw(){
     	return ahrs.getYaw();
+    }
+    
+    public double getFieldYaw() {
+    	if(Robot.side.equals(Side.Left)) {
+    		return getYaw();
+    	}else {
+    		return VortxMath.continuousLimit(getYaw() + 180, -180, 180);
+
+    	}
+   
     }
     public void zeroYaw(){
     	ahrs.zeroYaw();
@@ -117,7 +129,7 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     public void displayPosition(){
     	table.putNumberArray("centerX", new double[]{pos.x});
 		table.putNumberArray("centerY", new double[]{pos.y});
-		table.putNumberArray("angle", new double[]{pos.angle});
+		table.putNumberArray("angle", new double[]{pos.yaw});
     }
     
     
@@ -260,6 +272,61 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 		zeroYaw();
 		Robot.retrieveSide();
 		setPosition(getStartingPosition());
+	}
+	
+	public Position getPosition() {
+		return pos;
+	}
+	
+	public int getQuadrant() {
+		double xdif = pos.x - Waypoints.center.x;
+		double ydif = pos.y - Waypoints.center.y;
+		if(xdif > 0) {
+			if(ydif > 0) {
+				return 1;
+			}else {
+				return 4;
+			}
+		}else {
+			if(ydif > 0) {
+				return 2;
+			}else {
+				return 3;
+			}
+		}
+
+	}
+	public Location getClosestLocation(Location[] locs) {
+		if(locs != null && locs.length > 0) {
+			Location curPos = getPosition();
+			double least = curPos.distanceFrom(locs[0]);
+			int best = 0;
+			for(int i = 1; i < locs.length; i++) {
+				double dist = curPos.distanceFrom(locs[i]);
+				if(dist < least) {
+					least = dist;
+					best = i;
+				}
+			}
+			return locs[best];
+		}else {
+			System.out.println("Error in getting closest location");
+			return new Location(0,0);
+		}
+	}
+	
+	public double getAngleToLocation(Location loc) {
+		return Math.toDegrees(-Math.atan2(loc.y - pos.y, loc.x - pos.x));
+	}
+	
+	public double getAngleToLocationCorrected(Location loc) {
+		double ans = Math.toDegrees(-Math.atan2(loc.y - pos.y, loc.x - pos.x));
+		if(Robot.side.equals(Side.Right)){
+			return VortxMath.continuousLimit(ans + 180, -180, 180);
+		}else {
+			return ans;
+		}
+		
 	}
     
 }

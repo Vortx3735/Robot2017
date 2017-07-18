@@ -4,6 +4,7 @@ package org.usfirst.frc.team3735.robot.commands.drive;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.settings.Constants;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
+import org.usfirst.frc.team3735.robot.util.cmds.VortxCommand;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 import com.ctre.CANTalon.TalonControlMode;
@@ -15,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class ExpDrive extends Command {
+public class ExpDrive extends VortxCommand {
 
 	private double moveSetValue;
 	private double turnSetValue;
@@ -68,6 +69,8 @@ public class ExpDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+		super.initialize();
+
     	Robot.drive.setupDriveForSpeedControl();
     	if(isJoystickInput){
     		moveSetValue			= 0.0;
@@ -132,25 +135,26 @@ public class ExpDrive extends Command {
 //		turnMotor = VortxMath.limit(turnMotor, -1, 1);
 
 
-		Robot.drive.arcadeDrive(moveMotor, turnMotor);
+		Robot.drive.normalDrive(moveMotor, turnMotor);
 		
-		
+    	super.execute();
 		log();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     public boolean isFinished() {
-        return false;
+        return super.isFinished();
     }
 
     // Called once after isFinished returns true
     public void end() {
+    	super.end();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     public void interrupted() {
-
+    	end();
     }
     
     private void log(){

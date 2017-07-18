@@ -21,7 +21,7 @@ public class GTAOI implements DriveOI{
 
 		main = new XboxController(0);
 		co = new XboxController(1);
-
+		main.rb.get();
 		//Baby Driver
 		//main.pov180.whenPressed(new DriveGoToPeg());
 		main.pov90.whileHeld(new DriveAddSensitiveRight());

@@ -33,16 +33,19 @@ public class Drive extends Subsystem {
 	private static double dD = 0.0;
 	private static double dF = 0.0;
 
-	//unused motion magic variables
-	private static double accel = 30;			//rpm/s
-	private static double cruiseVelocity = 120;	//rpm
+	//for speed profiling
+	public static final double slope = 0.00113174;
+	public static final double minPct = 0.0944854;
+	public static final double maxSpeed = (1-minPct)/slope; //about 800.11
+	
+	
 	
 	private double leftAddTurn = 0;
 	private double rightAddTurn = 0;
 	private double visionAssist = 0;
 	private double navxAssist = 0;
-	private double voltageAssist = 0;
 
+	
 	
 
 	public Drive() {
@@ -331,8 +334,23 @@ public class Drive extends Subsystem {
      * 			compensates for the deadzone using gathered data
      */
     public static double speedToPercent(double spd){
-    	double speed = Math.abs(spd) *60.0 /Constants.Drive.InchesPerRotation;
-    	return Math.copySign(0.00113174*speed + 0.0944854, spd);
+    	double speed = (Math.abs(spd) *60.0) /Constants.Drive.InchesPerRotation;
+    	return Math.copySign(slope*speed + minPct, spd);
+    }
+    
+    public static double handleDeadband(double percent) {
+    	return percent - (minPct * percent) + minPct;
+    }
+    public static double invHandleDeadband(double inv) {
+    	return (inv-minPct)/(1-minPct);
+    }
+    
+    public double getCurrentPercentSpeed() {
+    	return invHandleDeadband(speedToPercent(getAverageSpeed()));
+    }
+    
+    public double getCurrentPercent() {
+    	return speedToPercent(getAverageSpeed());
     }
 
 	/******************************************

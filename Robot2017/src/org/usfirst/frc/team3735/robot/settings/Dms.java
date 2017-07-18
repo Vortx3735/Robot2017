@@ -29,6 +29,7 @@ public class Dms {
 
 		public class AirShip{
 			public static final double SIDELENGTH = 0;
+			public static final double HALFSL = SIDELENGTH/2.0;
 			public static final double DISTANCEFROMWALL = 0;
 
 		}
