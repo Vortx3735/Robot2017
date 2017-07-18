@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class ExpDrive extends VortxCommand {
+public class DriveExp extends VortxCommand {
 
 	private double moveSetValue;
 	private double turnSetValue;
@@ -27,43 +27,20 @@ public class ExpDrive extends VortxCommand {
 	private double moveMotorPrev;
 	private double turnMotorPrev;
 	
-	private boolean isJoystickInput;
-	
-	
-	private double fodAngle;
-	private double fodMove;
-	private double fodTurn;
-	
-	private static Setting navxCo = new Setting("FOD Navx Coefficient", 2.5);
-	private static Setting navxPow = new Setting("FOD Navx Exponent", 1);
-	private static Setting fodMoveCo = new Setting("FOD Move Exponent", 3);
-	
-	private static Setting moveExponent = new Setting("Move Exponent", Constants.Drive.moveExponent);
-	private static Setting turnExponent = new Setting("Turn Exponent", Constants.Drive.turnExponent);
-	private static Setting scaledMaxMove = new Setting("Scaled Max Move", Constants.Drive.scaledMaxMove);
-	private static Setting scaledMaxTurn = new Setting("Scaled Max Turn", Constants.Drive.scaledMaxTurn);
-	private static Setting moveReactivity = new Setting("Move Reactivity", Constants.Drive.moveReactivity);
-	private static Setting turnReactivity = new Setting("Turn Reactivity", Constants.Drive.turnReactivity);
+
 	
 	
 	/************************************/
 	/* Code								*/
 	/************************************/
-    public ExpDrive() {
-        // Use requires() here to declare subsystem dependencies
+    public DriveExp() {
     	requires(Robot.drive);
-		isJoystickInput = true;
-    	Robot.drive.setupDriveForSpeedControl();
     }
     
-    public ExpDrive(double move, double turn){
+    public DriveExp(double move, double turn){
     	moveSetValue = move;
     	turnSetValue = turn;
-    	//System.out.println("Exp Move no Joystick");
-     	
     	requires(Robot.drive);
-    	isJoystickInput = false;
-    	Robot.drive.setupDriveForSpeedControl();
 
     }
 
@@ -71,14 +48,8 @@ public class ExpDrive extends VortxCommand {
     protected void initialize() {
     	super.initialize();
     	Robot.drive.setupDriveForSpeedControl();
-    	if(isJoystickInput){
-    		moveSetValue			= 0.0;
-    		turnSetValue			= 0.0;
-    	}
-		moveMotor			= 0.0;
-		turnMotor			= 0.0;
-		moveMotorPrev = 0.0;
-		turnMotorPrev = 0.0;
+		moveMotor = moveMotorPrev = Robot.drive.
+		turnMotor = turnMotorPrev = 0.0;
 
     }
 
