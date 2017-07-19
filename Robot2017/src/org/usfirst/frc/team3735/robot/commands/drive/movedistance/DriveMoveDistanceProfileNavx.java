@@ -23,7 +23,7 @@ public class DriveMoveDistanceProfileNavx extends CommandGroup {
 				return done;
 			}
     	});
-    	addSequential(new DriveMoveDistanceProfile2(d, v, a, exitV){
+    	addSequential(new DriveMoveDistanceProfile(d, v, a, exitV){
     		@Override
     		protected void end() {
     			super.end();

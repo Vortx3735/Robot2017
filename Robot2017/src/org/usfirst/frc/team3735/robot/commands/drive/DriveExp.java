@@ -27,12 +27,10 @@ public class DriveExp extends VortxCommand {
 	private double moveMotorPrev;
 	private double turnMotorPrev;
 	
+	private double moveReactivity = .2;
+	private double turnReactivity = .4;
 
-	
-	
-	/************************************/
-	/* Code								*/
-	/************************************/
+
     public DriveExp() {
     	requires(Robot.drive);
     }
@@ -41,74 +39,40 @@ public class DriveExp extends VortxCommand {
     	moveSetValue = move;
     	turnSetValue = turn;
     	requires(Robot.drive);
-
+    }
+    
+    public DriveExp(double move, double turn, double mr, double tr){
+    	moveSetValue = move;
+    	turnSetValue = turn;
+    	moveReactivity = mr;
+    	turnReactivity = tr;
+    	requires(Robot.drive);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	super.initialize();
     	Robot.drive.setupDriveForSpeedControl();
-		moveMotor = moveMotorPrev = Robot.drive.
-		turnMotor = turnMotorPrev = 0.0;
+		moveMotor = moveMotorPrev = Robot.drive.getCurrentPercent();
+		turnMotor = turnMotorPrev = 0;
 
     }
 
     // Called repeatedly when this Command is scheduled to run
     public void execute() {
-    	super.execute();
-		if(isJoystickInput){
-			moveSetValue = Robot.oi.getDriveMove();
-			turnSetValue = Robot.oi.getDriveTurn();
-		}
+    	super.execute();	
 		
-		
-		
-		if(Robot.oi.getFODMag() > .05){
-			fodMove = Math.pow(Robot.oi.getFODMag(), fodMoveCo.getValue());
-			fodAngle = Robot.oi.getFODAngle();
-			Robot.navigation.getController().setSetpoint(fodAngle);
-			
-			fodTurn = (Math.pow(Robot.navigation.getController().getError(), navxPow.getValue())/180.0) * navxCo.getValue();
-			
-		
-		}else{
-			fodMove = 0;
-			fodTurn = 0;
-		}
-		
-//		SmartDashboard.putNumber("FOD Move", fodMove);
-//		SmartDashboard.putNumber("FOD Turn", fodTurn);
-
-		//moveSetValue = moveSetValue + fodMove;
-		turnSetValue = turnSetValue + fodTurn;
-		
-		
-	
-		moveMotor = (moveSetValue-moveMotorPrev)*moveReactivity.getValue() + moveMotorPrev;
-		turnMotor = (turnSetValue-turnMotorPrev)*turnReactivity.getValue() + turnMotorPrev;
+		moveMotor = (moveSetValue-moveMotorPrev)*moveReactivity + moveMotorPrev;
+		turnMotor = (turnSetValue-turnMotorPrev)*turnReactivity + turnMotorPrev;
 
 		moveMotorPrev = moveMotor;
 		turnMotorPrev = turnMotor;
 		
 					
-		moveMotor = moveMotor * Math.pow(Math.abs(moveMotor), moveExponent.getValue() - 1);
-		turnMotor = turnMotor * Math.pow(Math.abs(turnMotor), turnExponent.getValue() - 1);
+		moveMotor = moveMotor * Math.pow(Math.abs(moveMotor), 1);
+		turnMotor = turnMotor * Math.pow(Math.abs(turnMotor), 1);
 		
-		moveMotor = moveMotor * scaledMaxMove.getValue();
-		turnMotor = turnMotor * scaledMaxTurn.getValue();
-		
-		//turnMotor = turnMotor + Robot.oi.getCoLeftX() * .2; you suck James
-		
-
-//		SmartDashboard.putNumber("Move Motor", moveMotor);
-//		SmartDashboard.putNumber("Turn Motor", turnMotor);
-//		moveMotor = VortxMath.limit(moveMotor, -1, 1);
-//		turnMotor = VortxMath.limit(turnMotor, -1, 1);
-
-
-		Robot.drive.arcadeDrive(moveMotor, turnMotor);
-		
-		
+		Robot.drive.normalDrive(moveMotor, turnMotor);		
 		log();
     }
 

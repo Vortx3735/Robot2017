@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
 
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
 
@@ -20,7 +21,7 @@ public class DriveMoveDistanceExp extends CommandGroup {
     	deltaDistance = distance;
     	power = Math.signum(distance) * Math.abs(power);
     	
-    	addSequential(new ExpDrive(power,0){
+    	addSequential(new DriveExp(power,0){
     		@Override
     		public boolean isFinished(){
     			return(VortxMath.isWithinThreshold(Robot.drive.getLeftPositionInches(), leftTargetDistance, 2) ||

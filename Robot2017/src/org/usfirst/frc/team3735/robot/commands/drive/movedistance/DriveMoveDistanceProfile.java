@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveMoveDistanceProfile2 extends VortxCommand {
+public class DriveMoveDistanceProfile extends VortxCommand {
 
 
 	private static final double FRAMERATE = 50;
@@ -39,7 +39,7 @@ public class DriveMoveDistanceProfile2 extends VortxCommand {
 		rampingDown
 	}
 
-	public DriveMoveDistanceProfile2(Double distance, double v, double a, double exitV) {
+	public DriveMoveDistanceProfile(Double distance, double v, double a, double exitV) {
 		if(Math.abs(exitV) > v){
 			exitV = v;
 		}

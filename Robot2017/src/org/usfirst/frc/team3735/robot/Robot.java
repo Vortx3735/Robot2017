@@ -5,7 +5,7 @@ import org.usfirst.frc.team3735.robot.commands.RecordVoltageData;
 import org.usfirst.frc.team3735.robot.commands.ResetPosition;
 import org.usfirst.frc.team3735.robot.commands.SendSDVoltage;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
-import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceProfile2;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceProfile;
 import org.usfirst.frc.team3735.robot.commands.drive.spinnyspin.DriveMoveInCircleProfile;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
 import org.usfirst.frc.team3735.robot.commands.sequences.DriveAcquireGear;
@@ -137,7 +137,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData(new RecordVoltageData());
 		SmartDashboard.putData(new SendSDVoltage());
-		SmartDashboard.putData(new DriveMoveDistanceProfile2(100.0, 30, 30, 0).addAssist(new NavxAssist()));
+		SmartDashboard.putData(new DriveMoveDistanceProfile(100.0, 30, 30, 0).addAssist(new NavxAssist()));
 		SmartDashboard.putData(new DriveMoveInCircleProfile(90, 60, true, 30, 30, 30));
 		side = Side.Left;
 		prevTime = Timer.getFPGATimestamp();

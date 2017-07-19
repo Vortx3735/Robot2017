@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.drive.spinnyspin;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceProfile2;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceProfile;
 import org.usfirst.frc.team3735.robot.settings.Constants;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.triggers.HasMoved;
@@ -21,7 +21,7 @@ public class DriveMoveInCircleProfile extends VortxCommand {
 	private static final double MAX_SPEED = 800 * Constants.Drive.InchesPerRotation /60.0; //inches per sec
     
 	private HasReachedAngle angler;
-	private DriveMoveDistanceProfile2 profile;
+	private DriveMoveDistanceProfile profile;
 	private Double distance;
 	private double radius;
 	
@@ -46,7 +46,7 @@ public class DriveMoveInCircleProfile extends VortxCommand {
     		v = Math.signum(v) * Math.abs(vMax(radius, DRIVE_WIDTH));
     		System.out.println("The Cruise Velocity was too great. Reducing to " + v);
     	}
-    	profile = new DriveMoveDistanceProfile2(distance, v, a, exitV);
+    	profile = new DriveMoveDistanceProfile(distance, v, a, exitV);
     	addTrigger(angler);
     	
     	leftMult = 1.0 + (DRIVE_WIDTH/radius);
