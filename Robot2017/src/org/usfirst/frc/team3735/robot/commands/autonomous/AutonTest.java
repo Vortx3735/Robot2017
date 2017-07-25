@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.autonomous;
 
 import org.usfirst.frc.team3735.robot.assists.NavxAssist;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpNavx;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpNavxBumped;
@@ -32,14 +33,14 @@ public class AutonTest extends CommandGroup {
     	//addSequential(new DriveMoveDistance(10));
     	
     	//addSequential(new DriveMoveDistanceExpNavx(70,.7),2.6);
-    	addSequential(new ExpDrive(.7,0).addAssist(new NavxAssist()).addTrigger(new HasMoved(70)),2.6);
+    	addSequential(new DriveExp(.7,0).addAssist(new NavxAssist()).addTrigger(new HasMoved(70)),2.6);
     	addSequential(new DriveBrake(),.4);
     	addSequential(new DriveTurnToAnglePIDCtrl(60),2);
     	addSequential(new DriveTurnToAnglePIDCtrl(Pipes.Peg),1.5);
     	//addSequential(new DriveMoveDistanceExpNavx(88.7),3);
     	//addSequential(new DriveMoveDistanceExpVisionBumped(89, .7, Pipes.Peg),3);
     	//addSequential(new DriveMoveDistanceExpNavxBumped(89, .7),2.5);
-    	addSequential(new ExpDrive(.7,0).addAssist(new NavxAssist()).addTrigger(new HasMoved(70)).addTrigger(new Bumped()),2.6);
+    	addSequential(new DriveExp(.7,0).addAssist(new NavxAssist()).addTrigger(new HasMoved(70)).addTrigger(new Bumped()),2.6);
     	addSequential(new GearIntakeDropOff(),2);
      }
 }

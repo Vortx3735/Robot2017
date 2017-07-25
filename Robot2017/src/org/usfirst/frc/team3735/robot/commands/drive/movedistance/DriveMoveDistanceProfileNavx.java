@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
 
-import org.usfirst.frc.team3735.robot.commands.drive.DriveAddNavxAssist;
+import org.usfirst.frc.team3735.robot.commands.drive.AddNavxAssist;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -17,7 +17,7 @@ public class DriveMoveDistanceProfileNavx extends CommandGroup {
 
 	public DriveMoveDistanceProfileNavx(double d, double v, double a, double exitV) {
     	done = false;
-		addParallel(new DriveAddNavxAssist(){
+		addParallel(new AddNavxAssist(){
 			@Override
 			protected boolean isFinished() {
 				return done;

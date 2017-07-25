@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3735.robot.commands.drive.positions;
 
+import org.usfirst.frc.team3735.robot.commands.drive.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.sequences.DriveAcquireGear;
 import org.usfirst.frc.team3735.robot.commands.sequences.DrivePlaceGear;
@@ -19,7 +20,7 @@ public class GearCycle extends CommandGroup {
         addSequential(new GoToCenterField());
         addSequential(new FollowPath(Waypoints.toKeyLeft));
         addSequential(new DriveAcquireGear());
-        addSequential(new ExpDrive(-1,0).addTrigger(new HasMoved(-60)),1);
+        addSequential(new DriveExp(-1,0).addTrigger(new HasMoved(-60)),1);
         addSequential(new GoToCenterField());
         addSequential(new FollowPath(Waypoints.toTopGear));
         addSequential(new DrivePlaceGear());

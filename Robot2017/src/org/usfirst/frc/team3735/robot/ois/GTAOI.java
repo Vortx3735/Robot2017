@@ -38,7 +38,6 @@ public class GTAOI implements DriveOI{
 //		main.start.whenPressed(new DriveChangeToGearDirection());
 //		main.back.whenPressed(new DriveChangeToBallDirection());
 		
-		
 		//CoDriver
 		co.y.whenPressed(new ScalerUp(1));
 		co.x.whenPressed(new ScalerOff());

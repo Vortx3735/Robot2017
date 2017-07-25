@@ -3,6 +3,7 @@ package org.usfirst.frc.team3735.robot.commands.drive.positions;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.triggers.HasPassedWaypoint;
+import org.usfirst.frc.team3735.robot.util.VortxMath;
 import org.usfirst.frc.team3735.robot.util.cmds.VortxCommand;
 import org.usfirst.frc.team3735.robot.util.profiling.Location;
 import org.usfirst.frc.team3735.robot.util.profiling.Position;
@@ -10,21 +11,27 @@ import org.usfirst.frc.team3735.robot.util.profiling.Position;
 public class HitWaypoint extends VortxCommand{
 	
 	public Location target;
-	private double pct;
-	private double acc = 1/50;
+	private double speed;
+	private boolean isReversed;
 	
-	public HitWaypoint(Location point) {
+	public HitWaypoint(Location target, boolean rev) {
+		this(target, null, rev);
+		
+	}
+	
+	
+	public HitWaypoint(Location target, Location from, boolean rev) {
 		requires(Robot.drive);
 		requires(Robot.navigation);
-		target = point;
-		addTrigger(new HasPassedWaypoint(target));
-		
+		this.target = target;
+		if(from == null)
+		addTrigger(new HasPassedWaypoint(target, from));
+		isReversed = rev;
 	}
 	
 	@Override
 	protected void initialize() {
 		super.initialize();
-		pct = Robot.drive.getCurrentPercentSpeed();
 	}
 
 	@Override
@@ -33,17 +40,17 @@ public class HitWaypoint extends VortxCommand{
 		Position p = Robot.navigation.getPosition();
 		
 		//moving
-		if(p.distanceFrom(target) < 100) {
-			pct -= acc;
-		}else {
-			pct += acc;
-		}
-		Robot.drive.normalDrive(Drive.handleDeadband(pct), 0);
 		
 		
 		//turning
-		Robot.navigation.getController().setSetpoint(Math.toDegrees(-Math.atan2(target.y - p.y, target.x - p.x)));
+		double targetAngle = Math.toDegrees(-Math.atan2(target.y - p.y, target.x - p.x));
+		if(isReversed) {
+			targetAngle = VortxMath.continuousLimit(targetAngle + 180, -180, 180);
+		}
+		Robot.navigation.getController().setSetpoint(targetAngle);
+		
 		Robot.drive.setNavxAssist(Robot.navigation.getController().getError());
+		Robot.drive.limitedDrive(1,0);
 		
 	}
 

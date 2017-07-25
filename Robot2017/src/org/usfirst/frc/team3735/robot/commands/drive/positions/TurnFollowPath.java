@@ -12,8 +12,6 @@ public class TurnFollowPath extends CommandGroup {
 
     public TurnFollowPath(Location[] locs) {
     	addSequential(new DriveTurnToAnglePIDCtrl(locs[0]),1);
-        for(Location l : locs) {
-        	addSequential(new HitWaypoint(l));
-        }
+        addSequential(new FollowPath(locs));
     }
 }

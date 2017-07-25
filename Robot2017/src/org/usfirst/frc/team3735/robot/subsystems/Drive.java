@@ -36,7 +36,7 @@ public class Drive extends Subsystem {
 	//for speed profiling
 	public static final double slope = 0.00113174;
 	public static final double minPct = 0.0944854;
-	public static final double maxSpeed = (1-minPct)/slope; //about 800.11
+	public static final double maxSpeed = (1-minPct)/slope; //about 800.11 rpm
 	
 	
 	
@@ -220,8 +220,41 @@ public class Drive extends Subsystem {
 	
 	
 	public void normalDrive(double move, double rotate){
-		double rotateValue = rotate + leftAddTurn + rightAddTurn + visionAssist + navxAssist;
+		double rotateValue = rotate + getTurnAdditions();
 		setLeftRight(move + rotateValue, move - rotateValue);
+	}
+	
+	public void limitedDrive(double move, double rotate) {
+		double left = move + getTurnAdditions() + rotate;
+		double right = move - getTurnAdditions() - rotate;
+		double leftSpeed;
+		double rightSpeed;
+//		if(left > 1) {
+//			leftSpeed = 1;
+//			rightSpeed = right - left + 1;
+//		}else if(right > 1) {
+//			rightSpeed = 1;
+//			leftSpeed = left - right + 1;
+//		}else if(left < -1) {
+//			leftSpeed = -1;
+//			rightSpeed = right - left - 1;
+//		}else if(right < -1) {
+//			rightSpeed = -1;
+//			leftSpeed = left - right - 1;
+//		}
+		
+		if(Math.abs(left) > 1) {
+			leftSpeed = Math.signum(left);
+			rightSpeed = right - left + Math.signum(left);
+		}else if(Math.abs(right) > 1) {
+			leftSpeed = left - right + Math.signum(right);
+			rightSpeed = Math.signum(right);
+		}else {
+			leftSpeed = left;
+			rightSpeed = right;
+		}
+		setLeftRight(leftSpeed, rightSpeed);
+		
 	}
 
 	
@@ -240,6 +273,10 @@ public class Drive extends Subsystem {
 				  			 (radius + Dms.Bot.HALFWIDTH);
 		}
 		setLeftRight(left, right);
+	}
+	
+	public double getTurnAdditions() {
+		return leftAddTurn + rightAddTurn + visionAssist + navxAssist;
 	}
 
 	/*******************************
@@ -345,10 +382,18 @@ public class Drive extends Subsystem {
     	return (inv-minPct)/(1-minPct);
     }
     
+    /**
+     * 
+     * @return the percentage of the max speed that the robot is going at
+     */
     public double getCurrentPercentSpeed() {
     	return invHandleDeadband(speedToPercent(getAverageSpeed()));
     }
     
+    /**
+     * 
+     * @return	the percentVBus to send to the motors to maintain the current speed
+     */
     public double getCurrentPercent() {
     	return speedToPercent(getAverageSpeed());
     }

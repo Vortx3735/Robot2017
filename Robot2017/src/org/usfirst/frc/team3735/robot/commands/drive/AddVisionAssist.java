@@ -1,24 +1,41 @@
 package org.usfirst.frc.team3735.robot.commands.drive;
 
+import org.usfirst.frc.team3735.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class NormalDrive extends Command {
-
-    public NormalDrive() {
+public class AddVisionAssist extends Command {
+	Double angle;
+	
+    public AddVisionAssist() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	
+    	requires(Robot.navigation);
+    	angle = null;
+    }
+    
+    public AddVisionAssist(Double a) {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	requires(Robot.navigation);
+    	angle = a;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if(angle == null){
+        	Robot.navigation.getController().setSetpoint(Robot.navigation.getYaw());
+    	}else{
+        	Robot.navigation.getController().setSetpoint(angle);
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.drive.setNavxAssist(Robot.navigation.getController().getError());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -28,10 +45,12 @@ public class NormalDrive extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.drive.setNavxAssist(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

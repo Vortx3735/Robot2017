@@ -9,18 +9,21 @@ public class Waypoints {
 	public static final Location bottomRight = new Location(Dms.Field.LENGTH, -Dms.Field.HALFWIDTH);
 	public static final Location bottomLeft = new Location(0, -Dms.Field.HALFWIDTH);
 
-	
+	public static final Location Boiler = new Location(6, -155);
+	public static final Location MiddleRope = new Location(88, 0);
+	public static final Location upperRope = new Location(180, 53);
+	public static final Location BottomRope = new Location(180, 53);
 	public static final Location middlePeg =  new Location(Dms.Field.AirShip.DISTANCEFROMWALL, 0);
 	public static final Location upperPeg = middlePeg
 			.appendYawDistance(-90, Dms.Field.AirShip.HALFSL)
 			.appendYawDistance(30, Dms.Field.AirShip.HALFSL);
-	public static final Location lower = middlePeg
+	public static final Location lowerPeg = middlePeg
 			.appendYawDistance(90, Dms.Field.AirShip.HALFSL)
 			.appendYawDistance(-30, Dms.Field.AirShip.HALFSL);
 	
 	public static final Location middlePegLineup = middlePeg.appendYawDistance(180, 70);
-	public static final Location upperPegLineup = middlePeg.appendYawDistance(-120, 70);
-	public static final Location lowerPegLineup = middlePeg.appendYawDistance(120, 70);
+	public static final Location upperPegLineup = upperPeg.appendYawDistance(-120, 70);
+	public static final Location lowerPegLineup = lowerPeg.appendYawDistance(120, 70);
 	
 	
 	public static final Location pegSquareUpTop = center.appendXY(-100, 100);

@@ -1,37 +1,39 @@
-package org.usfirst.frc.team3735.robot.commands;
+package org.usfirst.frc.team3735.robot.commands.ballintake;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.util.RollingAverage;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class RecordVoltageData extends Command {
+public class BallIntakeSet extends Command {
 
-	private RollingAverage roll;
+	Double speed;
 	
-    public RecordVoltageData() {
-        roll = new RollingAverage(3){
-        	@Override
-        	public double get(){
-        		return Robot.drive.getAverageSpeed();
-        	}
-        };
+    public BallIntakeSet(double spd) {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	requires(Robot.ballIntake);
+    	speed = spd;
+    }
+    
+    public BallIntakeSet() {
+    	requires(Robot.ballIntake);
+    	speed = null;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	roll.reset();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	roll.compute();
-    	SmartDashboard.putNumber("Average Speed", roll.getAverage());
-
+    	if(speed == null) {
+        	Robot.ballIntake.setRollerSmartDashboard();
+    	}else {
+    		Robot.ballIntake.setRollerCurrent(speed);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -41,10 +43,12 @@ public class RecordVoltageData extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.ballIntake.setRollerCurrent(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

@@ -7,7 +7,7 @@ import org.usfirst.frc.team3735.robot.util.profiling.Location;
 
 public class HitCenterField extends HitWaypoint{
 	public HitCenterField() {
-		super(Waypoints.center);
+		super(Waypoints.center, false);
 	}
 
 	@Override

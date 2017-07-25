@@ -8,20 +8,31 @@ import org.usfirst.frc.team3735.robot.util.profiling.Location;
 public class HasPassedWaypoint extends ComTrigger{
 	
 
-	private Location location;
+	private Location targetLocation;
+	private Location fromLocation;
 	private Line toCross;
 	private boolean isTopRightofLine;
 
 	public HasPassedWaypoint(Location loc){
-		this.location = loc;
+		this(loc, null);
 	}
 	
+	public HasPassedWaypoint(Location target, Location from){
+		this.targetLocation = target;
+		fromLocation = from;
+	}
 	
 
 	@Override
 	public void initialize() {
-		Line toWaypoint = new Line(Robot.navigation.getPosition(), location);
-		toCross = toWaypoint.getPerpendicular(location);
+		Location from;
+		if(fromLocation == null) {
+			from = Robot.navigation.getPosition();
+		}else {
+			from = fromLocation;
+		}
+		Line toWaypoint = new Line(from, targetLocation);
+		toCross = toWaypoint.getPerpendicular(targetLocation);
 		isTopRightofLine = evaluateLocation();
 	}
 

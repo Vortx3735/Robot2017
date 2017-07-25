@@ -2,6 +2,7 @@ package org.usfirst.frc.team3735.robot.commands.sequences;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.commands.Wait;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpNavx;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeLiftDown;
@@ -28,7 +29,7 @@ public class GearIntakeDropOff extends CommandGroup {
 //    	//addSequential(new GearIntakeRollersOff());
     	
     	//new code
-    	addSequential(new ExpDrive(.5,0),.1);
+    	addSequential(new DriveExp(.5,0),.1);
     	
     	addParallel(new GearIntakeRollersOut());
     	addSequential(new Wait(.1));

@@ -1,12 +1,19 @@
 package org.usfirst.frc.team3735.robot.util.profiling;
 
+import java.util.ArrayList;
+
 public class Location {
 	public double x,y;
+	public static ArrayList<Location> staticLocations = new ArrayList<Location>();
 	
 	public Location(double x, double y) {
 		this.x = x;
 		this.y = y;
-		
+	}
+	
+	public Location(double x, double y, boolean flag) {
+		this(x,y);
+		staticLocations.add(this);
 	}
 	
 	public Location appendYawDistance(double yaw, double distance) {

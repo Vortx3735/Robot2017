@@ -7,17 +7,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveAddNavxAssist extends Command {
+public class AddNavxAssist extends Command {
 	Double angle;
 	
-    public DriveAddNavxAssist() {
+    public AddNavxAssist() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.navigation);
     	angle = null;
     }
     
-    public DriveAddNavxAssist(Double a) {
+    public AddNavxAssist(Double a) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.navigation);

@@ -7,35 +7,28 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveAddVisionAssist extends Command {
-	Double angle;
-	
-    public DriveAddVisionAssist() {
+public class DriveRaw extends Command {
+
+	private double move;
+    private double turn;
+
+	public DriveRaw(double move, double turn) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.navigation);
-    	angle = null;
-    }
-    
-    public DriveAddVisionAssist(Double a) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.navigation);
-    	angle = a;
+    	requires(Robot.drive);
+    	this.move = move;
+    	this.turn = turn;
+    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(angle == null){
-        	Robot.navigation.getController().setSetpoint(Robot.navigation.getYaw());
-    	}else{
-        	Robot.navigation.getController().setSetpoint(angle);
-    	}
+    	Robot.drive.setupDriveForSpeedControl();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.setNavxAssist(Robot.navigation.getController().getError());
+    	Robot.drive.normalDrive(move, turn);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -45,12 +38,11 @@ public class DriveAddVisionAssist extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drive.setNavxAssist(0);
+    	Robot.drive.normalDrive(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }
