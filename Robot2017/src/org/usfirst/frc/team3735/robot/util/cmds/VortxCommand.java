@@ -21,6 +21,8 @@ public class VortxCommand extends Command{
 	ArrayList<ComTrigger> triggers = new ArrayList<ComTrigger>();
 	ArrayList<ComAssist> assists = new ArrayList<ComAssist>();
 	
+
+
 	@Override
 	protected void initialize() {
 		for(ComTrigger t : triggers){
@@ -48,6 +50,13 @@ public class VortxCommand extends Command{
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	protected void end() {
+		for(ComAssist c : assists){
+			c.end();
+		}
 	}
 	
 	public VortxCommand addTrigger(ComTrigger t){

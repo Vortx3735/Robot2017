@@ -30,7 +30,7 @@ public class Vision extends Subsystem {
 	private static final int IMG_HEIGHT = 240;
 	public static Setting dpp = new Setting("Vision Degrees per Pixel", 0.13125);
 	
-	public static final double nullValue = -12345;
+	public static final double nullValue = -.0012345;
 	
 	private UsbCamera camera1;
 	private UsbCamera camera2;

@@ -1,9 +1,11 @@
 package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.assists.NavxAssist;
+import org.usfirst.frc.team3735.robot.assists.NavxVisionAssist;
 import org.usfirst.frc.team3735.robot.commands.ResetPosition;
 import org.usfirst.frc.team3735.robot.commands.SendSDVoltage;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
+import org.usfirst.frc.team3735.robot.commands.drive.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.drive.RecordVoltageData;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceProfile;
 import org.usfirst.frc.team3735.robot.commands.drive.spinnyspin.DriveMoveInCircleProfile;
@@ -23,6 +25,9 @@ import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team3735.robot.subsystems.Vision;
+import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
+import org.usfirst.frc.team3735.robot.triggers.Bumped;
+import org.usfirst.frc.team3735.robot.util.TorqueIterative;
 import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
 import org.usfirst.frc.team3735.robot.util.profiling.Position;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
@@ -56,7 +61,7 @@ public class Robot extends IterativeRobot {
 	public static Navigation navigation;
 	public static Ultrasonic ultra;
 	public static Vision vision;
-	public static DriveOI oi;
+	public static GTAOI oi;
 	
 	public double dt;
 	private double prevTime;
@@ -141,15 +146,18 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new DriveMoveInCircleProfile(90, 60, true, 30, 30, 30));
 		side = Side.Left;
 		prevTime = Timer.getFPGATimestamp();
+		SmartDashboard.putData("Drive Test", new DriveExp(.5,0).addAssist(new NavxVisionAssist(Pipes.Peg)));
 	}
 	
-	@Override
+	//@Override
 	public void robotPeriodic() {
-		dt = Timer.getFPGATimestamp() - prevTime;
-		prevTime += dt;
-		
+//		dt = Timer.getFPGATimestamp() - prevTime;
+//		prevTime += dt;
+//		SmartDashboard.putNumber("dt", dt);
+//		
 		Setting.fetchAround();
-        //vision.debugLog();
+		
+        vision.debugLog();
         navigation.integrate();
         navigation.displayPosition();
         drive.debugLog();
@@ -157,6 +165,8 @@ public class Robot extends IterativeRobot {
         
 
 	}
+
+
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable
@@ -182,6 +192,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		//robotPeriodic();
 		 Scheduler.getInstance().run();
 	}
 
@@ -199,6 +210,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		//robotPeriodic();
         Scheduler.getInstance().run();
         
 	}

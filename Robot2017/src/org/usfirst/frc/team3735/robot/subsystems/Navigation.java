@@ -39,6 +39,7 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 
 	
 	Position pos = new Position(0,0,0);
+	private Object posLock = new Object();
 	NetworkTable table;
 
 	private double prevLeft;
@@ -60,8 +61,10 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     	SmartDashboard.putData("Navigation Turning Controller", controller);
 	}
 
-	public void setPosition(Position p){
-		pos = p;
+	public synchronized void setPosition(Position p){
+		synchronized(posLock){
+			pos = p;
+		}
 	}
 	
     // Put methods for controlling this subsystem
@@ -70,23 +73,26 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     public void initDefaultCommand() {
     }
     
-    public void integrate(){
-    	curLeft = Robot.drive.getLeftPositionInches();
-    	curRight = Robot.drive.getRightPositionInches();
-    	
-    	double dd = ((curLeft-prevLeft) + (curRight-prevRight)) * .5;
-    	double angle = getYaw();
-    	if(Robot.side.equals(Side.Left)){ //simplified version of getFieldYaw without limits
-    		angle *= -1;
-    	}else{
-    		angle = (angle + 180) * -1;
+    public synchronized void integrate(){
+    	synchronized(posLock){
+    		curLeft = Robot.drive.getLeftPositionInches();
+        	curRight = Robot.drive.getRightPositionInches();
+        	
+        	double dd = ((curLeft-prevLeft) + (curRight-prevRight)) * .5;
+        	double angle = getYaw();
+        	if(Robot.side.equals(Side.Left)){ //simplified version of getFieldYaw without limits
+        		angle *= -1;
+        	}else{
+        		angle = (angle + 180) * -1;
+        	}
+    		pos.x += Math.cos(Math.toRadians(angle)) * dd;
+    		pos.y += Math.sin(Math.toRadians(angle)) * dd;
+    		pos.yaw = angle * -1;
+    		
+        	prevLeft = curLeft;
+        	prevRight = curRight;
     	}
-		pos.x += Math.cos(Math.toRadians(angle)) * dd;
-		pos.y += Math.sin(Math.toRadians(angle)) * dd;
-		pos.yaw = angle * -1;
-		
-    	prevLeft = curLeft;
-    	prevRight = curRight;
+    	
     	
     }
     
@@ -274,7 +280,7 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 		setPosition(getStartingPosition());
 	}
 	
-	public Position getPosition() {
+	public synchronized Position getPosition() {
 		return pos;
 	}
 	

@@ -101,6 +101,8 @@ public class Drive extends Subsystem {
 		setEnableBrake(true);
 		l1.changeControlMode(TalonControlMode.PercentVbus);
 		r1.changeControlMode(TalonControlMode.PercentVbus);
+		this.setNavxAssist(0);
+		this.setVisionAssist(0);
 	}
 
 	/*******************************

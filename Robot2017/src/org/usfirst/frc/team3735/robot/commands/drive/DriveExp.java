@@ -29,11 +29,6 @@ public class DriveExp extends VortxCommand {
 	
 	private double moveReactivity = .2;
 	private double turnReactivity = .4;
-
-
-    public DriveExp() {
-    	requires(Robot.drive);
-    }
     
     public DriveExp(double move, double turn){
     	moveSetValue = move;
@@ -73,7 +68,6 @@ public class DriveExp extends VortxCommand {
 		turnMotor = turnMotor * Math.pow(Math.abs(turnMotor), 1);
 		
 		Robot.drive.normalDrive(moveMotor, turnMotor);		
-		log();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -91,8 +85,5 @@ public class DriveExp extends VortxCommand {
     public void interrupted() {
     	super.interrupted();
     }
-    
-    private void log(){
 
-    }
 }

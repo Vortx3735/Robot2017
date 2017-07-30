@@ -57,7 +57,7 @@ public class ExpDrive extends Command {
 		moveMotor		= 0.0;
 		turnMotor		= 0.0;
 		
-		moveMotorPrev 	= 0.0;
+		moveMotorPrev 	= moveSetValue;
 		turnMotorPrev 	= 0.0;
 
     }
@@ -92,7 +92,9 @@ public class ExpDrive extends Command {
 		turnMotor = turnMotor * Math.pow(Math.abs(turnMotor), turnExponent.getValue() - 1);
 		
 		moveMotor = moveMotor * scaledMaxMove.getValue();
-		turnMotor = turnMotor * scaledMaxTurn.getValue();		
+		if(!Robot.oi.main.ls.get()){
+			turnMotor = turnMotor * scaledMaxTurn.getValue();		
+		}
 		Robot.drive.normalDrive(moveMotor, turnMotor);
 		log();
     }

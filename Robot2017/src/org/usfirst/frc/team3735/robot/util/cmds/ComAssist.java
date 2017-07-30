@@ -14,6 +14,9 @@ public class ComAssist {
 	public void execute(){
 		
 	}
+	public void end(){
+		
+	}
 	
 	public void requires(Subsystem s){
 		requirements.add(s);

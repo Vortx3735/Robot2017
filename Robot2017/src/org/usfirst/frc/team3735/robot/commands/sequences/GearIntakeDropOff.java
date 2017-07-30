@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.sequences;
 
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.assists.NavxAssist;
 import org.usfirst.frc.team3735.robot.commands.Wait;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
@@ -9,6 +10,8 @@ import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeLiftDown;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeLiftUp;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersOut;
+import org.usfirst.frc.team3735.robot.triggers.HasMoved;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -37,8 +40,8 @@ public class GearIntakeDropOff extends CommandGroup {
     	addSequential(new GearIntakeLiftDown());
     	addSequential(new Wait(.1));
 
-    	addSequential(new DriveMoveDistanceExpNavx(-20, .6, null, .8),2);
-
+    	//addSequential(new DriveMoveDistanceExpNavx(-20, .6, null, .8),2);
+    	addSequential(new DriveExp(-1,0,.4,.4).addAssist(new NavxAssist()).addTrigger(new HasMoved(-20)));
     	addSequential(new GearIntakeLiftUp());
     	addSequential(new GearIntakeRollersOff());
     	
