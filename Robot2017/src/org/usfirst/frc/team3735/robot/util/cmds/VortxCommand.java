@@ -59,7 +59,7 @@ public class VortxCommand extends Command{
 		}
 	}
 	
-	public VortxCommand addTrigger(ComTrigger t){
+	public VortxCommand addT(ComTrigger t){
 		triggers.add(t);
 		for(Subsystem s : t.requirements){
 			requires(s);
@@ -67,7 +67,7 @@ public class VortxCommand extends Command{
 		return this;
 	}
 	
-	public VortxCommand addAssist(ComAssist c){
+	public VortxCommand addA(ComAssist c){
 		assists.add(c);
 		for(Subsystem s : c.requirements){
 			requires(s);

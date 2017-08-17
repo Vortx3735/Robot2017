@@ -1,9 +1,13 @@
-package org.usfirst.frc.team3735.robot.commands.drive.turntoangle;
+package org.usfirst.frc.team3735.robot.commands.drive;
 
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.Robot.Side;
 import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
+import org.usfirst.frc.team3735.robot.util.Func;
 import org.usfirst.frc.team3735.robot.util.PIDCtrl;
+import org.usfirst.frc.team3735.robot.util.VortxMath;
+import org.usfirst.frc.team3735.robot.util.profiling.Location;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -15,26 +19,65 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveTurnToAnglePIDCtrlVision extends Command{
-	    
+public class TurnTo extends Command{
+	
 	private double finishTime = .5;
 	private double timeOnTarget = 0;
-	private Pipes pipeline;
 
-    
-	public DriveTurnToAnglePIDCtrlVision(Pipes p) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-		this.pipeline = p;
+	Func getAngle;
+	
+
+	public TurnTo(double angle) {
+    	this(new Func(){
+			@Override
+			public double get() {
+				return angle;
+			}
+    	});
+    }
+	
+	public TurnTo(double angle, boolean flag) {
+		this(new Func(){
+			@Override
+			public double get() {
+				return VortxMath.continuousLimit(Robot.navigation.getYaw() + angle, -180, 180);
+			}
+    	});
+    }
+	
+	public TurnTo(Pipes p) {
+    	this(new Func(){
+			@Override
+			public double get() {
+				Robot.vision.setMainHandler(p);
+				return VortxMath.continuousLimit(
+	    				Robot.navigation.getYaw() + (Robot.vision.getRelativeCX() * Robot.vision.dpp.getValue()),
+	    				-180, 180);
+			}
+    	});
+    	requires(Robot.vision);
+    }
+	
+	public TurnTo(Location loc) {
+		this(new Func(){
+			@Override
+			public double get() {
+				return Robot.navigation.getAngleToLocationCorrected(loc);
+			}
+    	});
+    	
+    }
+	
+	public TurnTo(Func fun) {
     	requires(Robot.drive);
     	requires(Robot.navigation);
-
-    }
+		getAngle = fun;
+	}
+	
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.vision.setMainHandler(pipeline);
-    	Robot.navigation.getController().setSetpoint(Robot.navigation.getYaw() + (Robot.vision.getRelativeCX() * Robot.vision.dpp.getValue()));
+    	Robot.navigation.getController().setSetpoint(getAngle.get());
     	Robot.navigation.getController().enable();
     }
 
