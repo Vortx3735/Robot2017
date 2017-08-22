@@ -27,6 +27,8 @@ import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team3735.robot.subsystems.Vision;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.triggers.Bumped;
+
+import org.usfirst.frc.team3735.robot.util.VortxIterative;
 import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
 import org.usfirst.frc.team3735.robot.util.profiling.Position;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
@@ -47,7 +49,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends VortxIterative {
+
+
+
+	@Override
+	public void autonomousContinuous() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void disabledContinuous() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void robotContinuous() {
+		dt = Timer.getFPGATimestamp() - prevTime;
+		prevTime += dt;
+		SmartDashboard.putNumber("dt", dt);
+	}
+
 
 	SendableChooser<Command> autonomousChooser;
 	Command autonomousCommand;
@@ -63,7 +85,7 @@ public class Robot extends IterativeRobot {
 	public static GTAOI oi;
 	
 	public double dt;
-	private double prevTime;
+	private double prevTime = 0;
 
 	public static enum Side{
 		Left,Right
@@ -109,27 +131,10 @@ public class Robot extends IterativeRobot {
 		sideChooser = new SendableChooser<Side>();
 			sideChooser.addDefault("Red", Side.Left);
 			sideChooser.addObject("Blue", Side.Right);
-		SmartDashboard.putData("Side Selection", sideChooser);
-		
-		//SmartDashboard.putData("Start Sending Turn Voltages", new RecordTrapTurnData());
-		//SmartDashboard.putData("Start Sending Turn Voltages", new RecordAverageRate());
+		SmartDashboard.putData("Side Selection", sideChooser);		
 		SmartDashboard.putData("Reset Position", new ResetPosition());
-//		SmartDashboard.putData("Record Data", new RecordSmartDashboardFile());
-//		SmartDashboard.putData("Send Data", new SendSmartDashboardFile());
 		SmartDashboard.putData("Gear Dropoff", new GearIntakeDropOff());
 		SmartDashboard.putData("Scaler Start", new ScalerUp(1));
-//		SmartDashboard.putData("Resume Thread", new InstantCommand(){
-//			@Override
-//			public void initialize(){
-//				Robot.vision.resume();
-//			}
-//		});
-//		SmartDashboard.putData("Pause Thread", new InstantCommand(){
-//			@Override
-//			public void initialize(){
-//				Robot.vision.pause();
-//			}
-//		});
 		SmartDashboard.putData("Acquire Gear", new  DriveAcquireGear());
 		SmartDashboard.putData("Place Gear", new  DrivePlaceGear());
 		SmartDashboard.putData("Zero Yaw", new InstantCommand(){
@@ -141,19 +146,16 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData(new RecordVoltageData());
 		SmartDashboard.putData(new SendSDVoltage());
-		SmartDashboard.putData(new DriveMoveDistanceProfile(100.0, 30, 30, 0).addAssist(new NavxAssist()));
+		SmartDashboard.putData(new DriveMoveDistanceProfile(100.0, 30, 30, 0).addA(new NavxAssist()));
 		SmartDashboard.putData(new DriveMoveInCircleProfile(90, 60, true, 30, 30, 30));
+		SmartDashboard.putData("Drive Test", new DriveExp(.5,0).addA(new NavxVisionAssist(Pipes.Peg)));
+
 		side = Side.Left;
 		prevTime = Timer.getFPGATimestamp();
-		SmartDashboard.putData("Drive Test", new DriveExp(.5,0).addAssist(new NavxVisionAssist(Pipes.Peg)));
 	}
 	
 	//@Override
-	public void robotPeriodic() {
-//		dt = Timer.getFPGATimestamp() - prevTime;
-//		prevTime += dt;
-//		SmartDashboard.putNumber("dt", dt);
-//		
+	public void robotPeriodic() {		
 		Setting.fetchAround();
 		
         vision.debugLog();
@@ -165,22 +167,9 @@ public class Robot extends IterativeRobot {
 
 	}
 
-
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString line to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional comparisons to the
-	 * switch structure below with additional strings. If using the
-	 * SendableChooser make sure to add them to the chooser code above as well.
-	 */
 	@Override
 	public void autonomousInit() {
 		navigation.resetPosition();
-		
         autonomousCommand = autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}
@@ -191,29 +180,23 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		//robotPeriodic();
 		 Scheduler.getInstance().run();
 	}
 
-	
+	@Override
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
     }
-    
-	/**
-	 * This function is called periodically during operator control
-	 */
+
 	@Override
 	public void teleopPeriodic() {
-		//robotPeriodic();
         Scheduler.getInstance().run();
-        
 	}
-
+	
+	@Override
+	public void teleopContinuous() {
+		// TODO Auto-generated method stub
+	}
 	/**
 	 * This function is called periodically during test mode
 	 */
@@ -223,7 +206,6 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void log(){
-		//oi.log();
 		scaler.log();
 		drive.log();
 		shooter.log();

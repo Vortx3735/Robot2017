@@ -41,7 +41,7 @@ public class GearIntakeDropOff extends CommandGroup {
     	addSequential(new Wait(.1));
 
     	//addSequential(new DriveMoveDistanceExpNavx(-20, .6, null, .8),2);
-    	addSequential(new DriveExp(-1,0,.4,.4).addAssist(new NavxAssist()).addTrigger(new HasMoved(-20)));
+    	addSequential(new DriveExp(-1,0,.4,.4).addA(new NavxAssist()).addTrigger(new HasMoved(-20)));
     	addSequential(new GearIntakeLiftUp());
     	addSequential(new GearIntakeRollersOff());
     	
