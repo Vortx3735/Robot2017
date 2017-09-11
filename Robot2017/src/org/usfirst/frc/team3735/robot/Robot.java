@@ -105,6 +105,9 @@ public class Robot extends VortxIterative {
 			autonomousChooser.addObject("Right Gear Baseline", new  AutonRightGearBaseline());
 			autonomousChooser.addObject("Right Gear Balls", new  AutonRightGearBalls());
 			autonomousChooser.addObject("Testing", new  AutonTest());
+			autonomousChooser.addObject("Top Gear", new AutonTopGear());
+			autonomousChooser.addObject("Bottom Gear", new AutonBottomGear());
+
 		SmartDashboard.putData("AUTONOMOUS SELECTION", autonomousChooser);
 		
 		sideChooser = new SendableChooser<Side>();
