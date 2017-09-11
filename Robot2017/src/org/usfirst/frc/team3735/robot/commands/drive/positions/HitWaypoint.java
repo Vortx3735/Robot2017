@@ -25,7 +25,7 @@ public class HitWaypoint extends VortxCommand{
 		requires(Robot.navigation);
 		this.target = target;
 		if(from == null)
-		addTrigger(new HasPassedWaypoint(target, from));
+		addT(new HasPassedWaypoint(target, from));
 		isReversed = rev;
 	}
 	
@@ -56,7 +56,7 @@ public class HitWaypoint extends VortxCommand{
 
 	@Override
 	protected boolean isFinished() {
-		return super.isFinished();
+		return super.isFinished() || Robot.navigation.getPosition().distanceFrom(target) < 5;
 	}
 
 	@Override

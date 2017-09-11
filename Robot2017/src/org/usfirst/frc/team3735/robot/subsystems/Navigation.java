@@ -42,8 +42,8 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 	private Object posLock = new Object();
 	NetworkTable table;
 
-	private double prevLeft;
-	private double prevRight;
+	private double prevLeft = 0;
+	private double prevRight = 0;
 	private double curLeft;
 	private double curRight;
 	
@@ -59,6 +59,9 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     	controller.setAbsoluteTolerance(1);
     	
     	SmartDashboard.putData("Navigation Turning Controller", controller);
+    	
+		curLeft = Robot.drive.getLeftPositionInches();
+    	curRight = Robot.drive.getRightPositionInches();
 	}
 
 	public synchronized void setPosition(Position p){
@@ -278,12 +281,18 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 		zeroYaw();
 		Robot.retrieveSide();
 		setPosition(getStartingPosition());
+		Location.changeSide(Robot.side);
 	}
 	
 	public synchronized Position getPosition() {
 		return pos;
 	}
 	
+	/**
+	 * 
+	 * @return	the quadrant the robot is in
+	 * 			follows the quadrant naming system of algebra, looking at the field from Field Map.PNG
+	 */
 	public int getQuadrant() {
 		double xdif = pos.x - Waypoints.center.x;
 		double ydif = pos.y - Waypoints.center.y;
@@ -325,6 +334,12 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 		return Math.toDegrees(-Math.atan2(loc.y - pos.y, loc.x - pos.x));
 	}
 	
+	/**
+	 * 
+	 * @param loc	the Location to reference
+	 * @return		the Angle to the location, meant for using with the TurnTo Command, 
+	 * 				where the angle from getYaw is used for turning
+	 */
 	public double getAngleToLocationCorrected(Location loc) {
 		double ans = Math.toDegrees(-Math.atan2(loc.y - pos.y, loc.x - pos.x));
 		if(Robot.side.equals(Side.Right)){

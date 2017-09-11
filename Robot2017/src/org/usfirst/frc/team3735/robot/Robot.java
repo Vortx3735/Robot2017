@@ -4,6 +4,7 @@ import org.usfirst.frc.team3735.robot.assists.NavxAssist;
 import org.usfirst.frc.team3735.robot.assists.NavxVisionAssist;
 import org.usfirst.frc.team3735.robot.commands.ResetPosition;
 import org.usfirst.frc.team3735.robot.commands.SendSDVoltage;
+import org.usfirst.frc.team3735.robot.commands.ZeroYaw;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.drive.RecordVoltageData;
@@ -51,26 +52,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends VortxIterative {
 
-
-
-	@Override
-	public void autonomousContinuous() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void disabledContinuous() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void robotContinuous() {
-		dt = Timer.getFPGATimestamp() - prevTime;
-		prevTime += dt;
-		SmartDashboard.putNumber("dt", dt);
-	}
-
-
 	SendableChooser<Command> autonomousChooser;
 	Command autonomousCommand;
 	
@@ -84,19 +65,17 @@ public class Robot extends VortxIterative {
 	public static Vision vision;
 	public static GTAOI oi;
 	
-	public double dt;
+	private double dt;
 	private double prevTime = 0;
 
 	public static enum Side{
 		Left,Right
 	}
-
 	public static SendableChooser<Side> sideChooser;
-	public static Side side;
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
+	public static Side side = Side.Left;
+	
+	
+	
 	@Override
 	public void robotInit() {
 		gearIntake = new GearIntake();
@@ -111,7 +90,7 @@ public class Robot extends VortxIterative {
 		oi = new GTAOI(); //MUST be instantiated after the subsystems
 			
 		autonomousChooser = new SendableChooser<Command>();
-			autonomousChooser.addDefault ("Do Nothing", new AutonDoNothing());
+			autonomousChooser.addDefault("Do Nothing", new AutonDoNothing());
 			autonomousChooser.addObject("Base Line", new AutonBaseline());
 			autonomousChooser.addObject("Left Gear Hopper", new  AutonLeftGearHopper());
 			autonomousChooser.addObject("Left Gear", new  AutonLeftGear());
@@ -125,24 +104,20 @@ public class Robot extends VortxIterative {
 			autonomousChooser.addObject("Right Gear", new  AutonRightGear());
 			autonomousChooser.addObject("Right Gear Baseline", new  AutonRightGearBaseline());
 			autonomousChooser.addObject("Right Gear Balls", new  AutonRightGearBalls());
-			autonomousChooser.addObject("Testing", new  AutonDriveForwardTest());
+			autonomousChooser.addObject("Testing", new  AutonTest());
 		SmartDashboard.putData("AUTONOMOUS SELECTION", autonomousChooser);
 		
 		sideChooser = new SendableChooser<Side>();
 			sideChooser.addDefault("Red", Side.Left);
 			sideChooser.addObject("Blue", Side.Right);
-		SmartDashboard.putData("Side Selection", sideChooser);		
+		SmartDashboard.putData("Side Selection", sideChooser);	
+		
 		SmartDashboard.putData("Reset Position", new ResetPosition());
 		SmartDashboard.putData("Gear Dropoff", new GearIntakeDropOff());
 		SmartDashboard.putData("Scaler Start", new ScalerUp(1));
 		SmartDashboard.putData("Acquire Gear", new  DriveAcquireGear());
 		SmartDashboard.putData("Place Gear", new  DrivePlaceGear());
-		SmartDashboard.putData("Zero Yaw", new InstantCommand(){
-			@Override
-			public void initialize(){
-				Robot.navigation.zeroYaw();
-			}
-		});
+		SmartDashboard.putData("Zero Yaw", new ZeroYaw());
 		
 		SmartDashboard.putData(new RecordVoltageData());
 		SmartDashboard.putData(new SendSDVoltage());
@@ -153,19 +128,25 @@ public class Robot extends VortxIterative {
 		side = Side.Left;
 		prevTime = Timer.getFPGATimestamp();
 	}
-	
-	//@Override
+	@Override
 	public void robotPeriodic() {		
 		Setting.fetchAround();
 		
         vision.debugLog();
-        navigation.integrate();
+        //navigation.integrate();
         navigation.displayPosition();
         drive.debugLog();
-        log();
-        
-
+        log();       
 	}
+	@Override
+	public void robotContinuous() {
+//		dt = Timer.getFPGATimestamp() - prevTime;
+//		prevTime += dt;
+//		SmartDashboard.putNumber("dt", dt);
+		navigation.integrate();
+	}
+	
+	
 
 	@Override
 	public void autonomousInit() {
@@ -173,37 +154,52 @@ public class Robot extends VortxIterative {
         autonomousCommand = autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}
-
-
-	/**
-	 * This function is called periodically during autonomous
-	 */
 	@Override
 	public void autonomousPeriodic() {
 		 Scheduler.getInstance().run();
 	}
+	@Override
+	public void autonomousContinuous() {
+		
+	}
+	
+	
 
 	@Override
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
     }
-
 	@Override
 	public void teleopPeriodic() {
         Scheduler.getInstance().run();
 	}
-	
 	@Override
 	public void teleopContinuous() {
-		// TODO Auto-generated method stub
+
 	}
-	/**
-	 * This function is called periodically during test mode
-	 */
+	
+	
+
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+	@Override
+	public void disabledInit() {
+		if (autonomousCommand != null)
+			autonomousCommand.cancel();
+	}
+	@Override
+	public void disabledPeriodic() {
+		Scheduler.getInstance().run();
+
+	}
+	@Override
+	public void disabledContinuous() {
+		
+	}
+	
+	
 	
 	public void log(){
 		scaler.log();
@@ -229,24 +225,14 @@ public class Robot extends VortxIterative {
 	
 	
 	
-	/**
-	 * This function is called when the disabled button is hit. You can use it to reset subsystems before shutting down.
-	 */
-	@Override
-	public void disabledInit() {
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
-	}
-	@Override
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
 
-	}
 	
 	
 	public static void retrieveSide(){
 		if(sideChooser.getSelected() != null){
 			side = sideChooser.getSelected();
+		}else{
+			System.out.println("Error : sideChooser was found null when retrieving side.");
 		};
 	}
 
