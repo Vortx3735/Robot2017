@@ -33,14 +33,14 @@ public class AutonTest extends CommandGroup {
     	//addSequential(new DriveMoveDistance(10));
     	
     	//addSequential(new DriveMoveDistanceExpNavx(70,.7),2.6);
-    	addSequential(new DriveExp(.7,0).addA(new NavxAssist()).addTrigger(new HasMoved(70)),2.6);
+    	addSequential(new DriveExp(.7,0).addA(new NavxAssist()).addT(new HasMoved(70)),2.6);
     	addSequential(new DriveBrake(),.4);
     	addSequential(new TurnTo(60),2);
     	addSequential(new TurnTo(Pipes.Peg),1.5);
     	//addSequential(new DriveMoveDistanceExpNavx(88.7),3);
     	//addSequential(new DriveMoveDistanceExpVisionBumped(89, .7, Pipes.Peg),3);
     	//addSequential(new DriveMoveDistanceExpNavxBumped(89, .7),2.5);
-    	addSequential(new DriveExp(.7,0).addA(new NavxAssist()).addTrigger(new HasMoved(70)).addTrigger(new Bumped()),2.6);
+    	addSequential(new DriveExp(.7,0).addA(new NavxAssist()).addT(new HasMoved(70)).addT(new Bumped()),2.6);
     	addSequential(new GearIntakeDropOff(),2);
      }
 }
