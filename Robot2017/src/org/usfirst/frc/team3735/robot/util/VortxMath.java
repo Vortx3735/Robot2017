@@ -41,13 +41,17 @@ public class VortxMath {
 	 * @return			the same value but in the limited range
 	 */
 	public static double continuousLimit(double value, double minValue, double maxValue){
-		if(value < minValue){
-			return value + (maxValue - minValue);
-		}else if(value > maxValue){
-			return value - (maxValue - minValue);
-		}else{
-			return value;
+		while(value < minValue){
+			value += (maxValue - minValue);
 		}
+		while(value > maxValue){
+			value -= (maxValue - minValue);
+		}
+		return value;
+	}
+	
+	public static double navLimit(double value) {
+		return continuousLimit(value, -180, 180);
 	}
 	
 	/**

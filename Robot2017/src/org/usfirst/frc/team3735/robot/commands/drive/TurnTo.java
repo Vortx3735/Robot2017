@@ -25,7 +25,6 @@ public class TurnTo extends Command{
 	private double timeOnTarget = 0;
 
 	Func getAngle;
-	
 
 	public TurnTo(double angle) {
     	this(new Func(){
@@ -36,13 +35,31 @@ public class TurnTo extends Command{
     	});
     }
 	
+	/**
+	 * 
+	 * @param angle	
+	 * @param flag	true if a relative angle, false if relative to actual field position (Side independent)
+	 */
 	public TurnTo(double angle, boolean flag) {
-		this(new Func(){
-			@Override
-			public double get() {
-				return VortxMath.continuousLimit(Robot.navigation.getYaw() + angle, -180, 180);
-			}
-    	});
+		requires(Robot.drive);
+    	requires(Robot.navigation);
+    	
+    	if(flag) {
+    		getAngle = new Func() {
+	    		@Override
+				public double get() {
+					return VortxMath.navLimit(Robot.navigation.getYaw() + angle);
+				}
+	    	};
+    	}else {
+    		getAngle = new Func() {
+	    		@Override
+				public double get() {
+					return Robot.side.equals(Side.Right) ? VortxMath.navLimit(angle + 180) : angle;
+				}
+	    	};
+    	}
+		
     }
 	
 	public TurnTo(Pipes p) {
