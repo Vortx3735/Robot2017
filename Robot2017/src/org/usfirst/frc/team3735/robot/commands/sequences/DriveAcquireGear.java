@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.sequences;
 
 import org.usfirst.frc.team3735.robot.Robot;
+import org.usfirst.frc.team3735.robot.assists.NavxVisionAssist;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExp;
@@ -18,9 +19,8 @@ public class DriveAcquireGear extends CommandGroup {
     private static final double WIDTH_THRESH = 175;
 
 	public DriveAcquireGear() {
-    	addParallel(new DriveAddVisionAssist(Pipes.Gear));
     	addSequential(new GearIntakeLiftDown());
-    	addSequential(new DriveExp(.7,0));
+    	addSequential(new DriveExp(.7,0).addA(new NavxVisionAssist(Pipes.Gear)));
   
     }
 

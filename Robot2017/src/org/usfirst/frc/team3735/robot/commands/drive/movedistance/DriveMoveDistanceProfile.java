@@ -49,7 +49,7 @@ public class DriveMoveDistanceProfile extends VortxCommand {
 
     	requires(Robot.drive);
     	distHandler = new HasMoved(distance);
-    	addTrigger(distHandler);
+    	addT(distHandler);
     	acc = acceleration/FRAMERATE;
 
     }

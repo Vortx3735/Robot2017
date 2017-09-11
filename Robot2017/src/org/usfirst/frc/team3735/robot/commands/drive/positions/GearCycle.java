@@ -20,7 +20,7 @@ public class GearCycle extends CommandGroup {
         addSequential(new GoToCenterField());
         addSequential(new FollowPath(Waypoints.toKeyLeft));
         addSequential(new DriveAcquireGear());
-        addSequential(new DriveExp(-1,0).addTrigger(new HasMoved(-60)),1);
+        addSequential(new DriveExp(-1,0).addT(new HasMoved(-60)),1);
         addSequential(new GoToCenterField());
         addSequential(new FollowPath(Waypoints.toTopGear));
         addSequential(new DrivePlaceGear());

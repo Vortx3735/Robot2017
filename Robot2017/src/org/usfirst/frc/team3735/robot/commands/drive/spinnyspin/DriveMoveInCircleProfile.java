@@ -47,7 +47,7 @@ public class DriveMoveInCircleProfile extends VortxCommand {
     		System.out.println("The Cruise Velocity was too great. Reducing to " + v);
     	}
     	profile = new DriveMoveDistanceProfile(distance, v, a, exitV);
-    	addTrigger(angler);
+    	addT(angler);
     	
     	leftMult = 1.0 + (DRIVE_WIDTH/radius);
     	rightMult = 1.0 - (DRIVE_WIDTH/radius);
