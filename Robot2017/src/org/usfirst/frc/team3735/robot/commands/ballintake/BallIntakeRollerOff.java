@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3735.robot.commands.ballintake;
 
 import org.usfirst.frc.team3735.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
