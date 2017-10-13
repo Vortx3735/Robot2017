@@ -22,6 +22,13 @@ public class Bumped extends ComTrigger{
 	public boolean get() {
 		return acc > Math.abs(Robot.navigation.getXYAcceleration());
 	}
+
+	@Override
+	public String getHaltMessage() {
+		return "bumped" + acc + " acc";
+	}
+	
+	
 	
 	
 }

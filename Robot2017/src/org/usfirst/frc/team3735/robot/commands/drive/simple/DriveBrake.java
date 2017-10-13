@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveBrake extends Command {
-
     public DriveBrake() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -18,8 +17,6 @@ public class DriveBrake extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drive.setEnableBrake(true);
-    	Robot.drive.setLeftRight(0, 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -34,7 +31,7 @@ public class DriveBrake extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drive.setEnableBrake(false);
+    	//Robot.drive.setEnableBrake(false);
     }
 
     // Called when another command which requires one or more of the same

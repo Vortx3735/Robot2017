@@ -36,7 +36,7 @@ public class Drive extends Subsystem {
 	//for speed profiling
 	public static final double slope = 0.00113174;
 	public static final double minPct = 0.0944854;
-	public static final double maxSpeed = (1-minPct)/slope; //about 800.11 rpm
+	public static final double maxSpeed = (1-minPct)/slope; //about 800.11 rpm, 173 in/s
 	
 	
 	

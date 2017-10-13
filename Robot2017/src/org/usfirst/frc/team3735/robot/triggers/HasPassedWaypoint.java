@@ -54,5 +54,9 @@ public class HasPassedWaypoint extends ComTrigger{
 		return evaluateLocation() != isTopRightofLine;
 	}
 	
+	@Override
+	public String getHaltMessage() {
+		return "Passed Waypoint (" + targetLocation.x + ", " + targetLocation.y + ")";
+	}
 	
 }

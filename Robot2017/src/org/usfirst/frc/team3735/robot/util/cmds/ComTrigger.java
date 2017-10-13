@@ -25,4 +25,8 @@ public abstract class ComTrigger {
 		requirements.add(s);
 	}
 	
+	public String getHaltMessage() {
+		return "";
+	}
+	
 }

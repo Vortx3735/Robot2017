@@ -72,6 +72,10 @@ public class HasReachedAngle extends ComTrigger{
 		return isRelative;
 	}
 	
+	@Override
+	public String getHaltMessage() {
+		return "Reached an Angle";
+	}
 	
 	
 }

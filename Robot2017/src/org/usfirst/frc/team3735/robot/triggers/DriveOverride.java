@@ -14,5 +14,10 @@ public class DriveOverride extends ComTrigger{
 		return Robot.oi.isOverriddenByDrive();
 	}
 	
+	@Override
+	public String getHaltMessage() {
+		return "overriden by drive";
+	}
+	
 	
 }

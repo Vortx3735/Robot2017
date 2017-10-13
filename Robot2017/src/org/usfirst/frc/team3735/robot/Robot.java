@@ -2,13 +2,15 @@ package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.assists.NavxAssist;
 import org.usfirst.frc.team3735.robot.assists.NavxVisionAssist;
-import org.usfirst.frc.team3735.robot.commands.ResetPosition;
 import org.usfirst.frc.team3735.robot.commands.SendSDVoltage;
-import org.usfirst.frc.team3735.robot.commands.ZeroYaw;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
+import org.usfirst.frc.team3735.robot.commands.autonomous.newstuff.AutonBottomGear;
+import org.usfirst.frc.team3735.robot.commands.autonomous.newstuff.AutonTopGear;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.drive.RecordVoltageData;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceProfile;
+import org.usfirst.frc.team3735.robot.commands.drive.positions.ResetPosition;
+import org.usfirst.frc.team3735.robot.commands.drive.positions.ZeroYaw;
 import org.usfirst.frc.team3735.robot.commands.drive.spinnyspin.DriveMoveInCircleProfile;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
 import org.usfirst.frc.team3735.robot.commands.sequences.DriveAcquireGear;
@@ -92,19 +94,19 @@ public class Robot extends VortxIterative {
 		autonomousChooser = new SendableChooser<Command>();
 			autonomousChooser.addDefault("Do Nothing", new AutonDoNothing());
 			autonomousChooser.addObject("Base Line", new AutonBaseline());
+			
 			autonomousChooser.addObject("Left Gear Hopper", new  AutonLeftGearHopper());
 			autonomousChooser.addObject("Left Gear", new  AutonLeftGear());
 			autonomousChooser.addObject("Left Gear Baseline", new  AutonLeftGearBaseline());
-			autonomousChooser.addObject("Left Gear Balls", new  AutonLeftGearBalls());
-			autonomousChooser.addObject("Middle Gear Left Gear", new  AutonMiddleGearLeftGear());
-			autonomousChooser.addObject("Middle Gear Left Balls", new  AutonMiddleGearLeftBalls());
+
 			autonomousChooser.addObject("Middle Gear", new  AutonMiddleGear());
-			autonomousChooser.addObject("Middle Gear Right Balls", new  AutonMiddleGearRightBalls());
-			autonomousChooser.addObject("Middle Gear Right Gear", new  AutonMiddleGearRightGear());
+
 			autonomousChooser.addObject("Right Gear", new  AutonRightGear());
 			autonomousChooser.addObject("Right Gear Baseline", new  AutonRightGearBaseline());
-			autonomousChooser.addObject("Right Gear Balls", new  AutonRightGearBalls());
+			autonomousChooser.addObject("Right Gear Hopper", new  AutonRightGearHopper());
+
 			autonomousChooser.addObject("Testing", new  AutonTest());
+			
 			autonomousChooser.addObject("Top Gear", new AutonTopGear());
 			autonomousChooser.addObject("Bottom Gear", new AutonBottomGear());
 

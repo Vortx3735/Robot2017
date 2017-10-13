@@ -14,6 +14,9 @@ public class HitWaypoint extends VortxCommand{
 	private double speed;
 	private boolean isReversed;
 	
+	private double maxSpeed = .8;
+	private double minSpeed = .3;
+	
 	public HitWaypoint(Location target, boolean rev) {
 		this(target, null, rev);
 		
@@ -24,7 +27,6 @@ public class HitWaypoint extends VortxCommand{
 		requires(Robot.drive);
 		requires(Robot.navigation);
 		this.target = target;
-		if(from == null)
 		addT(new HasPassedWaypoint(target, from));
 		isReversed = rev;
 	}
@@ -32,26 +34,33 @@ public class HitWaypoint extends VortxCommand{
 	@Override
 	protected void initialize() {
 		super.initialize();
+
 	}
 
 	@Override
 	protected void execute() {
 		super.execute();
+		
+		setControllerAngle();
+		
+		double err = Robot.navigation.getController().getError();
+		speed =((maxSpeed-minSpeed)*Math.exp(-Math.abs(.05*err))) + minSpeed;
+		if(isReversed) {
+			speed *= -1;
+		}
+		Robot.drive.setNavxAssist(err);
+		Robot.drive.limitedDrive(speed, 0);
+		
+		
+	}
+	
+	public void setControllerAngle() {
 		Position p = Robot.navigation.getPosition();
-		
-		//moving
-		
-		
-		//turning
 		double targetAngle = Math.toDegrees(-Math.atan2(target.y - p.y, target.x - p.x));
 		if(isReversed) {
-			targetAngle = VortxMath.continuousLimit(targetAngle + 180, -180, 180);
+			targetAngle = VortxMath.navLimit(targetAngle + 180);
 		}
 		Robot.navigation.getController().setSetpoint(targetAngle);
-		
-		Robot.drive.setNavxAssist(Robot.navigation.getController().getError());
-		Robot.drive.limitedDrive(1,0);
-		
 	}
 
 	@Override

@@ -47,5 +47,10 @@ public class HasMoved extends ComTrigger{
 		return deltaDistance.doubleValue();
 	}
 	
+	@Override
+	public String getHaltMessage() {
+		return "Moved " + deltaDistance + "Inches";
+	}
+	
 	
 }

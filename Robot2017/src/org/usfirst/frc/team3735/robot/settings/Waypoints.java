@@ -51,7 +51,8 @@ public class Waypoints {
 	//generated from the PathDrawer program
 	public static final Location[] topGear = {new Location(33.8,103.8, true), new Location(61.0,100.4, true), new Location(80.6,94.2, true), new Location(95.3,83.9, true), new Location(108.1,68.1, true), new Location(121.9,45.3, true)};
 	public static final Location[] bottomGear = {new Location(33.8,-108.7, true), new Location(60.5,-103.5, true), new Location(79.7,-95.9, true), new Location(93.2,-86.1, true), new Location(103.2,-74.1, true), new Location(111.8,-59.9, true), new Location(121.1,-43.7, true)};
-
-
+	public static final Location[] topGearHopper = {new Location(95.6,75.0, true), new Location(86.3,92.8, true), new Location(83.2,107.0, true), new Location(86.1,117.8, true), new Location(94.9,125.8, true), new Location(109.5,131.3, true), new Location(129.8,134.5, true), new Location(155.7,135.9, true), new Location(187.0,135.9, true)};
+	public static final Location[] bottomGearHopper = {new Location(88.1,-81.5, true), new Location(70.7,-102.5, true), new Location(63.9,-118.6, true), new Location(66.8,-130.1, true), new Location(78.6,-137.3, true), new Location(98.4,-140.2, true), new Location(125.2,-139.2, true)};
+	public static final Location[] crossField = {new Location(83.2,-108.7, true), new Location(109.3,-110.4, true), new Location(133.4,-110.7, true), new Location(155.7,-109.7, true), new Location(176.3,-107.5, true), new Location(195.4,-104.2, true), new Location(213.0,-99.8, true), new Location(229.4,-94.5, true), new Location(244.6,-88.2, true), new Location(258.7,-81.1, true), new Location(271.9,-73.2, true), new Location(284.3,-64.6, true), new Location(296.1,-55.4, true), new Location(307.3,-45.6, true), new Location(318.1,-35.4, true), new Location(328.6,-24.7, true), new Location(339.0,-13.8, true), new Location(349.3,-2.5, true), new Location(359.8,8.9, true), new Location(370.4,20.5, true), new Location(381.4,32.1, true), new Location(392.9,43.7, true)};
 
 }

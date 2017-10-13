@@ -234,7 +234,7 @@ public class PegPipeline implements VisionPipeline {
 				return BILATERAL;
 			}
 			else if (GAUSSIAN.label.equals(type)) {
-			return GAUSSIAN;
+				return GAUSSIAN;
 			}
 			else if (MEDIAN.label.equals(type)) {
 				return MEDIAN;

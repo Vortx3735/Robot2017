@@ -20,7 +20,7 @@ public class VortxCommand extends Command{
 
 	ArrayList<ComTrigger> triggers = new ArrayList<ComTrigger>();
 	ArrayList<ComAssist> assists = new ArrayList<ComAssist>();
-	
+	private boolean DebugPrint = true;
 
 
 	@Override
@@ -46,6 +46,9 @@ public class VortxCommand extends Command{
 	protected boolean isFinished() {
 		for(ComTrigger t : triggers){
 			if(t.get()){
+				if(DebugPrint) {
+					System.out.println("Command " + this.getName() + "halted: " + t.getHaltMessage());
+				}
 				return true;
 			}
 		}
