@@ -4,7 +4,6 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,7 +18,7 @@ import org.usfirst.frc.team3735.robot.settings.RobotMap;
  */
 
 public class Drive extends Subsystem {
-	RobotDrive d;
+
 	private CANTalon l1;
 	private CANTalon l2;
 	private CANTalon l3;
@@ -191,6 +190,12 @@ public class Drive extends Subsystem {
 	/*******************************
 	 * Drive Functions
 	 *******************************/
+	
+	/**
+	 * Standard arcade drive from wpi's RobotDrive class
+	 * @param move
+	 * @param rotate
+	 */
 	public void arcadeDrive(double move, double rotate) {
 		//copied from RobotDrive class. essentially lowers the speed of one motor first, rather than increases
 		//one and decreases the other at the same time.
@@ -199,7 +204,7 @@ public class Drive extends Subsystem {
 		double rightMotorSpeed;
 		
 		double moveValue = move;
-		double rotateValue = rotate + leftAddTurn + rightAddTurn + visionAssist + navxAssist;
+		double rotateValue = rotate + getTurnAdditions();
 	    if (moveValue > 0.0) {
 	        if (rotateValue < 0.0) {
 	          leftMotorSpeed = moveValue + rotateValue;
@@ -226,6 +231,12 @@ public class Drive extends Subsystem {
 		setLeftRight(move + rotateValue, move - rotateValue);
 	}
 	
+	/**
+	 * Limits the left and right speeds so that rotation is consistent
+	 * across all move values. Modifies speed for consistent rotation.
+	 * @param move
+	 * @param rotate
+	 */
 	public void limitedDrive(double move, double rotate) {
 		double left = move + getTurnAdditions() + rotate;
 		double right = move - getTurnAdditions() - rotate;
@@ -259,19 +270,23 @@ public class Drive extends Subsystem {
 		
 	}
 
-	
-	public void radialDrive(double radius, double voltage){
+	/**
+	 * Drives in a circle with a specified radius
+	 * @param radius
+	 * @param move
+	 */
+	public void radialDrive(double radius, double move){
 		double left;
 		double right;
 		if(radius > 0){
 			radius = Math.abs(radius);
-			left = voltage;
-			right = voltage * (radius - Dms.Bot.HALFWIDTH)/
+			left = move;
+			right = move * (radius - Dms.Bot.HALFWIDTH)/
 							  (radius + Dms.Bot.HALFWIDTH);
 		}else{
 			radius = Math.abs(radius);
-			right = voltage;
-			left = voltage * (radius - Dms.Bot.HALFWIDTH)/
+			right = move;
+			left = move * (radius - Dms.Bot.HALFWIDTH)/
 				  			 (radius + Dms.Bot.HALFWIDTH);
 		}
 		setLeftRight(left, right);
@@ -376,7 +391,10 @@ public class Drive extends Subsystem {
     	double speed = (Math.abs(spd) *60.0) /Constants.Drive.InchesPerRotation;
     	return Math.copySign(slope*speed + minPct, spd);
     }
-    
+    /**
+     * @param 	percent [0,1] of the max speed to go
+     * @return	the adjusted number to send to motors
+     */
     public static double handleDeadband(double percent) {
     	return percent - (minPct * percent) + minPct;
     }

@@ -6,7 +6,6 @@ import org.usfirst.frc.team3735.robot.subsystems.Vision;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
 import org.usfirst.frc.team3735.robot.util.cmds.ComAssist;
-import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 public class NavxVisionAssist extends ComAssist{
 

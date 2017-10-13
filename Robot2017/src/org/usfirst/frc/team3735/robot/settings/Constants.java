@@ -6,13 +6,6 @@ public class Constants {
 		
 		public static final double InchesPerRotation = 12.94;	//in inches
 		
-		
-		public static final double scaledMaxOutput = 1;	//(0,1] this is directly to the motor percentage
-		public static final double turnCorrection = 0;
-
-		//normal drive - but we usually use EXP!!!! this does nothing right now
-		public static final double sensitivity = .5;	//raise for sharper turns
-		
 		//exp drive
 		public static final double moveReactivity = 1;	//(0,1] (least reactive, most reactive]
 		public static final double turnReactivity = 1;	//(0,1] (least reactive, most reactive]	
@@ -22,15 +15,6 @@ public class Constants {
 		//graph y = x * x^(p-1) {-1 < x < 1} for visualization
 		public static final double moveExponent = 3;		//[1,inf) 1 is linear, 2 is squared (normal), etc.
 		public static final double turnExponent = 3;		//[1,inf) 
-		
-		//power for using the driveMoveDistanceTimed experiment
-		public static final double timedPower = .4;			//seconds
-		
-		//values for turning to angles and driving distance
-		public static final double turnFinishTime = .5;		//seconds
-		public static final double turnTolerance = .5;		//degrees
-		public static final double driveFinishTime = .5;	//seconds
-		public static final double driveTolerance = 2;		//inches
 
 		//for turning slowly with lb and rb
 		public static final double lowSensitivityLeftTurn = -.2;

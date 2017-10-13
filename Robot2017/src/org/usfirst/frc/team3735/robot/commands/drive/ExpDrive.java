@@ -67,7 +67,7 @@ public class ExpDrive extends Command {
     	super.execute();
 		moveSetValue = Robot.oi.getDriveMove();
 		turnSetValue = Robot.oi.getDriveTurn();
-		if(Robot.oi.getFODMag() > .05){
+		if(Robot.oi.getFODMag() > .1){
 			fodMove = Math.pow(Robot.oi.getFODMag(), fodMoveCo.getValue());
 			fodAngle = Robot.oi.getFODAngle();
 			Robot.navigation.getController().setSetpoint(fodAngle);

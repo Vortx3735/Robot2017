@@ -1,13 +1,10 @@
 package org.usfirst.frc.team3735.robot.assists;
 
-import java.util.ArrayList;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.subsystems.Vision;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.util.cmds.ComAssist;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class VisionAssist extends ComAssist{
 	

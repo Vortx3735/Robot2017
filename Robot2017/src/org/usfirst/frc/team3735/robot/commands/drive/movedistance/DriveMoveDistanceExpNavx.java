@@ -1,14 +1,9 @@
 package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.settings.Constants;
 import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
-import org.usfirst.frc.team3735.robot.util.cmds.VortxCommand;
-import org.usfirst.frc.team3735.robot.util.settings.Setting;
-
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
