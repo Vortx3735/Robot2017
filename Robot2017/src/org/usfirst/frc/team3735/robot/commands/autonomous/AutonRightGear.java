@@ -1,11 +1,13 @@
 package org.usfirst.frc.team3735.robot.commands.autonomous;
 
+import org.usfirst.frc.team3735.robot.commands.drive.Move;
 import org.usfirst.frc.team3735.robot.commands.drive.TurnTo;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpNavx;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpNavxBumped;
 import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveBrake;
 import org.usfirst.frc.team3735.robot.commands.sequences.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
+import org.usfirst.frc.team3735.robot.triggers.Bumped;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -24,13 +26,23 @@ public class AutonRightGear extends CommandGroup {
 //    	//addSequential(new DriveMoveDistanceExpVisionBumped(89, .7, Pipes.Peg),3);
 //    	addSequential(new GearIntakeDropOff(),3);
     	
-    	addSequential(new DriveMoveDistanceExpNavx(70,.7),2.6);
+//    	addSequential(new DriveMoveDistanceExpNavx(70,.7),2.6);
+//    	addSequential(new DriveBrake(),.4);
+//    	addSequential(new TurnTo(-60),2);
+//    	addSequential(new TurnTo(Pipes.Peg),2);
+//    	//addSequential(new DriveMoveDistanceExpNavx(88.7),3);
+//    	//addSequential(new DriveMoveDistanceExpVisionBumped(89, .7, Pipes.Peg),3);
+//    	addSequential(new DriveMoveDistanceExpNavxBumped(89, .7),3);
+//    	addSequential(new GearIntakeDropOff(),3);
+    	
+       	addSequential(new Move(70));
     	addSequential(new DriveBrake(),.4);
     	addSequential(new TurnTo(-60),2);
-    	addSequential(new TurnTo(Pipes.Peg),2);
+    	addSequential(new TurnTo(Pipes.Peg),1.5);
     	//addSequential(new DriveMoveDistanceExpNavx(88.7),3);
     	//addSequential(new DriveMoveDistanceExpVisionBumped(89, .7, Pipes.Peg),3);
-    	addSequential(new DriveMoveDistanceExpNavxBumped(89, .7),3);
-    	addSequential(new GearIntakeDropOff(),3);
+    	//addSequential(new DriveMoveDistanceExpNavxBumped(89, .7),2.5);
+    	addSequential(new Move(60).addT(new Bumped()));
+    	addSequential(new GearIntakeDropOff(),2);
      }
 }

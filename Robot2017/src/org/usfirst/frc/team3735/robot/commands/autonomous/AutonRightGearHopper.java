@@ -13,15 +13,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonLeftGearHopper extends CommandGroup {
+public class AutonRightGearHopper extends CommandGroup {
 
-    public AutonLeftGearHopper() {
-     	addSequential(new AutonLeftGear());
-    	addSequential(new TurnTo(90));
+    public AutonRightGearHopper() {
+    	addSequential(new AutonRightGear());
+    	addSequential(new TurnTo(-90));
     	addSequential(new Move(-90).addT(new Bumped(.8)));
     	addSequential(new Wait(2));
     	addSequential(new Move(10));
-    	addSequential(new TurnTo(-170),2);
+    	addSequential(new TurnTo(170),2);
 
     }
 }

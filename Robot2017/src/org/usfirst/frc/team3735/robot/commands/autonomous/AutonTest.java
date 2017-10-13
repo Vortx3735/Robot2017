@@ -21,26 +21,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonTest extends CommandGroup {
 
     public AutonTest(){
-    	/* Let Move FWD Only */
-    	/* All the Timing Needs Adjustment     |    */ 
-    	/*                                    This */
-    	/*                                     |   */
-    	//112 + 20
-    	//addSequential(new DriveMoveDistanceExpNavx(132, .7)); /* Straight To Pin*/
-    	//addSequential(new DriveMoveDistanceExpNavxVision(30,.7,Pipes.Peg),3);
     	
-    	//addSequential(new DriveMoveDistanceNavxExpNaik(132));
-    	//addSequential(new DriveMoveDistance(10));
-    	
-    	//addSequential(new DriveMoveDistanceExpNavx(70,.7),2.6);
-    	addSequential(new DriveExp(.7,0).addA(new NavxAssist()).addT(new HasMoved(70)),2.6);
-    	addSequential(new DriveBrake(),.4);
-    	addSequential(new TurnTo(60),2);
-    	addSequential(new TurnTo(Pipes.Peg),1.5);
-    	//addSequential(new DriveMoveDistanceExpNavx(88.7),3);
-    	//addSequential(new DriveMoveDistanceExpVisionBumped(89, .7, Pipes.Peg),3);
-    	//addSequential(new DriveMoveDistanceExpNavxBumped(89, .7),2.5);
-    	addSequential(new DriveExp(.7,0).addA(new NavxAssist()).addT(new HasMoved(70)).addT(new Bumped()),2.6);
-    	addSequential(new GearIntakeDropOff(),2);
      }
 }
