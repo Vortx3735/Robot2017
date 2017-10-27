@@ -1,5 +1,6 @@
 # Ignored files
 *.class
 *.jar
+*.classpath
 */target/
 /bin/
