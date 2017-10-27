@@ -40,6 +40,7 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 	
 	Position pos = new Position(0,0,0);
 	private Object posLock = new Object();
+	
 	NetworkTable table;
 
 	private double prevLeft = 0;

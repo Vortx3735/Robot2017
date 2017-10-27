@@ -4,6 +4,7 @@ import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.triggers.HasMoved;
 import org.usfirst.frc.team3735.robot.triggers.HasReachedSpeed;
+import org.usfirst.frc.team3735.robot.triggers.TimeOut;
 import org.usfirst.frc.team3735.robot.util.cmds.VortxCommand;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -34,6 +35,7 @@ public class SinusoidalProfile extends VortxCommand {
         
         addT(new HasMoved(d));
         addT(new HasReachedSpeed(vf));
+        addT(new TimeOut(Math.PI/scale, this));
         
     }
     

@@ -7,6 +7,7 @@ import org.usfirst.frc.team3735.robot.commands.autonomous.*;
 import org.usfirst.frc.team3735.robot.commands.autonomous.newstuff.AutonBottomGear;
 import org.usfirst.frc.team3735.robot.commands.autonomous.newstuff.AutonTopGear;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveExp;
+import org.usfirst.frc.team3735.robot.commands.drive.MoveSine;
 import org.usfirst.frc.team3735.robot.commands.drive.RecordVoltageData;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceProfile;
 import org.usfirst.frc.team3735.robot.commands.drive.positions.ResetPosition;
@@ -130,7 +131,7 @@ public class Robot extends VortxIterative {
 		SmartDashboard.putData(new DriveMoveDistanceProfile(100.0, 30, 30, 0).addA(new NavxAssist()));
 		SmartDashboard.putData(new DriveMoveInCircleProfile(90, 60, true, 30, 30, 30));
 		SmartDashboard.putData("Drive Test", new DriveExp(.5,0).addA(new NavxVisionAssist(Pipes.Peg)));
-
+		SmartDashboard.putData("Sine Profile 100", new MoveSine(100));
 		side = Side.Left;
 		prevTime = Timer.getFPGATimestamp();
 	}
