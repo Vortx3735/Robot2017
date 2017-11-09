@@ -2,19 +2,24 @@ package org.usfirst.frc.team3735.robot.triggers;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.util.cmds.ComTrigger;
+import org.usfirst.frc.team3735.robot.util.settings.Func;
 
 public class HasMoved extends ComTrigger{
 	
-	private Double deltaDistance;
+	private Func deltaDistance;
 	private double rsd;
 	private double lsd;
 
-	public HasMoved(Double distance){
+	public HasMoved(Func distance){
 		this.deltaDistance = distance;
 	}
 	
 	public HasMoved(double distance){
-		this(new Double(distance));
+		this(new Func() {
+			public double getValue() {
+				return distance;
+			}
+		});
 	}
 
 	@Override
@@ -26,10 +31,10 @@ public class HasMoved extends ComTrigger{
 	
 	@Override
 	public boolean get() {
-		if(deltaDistance > 0){
-			return distanceTraveled() > deltaDistance.doubleValue();
+		if(deltaDistance.getValue() > 0){
+			return distanceTraveled() > deltaDistance.getValue();
 		}else{
-			return distanceTraveled() < deltaDistance.doubleValue();
+			return distanceTraveled() < deltaDistance.getValue();
 		}
 	}
 
@@ -40,11 +45,11 @@ public class HasMoved extends ComTrigger{
 	}
 	
 	public double distanceToGo(){
-		return deltaDistance - distanceTraveled();
+		return deltaDistance.getValue() - distanceTraveled();
 	}
 	
 	public double distance(){
-		return deltaDistance.doubleValue();
+		return deltaDistance.getValue();
 	}
 	
 	@Override

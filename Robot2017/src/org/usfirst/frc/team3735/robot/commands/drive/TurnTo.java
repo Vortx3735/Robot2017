@@ -4,10 +4,10 @@ import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.Robot.Side;
 import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
-import org.usfirst.frc.team3735.robot.util.Func;
 import org.usfirst.frc.team3735.robot.util.PIDCtrl;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
 import org.usfirst.frc.team3735.robot.util.profiling.Location;
+import org.usfirst.frc.team3735.robot.util.settings.Func;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -29,7 +29,7 @@ public class TurnTo extends Command{
 	public TurnTo(double angle) {
     	this(new Func(){
 			@Override
-			public double get() {
+			public double getValue() {
 				return angle;
 			}
     	});
@@ -47,14 +47,14 @@ public class TurnTo extends Command{
     	if(flag) {
     		getAngle = new Func() {
 	    		@Override
-				public double get() {
+				public double getValue() {
 					return VortxMath.navLimit(Robot.navigation.getYaw() + angle);
 				}
 	    	};
     	}else {
     		getAngle = new Func() {
 	    		@Override
-				public double get() {
+				public double getValue() {
 					return Robot.side.equals(Side.Right) ? VortxMath.navLimit(angle + 180) : angle;
 				}
 	    	};
@@ -65,7 +65,7 @@ public class TurnTo extends Command{
 	public TurnTo(Pipes p) {
     	this(new Func(){
 			@Override
-			public double get() {
+			public double getValue() {
 				Robot.vision.setMainHandler(p);
 				return VortxMath.continuousLimit(
 	    				Robot.navigation.getYaw() + (Robot.vision.getRelativeCX() * Robot.vision.dpp.getValue()),
@@ -78,7 +78,7 @@ public class TurnTo extends Command{
 	public TurnTo(Location loc) {
 		this(new Func(){
 			@Override
-			public double get() {
+			public double getValue() {
 				return Robot.navigation.getAngleToLocationCorrected(loc);
 			}
     	});
@@ -94,7 +94,7 @@ public class TurnTo extends Command{
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.navigation.getController().setSetpoint(getAngle.get());
+    	Robot.navigation.getController().setSetpoint(getAngle.getValue());
     	Robot.navigation.getController().enable();
     }
 

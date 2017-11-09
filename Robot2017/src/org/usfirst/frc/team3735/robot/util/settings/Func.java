@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3735.robot.util;
+package org.usfirst.frc.team3735.robot.util.settings;
 
 //@FunctionalInterface
 public interface Func {
@@ -21,5 +21,5 @@ public interface Func {
 	 * This interface is clearly not very functional
 	 */
 	
-	public double get();
+	public double getValue();
 }
