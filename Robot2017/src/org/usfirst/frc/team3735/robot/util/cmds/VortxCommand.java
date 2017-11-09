@@ -38,6 +38,9 @@ public class VortxCommand extends Command{
 		for(ComAssist c : assists){
 			c.execute();
 		}
+		for(ComTrigger t : triggers){
+			t.execute();
+		}
 	}
 
 
@@ -60,6 +63,7 @@ public class VortxCommand extends Command{
 		for(ComAssist c : assists){
 			c.end();
 		}
+		
 	}
 	
 	public VortxCommand addT(ComTrigger t){

@@ -19,6 +19,9 @@ public class Constants {
 		//for turning slowly with lb and rb
 		public static final double lowSensitivityLeftTurn = -.2;
 		public static final double lowSensitivityRightTurn = .2;
+		
+		public static final boolean isUsingLeftEncoders = true;
+		public static final boolean isUsingRightEncoders = true;
 
 	}
 	

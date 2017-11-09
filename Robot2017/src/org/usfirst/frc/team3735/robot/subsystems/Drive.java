@@ -391,6 +391,9 @@ public class Drive extends Subsystem {
     	double speed = (Math.abs(spd) *60.0) /Constants.Drive.InchesPerRotation;
     	return Math.copySign(slope*speed + minPct, spd);
     }
+    public static double percentToSpeed(double pct){
+    	return Math.copySign((pct - minPct) / slope, pct);
+    }
     /**
      * @param 	percent [0,1] of the max speed to go
      * @return	the adjusted number to send to motors
@@ -416,6 +419,11 @@ public class Drive extends Subsystem {
      */
     public double getCurrentPercent() {
     	return speedToPercent(getAverageSpeed());
+    }
+    
+    public double getSpeedInchesFromCurrent() {
+    	double pct = .5 * (l1.getOutputCurrent() + r1.getOutputCurrent());
+    	return Math.abs(pct) > minPct ? (pct-Math.signum(pct)*minPct)/slope : 0;
     }
 
 	/******************************************
