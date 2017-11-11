@@ -57,8 +57,8 @@ public class Shooter extends Subsystem {
 		agitator.changeControlMode(TalonControlMode.Voltage);
 		
 		
-		drumSet = new Setting("Shooter set", Constants.Shooter.shootSpeed);
-		agitatorSet = new Setting("Agitator set", Constants.Shooter.agitatorVoltage);
+		drumSet = new Setting("Shooter set", Constants.Shooter.shootSpeed, false);
+		agitatorSet = new Setting("Agitator set", Constants.Shooter.agitatorVoltage, false);
 
 		
 //		F = new Setting("Shooter F", .022);
@@ -66,10 +66,10 @@ public class Shooter extends Subsystem {
 //		I = new Setting("Shooter I", .0);
 //		D = new Setting("Shooter D", .0005);
 
-		F = new Setting("Shooter F", .028);
-		P = new Setting("Shooter P", .03);
-		I = new Setting("Shooter I", .0);
-		D = new Setting("Shooter D", 1);
+		F = new Setting("Shooter F", .028, false);
+		P = new Setting("Shooter P", .03, false);
+		I = new Setting("Shooter I", .0, false);
+		D = new Setting("Shooter D", 1, false);
         drum.configNominalOutputVoltage(0.0, -0.0); 
         drum.configPeakOutputVoltage(12.0, -12.0); 
 

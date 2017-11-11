@@ -26,7 +26,7 @@ public class BallIntake extends Subsystem {
 		motor = new CANTalon(RobotMap.BallIntake.roller);
 		motor.setInverted(RobotMap.BallIntake.rollerInverted);
 		
-    	speed = new Setting("Ball Intake setSpeed", Constants.BallIntake.rollerInSpeed);
+    	speed = new Setting("Ball Intake setSpeed", Constants.BallIntake.rollerInSpeed, false);
 
 	}
 

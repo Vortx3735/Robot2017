@@ -126,8 +126,8 @@ public class Robot extends VortxIterative {
 		SmartDashboard.putData("Place Gear", new  DrivePlaceGear());
 		SmartDashboard.putData("Zero Yaw", new ZeroYaw());
 		
-		SmartDashboard.putData(new RecordVoltageData());
-		SmartDashboard.putData(new SendSDVoltage());
+//		SmartDashboard.putData(new RecordVoltageData());
+//		SmartDashboard.putData(new SendSDVoltage());
 		SmartDashboard.putData(new DriveMoveDistanceProfile(100.0, 30, 30, 0).addA(new NavxAssist()));
 		SmartDashboard.putData(new DriveMoveInCircleProfile(90, 60, true, 30, 30, 30));
 		SmartDashboard.putData("Drive Test", new DriveExp(.5,0).addA(new NavxVisionAssist(Pipes.Peg)));
@@ -211,22 +211,22 @@ public class Robot extends VortxIterative {
 	public void log(){
 		scaler.log();
 		drive.log();
-		shooter.log();
-		ballIntake.log();
+		//shooter.log();
+		//ballIntake.log();
 		gearIntake.log();
 		navigation.log();
-		ultra.log();
+		//ultra.log();
 		vision.log();
 	}
 	
 	public void debugLog(){
 		scaler.debugLog();
 		drive.debugLog();
-		shooter.debugLog();
-		ballIntake.debugLog();
+		//shooter.debugLog();
+		//ballIntake.debugLog();
 		gearIntake.debugLog();
 		navigation.debugLog();
-		ultra.debugLog();
+		//ultra.debugLog();
 		vision.debugLog();
 	}
 	
