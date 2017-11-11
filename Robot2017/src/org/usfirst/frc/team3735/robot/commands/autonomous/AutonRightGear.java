@@ -35,14 +35,14 @@ public class AutonRightGear extends CommandGroup {
 //    	addSequential(new DriveMoveDistanceExpNavxBumped(89, .7),3);
 //    	addSequential(new GearIntakeDropOff(),3);
     	
-       	addSequential(new Move(70));
+    	addSequential(new Move(60));
     	addSequential(new DriveBrake(),.4);
     	addSequential(new TurnTo(-60),2);
-    	addSequential(new TurnTo(Pipes.Peg),1.5);
+    	addSequential(new TurnTo(Pipes.Peg),2);
     	//addSequential(new DriveMoveDistanceExpNavx(88.7),3);
     	//addSequential(new DriveMoveDistanceExpVisionBumped(89, .7, Pipes.Peg),3);
     	//addSequential(new DriveMoveDistanceExpNavxBumped(89, .7),2.5);
-    	addSequential(new Move(60).addT(new Bumped()));
+    	addSequential(new Move(45,.5).addT(new Bumped(.7)));
     	addSequential(new GearIntakeDropOff(),2);
      }
 }

@@ -16,7 +16,7 @@ public class AutonTopGear extends CommandGroup {
     public AutonTopGear() {
     	addSequential(new BeginAtPathY(Waypoints.topGear));
     	addSequential(new FollowPathTight(Waypoints.topGear));
-    	addSequential(new DriveBrake(),.5);
+    	addSequential(new DriveBrake(),1);
     	addSequential(new GearIntakeDropOff());
     }
 }

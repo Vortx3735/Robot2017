@@ -142,7 +142,7 @@ public class Robot extends VortxIterative {
         vision.debugLog();
         //navigation.integrate();
         navigation.displayPosition();
-        drive.debugLog();
+        //drive.debugLog();
         log();       
 	}
 	@Override

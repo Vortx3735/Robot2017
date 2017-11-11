@@ -90,7 +90,7 @@ public class HasMoved extends ComTrigger{
 	
 	@Override
 	public String getHaltMessage() {
-		return "Moved " + deltaDistance.getValue() + "Inches";
+		return "Moved " + deltaDistance.getValue() + " Inches";
 	}
 	
 	

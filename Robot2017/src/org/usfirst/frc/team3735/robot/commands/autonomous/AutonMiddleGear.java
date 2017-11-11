@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonMiddleGear extends CommandGroup {
 
     public AutonMiddleGear(){
-    	addSequential(new Move(75).addT(new Bumped()));
+    	addSequential(new Move(75, .6).addT(new Bumped()));
     	addSequential(new GearIntakeDropOff(),4);
      }
 }

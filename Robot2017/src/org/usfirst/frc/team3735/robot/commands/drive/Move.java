@@ -11,9 +11,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Move extends DriveExp {
 
     public Move(double dist) {
-    	super(Math.signum(dist) * .7,0);
+    	this(dist, .7);
+    }
+    
+    public Move(double dist, double spd) {
+    	super(Math.signum(dist) * spd,0);
     	addA(new NavxAssist());
     	addT(new HasMoved(dist));
     }
-
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Setting implements Func{
+public class Setting extends Func{
 	
 	private String name;
 	private double value;

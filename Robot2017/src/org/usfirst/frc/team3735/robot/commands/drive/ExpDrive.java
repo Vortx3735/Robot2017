@@ -3,6 +3,7 @@ package org.usfirst.frc.team3735.robot.commands.drive;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.settings.Constants;
+import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.util.VortxMath;
 import org.usfirst.frc.team3735.robot.util.cmds.VortxCommand;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
@@ -35,11 +36,7 @@ public class ExpDrive extends Command {
 	private static Setting navxPow = new Setting("FOD Navx Exponent", 1);
 	private static Setting fodMoveCo = new Setting("FOD Move Exponent", 1);
 	
-	private static Setting moveExponent = new Setting("Move Exponent", Constants.Drive.moveExponent);
-	private static Setting turnExponent = new Setting("Turn Exponent", Constants.Drive.turnExponent);
-	private static Setting scaledMaxMove = new Setting("Scaled Max Move", Constants.Drive.scaledMaxMove);
-	private static Setting scaledMaxTurn = new Setting("Scaled Max Turn", Constants.Drive.scaledMaxTurn);
-	private static Setting moveReactivity = new Setting("Move Reactivity", Constants.Drive.moveReactivity);
+private static Setting moveReactivity = new Setting("Move Reactivity", Constants.Drive.moveReactivity);
 	private static Setting turnReactivity = new Setting("Turn Reactivity", Constants.Drive.turnReactivity);
 
 	
@@ -88,12 +85,12 @@ public class ExpDrive extends Command {
 		moveMotorPrev = moveMotor;
 		turnMotorPrev = turnMotor;
 					
-		moveMotor = moveMotor * Math.pow(Math.abs(moveMotor), moveExponent.getValue() - 1);
-		turnMotor = turnMotor * Math.pow(Math.abs(turnMotor), turnExponent.getValue() - 1);
+		moveMotor = moveMotor * Math.pow(Math.abs(moveMotor), Drive.moveExponent.getValue() - 1);
+		turnMotor = turnMotor * Math.pow(Math.abs(turnMotor), Drive.turnExponent.getValue() - 1);
 		
-		moveMotor = moveMotor * scaledMaxMove.getValue();
+		moveMotor = moveMotor * Drive.scaledMaxMove.getValue();
 		if(!Robot.oi.main.ls.get()){
-			turnMotor = turnMotor * scaledMaxTurn.getValue();		
+			turnMotor = turnMotor * Drive.scaledMaxTurn.getValue();		
 		}
 		Robot.drive.normalDrive(moveMotor, turnMotor);
 		log();

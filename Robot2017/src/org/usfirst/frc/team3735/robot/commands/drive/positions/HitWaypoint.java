@@ -48,7 +48,7 @@ public class HitWaypoint extends VortxCommand{
 		if(isReversed) {
 			speed *= -1;
 		}
-		Robot.drive.setNavxAssist(err);
+		Robot.drive.setNavxAssist(VortxMath.limit(err, -40, 40));
 		Robot.drive.limitedDrive(speed, 0);
 		
 		
@@ -65,7 +65,7 @@ public class HitWaypoint extends VortxCommand{
 
 	@Override
 	protected boolean isFinished() {
-		return super.isFinished() || Robot.navigation.getPosition().distanceFrom(target) < 5;
+		return super.isFinished() || Robot.navigation.getPosition().distanceFrom(target) < 10;
 	}
 
 	@Override

@@ -25,7 +25,7 @@ public class Bumped extends ComTrigger{
 
 	@Override
 	public String getHaltMessage() {
-		return "bumped" + acc + " acc";
+		return "bumped " + acc + " acc";
 	}
 	
 	

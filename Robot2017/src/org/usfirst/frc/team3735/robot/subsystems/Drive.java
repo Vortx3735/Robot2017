@@ -7,10 +7,12 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team3735.robot.commands.drive.DDxDrive;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.settings.Constants;
 import org.usfirst.frc.team3735.robot.settings.Dms;
 import org.usfirst.frc.team3735.robot.settings.RobotMap;
+import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 
 /**
@@ -44,6 +46,11 @@ public class Drive extends Subsystem {
 	private double visionAssist = 0;
 	private double navxAssist = 0;
 
+	public static Setting moveExponent = new Setting("Move Exponent", Constants.Drive.moveExponent);
+	public static Setting turnExponent = new Setting("Turn Exponent", Constants.Drive.turnExponent);
+	public static Setting scaledMaxMove = new Setting("Scaled Max Move", Constants.Drive.scaledMaxMove);
+	public static Setting scaledMaxTurn = new Setting("Scaled Max Turn", Constants.Drive.scaledMaxTurn);
+	
 	
 	
 
