@@ -32,7 +32,7 @@ public class GearIntakeDropOff extends CommandGroup {
 //    	//addSequential(new GearIntakeRollersOff());
     	
     	//new code
-    	addSequential(new DriveExp(.5,0),.1);
+    	addSequential(new DriveExp(.4,0),.1);
     	
     	addParallel(new GearIntakeRollersOut());
     	addSequential(new Wait(.1));
@@ -41,8 +41,8 @@ public class GearIntakeDropOff extends CommandGroup {
     	addSequential(new Wait(.1));
 
     	//addSequential(new DriveMoveDistanceExpNavx(-20, .6, null, .8),2);
-    	//addSequential(new DriveExp(-1,0,.4,.4).addA(new NavxAssist()).addT(new HasMoved(-20)));
-    	addSequential(new DriveExp(-.8,0),.7);
+    	addSequential(new DriveExp(-1,0,.4,.4).addA(new NavxAssist()).addT(new HasMoved(-20)));
+    	//addSequential(new DriveExp(-1,0),.7);
     	addSequential(new GearIntakeLiftUp());
     	addSequential(new GearIntakeRollersOff());
     	

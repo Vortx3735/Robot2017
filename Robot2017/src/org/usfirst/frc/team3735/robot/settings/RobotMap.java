@@ -47,12 +47,12 @@ package org.usfirst.frc.team3735.robot.settings;
 public class RobotMap {
 
 	public static class Drive{
-		public static int leftMotor1 =		4;//4
-		public static int leftMotor2 = 		5;//5
+		public static int leftMotor1 =		5;//4
+		public static int leftMotor2 = 		4;//5
 		public static int leftMotor3 = 		6;//6
 		
-		public static int rightMotor1 = 	10;//10
-		public static int rightMotor2 = 	11;//11
+		public static int rightMotor1 = 	11;//10
+		public static int rightMotor2 = 	10;//11
 		public static int rightMotor3 = 	12;//12
 	}
 	public static class GearIntake{

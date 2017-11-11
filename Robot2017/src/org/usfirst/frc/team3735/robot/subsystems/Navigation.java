@@ -283,6 +283,7 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 		Robot.retrieveSide();
 		setPosition(getStartingPosition());
 		Location.changeSide(Robot.side);
+		System.out.println("Reseting Position...");
 	}
 	
 	public synchronized Position getPosition() {

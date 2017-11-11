@@ -50,7 +50,7 @@ public class VortxCommand extends Command{
 		for(ComTrigger t : triggers){
 			if(t.get()){
 				if(DebugPrint) {
-					System.out.println("Command " + this.getName() + "halted: " + t.getHaltMessage());
+					System.out.println("Command " + this.getName() + " halted: " + t.getHaltMessage());
 				}
 				return true;
 			}

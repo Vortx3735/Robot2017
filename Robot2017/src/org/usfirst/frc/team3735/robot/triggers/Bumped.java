@@ -20,7 +20,7 @@ public class Bumped extends ComTrigger{
 
 	@Override
 	public boolean get() {
-		return acc > Math.abs(Robot.navigation.getXYAcceleration());
+		return Math.abs(Robot.navigation.getXYAcceleration()) > acc;
 	}
 
 	@Override
