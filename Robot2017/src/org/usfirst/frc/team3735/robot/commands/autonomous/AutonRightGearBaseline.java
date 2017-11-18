@@ -1,8 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.autonomous;
 
-import org.usfirst.frc.team3735.robot.commands.drive.Move;
 import org.usfirst.frc.team3735.robot.commands.drive.TurnTo;
-import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpNavx;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.Move;
 import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveBrake;
 import org.usfirst.frc.team3735.robot.triggers.Bumped;
 
