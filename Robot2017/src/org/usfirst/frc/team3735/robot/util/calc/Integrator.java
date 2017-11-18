@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3735.robot.util;
+package org.usfirst.frc.team3735.robot.util.calc;
 
 import edu.wpi.first.wpilibj.Timer;
 

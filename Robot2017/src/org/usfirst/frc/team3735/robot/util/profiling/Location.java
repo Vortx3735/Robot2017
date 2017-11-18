@@ -2,8 +2,7 @@ package org.usfirst.frc.team3735.robot.util.profiling;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team3735.robot.Robot.Side;
-import org.usfirst.frc.team3735.robot.settings.Dms;
+import org.usfirst.frc.team3735.robot.util.VortxIterative.Side;
 
 public class Location {
 	public double x,y;
@@ -33,10 +32,10 @@ public class Location {
 		return Math.hypot(this.x - other.x, this.y - other.y);
 	}
 	
-	public static void changeSide(Side side) {
+	public static void changeSide(Side side, double fieldLength) {
 		if((side == Side.Left) != onLeftSide) {
 			for(Location loc : staticLocations) {
-				loc.x = Dms.Field.LENGTH - loc.x;
+				loc.x = fieldLength - loc.x;
 			}
 			onLeftSide = !onLeftSide;
 		}

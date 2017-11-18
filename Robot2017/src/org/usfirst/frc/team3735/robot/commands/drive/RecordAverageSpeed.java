@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class RecordVoltageData extends Command {
+public class RecordAverageSpeed extends Command {
 
 	private RollingAverage roll;
 	
-    public RecordVoltageData() {
+    public RecordAverageSpeed() {
         roll = new RollingAverage(3){
         	@Override
         	public double get(){

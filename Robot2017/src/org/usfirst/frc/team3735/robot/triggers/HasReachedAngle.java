@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot.triggers;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.util.VortxMath;
+import org.usfirst.frc.team3735.robot.util.calc.VortxMath;
 import org.usfirst.frc.team3735.robot.util.cmds.ComTrigger;
 
 public class HasReachedAngle extends ComTrigger{

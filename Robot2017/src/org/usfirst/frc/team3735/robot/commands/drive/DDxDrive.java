@@ -2,8 +2,8 @@ package org.usfirst.frc.team3735.robot.commands.drive;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
-import org.usfirst.frc.team3735.robot.util.JerkLimiter;
 import org.usfirst.frc.team3735.robot.util.Range;
+import org.usfirst.frc.team3735.robot.util.calc.JerkLimiter;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -20,28 +20,28 @@ public class DDxDrive extends Command {
 //	private double maxA = 2;
 //	private double maxJ = 1;
 	
-	private Setting maxA = new Setting("Max Acc", 1){
+	private Setting maxA = new Setting("Max Acc", 10){
 		@Override
 		public double getValue(){
 			return super.getValue() / 50.0;
 		}
 	};
 	
-	private Setting maxJ = new Setting("Max Jerk", 1){
+	private Setting maxJ = new Setting("Max Jerk", 10){
 		@Override
 		public double getValue(){
 			return super.getValue() / 50.0;
 		}
 	};
 	
-	private Setting maxAt = new Setting("Max Acc Turn", 1){
+	private Setting maxAt = new Setting("Max Acc Turn", 10){
 		@Override
 		public double getValue(){
 			return super.getValue() / 50.0;
 		}
 	};
 	
-	private Setting maxJt = new Setting("Max Jerk Turn", 1){
+	private Setting maxJt = new Setting("Max Jerk Turn", 10){
 		@Override
 		public double getValue(){
 			return super.getValue() / 50.0;

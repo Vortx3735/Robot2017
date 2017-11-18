@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.drive.simple;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.util.VortxMath;
+import org.usfirst.frc.team3735.robot.util.calc.VortxMath;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

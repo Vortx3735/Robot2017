@@ -2,9 +2,8 @@ package org.usfirst.frc.team3735.robot.commands.sequences;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.assists.NavxVisionAssist;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
-import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExp;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeLiftDown;
 import org.usfirst.frc.team3735.robot.commands.vision.DriveAddVisionAssist;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;

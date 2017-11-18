@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3735.robot.commands.drive;
+package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

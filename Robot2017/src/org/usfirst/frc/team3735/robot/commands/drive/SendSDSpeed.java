@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3735.robot.commands;
+package org.usfirst.frc.team3735.robot.commands.drive;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
@@ -10,14 +10,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SendSDVoltage extends Command {
+public class SendSDSpeed extends Command {
 
-	private static Setting voltage;
-    public SendSDVoltage() {
+	private static Setting speed;
+    public SendSDSpeed() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
-    	voltage = new Setting("Drive Voltage Input", 0);
+    	speed = new Setting("Drive Speed Input", 0);
     	
     }
     
@@ -29,7 +29,7 @@ public class SendSDVoltage extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.setLeftRight(voltage.getValue(), voltage.getValue());
+    	Robot.drive.setLeftRight(speed.getValue(), speed.getValue());
     }
 
     // Make this return true when this Command no longer needs to run execute()

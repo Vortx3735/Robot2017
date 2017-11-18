@@ -1,9 +1,9 @@
-package org.usfirst.frc.team3735.robot.commands.drive;
+package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
 
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.settings.Constants;
-import org.usfirst.frc.team3735.robot.util.VortxMath;
+import org.usfirst.frc.team3735.robot.util.calc.VortxMath;
 import org.usfirst.frc.team3735.robot.util.cmds.VortxCommand;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 

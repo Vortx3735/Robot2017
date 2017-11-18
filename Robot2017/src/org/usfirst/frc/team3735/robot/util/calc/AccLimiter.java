@@ -1,4 +1,6 @@
-package org.usfirst.frc.team3735.robot.util;
+package org.usfirst.frc.team3735.robot.util.calc;
+
+import org.usfirst.frc.team3735.robot.util.Range;
 
 public class AccLimiter {
 	public double value;

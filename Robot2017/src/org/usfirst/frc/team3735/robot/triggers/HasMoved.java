@@ -2,7 +2,7 @@ package org.usfirst.frc.team3735.robot.triggers;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.settings.Constants;
-import org.usfirst.frc.team3735.robot.util.Integrator;
+import org.usfirst.frc.team3735.robot.util.calc.Integrator;
 import org.usfirst.frc.team3735.robot.util.cmds.ComTrigger;
 import org.usfirst.frc.team3735.robot.util.settings.Func;
 

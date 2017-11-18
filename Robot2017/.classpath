@@ -8,5 +8,7 @@
 	<classpathentry kind="var" path="wpilib" sourcepath="wpilib.sources"/>
 	<classpathentry kind="lib" path="C:/Users/s542046/Desktop/Classes/Vortx/navx_frc.jar"/>
 	<classpathentry kind="lib" path="C:/Users/s542046/Desktop/Classes/Vortx/CTRLib.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3735.robot.commands.drive;
+package org.usfirst.frc.team3735.robot.commands.drive.movedistance;
 
 import org.usfirst.frc.team3735.robot.assists.NavxAssist;
 import org.usfirst.frc.team3735.robot.triggers.HasMoved;

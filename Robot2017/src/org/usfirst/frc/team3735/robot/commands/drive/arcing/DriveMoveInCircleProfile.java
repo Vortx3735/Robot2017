@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3735.robot.commands.drive.spinnyspin;
+package org.usfirst.frc.team3735.robot.commands.drive.arcing;
 
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceProfile;
@@ -6,7 +6,7 @@ import org.usfirst.frc.team3735.robot.settings.Constants;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.triggers.HasMoved;
 import org.usfirst.frc.team3735.robot.triggers.HasReachedAngle;
-import org.usfirst.frc.team3735.robot.util.VortxMath;
+import org.usfirst.frc.team3735.robot.util.calc.VortxMath;
 import org.usfirst.frc.team3735.robot.util.cmds.VortxCommand;
 
 import edu.wpi.first.wpilibj.command.Command;

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.drive.positions;
 
-import org.usfirst.frc.team3735.robot.commands.drive.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.sequences.DriveAcquireGear;
 import org.usfirst.frc.team3735.robot.commands.sequences.DrivePlaceGear;
 import org.usfirst.frc.team3735.robot.settings.Waypoints;
