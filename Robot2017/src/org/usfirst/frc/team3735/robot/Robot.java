@@ -2,18 +2,17 @@ package org.usfirst.frc.team3735.robot;
 
 import org.usfirst.frc.team3735.robot.assists.NavxAssist;
 import org.usfirst.frc.team3735.robot.assists.NavxVisionAssist;
-import org.usfirst.frc.team3735.robot.commands.SendSDVoltage;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
 import org.usfirst.frc.team3735.robot.commands.autonomous.newstuff.AutonBottomGear;
 import org.usfirst.frc.team3735.robot.commands.autonomous.newstuff.AutonTopGear;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveExp;
-import org.usfirst.frc.team3735.robot.commands.drive.MoveSine;
-import org.usfirst.frc.team3735.robot.commands.drive.RecordVoltageData;
+import org.usfirst.frc.team3735.robot.commands.drive.RecordAverageSpeed;
+import org.usfirst.frc.team3735.robot.commands.drive.SendSDSpeed;
+import org.usfirst.frc.team3735.robot.commands.drive.arcing.DriveMoveInCircleProfile;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveExp;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceProfile;
+import org.usfirst.frc.team3735.robot.commands.drive.movedistance.MoveSine;
 import org.usfirst.frc.team3735.robot.commands.drive.positions.ResetPosition;
 import org.usfirst.frc.team3735.robot.commands.drive.positions.ZeroYaw;
-
-import org.usfirst.frc.team3735.robot.commands.drive.spinnyspin.DriveMoveInCircleProfile;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
 import org.usfirst.frc.team3735.robot.commands.sequences.DriveAcquireGear;
 import org.usfirst.frc.team3735.robot.commands.sequences.DrivePlaceGear;
@@ -35,6 +34,7 @@ import org.usfirst.frc.team3735.robot.triggers.Bumped;
 
 import org.usfirst.frc.team3735.robot.util.VortxIterative;
 import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
+import org.usfirst.frc.team3735.robot.util.profiling.Location;
 import org.usfirst.frc.team3735.robot.util.profiling.Position;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
@@ -72,9 +72,7 @@ public class Robot extends VortxIterative {
 	private double dt;
 	private double prevTime = 0;
 
-	public static enum Side{
-		Left,Right
-	}
+
 	public static SendableChooser<Side> sideChooser;
 	public static Side side = Side.Left;
 	
@@ -158,6 +156,8 @@ public class Robot extends VortxIterative {
 	@Override
 	public void autonomousInit() {
 		navigation.resetPosition();
+		retrieveSide();
+		Location.changeSide(side, Dms.Field.LENGTH);
         autonomousCommand = autonomousChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
 	}

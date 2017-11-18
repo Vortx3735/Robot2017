@@ -58,6 +58,10 @@ public class VortxIterative extends RobotBase {
     m_teleopInitialized = false;
     m_testInitialized = false;
   }
+  
+	public static enum Side{
+		Left,Right
+	}
 
   /**
    * Provide an alternate "main loop" via startCompetition().
