@@ -7,6 +7,7 @@ import org.usfirst.frc.team3735.robot.util.calc.VortxMath;
 import org.usfirst.frc.team3735.robot.util.cmds.VortxCommand;
 import org.usfirst.frc.team3735.robot.util.profiling.Location;
 import org.usfirst.frc.team3735.robot.util.profiling.Position;
+import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 public class HitWaypoint extends VortxCommand{
 	
@@ -14,8 +15,10 @@ public class HitWaypoint extends VortxCommand{
 	private double speed;
 	private boolean isReversed;
 	
-	private double maxSpeed = .8;
-	private double minSpeed = .3;
+	
+	//use 3.8 for navx assist!!!
+	private double maxSpeed = .5;
+	private double minSpeed = .2;
 	
 	public HitWaypoint(Location target, boolean rev) {
 		this(target, null, rev);
@@ -36,6 +39,8 @@ public class HitWaypoint extends VortxCommand{
 		super.initialize();
 
 	}
+	
+	private static Setting maxTurn = new Setting("Max Turn Profiling", 40);
 
 	@Override
 	protected void execute() {
@@ -48,7 +53,7 @@ public class HitWaypoint extends VortxCommand{
 		if(isReversed) {
 			speed *= -1;
 		}
-		Robot.drive.setNavxAssist(VortxMath.limit(err, -40, 40));
+		Robot.drive.setNavxAssist(VortxMath.limit(err, -1 * maxTurn.getValue(), maxTurn.getValue()));
 		Robot.drive.limitedDrive(speed, 0);
 		
 		
@@ -65,7 +70,7 @@ public class HitWaypoint extends VortxCommand{
 
 	@Override
 	protected boolean isFinished() {
-		return super.isFinished() || Robot.navigation.getPosition().distanceFrom(target) < 10;
+		return super.isFinished() || Robot.navigation.getPosition().distanceFrom(target) < 25;
 	}
 
 	@Override

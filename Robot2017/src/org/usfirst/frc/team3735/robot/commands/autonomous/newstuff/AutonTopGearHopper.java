@@ -17,6 +17,6 @@ public class AutonTopGearHopper extends CommandGroup {
     public AutonTopGearHopper() {
     	addSequential(new AutonTopGear());
     	addSequential(new FollowPathTight(Waypoints.topGearHopper, true));
-    	addSequential(new TurnTo(0));
+    	addSequential(new TurnTo(-180,false));
     }
 }

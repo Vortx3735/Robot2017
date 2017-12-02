@@ -10,11 +10,12 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.Robot.Side;
+
 //import org.usfirst.frc.team3735.robot.Robot.Side;
 import org.usfirst.frc.team3735.robot.settings.Dms;
 import org.usfirst.frc.team3735.robot.settings.Waypoints;
 import org.usfirst.frc.team3735.robot.util.PIDCtrl;
+import org.usfirst.frc.team3735.robot.util.VortxIterative.Side;
 import org.usfirst.frc.team3735.robot.util.calc.VortxMath;
 import org.usfirst.frc.team3735.robot.util.profiling.Location;
 import org.usfirst.frc.team3735.robot.util.profiling.Position;
@@ -282,7 +283,7 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
 		zeroYaw();
 		Robot.retrieveSide();
 		setPosition(getStartingPosition());
-		Location.changeSide(Robot.side);
+		Location.changeSide(Robot.side, Dms.Field.LENGTH);
 		System.out.println("Reseting Position...");
 	}
 	

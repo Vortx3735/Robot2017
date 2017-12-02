@@ -5,6 +5,7 @@ import org.usfirst.frc.team3735.robot.assists.NavxVisionAssist;
 import org.usfirst.frc.team3735.robot.commands.autonomous.*;
 import org.usfirst.frc.team3735.robot.commands.autonomous.newstuff.AutonBottomGear;
 import org.usfirst.frc.team3735.robot.commands.autonomous.newstuff.AutonTopGear;
+import org.usfirst.frc.team3735.robot.commands.autonomous.newstuff.AutonTopGearHopper;
 import org.usfirst.frc.team3735.robot.commands.drive.RecordAverageSpeed;
 import org.usfirst.frc.team3735.robot.commands.drive.SendSDSpeed;
 import org.usfirst.frc.team3735.robot.commands.drive.arcing.DriveMoveInCircleProfile;
@@ -108,6 +109,8 @@ public class Robot extends VortxIterative {
 			autonomousChooser.addObject("Testing", new  AutonTest());
 			
 			autonomousChooser.addObject("Top Gear", new AutonTopGear());
+			autonomousChooser.addObject("Top Gear Hopper", new AutonTopGearHopper());
+
 			autonomousChooser.addObject("Bottom Gear", new AutonBottomGear());
 
 		SmartDashboard.putData("AUTONOMOUS SELECTION", autonomousChooser);

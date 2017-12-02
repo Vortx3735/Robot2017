@@ -3,9 +3,8 @@ package org.usfirst.frc.team3735.robot.commands.sequences;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.assists.NavxAssist;
 import org.usfirst.frc.team3735.robot.commands.Wait;
-import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveExp;
-import org.usfirst.frc.team3735.robot.commands.drive.movedistance.DriveMoveDistanceExpNavx;
+
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeLiftDown;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeLiftUp;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersOff;
