@@ -11,7 +11,6 @@ import org.usfirst.frc.team3735.robot.commands.scaler.*;
 import org.usfirst.frc.team3735.robot.commands.sequences.DriveGoToPeg;
 import org.usfirst.frc.team3735.robot.commands.sequences.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.shooter.*;
-import org.usfirst.frc.team3735.robot.commands.vision.*;
 
 
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
