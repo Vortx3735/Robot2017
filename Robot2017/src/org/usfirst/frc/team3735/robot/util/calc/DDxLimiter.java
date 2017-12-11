@@ -37,7 +37,11 @@ public class DDxLimiter {
 	}
 	
 	public void reset(){
-		value = 0;
+		reset(0);
+	}
+	
+	public void reset(double num) {
+		value = num;
 		if(derivative != null){
 			derivative.reset();
 		}

@@ -38,6 +38,16 @@ public class Line {
 		return new Line(loc, -1/m);
 	}
 	
+	public double distanceFrom(Location loc) {
+		if(!isVertical) {
+			double x2 = (loc.y + (1/m)*loc.x - b) / (m + 1/m);
+			double y2 = m*x2 + b;
+			return loc.distanceFrom(new Location(x2,y2));
+		}else {
+			return Math.abs(loc.x - this.xOffset);
+		}
+	}
+	
 	public double func(double x) {
 		return m * x + b;
 	}
