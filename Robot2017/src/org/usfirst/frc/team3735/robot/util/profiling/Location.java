@@ -2,7 +2,7 @@ package org.usfirst.frc.team3735.robot.util.profiling;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team3735.robot.util.VortxIterative.Side;
+import org.usfirst.frc.team3735.robot.util.bases.VortxIterative.Side;
 
 public class Location {
 	public double x,y;

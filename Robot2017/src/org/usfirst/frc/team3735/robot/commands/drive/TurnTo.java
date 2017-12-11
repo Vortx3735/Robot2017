@@ -5,7 +5,7 @@ import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.util.PIDCtrl;
-import org.usfirst.frc.team3735.robot.util.VortxIterative.Side;
+import org.usfirst.frc.team3735.robot.util.bases.VortxIterative.Side;
 import org.usfirst.frc.team3735.robot.util.calc.VortxMath;
 import org.usfirst.frc.team3735.robot.util.profiling.Location;
 import org.usfirst.frc.team3735.robot.util.settings.Func;

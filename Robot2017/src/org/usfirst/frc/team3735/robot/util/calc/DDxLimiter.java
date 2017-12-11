@@ -2,8 +2,6 @@ package org.usfirst.frc.team3735.robot.util.calc;
 
 import java.util.Arrays;
 
-import org.usfirst.frc.team3735.robot.util.Range;
-
 public class DDxLimiter {
 	public double value;
 	public double dyValue;

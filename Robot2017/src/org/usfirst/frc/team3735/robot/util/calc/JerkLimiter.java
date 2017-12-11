@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3735.robot.util.calc;
 
-import org.usfirst.frc.team3735.robot.util.Range;
-
 public class JerkLimiter {
 	public double value;
 	public double dyValue;

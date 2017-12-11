@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3735.robot.commands.drive;
 
 import org.usfirst.frc.team3735.robot.Robot;
-import org.usfirst.frc.team3735.robot.util.RollingAverage;
+import org.usfirst.frc.team3735.robot.util.calc.RollingAverage;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

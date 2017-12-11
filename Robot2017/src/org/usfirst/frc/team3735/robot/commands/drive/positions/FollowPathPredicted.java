@@ -5,8 +5,8 @@ import org.usfirst.frc.team3735.robot.settings.Dms;
 import org.usfirst.frc.team3735.robot.settings.Waypoints;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.triggers.HasPassedWaypoint;
-import org.usfirst.frc.team3735.robot.util.Range;
 import org.usfirst.frc.team3735.robot.util.calc.DDxLimiter;
+import org.usfirst.frc.team3735.robot.util.calc.Range;
 import org.usfirst.frc.team3735.robot.util.calc.VortxMath;
 import org.usfirst.frc.team3735.robot.util.profiling.Line;
 import org.usfirst.frc.team3735.robot.util.profiling.Location;
@@ -61,9 +61,7 @@ public class FollowPathPredicted extends Command {
     		Location current = locs[i];
     		
     		angleChanges[i] = Math.atan2(next.y - current.y, next.x - current.x)  -  
-    					   Math.atan2(current.y - prev.y, current.x - prev.x);
-    		
-    		
+    					   Math.atan2(current.y - prev.y, current.x - prev.x);	
     	}
     }
 
@@ -72,9 +70,8 @@ public class FollowPathPredicted extends Command {
     	dxdt.reset(Robot.drive.getAverageSpeedInches());
     	dadt.reset();
     	
-    	wantedDadx = computeTurn(0);
-    	targetIndex = 1;
-    	cutoffLine = new HasPassedWaypoint(locs[1], locs[0]);
+    	targetIndex = 0;
+    	nextTarget();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -88,8 +85,10 @@ public class FollowPathPredicted extends Command {
     	}
     	
     	setControllerAngle();
+    	
     	double error = coeff.getValue() * toFollow.distanceFrom(Robot.navigation.getPosition());
     	error *= Math.signum(Robot.navigation.getController().getError());
+    	
     	double currDxdt = dxdt.feed(wantedDxdt);
     	move(currDxdt, dadt.feed(currDxdt * wantedDadx + error));
     }

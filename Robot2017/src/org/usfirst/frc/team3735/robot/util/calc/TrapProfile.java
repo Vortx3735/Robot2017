@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3735.robot.util;
+package org.usfirst.frc.team3735.robot.util.calc;
 
 public class TrapProfile {
 	private final double fps = 50;

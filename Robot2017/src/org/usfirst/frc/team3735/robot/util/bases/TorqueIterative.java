@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3735.robot.util;
+package org.usfirst.frc.team3735.robot.util.bases;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.hal.HAL;

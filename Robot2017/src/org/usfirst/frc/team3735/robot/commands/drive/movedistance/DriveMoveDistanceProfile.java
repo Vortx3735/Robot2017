@@ -4,7 +4,7 @@ import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.settings.Constants;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.triggers.HasMoved;
-import org.usfirst.frc.team3735.robot.util.TrapProfile;
+import org.usfirst.frc.team3735.robot.util.calc.TrapProfile;
 import org.usfirst.frc.team3735.robot.util.calc.VortxMath;
 import org.usfirst.frc.team3735.robot.util.cmds.VortxCommand;
 
