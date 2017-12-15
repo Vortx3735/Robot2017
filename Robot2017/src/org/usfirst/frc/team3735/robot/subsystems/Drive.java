@@ -399,7 +399,7 @@ public class Drive extends Subsystem {
     	return Math.copySign(slope*speed + minPct, spd);
     }
     public static double percentToSpeed(double pct){
-    	return Math.copySign((pct - minPct) / slope, pct);
+    	return Math.copySign((pct - minPct) / slope, pct) * Constants.Drive.InchesPerRotation/60.0;
     }
     /**
      * @param 	percent [0,1] of the max speed to go

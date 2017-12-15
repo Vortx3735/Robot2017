@@ -7,7 +7,7 @@ public class Dms {
 	public class Bot{
 		public class DriveBase{
 			//???
-			public static final double WIDTH = 37;
+			public static final double WIDTH = 28;
 			public static final double HALFWIDTH = WIDTH/2.0;
 			public static final double LENGTH = 31;
 			public static final double HALFLENGTH = LENGTH/2.0;

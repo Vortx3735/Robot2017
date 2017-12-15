@@ -22,13 +22,15 @@ public class FollowPathPredicted extends Command {
 
 	Location[] locs;
 	boolean rev;
-	double maxP = .6;
+	double maxP = .5;
 	
 	DDxLimiter dxdt;	//inches/second
 	DDxLimiter dadt;	//radians
 	
 	double[] angleChanges;
-	private static Setting coeff = new Setting("Path Prediction coeff", .01);
+	private static Setting coeff = new Setting("Path Prediction coeff", .05);
+	private static Setting turnco = new Setting("Path Prediction turn coeff", 1);
+
 	HasPassedWaypoint cutoffLine;
 	
 	double wantedDadx;
@@ -46,8 +48,8 @@ public class FollowPathPredicted extends Command {
     	this.rev = rev;
     	
     	//max speed is 173
-    	dxdt = new DDxLimiter(0, new Range(.05 * 173 * 2), new Range(.05 * 173 * 1.5));
-    	dadt = new DDxLimiter(0, new Range(.05 * 6.28), new Range(.05 * 6.28 * .5));
+    	dxdt = new DDxLimiter(0, new Range(200));
+    	dadt = new DDxLimiter(0, new Range(200));
     	
     	if(rev) {
     		maxP *= -1;
@@ -64,8 +66,9 @@ public class FollowPathPredicted extends Command {
     		Location next = locs[i+1];
     		Location current = locs[i];
     		
-    		angleChanges[i] = Math.atan2(next.y - current.y, next.x - current.x)  -  
-    					   Math.atan2(current.y - prev.y, current.x - prev.x);	
+    		angleChanges[i] = Math.atan2(current.y - prev.y, current.x - prev.x)	
+    		- Math.atan2(next.y - current.y, next.x - current.x);
+    					   
     	}
     }
 
@@ -92,10 +95,12 @@ public class FollowPathPredicted extends Command {
     	setControllerAngle();
     	
     	double error = coeff.getValue() * toFollow.distanceFrom(Robot.navigation.getPosition());
+    	error = error * error;
     	error *= Math.signum(Robot.navigation.getController().getError());
     	
     	double currDxdt = dxdt.feed(wantedDxdt);
-    	move(currDxdt, dadt.feed(currDxdt * wantedDadx + error));
+    	
+    	move(currDxdt, dadt.feed(currDxdt * wantedDadx * turnco.getValue() + error));
     }
     
     public boolean nextTarget(){
@@ -106,6 +111,7 @@ public class FollowPathPredicted extends Command {
 		wantedDadx = computeTurn(targetIndex);
 		wantedDxdt = Drive.percentToSpeed(maxP / (1 + Math.abs(wantedDadx)*Dms.Bot.DriveBase.HALFWIDTH));
     	cutoffLine = new HasPassedWaypoint(locs[targetIndex], locs[targetIndex-1]);
+    	cutoffLine.initialize();
     	toFollow = new Line(locs[targetIndex], locs[targetIndex-1]);
     	return true;
     }
@@ -131,6 +137,7 @@ public class FollowPathPredicted extends Command {
     	double left = dx + (da * Dms.Bot.DriveBase.HALFWIDTH);
     	double right = dx - (da * Dms.Bot.DriveBase.HALFWIDTH);
     	Robot.drive.setLeftRight(Drive.speedToPercent(left), Drive.speedToPercent(right));
+    	System.out.println("Left: " + Drive.speedToPercent(left) + "Right: " + Drive.speedToPercent(right));
     }
 	
     // Make this return true when this Command no longer needs to run execute()
