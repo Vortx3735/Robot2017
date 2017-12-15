@@ -24,8 +24,8 @@ public class FollowPathPredicted extends Command {
 	boolean rev;
 	double maxP = .6;
 	
-	DDxLimiter dxdt;
-	DDxLimiter dadt;
+	DDxLimiter dxdt;	//inches/second
+	DDxLimiter dadt;	//radians
 	
 	double[] angleChanges;
 	private static Setting coeff = new Setting("Path Prediction coeff", .01);
@@ -35,7 +35,7 @@ public class FollowPathPredicted extends Command {
 	double wantedDxdt;
 	Line toFollow;
 	int targetIndex;
-	private boolean isDone;
+	private boolean isDone = false;
 	
 	public FollowPathPredicted(Location[] locs) {
 		this(locs, false);
@@ -45,9 +45,13 @@ public class FollowPathPredicted extends Command {
     	this.locs = locs;
     	this.rev = rev;
     	
-    	dxdt = new DDxLimiter(0, new Range(-10, 10), new Range(-10, 10));
-    	dadt = new DDxLimiter(0, new Range(-10, 10), new Range(-10, 10));
+    	//max speed is 173
+    	dxdt = new DDxLimiter(0, new Range(.05 * 173 * 2), new Range(.05 * 173 * 1.5));
+    	dadt = new DDxLimiter(0, new Range(.05 * 6.28), new Range(.05 * 6.28 * .5));
     	
+    	if(rev) {
+    		maxP *= -1;
+    	}
     	angleChanges = new double[locs.length];
     	
     	//since bezier curves have dadt of 0 at endpoints, assign this to endpoints
@@ -72,6 +76,7 @@ public class FollowPathPredicted extends Command {
     	
     	targetIndex = 0;
     	nextTarget();
+    	isDone = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
