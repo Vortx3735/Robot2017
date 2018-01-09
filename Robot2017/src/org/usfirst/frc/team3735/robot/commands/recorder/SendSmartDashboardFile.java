@@ -5,7 +5,6 @@ import org.usfirst.frc.team3735.robot.util.recording.DataRecorder;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 import org.usfirst.frc.team3735.robot.util.settings.StringSetting;
 
-import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,11 +20,9 @@ public class SendSmartDashboardFile extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
-    	requires(Robot.ballIntake);
     	requires(Robot.gearIntake);
     	requires(Robot.navigation);
     	requires(Robot.scaler);
-    	requires(Robot.shooter);
     	requires(Robot.ultra);
     	requires(Robot.vision);
     }
@@ -50,7 +47,6 @@ public class SendSmartDashboardFile extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	DataRecorder.endSending();
-    	Robot.drive.changeControlMode(TalonControlMode.PercentVbus);
     }
 
     // Called when another command which requires one or more of the same

@@ -84,7 +84,7 @@ public class FollowPathPredicted extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(cutoffLine.get()) {
+    	if(cutoffLine.get() || locs[targetIndex].distanceFrom(Robot.navigation.getPosition()) < 20) {
     		if(!nextTarget()) {
     			isDone = true;
     			return;
@@ -95,7 +95,7 @@ public class FollowPathPredicted extends Command {
     	setControllerAngle();
     	
     	double error = coeff.getValue() * toFollow.distanceFrom(Robot.navigation.getPosition());
-    	error = error * error;
+    	
     	error *= Math.signum(Robot.navigation.getController().getError());
     	
     	double currDxdt = dxdt.feed(wantedDxdt);

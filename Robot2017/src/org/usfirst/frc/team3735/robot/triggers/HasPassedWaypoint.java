@@ -10,7 +10,7 @@ public class HasPassedWaypoint extends ComTrigger{
 
 	private Location targetLocation;
 	private Location fromLocation;
-	private Line toCross;
+	public Line toCross;
 	private boolean isTopRightofLine;
 
 	public HasPassedWaypoint(Location loc){

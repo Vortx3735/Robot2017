@@ -8,7 +8,6 @@ import org.usfirst.frc.team3735.robot.util.calc.TrapProfile;
 import org.usfirst.frc.team3735.robot.util.calc.VortxMath;
 import org.usfirst.frc.team3735.robot.util.cmds.VortxCommand;
 
-import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -60,7 +59,7 @@ public class DriveMoveDistanceProfile extends VortxCommand {
     	distHandler.initialize();
     	acc = acceleration/FRAMERATE;
     	currentSpeed = Robot.drive.getAverageSpeedInches();
-    	Robot.drive.changeControlMode(TalonControlMode.PercentVbus);
+
     	state = State.rampingUp;
     	if(currentSpeed * distHandler.distance() < 0){
     		System.out.println("Profile Error: Robot is moving in the wrong direction");

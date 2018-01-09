@@ -3,8 +3,7 @@ package org.usfirst.frc.team3735.robot.subsystems;
 import org.usfirst.frc.team3735.robot.settings.Constants;
 import org.usfirst.frc.team3735.robot.settings.RobotMap;
 
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -15,8 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 public class GearIntake extends Subsystem {
-	CANTalon roller;
-	//CANTalon bottomRoller;
+	WPI_TalonSRX roller;
+	//WPI_TalonSRX bottomRoller;
 	Solenoid liftSolenoid;
 
 	private boolean isDown = false;
@@ -24,8 +23,7 @@ public class GearIntake extends Subsystem {
     // here. Call these from Commands.
 	
 	public GearIntake(){
-		roller = new CANTalon(RobotMap.GearIntake.topRoller);
-		roller.changeControlMode(TalonControlMode.Voltage);
+		roller = new WPI_TalonSRX(RobotMap.GearIntake.topRoller);
 		roller.setInverted(RobotMap.GearIntake.topRollerInverted);
 		liftSolenoid = new Solenoid(RobotMap.GearIntake.liftSolenoid);
 		liftUp();
@@ -36,13 +34,11 @@ public class GearIntake extends Subsystem {
     
     //positive is out, negative is in
     //actually flip that
-    public void setRollerVoltage(double speed){
+    public void setRollerSpeed(double speed){
     	roller.set(speed);
     }
     
-    public double getRollerPower(){
-    	return Math.abs(roller.getOutputVoltage() * roller.getOutputCurrent());
-    }
+
 
     public void liftDown(){
     	liftSolenoid.set(true);
@@ -70,7 +66,7 @@ public class GearIntake extends Subsystem {
     }
 
 	public void debugLog() {
-    	SmartDashboard.putNumber("Gear Roller getPower", getRollerPower());
+
 		
 	}
 }

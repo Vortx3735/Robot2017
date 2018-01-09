@@ -22,21 +22,19 @@ import org.usfirst.frc.team3735.robot.ois.DemoOI;
 import org.usfirst.frc.team3735.robot.ois.GTAOI;
 import org.usfirst.frc.team3735.robot.ois.NormieOI;
 import org.usfirst.frc.team3735.robot.settings.Dms;
-import org.usfirst.frc.team3735.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3735.robot.subsystems.Drive;
 import org.usfirst.frc.team3735.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.subsystems.Scaler;
-import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team3735.robot.subsystems.Vision;
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
 import org.usfirst.frc.team3735.robot.triggers.Bumped;
 import org.usfirst.frc.team3735.robot.util.bases.VortxIterative;
-import org.usfirst.frc.team3735.robot.util.bases.VortxSim;
 import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
 import org.usfirst.frc.team3735.robot.util.profiling.Location;
 import org.usfirst.frc.team3735.robot.util.profiling.Position;
+import org.usfirst.frc.team3735.robot.util.settings.BooleanSetting;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -60,14 +58,13 @@ public class Robot extends VortxIterative {
 	SendableChooser<Command> autonomousChooser;
 	Command autonomousCommand;
 	
-	public static BallIntake ballIntake;
 	public static Drive drive;
 	public static GearIntake gearIntake;
 	public static Scaler scaler;
-	public static Shooter shooter;
 	public static Navigation navigation;
 	public static Ultrasonic ultra;
 	public static Vision vision;
+	
 	public static GTAOI oi;
 	
 	private double dt;
@@ -82,10 +79,8 @@ public class Robot extends VortxIterative {
 	@Override
 	public void robotInit() {
 		gearIntake = new GearIntake();
-		shooter = new Shooter();
 		scaler = new Scaler();
 		drive = new Drive();
-		ballIntake = new BallIntake();
 		navigation = new Navigation();
 		ultra = new Ultrasonic();
 		vision = new Vision();
@@ -139,6 +134,7 @@ public class Robot extends VortxIterative {
 	@Override
 	public void robotPeriodic() {		
 		Setting.fetchAround();
+		BooleanSetting.fetchAround();
 		
         vision.debugLog();
         //navigation.integrate();

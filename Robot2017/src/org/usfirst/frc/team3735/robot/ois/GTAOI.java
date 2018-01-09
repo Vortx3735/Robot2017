@@ -2,14 +2,12 @@ package org.usfirst.frc.team3735.robot.ois;
 
 //import org.usfirst.frc.team3735.robot.commands.DriveTurnToAngleHyperbola;
 import org.usfirst.frc.team3735.robot.commands.*;
-import org.usfirst.frc.team3735.robot.commands.ballintake.*;
 import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
 import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveAddSensitiveLeft;
 import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveAddSensitiveRight;
 import org.usfirst.frc.team3735.robot.commands.gearintake.*;
 import org.usfirst.frc.team3735.robot.commands.scaler.*;
 import org.usfirst.frc.team3735.robot.commands.sequences.GearIntakeDropOff;
-import org.usfirst.frc.team3735.robot.commands.shooter.*;
 import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
 import org.usfirst.frc.team3735.robot.util.oi.XboxController;
 
@@ -46,13 +44,7 @@ public class GTAOI implements DriveOI{
 		co.a.whileHeld(new GearIntakeRollersIn());
 		co.b.whileHeld(new GearIntakeRollersOut());
 
-		co.pov0.whenPressed(new ShooterAgitatorOn(31000, 10));
-		co.pov90.whenPressed(new ShooterAgitatorOn(28000, 10));
-		co.pov180.whenPressed(new ShooterAgitatorOn(25000, 10));
-		co.pov270.whenPressed(new ShooterAgitatorOff());
-		
-		co.lt.whenPressed(new BallIntakeRollerOff());
-		co.lb.whenPressed(new BallIntakeRollerIn());
+
 		
 		co.start.whenPressed(new InterruptOperations());
 		

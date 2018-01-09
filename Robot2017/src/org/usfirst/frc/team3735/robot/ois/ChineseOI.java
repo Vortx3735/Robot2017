@@ -1,8 +1,6 @@
 package org.usfirst.frc.team3735.robot.ois;
 
 import org.usfirst.frc.team3735.robot.commands.InterruptOperations;
-import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
-import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
 import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveAddSensitiveLeft;
 import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveAddSensitiveRight;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
@@ -12,8 +10,6 @@ import org.usfirst.frc.team3735.robot.commands.scaler.ScalerOff;
 import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
 import org.usfirst.frc.team3735.robot.commands.sequences.DriveGoToPeg;
 import org.usfirst.frc.team3735.robot.commands.sequences.GearIntakeDropOff;
-import org.usfirst.frc.team3735.robot.commands.shooter.ShooterAgitatorOff;
-import org.usfirst.frc.team3735.robot.commands.shooter.ShooterAgitatorOn;
 //import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
 import org.usfirst.frc.team3735.robot.util.oi.ChineseBoard;
 import org.usfirst.frc.team3735.robot.util.oi.DriveOI;
@@ -34,12 +30,7 @@ public class ChineseOI implements DriveOI{
 		board.rWhiteButton.whenPressed(new ScalerOff());
 		board.a.whileHeld(new GearIntakeRollersIn());
 		board.b.whileHeld(new GearIntakeRollersOut());
-		board.c.whenPressed(new ShooterAgitatorOn(31000, 10));
-		board.d.whenPressed(new ShooterAgitatorOn(28000, 10));
-		board.e.whenPressed(new ShooterAgitatorOn(25000, 10));
-		board.f.whenPressed(new ShooterAgitatorOff());	
-		board.g.whenPressed(new BallIntakeRollerOff());
-		board.h.whenPressed(new BallIntakeRollerIn());
+
 		board.j.whenPressed(new InterruptOperations());
 	}
 

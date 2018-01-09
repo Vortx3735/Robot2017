@@ -12,10 +12,9 @@ public class InterruptOperations extends InstantCommand {
     public InterruptOperations() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.ballIntake);
         requires(Robot.gearIntake);
         requires(Robot.scaler);
-        requires(Robot.shooter);
+
     }
 
     // Called once when the command executes

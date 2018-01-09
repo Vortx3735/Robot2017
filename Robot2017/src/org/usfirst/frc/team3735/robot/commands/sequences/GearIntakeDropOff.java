@@ -55,7 +55,7 @@ public class GearIntakeDropOff extends CommandGroup {
 	@Override
 	protected void end() {
 		Robot.gearIntake.liftUp();
-		Robot.gearIntake.setRollerVoltage(0);
+		Robot.gearIntake.setRollerSpeed(0);
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package org.usfirst.frc.team3735.robot.ois;
 
 //import org.usfirst.frc.team3735.robot.commands.DriveTurnToAngleHyperbola;
 import org.usfirst.frc.team3735.robot.commands.*;
-import org.usfirst.frc.team3735.robot.commands.ballintake.*;
 import org.usfirst.frc.team3735.robot.commands.drive.*;
 import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveAddSensitiveLeft;
 import org.usfirst.frc.team3735.robot.commands.drive.simple.DriveAddSensitiveRight;
@@ -10,7 +9,6 @@ import org.usfirst.frc.team3735.robot.commands.gearintake.*;
 import org.usfirst.frc.team3735.robot.commands.scaler.*;
 import org.usfirst.frc.team3735.robot.commands.sequences.DriveGoToPeg;
 import org.usfirst.frc.team3735.robot.commands.sequences.GearIntakeDropOff;
-import org.usfirst.frc.team3735.robot.commands.shooter.*;
 
 
 import org.usfirst.frc.team3735.robot.subsystems.Vision.Pipes;
@@ -41,20 +39,13 @@ public class DemoOI implements DriveOI{
 		
 		main.lt.whenPressed(new GearIntakeDropOff());
 		main.rt.whileHeld(new GearIntakeFeeding());
-		
-		//CoDriver
-		co.pov0.whenPressed(new ShooterAgitatorOn(31000, 10));
-		co.pov90.whenPressed(new ShooterAgitatorOn(28000, 10));
-		co.pov180.whenPressed(new ShooterAgitatorOn(25000, 10));
-		co.pov270.whenPressed(new ShooterAgitatorOff());
-		
+
 		co.start.whenPressed(new InterruptOperations());
 		
 		co.a.whileHeld(new GearIntakeRollersIn());
 		co.b.whileHeld(new GearIntakeRollersOut());
 
-		co.lt.whenPressed(new BallIntakeRollerOff());
-		co.lb.whenPressed(new BallIntakeRollerIn());
+
 		
 		co.x.whenPressed(new InstantCommand(){
 			@Override

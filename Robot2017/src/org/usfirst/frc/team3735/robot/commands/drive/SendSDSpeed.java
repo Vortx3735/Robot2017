@@ -3,7 +3,6 @@ package org.usfirst.frc.team3735.robot.commands.drive;
 import org.usfirst.frc.team3735.robot.Robot;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
-import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -24,7 +23,7 @@ public class SendSDSpeed extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drive.changeControlMode(TalonControlMode.PercentVbus);
+
     }
 
     // Called repeatedly when this Command is scheduled to run

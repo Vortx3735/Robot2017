@@ -22,7 +22,7 @@ public class GearIntakeRollersIn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.gearIntake.setRollerVoltage(Constants.GearIntake.rollerInVoltage);
+    	Robot.gearIntake.setRollerSpeed(Constants.GearIntake.rollerInVoltage);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -32,7 +32,7 @@ public class GearIntakeRollersIn extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.gearIntake.setRollerVoltage(0);
+    	Robot.gearIntake.setRollerSpeed(0);
     }
 
     // Called when another command which requires one or more of the same

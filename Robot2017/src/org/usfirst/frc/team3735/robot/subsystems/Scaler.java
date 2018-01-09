@@ -5,7 +5,7 @@ import org.usfirst.frc.team3735.robot.commands.scaler.ScalerOff;
 import org.usfirst.frc.team3735.robot.settings.Constants;
 import org.usfirst.frc.team3735.robot.settings.RobotMap;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,8 +17,8 @@ public class Scaler extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	CANTalon motor;
-	CANTalon motor2;
+	WPI_TalonSRX motor;
+	WPI_TalonSRX motor2;
 
 	//private final double voltageChangeSpeed = 5;
 
@@ -28,13 +28,13 @@ public class Scaler extends Subsystem {
 	private double percent = 0;
 	
 	public Scaler(){
-		motor = new CANTalon(RobotMap.Scaler.motor);
+		motor = new WPI_TalonSRX(RobotMap.Scaler.motor);
 		//motor.setCloseLoopRampRate(.2);
 		motor.setInverted(RobotMap.Scaler.scalerInverted);
-		motor2 = new CANTalon(RobotMap.Scaler.motor2);
+		motor2 = new WPI_TalonSRX(RobotMap.Scaler.motor2);
 		//motor2.setCloseLoopRampRate(.2);
 		motor2.setInverted(RobotMap.Scaler.scalerInverted);
-		//motor.changeControlMode(CANTalon.TalonControlMode.Voltage);
+		//motor.changeControlMode(WPI_TalonSRX.TalonControlMode.Voltage);
 		//motor.setVoltageCompensationRampRate(voltageChangeSpeed);
 		log();
 
@@ -74,7 +74,8 @@ public class Scaler extends Subsystem {
 	}
 	
 	public double getPower(){
-		return Math.abs(motor.getOutputCurrent() * motor.getOutputVoltage());
+		//return Math.abs(motor.getOutputCurrent() * motor.getOutputVoltage());
+		return 0;
 	}
 	
 	public boolean getOverloaded(){

@@ -26,9 +26,10 @@ public class Constants {
 	}
 	
 	public class GearIntake{
-		public final static double rollerOutVoltage = 3;
-		public final static double rollerInVoltage = -10;
-		public final static double feedingVoltage = -6;
+		//these arent voltage anymore
+		public final static double rollerOutVoltage = .25;
+		public final static double rollerInVoltage = -.85;
+		public final static double feedingVoltage = -.5;
 	}
 	
 	public class Scaler{

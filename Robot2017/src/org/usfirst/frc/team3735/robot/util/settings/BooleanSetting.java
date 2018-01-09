@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Setting extends Func{
+public class BooleanSetting{
 	
 	private String name;
-	private double value;
+	private boolean value;
 	
 	private boolean isReceiving;
 	private boolean isVisible;
 	private boolean isListening = false;
 	
-	private static ArrayList<Setting> settings = new ArrayList<Setting>();
+	private static ArrayList<BooleanSetting> settings = new ArrayList<BooleanSetting>();
 	private static int fIteration;
 	
-	public Setting(String name, double defaultValue){
+	public BooleanSetting(String name, boolean defaultValue){
 		this.name = name;
 		this.value = defaultValue;
 		
-		SmartDashboard.putNumber(name, defaultValue);
+		SmartDashboard.putBoolean(name, defaultValue);
 		isVisible = true;
 		isReceiving = true;
 		settings.add(this);
@@ -38,12 +38,12 @@ public class Setting extends Func{
 	 * 				if false, the setting does not appear on the SmartDasboard
 	 * 
 	 */
-	public Setting(String name, double defaultValue, boolean flag){
+	public BooleanSetting(String name, boolean defaultValue, boolean flag){
 		this.name = name;
 		this.value = defaultValue;
 		
 		if(flag){
-			SmartDashboard.putNumber(name, defaultValue);
+			SmartDashboard.putBoolean(name, defaultValue);
 			isVisible = true;
 		}else{
 			isVisible = false;
@@ -52,11 +52,11 @@ public class Setting extends Func{
 	}
 
 	
-	public double getValue(){
+	public boolean getValue(){
 		return value;
 	}
 	
-	public double getValueFetched() {
+	public boolean getValueFetched() {
 		fetch();
 		return value;
 	}
@@ -64,27 +64,27 @@ public class Setting extends Func{
 	public void fetch() {
 		if(isReceiving) {
 			if(isListening) {
-				if(value != SmartDashboard.getNumber(name, value)) {
-					value = SmartDashboard.getNumber(name, value);
+				if(value != SmartDashboard.getBoolean(name, value)) {
+					value = SmartDashboard.getBoolean(name, value);
 					valueChanged(value);
 				}
 			}else {
-				value = SmartDashboard.getNumber(name, value);
+				value = SmartDashboard.getBoolean(name, value);
 			}
 		}
 	}
 	
 
 	
-	public void setValue(double value){
+	public void setValue(boolean value){
 		this.value = value;
 		if(isVisible){
-			SmartDashboard.putNumber(name, this.value);
+			SmartDashboard.putBoolean(name, this.value);
 		}
 	}
 	
 	public static void fetchAll() {
-		for(Setting s : settings) {
+		for(BooleanSetting s : settings) {
 			s.fetch();
 		}
 	}
@@ -105,7 +105,7 @@ public class Setting extends Func{
 	}
 	
 	//Override me if you want!
-	public void valueChanged(double val) {
+	public void valueChanged(boolean val) {
 		
 	}
 	
