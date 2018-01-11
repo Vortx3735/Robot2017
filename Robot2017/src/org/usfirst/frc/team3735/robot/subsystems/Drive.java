@@ -56,17 +56,17 @@ public class Drive extends Subsystem {
 	public static Setting scaledMaxMove = new Setting("Scaled Max Move", Constants.Drive.scaledMaxMove);
 	public static Setting scaledMaxTurn = new Setting("Scaled Max Turn", Constants.Drive.scaledMaxTurn);
 	
-	public static BooleanSetting brakeEnabled = new BooleanSetting("Brake Mode On", false) {
-
-		@Override
-		public void valueChanged(boolean val) {
-			if(Robot.drive != null) {
-				Robot.drive.setEnableBrake(val);
-
-			}
-		}
-		
-	};
+//	public static BooleanSetting brakeEnabled = new BooleanSetting("Brake Mode On", false) {
+//
+//		@Override
+//		public void valueChanged(boolean val) {
+//			if(Robot.drive != null) {
+//				Robot.drive.setEnableBrake(val);
+//
+//			}
+//		}
+//		
+//	};
 	
 
 	public Drive() {
@@ -78,9 +78,9 @@ public class Drive extends Subsystem {
 		r2 = new WPI_TalonSRX(RobotMap.Drive.rightMotor2);
 		r3 = new WPI_TalonSRX(RobotMap.Drive.rightMotor3);
 
-		initSensors();
+		//initSensors();
 		setupSlaves();
-		setEnableBrake(false);
+		//setEnableBrake(false);
 	}
 
 	/*******************************
@@ -453,8 +453,11 @@ public class Drive extends Subsystem {
 	}
 
 	public void setLeftRight(double left, double right) {
+		System.out.println("Left: " + left + " Right:" + right);
 		l1.set(left); 
-		r1.set(-right);
+		
+		
+		r1.set(-1 * right);
 	}
 
 	/**
