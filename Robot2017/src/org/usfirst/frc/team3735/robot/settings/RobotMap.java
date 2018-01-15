@@ -47,9 +47,9 @@ package org.usfirst.frc.team3735.robot.settings;
 public class RobotMap {
 
 	public static class Drive{
-		public static int leftMotor1 =		5;//4
+		public static int leftMotor1 =		6;//4
 		public static int leftMotor2 = 		4;//5
-		public static int leftMotor3 = 		6;//6
+		public static int leftMotor3 = 		13;//6
 		
 		public static int rightMotor1 = 	11;//10
 		public static int rightMotor2 = 	10;//11
@@ -60,17 +60,17 @@ public class RobotMap {
 		public static final boolean topRollerInverted = true;
 		public static int liftSolenoid = 			1;
 	}
-	public static class Shooter{
-		public static int drum = 			2;
-		public static int drum2 = 			7;
-		public static final boolean drumInverted = false;
-		public static int agitator =   		13;
-		public static final boolean agitatorInverted = false;
-	}
-	public static class BallIntake{
-		public static int roller = 			1;
-		public static final boolean rollerInverted = true;
-	}
+//	public static class Shooter{
+//		public static int drum = 			2;
+//		public static int drum2 = 			7;
+//		public static final boolean drumInverted = false;
+//		public static int agitator =   		13;
+//		public static final boolean agitatorInverted = false;
+//	}
+//	public static class BallIntake{
+//		public static int roller = 			1;
+//		public static final boolean rollerInverted = true;
+//	}
 	public static class Scaler{
 		public static int motor = 			3;
 		public static final int motor2 = 	9;

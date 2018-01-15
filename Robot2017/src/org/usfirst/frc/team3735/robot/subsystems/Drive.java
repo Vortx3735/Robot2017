@@ -14,6 +14,7 @@ import org.usfirst.frc.team3735.robot.settings.RobotMap;
 import org.usfirst.frc.team3735.robot.util.settings.BooleanSetting;
 import org.usfirst.frc.team3735.robot.util.settings.Setting;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -56,17 +57,17 @@ public class Drive extends Subsystem {
 	public static Setting scaledMaxMove = new Setting("Scaled Max Move", Constants.Drive.scaledMaxMove);
 	public static Setting scaledMaxTurn = new Setting("Scaled Max Turn", Constants.Drive.scaledMaxTurn);
 	
-//	public static BooleanSetting brakeEnabled = new BooleanSetting("Brake Mode On", false) {
-//
-//		@Override
-//		public void valueChanged(boolean val) {
-//			if(Robot.drive != null) {
-//				Robot.drive.setEnableBrake(val);
-//
-//			}
-//		}
-//		
-//	};
+	public static BooleanSetting brakeEnabled = new BooleanSetting("Brake Mode On", false) {
+
+		@Override
+		public void valueChanged(boolean val) {
+			if(Robot.drive != null) {
+				Robot.drive.setEnableBrake(val);
+
+			}
+		}
+		
+	};
 	
 
 	public Drive() {
@@ -454,10 +455,12 @@ public class Drive extends Subsystem {
 
 	public void setLeftRight(double left, double right) {
 		System.out.println("Left: " + left + " Right:" + right);
-		l1.set(left); 
+		//l1.set(left); 
+		l1.set(ControlMode.PercentOutput, left *100);
 		
 		
-		r1.set(-1 * right);
+		//r1.set(-1 * right);
+		r1.set(ControlMode.PercentOutput, right * -100);
 	}
 
 	/**
