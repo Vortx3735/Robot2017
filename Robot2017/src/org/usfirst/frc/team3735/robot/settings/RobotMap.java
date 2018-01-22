@@ -77,5 +77,7 @@ public class RobotMap {
 		public static final boolean scalerInverted = true;
 
 	}
+	
+	//1 2 5 7
 		
 }

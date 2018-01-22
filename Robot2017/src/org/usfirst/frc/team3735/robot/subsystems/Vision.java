@@ -51,7 +51,7 @@ public class Vision extends Subsystem {
 	    camera2.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    
 	    pegs = new VisionHandler(new TestModdedMoreTRI(), camera1, 2, "GRIP/PegTracker", VisionType.getCorrectRatio);
-	    pegs.startThread();
+	    //pegs.startThread();
 	    
 	    gears = new VisionHandler(new GearPipeline(), camera2, 1, "GRIP/GearTracker", VisionType.Normal);
 	    //gears.startThread();
@@ -77,14 +77,16 @@ public class Vision extends Subsystem {
     }
 
     public double getRelativeCX(){
-    	if(mainHandler.target.equals(VisionHandler.nullTarget)){
-    		return nullValue;
-    	}else{
-        	return mainHandler.getCenterX() - IMG_WIDTH/2;
-    	}
+//    	if(mainHandler.target.equals(VisionHandler.nullTarget)){
+//    		return nullValue;
+//    	}else{
+//        	return mainHandler.getCenterX() - IMG_WIDTH/2;
+//    	}
+    	return 0;
     }
     public double getWidth(){
-    	return mainHandler.getWidth();
+//    	return mainHandler.getWidth();
+    	return 0;
     }
 
 

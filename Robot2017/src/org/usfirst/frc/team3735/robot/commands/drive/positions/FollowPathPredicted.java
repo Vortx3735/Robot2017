@@ -74,7 +74,7 @@ public class FollowPathPredicted extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	dxdt.reset(Robot.drive.getAverageSpeedInches());
+    	dxdt.reset(Robot.drive.getAverageSpeed());
     	dadt.reset();
     	
     	targetIndex = 0;

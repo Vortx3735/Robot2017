@@ -31,7 +31,7 @@ public class GTAOI implements DriveOI{
 		main.a.whileHeld(new GearIntakeFeeding());
 		main.x.whenPressed(new GearIntakeLiftDown());
 		main.y.whenPressed(new GearIntakeLiftUp());
-		main.start.whenPressed(new ExpDrive());
+//		main.start.whenPressed(new ExpDrive());
 //		main.x.whileHeld(new DriveAddSensitiveLeft());
 //		main.y.whileHeld(new DriveAddSensitiveRight());
 
@@ -39,15 +39,15 @@ public class GTAOI implements DriveOI{
 //		main.back.whenPressed(new DriveChangeToBallDirection());
 		
 		//CoDriver
-		co.y.whenPressed(new ScalerUp(1));
-		co.x.whenPressed(new ScalerOff());
-		co.a.whileHeld(new GearIntakeRollersIn());
-		co.b.whileHeld(new GearIntakeRollersOut());
-
-
-		
-		co.start.whenPressed(new InterruptOperations());
-		
+//		co.y.whenPressed(new ScalerUp(1));
+//		co.x.whenPressed(new ScalerOff());
+//		co.a.whileHeld(new GearIntakeRollersIn());
+//		co.b.whileHeld(new GearIntakeRollersOut());
+//
+//
+//		
+//		co.start.whenPressed(new InterruptOperations());
+//		
 		
 		
 	}

@@ -18,7 +18,7 @@ public class DriveMoveInCircleProfile extends VortxCommand {
 
     private static final double DRIVE_WIDTH = 28;	//in inches
 
-	private static final double MAX_SPEED = 800 * Constants.Drive.InchesPerRotation /60.0; //inches per sec
+	private static final double MAX_SPEED = 800 * Constants.Drive.InchesPerTick /60.0; //inches per sec
     
 	private HasReachedAngle angler;
 	private DriveMoveDistanceProfile profile;

@@ -89,9 +89,9 @@ private static Setting moveReactivity = new Setting("Move Reactivity", Constants
 		turnMotor = turnMotor * Math.pow(Math.abs(turnMotor), Drive.turnExponent.getValue() - 1);
 		
 		moveMotor = moveMotor * Drive.scaledMaxMove.getValue();
-		if(!Robot.oi.main.ls.get()){
-			turnMotor = turnMotor * Drive.scaledMaxTurn.getValue();		
-		}
+//		if(!Robot.oi.main.ls.get()){
+//			turnMotor = turnMotor * Drive.scaledMaxTurn.getValue();		
+//		}
 		Robot.drive.normalDrive(moveMotor, turnMotor);
 		log();
     }

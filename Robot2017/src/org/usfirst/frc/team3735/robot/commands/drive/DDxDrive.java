@@ -61,7 +61,8 @@ public class DDxDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	move.reset(Robot.drive.getCurrentPercent());
+    	//move.reset(Robot.drive.getCurrentPercent());
+    	move.reset();
     	turn.reset();
     	Robot.drive.setupDriveForSpeedControl();
     }
@@ -76,8 +77,8 @@ public class DDxDrive extends Command {
 		turnMotor = turnMotor * Math.pow(Math.abs(turnMotor), Drive.turnExponent.getValue() - 1);
 		
     	Robot.drive.normalDrive(
-    			move.feed(Robot.oi.getDriveMove()), 
-    			turn.feed(Robot.oi.getDriveTurn())
+    			move.feed(Robot.oi.getDriveMove()) * Drive.scaledMaxMove.getValue(), 
+    			turn.feed(Robot.oi.getDriveTurn()) * Drive.scaledMaxTurn.getValue()
 		);
     	
     	

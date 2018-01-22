@@ -31,10 +31,10 @@ public class HasMoved extends ComTrigger{
 	@Override
 	public void initialize() {
 		if(Constants.Drive.isUsingLeftEncoders) {
-			lsd = Robot.drive.getLeftPositionInches();
+			lsd = Robot.drive.getLeftPosition();
 		}
 		if(Constants.Drive.isUsingRightEncoders) {
-			rsd = Robot.drive.getRightPositionInches();
+			rsd = Robot.drive.getRightPosition();
 		}
 		if(lsd == null && rsd == null) {
 			isIntegrating = true;
@@ -64,13 +64,13 @@ public class HasMoved extends ComTrigger{
 	
 	public double distanceTraveled(){
 		if((rsd != null) && (lsd != null)) {
-			return .5 * ((Robot.drive.getLeftPositionInches() - lsd) + (Robot.drive.getRightPositionInches() - rsd));
+			return .5 * ((Robot.drive.getLeftPosition() - lsd) + (Robot.drive.getRightPosition() - rsd));
 		}
 		if(lsd != null) {
-			return Robot.drive.getLeftPositionInches() - lsd;
+			return Robot.drive.getLeftPosition() - lsd;
 		}
 		if(rsd != null) {
-			return Robot.drive.getRightPositionInches() - lsd;
+			return Robot.drive.getRightPosition() - lsd;
 		}
 		if(integrator != null) {
 			return integrator.total;

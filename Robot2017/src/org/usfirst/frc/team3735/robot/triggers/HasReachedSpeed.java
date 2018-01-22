@@ -22,7 +22,7 @@ public class HasReachedSpeed extends ComTrigger{
 	}
 	
 	public boolean evaluateSpeed() {
-		return Robot.drive.getAverageSpeedInches() < targetSpeed;
+		return Robot.drive.getAverageSpeed() < targetSpeed;
 	}
 	@Override
 	public boolean get() {

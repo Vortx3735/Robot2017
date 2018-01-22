@@ -65,7 +65,7 @@ public class Robot extends VortxIterative {
 	public static Ultrasonic ultra;
 	public static Vision vision;
 	
-	public static GTAOI oi;
+	public static DriveOI oi;
 	
 	private double dt;
 	private double prevTime = 0;
@@ -115,19 +115,19 @@ public class Robot extends VortxIterative {
 			sideChooser.addObject("Blue", Side.Right);
 		SmartDashboard.putData("Side Selection", sideChooser);	
 		
-		SmartDashboard.putData("Reset Position", new ResetPosition());
-		SmartDashboard.putData("Gear Dropoff", new GearIntakeDropOff());
-		SmartDashboard.putData("Scaler Start", new ScalerUp(1));
-		SmartDashboard.putData("Acquire Gear", new  DriveAcquireGear());
-		SmartDashboard.putData("Place Gear", new  DrivePlaceGear());
-		SmartDashboard.putData("Zero Yaw", new ZeroYaw());
-		
-//		SmartDashboard.putData(new RecordVoltageData());
-//		SmartDashboard.putData(new SendSDVoltage());
-		SmartDashboard.putData(new DriveMoveDistanceProfile(100.0, 30, 30, 0).addA(new NavxAssist()));
-		SmartDashboard.putData(new DriveMoveInCircleProfile(90, 60, true, 30, 30, 30));
-		SmartDashboard.putData("Drive Test", new DriveExp(.5,0).addA(new NavxVisionAssist(Pipes.Peg)));
-		SmartDashboard.putData("Sine Profile 100", new MoveSine(100));
+//		SmartDashboard.putData("Reset Position", new ResetPosition());
+//		SmartDashboard.putData("Gear Dropoff", new GearIntakeDropOff());
+//		SmartDashboard.putData("Scaler Start", new ScalerUp(1));
+//		SmartDashboard.putData("Acquire Gear", new  DriveAcquireGear());
+//		SmartDashboard.putData("Place Gear", new  DrivePlaceGear());
+//		SmartDashboard.putData("Zero Yaw", new ZeroYaw());
+//		
+////		SmartDashboard.putData(new RecordVoltageData());
+////		SmartDashboard.putData(new SendSDVoltage());
+//		SmartDashboard.putData(new DriveMoveDistanceProfile(100.0, 30, 30, 0).addA(new NavxAssist()));
+//		SmartDashboard.putData(new DriveMoveInCircleProfile(90, 60, true, 30, 30, 30));
+//		SmartDashboard.putData("Drive Test", new DriveExp(.5,0).addA(new NavxVisionAssist(Pipes.Peg)));
+//		SmartDashboard.putData("Sine Profile 100", new MoveSine(100));
 		side = Side.Left;
 		prevTime = Timer.getFPGATimestamp();
 	}
@@ -139,7 +139,7 @@ public class Robot extends VortxIterative {
         vision.debugLog();
         //navigation.integrate();
         navigation.displayPosition();
-        //drive.debugLog();
+        drive.debugLog();
         log();       
 	}
 	@Override

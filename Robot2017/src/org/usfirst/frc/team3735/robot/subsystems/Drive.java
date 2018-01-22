@@ -63,6 +63,7 @@ public class Drive extends Subsystem {
 		public void valueChanged(boolean val) {
 			if(Robot.drive != null) {
 				Robot.drive.setEnableBrake(val);
+				System.out.println("Brake mode " + val);
 
 			}
 		}
@@ -79,16 +80,16 @@ public class Drive extends Subsystem {
 		r2 = new WPI_TalonSRX(RobotMap.Drive.rightMotor2);
 		r3 = new WPI_TalonSRX(RobotMap.Drive.rightMotor3);
 
-		//initSensors();
+		initSensors();
 		setupSlaves();
-		//setEnableBrake(false);
+		setEnableBrake(true);
 	}
 
 	/*******************************
 	 * Default Command For Driving
 	 *******************************/
 	public void initDefaultCommand() {
-		setDefaultCommand(new ExpDrive());
+		setDefaultCommand(new DDxDrive());
 	}
 
 	/*******************************
@@ -111,7 +112,7 @@ public class Drive extends Subsystem {
 	 * Speed Control Setup
 	 *******************************/
 	public void setupDriveForSpeedControl() {
-		setEnableBrake(false);
+		//setEnableBrake(false);
 
 		this.setNavxAssist(0);
 		this.setVisionAssist(0);
@@ -145,43 +146,35 @@ public class Drive extends Subsystem {
 		l1.setSensorPhase(true);
 		
 		//l1.configNominalOutputVoltage(0.0, -0.0);
-		l1.configNominalOutputForward(0, 0);
-		l1.configNominalOutputReverse(0, 0);
-		l1.configPeakOutputForward(.5, 0);
-		l1.configPeakOutputReverse(.5, 0);
+//		l1.configNominalOutputForward(0, 0);
+//		l1.configNominalOutputReverse(0, 0);
+//		l1.configPeakOutputForward(1, 0);
+//		l1.configPeakOutputReverse(-1, 0);
 		//l1.setPosition(0);
 		
-		
-//		absolutePosition = r1.getPulseWidthPosition() & 0xFFF;
-//		
-//		r1.reverseOutput(true);
-//		r1.setEncPosition(absolutePosition);
-//		r1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-//		r1.reverseSensor(false);
-//		r1.configNominalOutputVoltage(0.0f, -0.0);
-//		r1.configPeakOutputVoltage(5, -5);
-//		r1.setPosition(0);
-		
-		//int absolutePosition = l1.getPulseWidthPosition() & 0xFFF;
-		absolutePosition = l1.getSelectedSensorPosition(0) & 0xFFF;
+		absolutePosition = r1.getSelectedSensorPosition(0) & 0xFFF;
 
 		//l1.reverseOutput(false); <--- setinverted does this instead
 		
 		//l1.setEncPosition(absolutePosition);
-		l1.setSelectedSensorPosition(absolutePosition, 0, 0);
+		r1.setSelectedSensorPosition(absolutePosition, 0, 0);
 		
 		//l1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		l1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+		r1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 		
 		//l1.reverseSensor(true);
-		l1.setSensorPhase(false);
+		r1.setSensorPhase(true);
+		
+		//r1.setInverted(true);
 		
 		//l1.configNominalOutputVoltage(0.0, -0.0);
-		l1.configNominalOutputForward(0, 0);
-		l1.configNominalOutputReverse(0, 0);
-		l1.configPeakOutputForward(.5, 0);
-		l1.configPeakOutputReverse(.5, 0);
-		//l1.setPosition(0);
+//		r1.configNominalOutputForward(0, 0);
+//		r1.configNominalOutputReverse(0, 0);
+//		r1.configPeakOutputForward(1, 0);
+//		r1.configPeakOutputReverse(-1, 0);
+		
+		
+
 
 	}
 	
@@ -397,29 +390,22 @@ public class Drive extends Subsystem {
 	}
 	
 	public double getLeftErrorInches(){
-		return l1.getClosedLoopError(0) * Constants.Drive.InchesPerRotation ;
+		return l1.getClosedLoopError(0) * Constants.Drive.InchesPerTick ;
 	}
 
 	public double getRightErrorInches(){
-		return r1.getClosedLoopError(0)* Constants.Drive.InchesPerRotation ;
+		return r1.getClosedLoopError(0)* Constants.Drive.InchesPerTick ;
 	}
 	/*********************************
 	 * Left and Right position getters
 	 *********************************/
+
 	public double getLeftPosition() {
-		return l1.getSelectedSensorPosition(0); //Multiply by (1/SensorUnitsPerRotation) to convert into rotations.
+		return l1.getSelectedSensorPosition(0) * Constants.Drive.InchesPerTick;
 	}
 
 	public double getRightPosition() {
-		return r1.getSelectedSensorPosition(0); //Multiply by (1/SensorUnitsPerRotation) to convert into rotations.
-	}
-
-	public double getLeftPositionInches() {
-		return getLeftPosition() * (Constants.Drive.InchesPerRotation);
-	}
-
-	public double getRightPositionInches() {
-		return getRightPosition() * (Constants.Drive.InchesPerRotation);
+		return r1.getSelectedSensorPosition(0) * Constants.Drive.InchesPerTick;
 	}
 	
 	/*
@@ -429,38 +415,27 @@ public class Drive extends Subsystem {
 	 *
 	 */
 
+	
 	public double getLeftSpeed() {
-		return l1.getSelectedSensorVelocity(0);
+		return l1.getSelectedSensorVelocity(0) * Constants.Drive.InchesPerTick * 10.0;
 	}
 	
 	public double getRightSpeed() {
-		return l1.getSelectedSensorVelocity(0);
+		return r1.getSelectedSensorVelocity(0) * Constants.Drive.InchesPerTick * 10.0;
 	}
-
+	
 	public double getAverageSpeed() {
 		return .5 * (getLeftSpeed() + getRightSpeed());
 	}
-	
-	public double getLeftSpeedInches() {
-		return (getLeftSpeed() * Constants.Drive.InchesPerRotation) /60.0;
-	}
-	
-	public double getRightSpeedInches() {
-		return (getRightSpeed() * Constants.Drive.InchesPerRotation) /60.0;
-	}
-	
-	public double getAverageSpeedInches() {
-		return (getAverageSpeed() * Constants.Drive.InchesPerRotation)/60.0;
-	}
 
 	public void setLeftRight(double left, double right) {
-		System.out.println("Left: " + left + " Right:" + right);
+		//System.out.println("Left: " + left + " Right:" + right);
 		//l1.set(left); 
-		l1.set(ControlMode.PercentOutput, left *100);
+		l1.set(ControlMode.PercentOutput, left);
 		
 		
 		//r1.set(-1 * right);
-		r1.set(ControlMode.PercentOutput, right * -100);
+		r1.set(ControlMode.PercentOutput, -right);
 	}
 
 	/**
@@ -470,11 +445,11 @@ public class Drive extends Subsystem {
      * 			compensates for the deadzone using gathered data
      */
     public static double speedToPercent(double spd){
-    	double speed = (Math.abs(spd) *60.0) /Constants.Drive.InchesPerRotation;
+    	double speed = (Math.abs(spd) *60.0) /Constants.Drive.InchesPerTick;
     	return Math.copySign(slope*speed + minPct, spd);
     }
     public static double percentToSpeed(double pct){
-    	return Math.copySign((pct - minPct) / slope, pct) * Constants.Drive.InchesPerRotation/60.0;
+    	return Math.copySign((pct - minPct) / slope, pct) * Constants.Drive.InchesPerTick/60.0;
     }
     /**
      * @param 	percent [0,1] of the max speed to go
@@ -525,7 +500,7 @@ public class Drive extends Subsystem {
 		SmartDashboard.putNumber("Drive Left Get", l1.get());
 		SmartDashboard.putNumber("Drive Right Get", r1.get());
 		
-		SmartDashboard.putNumber("Drive avg speed inches", getAverageSpeedInches());
+		SmartDashboard.putNumber("Drive avg speed inches", getAverageSpeed());
 	}
 
 

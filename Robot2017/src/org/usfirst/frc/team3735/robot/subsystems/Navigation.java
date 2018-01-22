@@ -62,8 +62,8 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     	
     	SmartDashboard.putData("Navigation Turning Controller", controller);
     	
-		curLeft = Robot.drive.getLeftPositionInches();
-    	curRight = Robot.drive.getRightPositionInches();
+		curLeft = Robot.drive.getLeftPosition();
+    	curRight = Robot.drive.getRightPosition();
 	}
 
 	public synchronized void setPosition(Position p){
@@ -80,8 +80,8 @@ public class Navigation extends Subsystem implements PIDSource, PIDOutput {
     
     public synchronized void integrate(){
     	synchronized(posLock){
-    		curLeft = Robot.drive.getLeftPositionInches();
-        	curRight = Robot.drive.getRightPositionInches();
+    		curLeft = Robot.drive.getLeftPosition();
+        	curRight = Robot.drive.getRightPosition();
         	
         	double dd = ((curLeft-prevLeft) + (curRight-prevRight)) * .5;
         	double angle = getYaw();

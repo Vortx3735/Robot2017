@@ -58,7 +58,7 @@ public class DriveMoveDistanceProfile extends VortxCommand {
     	super.initialize();
     	distHandler.initialize();
     	acc = acceleration/FRAMERATE;
-    	currentSpeed = Robot.drive.getAverageSpeedInches();
+    	currentSpeed = Robot.drive.getAverageSpeed();
 
     	state = State.rampingUp;
     	if(currentSpeed * distHandler.distance() < 0){
@@ -103,12 +103,12 @@ public class DriveMoveDistanceProfile extends VortxCommand {
 
 	private void sendErrorReport() {
     	SmartDashboard.putNumber("Profile currentSpeed: ", currentSpeed);
-    	SmartDashboard.putNumber("Profile actual Speed", Robot.drive.getAverageSpeedInches());
-    	SmartDashboard.putNumber("Profile Error", currentSpeed - Robot.drive.getAverageSpeedInches());
+    	SmartDashboard.putNumber("Profile actual Speed", Robot.drive.getAverageSpeed());
+    	SmartDashboard.putNumber("Profile Error", currentSpeed - Robot.drive.getAverageSpeed());
     }
 
 	private double calcAcceleration() {
-    	return (Math.pow(exitVelocity, 2) - Math.pow(Robot.drive.getAverageSpeedInches(), 2)) / 
+    	return (Math.pow(exitVelocity, 2) - Math.pow(Robot.drive.getAverageSpeed(), 2)) / 
  			   (2 * (distHandler.distanceToGo()));
 	}
 
@@ -130,9 +130,9 @@ public class DriveMoveDistanceProfile extends VortxCommand {
 
     private boolean isProfileFinished() {
 		if(cruiseVelocity > 0){
-			return (state == State.rampingDown) && (Robot.drive.getAverageSpeedInches() < exitVelocity);
+			return (state == State.rampingDown) && (Robot.drive.getAverageSpeed() < exitVelocity);
 		}else{
-			return (state == State.rampingDown) && (Robot.drive.getAverageSpeedInches() > exitVelocity);
+			return (state == State.rampingDown) && (Robot.drive.getAverageSpeed() > exitVelocity);
 		}
 	}
 
